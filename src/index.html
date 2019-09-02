@@ -7,6 +7,7 @@ window.onload = function () {
  var dataPoints = [];
  var experimentsData = [];
  var experimentData = [];
+ var experimentName = "p";
 
  var chart = new CanvasJS.Chart("chartContainer", {
  	theme:"light2",
@@ -52,14 +53,25 @@ window.onload = function () {
    addDataPoints(data);
 }
 
+
 function addDataPoints(data) {
   for (var h = 0; h < data.length; h++) {
+    $.ajax({
+      async: false,cache: false,type: "get",
+      url: "http://localhost:8080/bush/experimentos/nombre?assayId=1",
+      success: function (expName) {
+        experimentName = expName;
+      },
+      error: function (request, status, error) {
+          alert("error:"+error);
+      }
+    })
     dataPoints.push({
       type: "spline",
       showInLegend: true,
       visible: false,
       ValueFormatString: "##.00mn",
-      name: "Experimento ".concat((h+1)),
+      name: experimentName,
       dataPoints: experimentsData[h]
     });
   }
@@ -73,29 +85,30 @@ function toggleDataSeries(e) {
 		e.dataSeries.visible = true;
 	}
 	chart.render();
+
 }
-
-
 $.ajax({
     type: "get", url: "http://localhost:8080/bush/prueba/imagenBase64?testId=1&experimentId=1",
     success: function (data, text) {
       generateTestImage(data);
-
     },
     error: function (request, status, error) {
+        alert(request.message);
         alert(error);
     }
 });
 
 
-function generateTestImage(base64Image){
+function generateTestImage(base64Images){
 
-  var src = "data:image/jpeg;base64,";
-src += base64Image;
-var newImage = document.createElement('img');
-newImage.src = src;
-newImage.width = newImage.height = "300";
-document.querySelector('#someDiv').innerHTML = newImage.outerHTML;//where to insert your image
+  for (var j = 0; j < base64Images.length; j++) {
+    var src = "data:image/jpeg;base64,";
+  src += base64Images[j];
+  var newImage = document.createElement('img');
+  newImage.src = src;
+  newImage.width = newImage.height = 300-(10*j);
+  document.querySelector('#someDiv').innerHTML = newImage.outerHTML;
+  }
 
 }
 
@@ -104,8 +117,7 @@ document.querySelector('#someDiv').innerHTML = newImage.outerHTML;//where to ins
 </head>
 <body>
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-<div id = 'someDiv'>
-</div>
+<div id = 'someDiv'></div>
 <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
