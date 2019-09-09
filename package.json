@@ -1,0 +1,49 @@
+{
+  "name": "oak",
+  "version": "1.0.0",
+  "description": "My webpack project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/5nano/oak.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/5nano/oak/issues"
+  },
+  "homepage": "https://github.com/5nano/oak#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.6.0",
+    "@types/node-sass": "^4.11.0",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "css-loader": "^3.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "node-sass": "^4.12.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^8.0.0",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^1.0.0",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.6.2",
+    "typings-for-css-modules-loader": "^1.7.0",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.8",
+    "webpack-dev-server": "^3.8.0"
+  },
+  "dependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  }
+}
