@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {BrowserRouter as Router,Route, Switch} from 'react-router-dom';
 import CropsForm from '../Crops/CropsForm';
+import { Search } from '../Search/Search';
 
 export interface AppProps { title: string }
 
@@ -14,7 +15,7 @@ const App = (props: AppProps) => (
     <Router>
 
         <Switch>
-            <Route path="/" component={CropsForm}/>}
+            <Route path="/" component={Search}/>}
             
         </Switch>
 
