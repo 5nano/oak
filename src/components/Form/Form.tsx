@@ -83,8 +83,6 @@ private handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-
-    console.log(this.state.values);
  
     if (this.validateForm()) {
       const submitSuccess: boolean = await this.submitForm();
@@ -114,6 +112,7 @@ private handleSubmit = async (
 
 
  private validateForm(): boolean {
+  
   const errors: IErrors = {};
   Object.keys(this.props.fields).map((fieldName: string) => {
     errors[fieldName] = this.validate(fieldName);
@@ -123,6 +122,7 @@ private handleSubmit = async (
 }
  
 private async submitForm(): Promise<boolean> {
+  console.log("Submitting form")
   try {
     const response = await fetch(this.props.action, {
       method: "post",
