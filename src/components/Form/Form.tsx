@@ -1,7 +1,14 @@
 import * as React from 'react';
+import { IFieldProps } from './Field';
+
+export interface IFields {
+  [key: string]: IFieldProps;
+}
 
 interface IFormProps {
     action: string;
+
+    fields: IFields,
 
     render: () => React.ReactNode;
 }
@@ -22,13 +29,29 @@ export interface IFormState {
 
 export interface IFormContext extends IFormState {
   setValues: (values: IValues) => void;
+  
+  validate: (fieldName: string) => void;
 }
 
 export const FormContext = React.createContext<IFormContext | undefined> (
   undefined
 );
 
+export const required = (values: IValues, fieldName: string): string =>
+  values[fieldName] === undefined ||
+  values[fieldName] === null ||
+  values[fieldName] === ""
+    ? "Este campo debe completarse"
+    : "";
 
+export const maxLength = (
+  values: IValues,
+  fieldName: string,
+  length: number
+): string =>
+  values[fieldName] && values[fieldName].length > length
+    ? `Este campo no puede exceder ${length} caracteres`
+    : "";
 
 export class Form extends React.Component<IFormProps, IFormState> {
     constructor(props: IFormProps){
@@ -69,14 +92,35 @@ private handleSubmit = async (
     }
   };
  
-  /**
-   * Executes the validation rules for all the fields on the form and sets the error state
-   * @returns {boolean} - Whether the form is valid or not
-   */
-  private validateForm(): boolean {
-    // TODO - validate form
-    return true;
-  }
+  private validate = (fieldName: string): string => {
+    let newError: string = "";
+  
+    if (
+      this.props.fields[fieldName] &&
+      this.props.fields[fieldName].validation
+    ) {
+      newError = this.props.fields[fieldName].validation!.rule(
+        this.state.values,
+        fieldName,
+        this.props.fields[fieldName].validation!.args
+      );
+    }
+    this.state.errors[fieldName] = newError;
+    this.setState({
+       errors: { ...this.state.errors, [fieldName]: newError }
+    });
+    return newError;
+ };
+
+
+ private validateForm(): boolean {
+  const errors: IErrors = {};
+  Object.keys(this.props.fields).map((fieldName: string) => {
+    errors[fieldName] = this.validate(fieldName);
+  });
+  this.setState({ errors });
+  return !this.haveErrors(errors);
+}
  
   /**
    * Submits the form to the http api
@@ -91,7 +135,8 @@ private handleSubmit = async (
     const { submitSuccess, errors } = this.state;
     const context: IFormContext = {
       ...this.state,
-      setValues: this.setValues
+      setValues: this.setValues,
+      validate: this.validate
     };
     return (
       <FormContext.Provider value={context}>
