@@ -1,7 +1,7 @@
 {
     "presets": [
         "@babel/preset-react",
-        ["@babel/preset-typescript", { "isTSX": true }]
+        ["@babel/preset-typescript", { "isTSX": true }],
         [
             "@babel/env",
             {
