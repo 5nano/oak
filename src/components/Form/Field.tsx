@@ -21,6 +21,12 @@ export interface IFieldProps {
   value?: any;
 }
 
+export interface IRule {
+    values:IValues,
+    fieldName: string,
+    args: any
+}
+
 export interface IValidation {
     rule: (values: IValues, fieldName: string, args: any) => string;
     args?: any;

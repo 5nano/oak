@@ -122,14 +122,33 @@ private handleSubmit = async (
   return !this.haveErrors(errors);
 }
  
-  /**
-   * Submits the form to the http api
-   * @returns {boolean} - Whether the form submission was successful or not
-   */
-  private async submitForm(): Promise<boolean> {
-    // TODO - submit the form
-    return true;
+private async submitForm(): Promise<boolean> {
+  try {
+    const response = await fetch(this.props.action, {
+      method: "post",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      }),
+      body: JSON.stringify(this.state.values)
+    });
+    if (response.status === 400) {
+      /* Map the validation errors to IErrors */
+      let responseBody: any;
+      responseBody = await response.json();
+      const errors: IErrors = {};
+      Object.keys(responseBody).map((key: string) => {
+        // For ASP.NET core, the field names are in title case - so convert to camel case
+        const fieldName = key.charAt(0).toLowerCase() + key.substring(1);
+        errors[fieldName] = responseBody[key];
+      });
+      this.setState({ errors });
+    }
+    return response.ok;
+  } catch (ex) {
+    return false;
   }
+}
  
   public render() {
     const { submitSuccess, errors } = this.state;
