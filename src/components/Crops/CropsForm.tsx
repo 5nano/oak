@@ -9,18 +9,13 @@ const CropsForm: React.SFC = () => {
       render={() => (
         <React.Fragment>
           <div className="alert alert-info" role="alert">
-            Enter the information below and we'll get back to you as soon as we
-            can.
+            Ingresa los datos del nuevo cultivo
           </div>
-          <Field id="name" label="Name" />
-          <Field id="email" label="Email" />
-          <Field
-            id="reason"
-            label="Reason"
-            editor="dropdown"
-            options={["", "Marketing", "Support", "Feedback", "Jobs"]}
-          />
-          <Field id="notes" label="Notes" editor="multilinetextbox" />
+          <Field id="name" 
+                 label="Nombre" />
+          <Field id="description" 
+                 label="Descripción" 
+                 editor="multilinetextbox"/>
         </React.Fragment>
       )}
     />
