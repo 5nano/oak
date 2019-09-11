@@ -1,8 +1,8 @@
 import * as React from "react";
-import Criteria from './Criteria';
 
 export interface ISearchProps{
-
+    action: string,
+    render: () => React.ReactNode
 }
 
 export interface IValues {
@@ -64,12 +64,10 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
         };
         return(
             <SearchContext.Provider value={context}>
-                <div>
-                    <Criteria 
-                        id="search"
-                        label="Buscar cultivo por nombre"
-                        onSearch={this.handleSearch} />
+                <div className="container">
+                    {this.props.render()}
                 </div>
+                <button onClick={this.handleSearch}>Go</button>
             </SearchContext.Provider>
         )
     }

@@ -1,6 +1,5 @@
 import * as React from "react";
 import {IErrors, ISearchContext,SearchContext} from "./Search"
-import { FormContext } from "../Form/Form";
 
 export interface ICriteriaSearch {
     onSearch: (criteria:string) => any;
@@ -15,15 +14,12 @@ export interface ICriteriaProps {
 
   /* The field value */
   value?: any;
-
-  onSearch: (e: React.MouseEvent<HTMLElement>) => Promise<void>;
 }
 
 export const Criteria: React.SFC<ICriteriaProps> = ({
     id,
     label,
-    value,
-    onSearch
+    value
 }) => {
     
     return (
@@ -38,7 +34,6 @@ export const Criteria: React.SFC<ICriteriaProps> = ({
                             (e: React.FormEvent<HTMLInputElement>) =>
                               context.setValues({ [id]: e.currentTarget.value }) 
                           }/>
-                    <button onClick={onSearch}>Go</button>
                 </div>
             )}
         </SearchContext.Consumer>

@@ -2,7 +2,7 @@ import * as React from "react";
 import Search from '../Search/Search';
 import Criteria from '../Search/Criteria';
 
-/*
+
 const CropsSearch: React.SFC = () => {
   
   return (
@@ -13,12 +13,13 @@ const CropsSearch: React.SFC = () => {
           <div className="alert alert-info" role="alert">
             Busca el cultivo
           </div>
-          <Field {...fields.name}/>
-          <Field {...fields.description}/>
+          <Criteria id="main-criteria"
+                    label="Buscar por nombre">
+          </Criteria>
         </React.Fragment>
       )}
     />
   );
 };
 
-export default CropsForm;*/
+export default CropsSearch;
