@@ -7,7 +7,7 @@ const CropsSearch: React.SFC = () => {
   
   return (
     <Search
-      action="" //endpoint
+      action='http://localhost:8080/bush/cultivos'
       render={() => (
         <React.Fragment>
           <div className="alert alert-info" role="alert">

@@ -50,6 +50,10 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
 
       console.log(this.state.values);
     
+      /* TODO fetch action to get crops from server
+      
+            check if there is any criteria(values), if not, get all crops
+      */ 
     };
 
     private setValues = (values: IValues) => {
@@ -67,7 +71,7 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
                 <div className="container">
                     {this.props.render()}
                 </div>
-                <button onClick={this.handleSearch}>Go</button>
+                <button onClick={this.handleSearch}>Buscar</button>
             </SearchContext.Provider>
         )
     }

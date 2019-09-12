@@ -122,33 +122,46 @@ private handleSubmit = async (
 }
  
 private async submitForm(): Promise<boolean> {
-  console.log("Submitting form")
-  try {
-    const response = await fetch(this.props.action, {
-      method: "post",
-      headers: new Headers({
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      }),
-      body: JSON.stringify(this.state.values)
-    });
-    if (response.status === 400) {
-      /* Map the validation errors to IErrors */
-      let responseBody: any;
-      responseBody = await response.json();
-      const errors: IErrors = {};
-      Object.keys(responseBody).map((key: string) => {
-        // For ASP.NET core, the field names are in title case - so convert to camel case
-        const fieldName = key.charAt(0).toLowerCase() + key.substring(1);
-        errors[fieldName] = responseBody[key];
-      });
-      this.setState({ errors });
+ console.log(JSON.stringify(this.state.values))
+  
+    return fetch(this.props.action, {
+      method: "POST",
+      mode: 'cors',
+      body: JSON.stringify(this.state.values),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    }).then(response => {
+            console.log(response)
+            if (response.status > 200) {
+              // Map the validation errors to IErrors 
+              let responseBody: any;
+              responseBody = response.json();
+              const errors: IErrors = {};
+            
+              Object.keys(responseBody).map((key: string) => {
+                // For ASP.NET core, the field names are in title case - so convert to camel case
+                const fieldName = key.charAt(0).toLowerCase() + key.substring(1);
+                errors[fieldName] = responseBody[key];
+              });
+              this.setState({ errors });
+              return false
+            }else return true
+    })
+/*
+    var xhttp= new XMLHttpRequest();
+    xhttp.open("POST", this.props.action,true);
+    xhttp.withCredentials = true;
+    xhttp.onreadystatechange = function(){
+      if(xhttp.readyState===2) console.log("ok")
     }
-    return response.ok;
-  } catch (ex) {
-    return false;
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(JSON.stringify(this.state.values))
+    return true;
+*/
+
   }
-}
  
   public render() {
     const { submitSuccess, errors } = this.state;

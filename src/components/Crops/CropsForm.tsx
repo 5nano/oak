@@ -6,13 +6,13 @@ const CropsForm: React.SFC = () => {
 
   //fieldName must match with fieldId
   const fields: IFields = {
-    cropName: {
-      id: "cropName",
+    name: {
+      id: "name",
       label: "Nombre",
       validation: {rule: required}
     },
-    cropDescription: {
-      id:"cropDescription",
+    description: {
+      id:"description",
       label: "Descripcion",
       editor: "multilinetextbox",
       validation: {rule: maxLength, args:200}
@@ -22,15 +22,15 @@ const CropsForm: React.SFC = () => {
   
   return (
     <Form
-      action="http://localhost:8080/bush/cultivos/insertar" //endpoint
+      action='http://localhost:8080/bush/cultivo/insertar'
       fields = {fields}
       render={() => (
         <React.Fragment>
           <div className="alert alert-info" role="alert">
             Ingresa los datos del nuevo cultivo
           </div>
-          <Field {...fields.cropName}/>
-          <Field {...fields.cropDescription}/>
+          <Field {...fields.name}/>
+          <Field {...fields.description}/>
         </React.Fragment>
       )}
     />
