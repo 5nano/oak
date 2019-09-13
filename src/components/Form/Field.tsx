@@ -19,6 +19,8 @@ export interface IFieldProps {
 
   /* The field value */
   value?: any;
+
+  validation?: IValidation;
 }
 
 export interface IRule {
@@ -32,11 +34,7 @@ export interface IValidation {
     args?: any;
   }
   
-export interface IFieldProps {
 
-    /* The field validator function and argument */
-    validation?: IValidation;
-  }
 
   
 export const Field: React.SFC<IFieldProps> = ({

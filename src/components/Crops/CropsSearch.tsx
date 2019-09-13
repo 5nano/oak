@@ -16,7 +16,7 @@ const CropsSearch: React.SFC = () => {
           <Criteria id="main-criteria"
                     label="Buscar por nombre">
           </Criteria>
-          <Results/>
+          <Results type="crop"/>
         </React.Fragment>
       )}
     />
