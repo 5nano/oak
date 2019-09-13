@@ -25,6 +25,7 @@ export interface ISearchState {
 
 export interface ISearchContext extends ISearchState {
     setValues: (values: IValues) => void
+    data: Array<any>
   }
 
 export const SearchContext = React.createContext<ISearchContext | undefined> (
@@ -95,7 +96,8 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
         const {searchSuccess, errors} = this.state
         const context: ISearchContext = {
             ...this.state,
-            setValues:this.setValues
+            setValues:this.setValues,
+            data: this.state.data
         };
         return(
             <SearchContext.Provider value={context}>
@@ -103,7 +105,6 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
                     {this.props.render()}
                 </div>
                 <button onClick={this.handleSearch}>Buscar</button>
-                <Results data={this.state.data}/>
             </SearchContext.Provider>
         )
     }

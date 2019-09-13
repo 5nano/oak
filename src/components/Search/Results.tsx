@@ -1,9 +1,9 @@
 import * as React from 'react';
-
+import Search, {ISearchContext,SearchContext} from './Search';
 
 
 export interface IResultsProps {
-    data: Array<any>
+    
 }
 
 export default class Results extends React.Component<IResultsProps> {
@@ -14,16 +14,24 @@ export default class Results extends React.Component<IResultsProps> {
     }
 
     render(){
-        console.log(this.props.data)
-        var list = this.props.data.map(function(obj:any){
+        var list:Array<any>
+        list = [];
+       
             return(
-                <li>{obj.name}</li>
-            );
-        });
-            return(
-                    <ul>
+                <SearchContext.Consumer>
+                   {(context: ISearchContext) =>(
+                     <ul>
+                        {
+                            context.data.map(function(obj:any){
+                                return (
+                                    <li>{obj.name}</li>
+                                )
+                            })
+                         }
                         {list}
                     </ul>
+                   )}
+                </SearchContext.Consumer>
             )
         }  
 }
