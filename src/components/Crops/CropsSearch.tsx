@@ -1,7 +1,7 @@
 import * as React from "react";
 import Search from '../Search/Search';
 import Criteria from '../Search/Criteria';
-
+import Results from '../Search/Results';
 
 const CropsSearch: React.SFC = () => {
   

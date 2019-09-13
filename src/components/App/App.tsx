@@ -10,7 +10,7 @@ const App = (props: AppProps) => (
     <Router>
 
         <Switch>
-            <Route path="/" component={CropsForm}/>}
+            <Route path="/" component={CropsSearch}/>}
             
         </Switch>
 

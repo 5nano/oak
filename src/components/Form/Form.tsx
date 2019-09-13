@@ -122,8 +122,7 @@ private handleSubmit = async (
 }
  
 private async submitForm(): Promise<boolean> {
- console.log(JSON.stringify(this.state.values))
-  
+
     return fetch(this.props.action, {
       method: "POST",
       mode: 'cors',
@@ -149,17 +148,6 @@ private async submitForm(): Promise<boolean> {
               return false
             }else return true
     })
-/*
-    var xhttp= new XMLHttpRequest();
-    xhttp.open("POST", this.props.action,true);
-    xhttp.withCredentials = true;
-    xhttp.onreadystatechange = function(){
-      if(xhttp.readyState===2) console.log("ok")
-    }
-    xhttp.setRequestHeader('Content-Type', 'application/json');
-    xhttp.send(JSON.stringify(this.state.values))
-    return true;
-*/
 
   }
  
