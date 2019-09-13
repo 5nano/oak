@@ -53,7 +53,9 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
     e: React.MouseEvent<HTMLElement>
       ): Promise<void> => {
       e.preventDefault();
-      /* TODO check if there is any criteria(values), if not, get all crops
+
+      /* TODO check if there is any criteria(values), 
+        if not, get all crops
       */ 
     return fetch(this.props.action, {
         method: "GET",

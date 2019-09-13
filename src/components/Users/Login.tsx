@@ -1,8 +1,8 @@
 import * as React from "react";
-import { Form, IFields, required, maxLength } from "../Form/Form";
+import { Form, IFields, required} from "../Form/Form";
 import { Field } from "../Form/Field";
 
-const CropsForm: React.SFC = () => {
+const Login: React.SFC = () => {
 
   //fieldName must match with fieldId
   const fields: IFields = {
@@ -11,30 +11,29 @@ const CropsForm: React.SFC = () => {
       label: "Nombre",
       validation: {rule: required}
     },
-    description: {
-      id:"description",
+    password: {
+      id:"password",
       label: "Descripcion",
       editor: "multilinetextbox",
-      validation: {rule: maxLength, args:200}
+      validation: {rule: required}
     }
   };
   
-  
   return (
     <Form
-      action='http://localhost:8080/bush/cultivo/insertar'
+      action='http://localhost:8080/bush/usuario/insertar'
       fields = {fields}
       render={() => (
         <React.Fragment>
           <div className="alert alert-info" role="alert">
-            Ingresa los datos del nuevo cultivo
+            Ingresa los datos del nuevo usuario
           </div>
           <Field {...fields.name}/>
-          <Field {...fields.description}/>
+          <Field {...fields.password}/>
         </React.Fragment>
       )}
     />
   );
 };
 
-export default CropsForm;
+export default Login;
