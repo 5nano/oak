@@ -133,20 +133,9 @@ private async submitForm(): Promise<boolean> {
       }
     }).then(response => {
             console.log(response)
-            if (response.status > 200) {
-              // Map the validation errors to IErrors 
-              let responseBody: any;
-              responseBody = response.json();
-              const errors: IErrors = {};
-            
-              Object.keys(responseBody).map((key: string) => {
-                // For ASP.NET core, the field names are in title case - so convert to camel case
-                const fieldName = key.charAt(0).toLowerCase() + key.substring(1);
-                errors[fieldName] = responseBody[key];
-              });
-              this.setState({ errors });
-              return false
-            }else return true
+
+            if (response.status > 200) return false
+            else return true
     })
 
   }

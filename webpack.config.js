@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 /*
  * SplitChunksPlugin is enabled by default and replaced
@@ -35,7 +36,10 @@ module.exports = {
 		path: path.resolve(__dirname, 'dist')
 	},
 
-	plugins: [new webpack.ProgressPlugin(), new HtmlWebpackPlugin(), new MiniCssExtractPlugin({})],
+	plugins: [new webpack.ProgressPlugin(), 
+			  new HtmlWebpackPlugin(), 
+			  new MiniCssExtractPlugin({}),
+			  new CleanWebpackPlugin(),],
 
 	module: {
 		rules: [
@@ -60,7 +64,7 @@ module.exports = {
 				  // Translates CSS into CommonJS
 				  'css-loader',
 				  // Compiles Sass to CSS
-				  'sass-loader',
+				  'sass-loader'
 				],
 				exclude: [/node_modules/]
 			},
@@ -85,7 +89,8 @@ module.exports = {
 	},
 
 	devServer: {
-		open: true
+		open: true,
+		historyApiFallback: true
 	},
 
 	resolve: {

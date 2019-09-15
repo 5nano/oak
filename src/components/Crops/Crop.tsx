@@ -14,9 +14,9 @@ export default class Crop extends React.Component<ICropProps> {
 
     render(){
         return(
-            <div>
-                <h1>{this.props.name}</h1>
-                <p>{this.props.description}</p>
+            <div className="crop-container">
+                    <h1>{this.props.name}</h1>
+                    <p>{this.props.description}</p>
             </div>
         )
     }

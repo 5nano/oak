@@ -27,7 +27,9 @@ export const Results: React.SFC<IResultsProps> =({type}) => {
         <SearchContext.Consumer>
             {(context: ISearchContext) =>(
                 <div>
-                {type.toLowerCase() ==='crop' && (<ul>{getCrops(context.data)}</ul>)}
+                {type.toLowerCase() ==='crop' && 
+                (<ul>{getCrops(context.data)}</ul>)
+                }
            
                 {type.toLowerCase() === 'agrochemical' && (<ul>{/*TODO*/}</ul>)}
                 </div>

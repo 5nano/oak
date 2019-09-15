@@ -11,8 +11,9 @@ const App = (props: AppProps) => (
     <Router>
 
         <Switch>
-            <Route path="/" component={Login}/>}
-            
+            <Route path="/" exact component={Login}/>
+            <Route path='/crops' exact component={CropsSearch}/>
+            <Route path="/crop-new" exact component={CropsForm} />
         </Switch>
 
     </Router>
