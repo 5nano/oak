@@ -2,7 +2,7 @@ import * as React from "react";
 import { Form, IFields, required} from "../Form/Form";
 import { Field } from "../Form/Field";
 
-const Login: React.SFC = () => {
+const Register: React.SFC = () => {
 
   //fieldName must match with fieldId
   const fields: IFields = {
@@ -36,4 +36,4 @@ const Login: React.SFC = () => {
   );
 };
 
-export default Login;
+export default Register;
