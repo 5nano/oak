@@ -48,16 +48,8 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
         };
     }
 
-
-    private handleSearch = async (
-    e: React.MouseEvent<HTMLElement>
-      ): Promise<void> => {
-      e.preventDefault();
-
-      /* TODO check if there is any criteria(values), 
-        if not, get all crops
-      */ 
-    return fetch(this.props.action, {
+    private getData()  {
+      return fetch(this.props.action, {
         method: "GET",
         mode: 'cors',
         headers: {
@@ -83,8 +75,21 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
                
               this.setData(data)
       })
+    }
+
+    private handleSearch = async (
+    e: React.MouseEvent<HTMLElement>
+      ): Promise<void> => {
+      e.preventDefault();
+
+      /* TODO check if there is any criteria(values), 
+        if not, get all crops
+      */ 
+    return this.getData();
 
     };
+
+
 
     private setData = (data:Array<any>) => {
         this.setState({data: data})
@@ -93,6 +98,11 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
     private setValues = (values: IValues) => {
         this.setState({values: {...this.state.values, ...values}});
       ;}
+
+
+    public componentDidMount(){
+      this.getData();
+    }
 
     public render (){
         const {searchSuccess, errors} = this.state

@@ -1,42 +1,37 @@
 import * as React from 'react';
 import {ISearchContext,SearchContext} from './Search';
-import Crop from '../Crops/Crop';
-
-/* The available editors for the results */
-type resultType = "crop" | "agrochemical";
 
 
-export interface IResultsProps {
-    type: resultType
+export interface IResultsTableProps {
+    titles: string[];
 }
 
-export const Results: React.SFC<IResultsProps> =({type}) => {
-
-
-    const getCrops = (data:Array<any>): any => {
-        return data.map(function(cropObject:any) {
-            return (
-                <Crop name={cropObject.name} 
-                description={cropObject.description}/>
-            )
-        })
-    }
-    
-
+export const Results:React.SFC<IResultsTableProps> = ({titles}) => {
+        
     return(
         <SearchContext.Consumer>
-            {(context: ISearchContext) =>(
-                <div>
-                {type.toLowerCase() ==='crop' && 
-                (<ul>{getCrops(context.data)}</ul>)
-                }
-           
-                {type.toLowerCase() === 'agrochemical' && (<ul>{/*TODO*/}</ul>)}
-                </div>
-           )}
+            {(context:ISearchContext) => (
+                <table>
+                    <tbody>
+
+                        <tr>
+                        {titles.map(title => {return <th>{title}</th>})}
+                        </tr>
+
+                        {context.data.map(object => {
+                            return (
+                                <tr>{
+                                    Object.keys(object).map((key:any) => {
+                                        return (
+                                        <td>{object[key]}</td>)
+                                        })}
+                                </tr>)
+                        })}
+                    </tbody>
+                </table>
+                )}
         </SearchContext.Consumer>
     )
-   }
+}
 
 export default Results;
-
