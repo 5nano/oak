@@ -16,6 +16,7 @@ export const Results:React.SFC<IResultsTableProps> = ({titles}) => {
 
                         <tr>
                         {titles.map(title => {return <th>{title}</th>})}
+                        <th>Opciones</th>
                         </tr>
 
                         {context.data.map(object => {
@@ -25,6 +26,9 @@ export const Results:React.SFC<IResultsTableProps> = ({titles}) => {
                                         return (
                                         <td>{object[key]}</td>)
                                         })}
+                                    <td>
+                                        <button onClick={e => context.remove(object)}>Eliminar</button>
+                                    </td>
                                 </tr>)
                         })}
                     </tbody>

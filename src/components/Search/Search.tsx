@@ -1,9 +1,9 @@
 import * as React from "react";
-import Results from './Results';
 import Crop from "../Crops/Crop";
 
 export interface ISearchProps{
-    action: string,
+    searchAction: string,
+    deleteAction: string,
     render: () => React.ReactNode
 }
 
@@ -26,6 +26,7 @@ export interface ISearchState {
 export interface ISearchContext extends ISearchState {
     setValues: (values: IValues) => void
     data: Array<any>
+    remove: (object:any) => Promise<void>
   }
 
 export const SearchContext = React.createContext<ISearchContext | undefined> (
@@ -49,7 +50,7 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
     }
 
     private getData()  {
-      return fetch(this.props.action, {
+      return fetch(this.props.searchAction, {
         method: "GET",
         mode: 'cors',
         headers: {
@@ -99,6 +100,19 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
         this.setState({values: {...this.state.values, ...values}});
       ;}
 
+    private remove = async (object:any): Promise<void> => {
+        console.log(object);
+        return fetch(this.props.deleteAction,{
+          method: 'DELETE',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+          },
+          body: JSON.stringify(object)
+        }).then(response => console.log(response.json()))
+    }
+
 
     public componentDidMount(){
       this.getData();
@@ -109,7 +123,8 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
         const context: ISearchContext = {
             ...this.state,
             setValues:this.setValues,
-            data: this.state.data
+            data: this.state.data,
+            remove:this.remove
         };
         return(
             <SearchContext.Provider value={context}>
