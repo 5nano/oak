@@ -3,7 +3,7 @@ import {BrowserRouter as Router,Route, Switch} from 'react-router-dom';
 import CropsSearch from '../Crops/CropsSearch';
 import CropsForm from '../Crops/CropsForm';
 import Register from '../Users/Register';
-import LogIn from '..//Users/LogIn';
+import LogIn from '../Users/LogIn';
 
 export interface AppProps { title: string }
 

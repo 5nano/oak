@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 /*
  * SplitChunksPlugin is enabled by default and replaced
@@ -29,7 +30,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
 	mode: 'development',
-	entry: ['./src/index.tsx', './src/styles.scss'],
+	entry: ['./src/index.tsx'],
 
 	output: {
 		filename: '[name].[chunkhash].js',
@@ -39,7 +40,11 @@ module.exports = {
 	plugins: [new webpack.ProgressPlugin(), 
 			  new HtmlWebpackPlugin(), 
 			  new MiniCssExtractPlugin({}),
-			  new CleanWebpackPlugin(),],
+			  new CleanWebpackPlugin(),
+			  new CopyPlugin([
+				{ from: './src/assets', to: './assets' },
+			  ]),
+			],
 
 	module: {
 		rules: [
@@ -62,9 +67,37 @@ module.exports = {
 						},
 					  },
 				  // Translates CSS into CommonJS
-				  'css-loader',
+				  {
+					  loader: 'css-loader',
+					  options: {
+						  url: false,
+					  }
+				  },
+				  {
+					loader: 'resolve-url-loader',
+					options: {debug: true}
+				  },
 				  // Compiles Sass to CSS
-				  'sass-loader'
+				  {
+					  loader: 'sass-loader',
+					  options: {
+						  sourceMap: true,
+					  }
+				  }
+				],
+				exclude: [/node_modules/]
+			},
+			{
+				test: /\.(png|svg|jpg|gif)$/,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+						  name: '[path][name]-[hash].[ext]',
+						//   outputPath: '../',
+						//   publicPath: '/dist',
+						},
+					},
 				],
 				exclude: [/node_modules/]
 			},

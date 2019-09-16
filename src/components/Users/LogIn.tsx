@@ -1,5 +1,6 @@
 import * as React from "react";
 
+
 export interface ILogInState {
     username:string,
     password:string
@@ -47,7 +48,7 @@ export class LogIn extends React.Component<ILogInProps,ILogInState> {
 
     render(){
     return(
-        <div className="container">
+        <div className="container login-background">
             <form onSubmit={this.handleSubmit}>
                 <div className="title">Bienvenido!</div>
                 <div className="title">NANIVO</div>
