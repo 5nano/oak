@@ -4,6 +4,7 @@ import Crop from "../Crops/Crop";
 export interface ISearchProps{
     searchAction: string,
     deleteAction: string,
+    title: string,
     render: () => React.ReactNode
 }
 
@@ -90,8 +91,6 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
 
     };
 
-
-
     private setData = (data:Array<any>) => {
         this.setState({data: data})
     }
@@ -129,9 +128,15 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
         return(
             <SearchContext.Provider value={context}>
                 <div className="container">
+                  <div className="search-wrapper">
+                    <div className="title-wrapper">
+                      <img src="public/head-icon.png"/>
+                      <p>{this.props.title}</p>
+                    </div>
                     {this.props.render()}
+                    <button onClick={this.handleSearch}>Buscar</button>
+                  </div>
                 </div>
-                <button onClick={this.handleSearch}>Buscar</button>
             </SearchContext.Provider>
         )
     }

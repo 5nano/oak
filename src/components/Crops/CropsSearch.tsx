@@ -9,15 +9,15 @@ const CropsSearch: React.SFC = () => {
     <Search
       searchAction='http://localhost:8080/bush/cultivos'
       deleteAction=''
+      title="Cultivos"
       render={() => (
         <React.Fragment>
-          <div className="alert alert-info" role="alert">
-            Busca el cultivo
-          </div>
+        
           <Criteria id="main-criteria"
                     label="Buscar por nombre">
           </Criteria>
-          <Results titles={['name','description']}/>
+          <Results titles={['Nombre','Descripcion']}/>
+          
         </React.Fragment>
       )}
     />
