@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 /*
  * SplitChunksPlugin is enabled by default and replaced
@@ -27,22 +28,25 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
  * https://github.com/jantimon/html-webpack-plugin
  *
  */
-
+const devMode = process.env.NODE_ENV === 'development';
 module.exports = {
-	mode: 'development',
-	entry: ['./src/index.tsx'],
+	entry: ['./src/index.tsx', './src/styles.scss'],
 
 	output: {
-		filename: '[name].[chunkhash].js',
+		filename: devMode ? '[name].js' : '[name].[chunkhash].js',
 		path: path.resolve(__dirname, 'dist')
 	},
 
 	plugins: [new webpack.ProgressPlugin(), 
-			  new HtmlWebpackPlugin(), 
+			  new ManifestPlugin(),
 			  new MiniCssExtractPlugin({}),
-			  new CleanWebpackPlugin(),
+			  ...(devMode ? [] : [new CleanWebpackPlugin()]),
 			  new CopyPlugin([
-				{ from: './src/assets', to: './assets' },
+				{ 
+					from: './src/assets', 
+					to: './assets',
+					force: true,
+				},
 			  ]),
 			],
 
@@ -63,7 +67,10 @@ module.exports = {
 						  // you can specify a publicPath here
 						  // by default it uses publicPath in webpackOptions.output
 						  publicPath: '../',
-						  hmr: process.env.NODE_ENV === 'development',
+						  filename: '[name].[hash].css',
+						  chunkFilename: '[id].css',
+						  hmr: devMode,
+						  reloadAll: true,
 						},
 					  },
 				  // Translates CSS into CommonJS
@@ -121,11 +128,17 @@ module.exports = {
 		}
 	},
 
-	devServer: {
-		open: true,
-		historyApiFallback: true
+	// devServer: {
+	// 	open: true,
+	// 	contentBase: path.join(__dirname, 'dist'),
+	// 	historyApiFallback: true,
+	// 	watchContentBase: true
+	// },
+	watch: devMode,
+	watchOptions: {
+		aggregateTimeout: 300,
+		poll: 200
 	},
-
 	resolve: {
 		extensions: ['.tsx', '.ts', '.js']
 	}
