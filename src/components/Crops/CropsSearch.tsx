@@ -2,6 +2,7 @@ import * as React from "react";
 import Search from '../Search/Search';
 import Criteria from '../Search/Criteria';
 import Results from '../Search/Results';
+import CropsForm from "./CropsForm";
 
 const CropsSearch: React.SFC = () => {
   
@@ -10,6 +11,7 @@ const CropsSearch: React.SFC = () => {
       searchAction='http://localhost:8080/bush/cultivos'
       deleteAction=''
       title="Cultivos"
+      form={<CropsForm/>}
       render={() => (
         <React.Fragment>
         

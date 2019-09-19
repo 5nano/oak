@@ -10,10 +10,12 @@ export const Results:React.SFC<IResultsTableProps> = ({titles}) => {
     return(
         <SearchContext.Consumer>
             {(context:ISearchContext) => (
-                <li className="results">
+                <div className="results-list">
                         {context.data.map(object => {
                             return (
-                                <ul>{
+                                <div className="results-list-item">
+                                    
+                                    {
                                     Object.keys(object).map((key:any) => {
                                         return (
                                         <p>{object[key]}</p>)
@@ -24,9 +26,9 @@ export const Results:React.SFC<IResultsTableProps> = ({titles}) => {
                                                 Eliminar
                                         </button>
                                     
-                                </ul>)
+                                </div>)
                         })}
-                </li>
+                </div>
                 )}
         </SearchContext.Consumer>
     )

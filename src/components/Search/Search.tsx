@@ -1,10 +1,12 @@
 import * as React from "react";
 import Crop from "../Crops/Crop";
+import { format } from "path";
 
 export interface ISearchProps{
     searchAction: string,
     deleteAction: string,
     title: string,
+    form: React.ReactElement,
     render: () => React.ReactNode
 }
 
@@ -21,6 +23,7 @@ export interface ISearchState {
     values: IValues;
     errors: IErrors;
     data: Array<any>;
+    registerRequested: boolean;
     searchSuccess?: boolean;
 }
 
@@ -43,10 +46,12 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
         const errors: IErrors={}
         const values: IValues = {};
         const data: Array<any> = [];
+        const registerRequested: boolean = false;
         this.state = {
             errors,
             values,
-            data
+            data,
+            registerRequested
         };
     }
 
@@ -78,6 +83,13 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
               this.setData(data)
       })
     }
+
+    private handleRequest = async (
+      e: React.MouseEvent<HTMLElement>
+      ): Promise<void> => {
+        e.preventDefault();
+          this.setState({registerRequested: true})
+      }
 
     private handleSearch = async (
     e: React.MouseEvent<HTMLElement>
@@ -134,8 +146,14 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
                       <p>{this.props.title}</p>
                     </div>
                     {this.props.render()}
+
                     <button onClick={this.handleSearch}>Buscar</button>
+                    
+                    <button onClick={this.handleRequest}>Agregar</button>                    
+                    {this.state.registerRequested && this.props.form}
                   </div>
+                    
+                
                 </div>
             </SearchContext.Provider>
         )
