@@ -13,10 +13,10 @@ const CropsSearch: React.SFC = () => {
       render={() => (
         <React.Fragment>
         
+          <Results titles={['Nombre','Descripcion']}/>
           <Criteria id="main-criteria"
                     label="Buscar por nombre">
           </Criteria>
-          <Results titles={['Nombre','Descripcion']}/>
           
         </React.Fragment>
       )}

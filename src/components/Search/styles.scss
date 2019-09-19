@@ -7,8 +7,22 @@
     align-content: center;
     background-color: #3A7257;
 }
-.result-table{
-   background-color: azure; 
+.results{
+   display:flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   align-content: flex-start; 
+   background-color: azure;
+}
+
+.results ul{
+    flex-grow: 0;
+    flex-shrink: 0;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    flex-direction: row;
 }
 
 .search-wrapper{

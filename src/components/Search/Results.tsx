@@ -10,31 +10,23 @@ export const Results:React.SFC<IResultsTableProps> = ({titles}) => {
     return(
         <SearchContext.Consumer>
             {(context:ISearchContext) => (
-                <table className="result-table">
-                    <tbody>
-
-                        <tr>
-                        {titles.map(title => {return <th>{title}</th>})}
-                        <th>Opciones</th>
-                        </tr>
-
+                <li className="results">
                         {context.data.map(object => {
                             return (
-                                <tr>{
+                                <ul>{
                                     Object.keys(object).map((key:any) => {
                                         return (
-                                        <td>{object[key]}</td>)
+                                        <p>{object[key]}</p>)
                                         })}
-                                    <td>
+                    
                                         <button 
                                             onClick={e => context.remove(object)}>
                                                 Eliminar
                                         </button>
-                                    </td>
-                                </tr>)
+                                    
+                                </ul>)
                         })}
-                    </tbody>
-                </table>
+                </li>
                 )}
         </SearchContext.Consumer>
     )
