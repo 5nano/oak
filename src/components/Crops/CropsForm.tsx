@@ -26,11 +26,10 @@ const CropsForm: React.SFC = () => {
       fields = {fields}
       render={() => (
         <React.Fragment>
-          <div className="alert alert-info" role="alert">
-            Ingresa los datos del nuevo cultivo
-          </div>
+          
           <Field {...fields.name}/>
           <Field {...fields.description}/>
+          
         </React.Fragment>
       )}
     />

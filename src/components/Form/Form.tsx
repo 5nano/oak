@@ -149,8 +149,8 @@ private async submitForm(): Promise<boolean> {
     };
     return (
       <FormContext.Provider value={context}>
-        <form onSubmit={this.handleSubmit} noValidate={true}>
-          <div className="container">
+        <div className="form-container">
+          <form onSubmit={this.handleSubmit} noValidate={true}>
 
             {this.props.render()}
 
@@ -160,9 +160,11 @@ private async submitForm(): Promise<boolean> {
                 className="btn btn-primary"
                 disabled={this.haveErrors(errors)}
               >
-                Submit
+                Agregar
               </button>
             </div>
+
+
             {submitSuccess && (
               <div className="alert alert-info" role="alert">
                 The form was successfully submitted!
@@ -180,8 +182,8 @@ private async submitForm(): Promise<boolean> {
                   Sorry, the form is invalid. Please review, adjust and try again
                 </div>
               )}
-          </div>
-        </form>
+          </form>
+        </div>
       </FormContext.Provider>
     );
   }

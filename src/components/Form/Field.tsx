@@ -53,9 +53,10 @@ export const Field: React.SFC<IFieldProps> = ({
     return (
         <FormContext.Consumer>
           {(context: IFormContext) => (
-            <div className="form-group">
-              {label && <label htmlFor={id}>{label}</label>}
+            <div className="field-container">
+              {label && <div className="field-title">{label}</div>}
     
+              <div className="field-content">
               {editor!.toLowerCase() === "textbox" && (
                 <input
                   id={id}
@@ -113,7 +114,7 @@ export const Field: React.SFC<IFieldProps> = ({
                 </div>
                 )}
 
-
+              </div>
             </div>
           )}
         </FormContext.Consumer>
