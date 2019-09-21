@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=development webpack",
-    "start": "NODE_ENV=development nodemon index.js"
+    "start": "npm run dist && NODE_ENV=production node index.js",
+    "start:dev": "NODE_ENV=development nodemon index.js",
+    "dist": "NODE_ENV=production ./node_modules/webpack/bin/webpack.js"
   },
   "repository": {
     "type": "git",
