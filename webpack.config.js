@@ -82,13 +82,13 @@ module.exports = {
 				  },
 				  {
 					loader: 'resolve-url-loader',
-					options: {debug: true}
+					options: {debug: devMode}
 				  },
 				  // Compiles Sass to CSS
 				  {
 					  loader: 'sass-loader',
 					  options: {
-						  sourceMap: true,
+						  sourceMap: devMode,
 					  }
 				  }
 				],
