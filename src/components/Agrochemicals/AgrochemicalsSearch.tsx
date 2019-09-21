@@ -2,16 +2,16 @@ import * as React from "react";
 import Search from '../Search/Search';
 import Criteria from '../Search/Criteria';
 import Results from '../Search/Results';
-import CropsForm from "./CropsForm";
+import AgrochemicalsForm from "./AgrochemicalsForm";
 
-const CropsSearch: React.SFC = () => {
+const AgrochemicalsSearch: React.SFC = () => {
   
   return (
     <Search
-      searchAction='https://nanivo-bush.herokuapp.com/bush/cultivos'
-      deleteAction='https://nanivo-bush.herokuapp.com/bush/cultivos/eliminar'
-      title="Cultivos"
-      form={<CropsForm/>}
+      searchAction='https://nanivo-bush.herokuapp.com/bush/agroquimicos'
+      deleteAction='https://nanivo-bush.herokuapp.com/bush/agroquimicos/eliminar'
+      title="Agroquimicos"
+      form={<AgrochemicalsForm/>}
       render={() => (
         <React.Fragment>
         
@@ -26,4 +26,4 @@ const CropsSearch: React.SFC = () => {
   );
 };
 
-export default CropsSearch;
+export default AgrochemicalsSearch;

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {BrowserRouter as Router,Route, Switch} from 'react-router-dom';
 import CropsSearch from '../Crops/CropsSearch';
-import CropsForm from '../Crops/CropsForm';
+import CompanySearch from '../Companies/CompanySearch';
+import AgrochemicalsSearch from '../Agrochemicals/AgrochemicalsSearch';
 import Register from '../Users/Register';
 import LogIn from '../Users/LogIn';
 
@@ -14,8 +15,13 @@ const App = (props: AppProps) => (
         <Switch>
             <Route path="/" exact component={LogIn}/>
             <Route path="/register" exact component={Register}/>
+
             <Route path='/crops' exact component={CropsSearch}/>
-            <Route path="/crop-new" exact component={CropsForm} />
+
+            <Route path='/agrochemicals' exact component={AgrochemicalsSearch}/>
+        
+            <Route path='/companies' exact component={CompanySearch}/>
+
         </Switch>
 
     </Router>

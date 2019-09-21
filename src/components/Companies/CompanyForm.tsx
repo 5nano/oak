@@ -2,7 +2,7 @@ import * as React from "react";
 import { Form, IFields, required, maxLength } from "../Form/Form";
 import { Field } from "../Form/Field";
 
-const CropsForm: React.SFC = () => {
+const CompanyForm: React.SFC = () => {
 
   //fieldName must match with fieldId
   const fields: IFields = {
@@ -22,7 +22,7 @@ const CropsForm: React.SFC = () => {
   
   return (
     <Form
-      action='https://nanivo-bush.herokuapp.com/bush/cultivo/insertar'
+      action='https://nanivo-bush.herokuapp.com/bush/companias/insertar'
       fields = {fields}
       render={() => (
         <React.Fragment>
@@ -36,4 +36,4 @@ const CropsForm: React.SFC = () => {
   );
 };
 
-export default CropsForm;
+export default CompanyForm;

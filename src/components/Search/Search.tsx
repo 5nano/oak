@@ -112,16 +112,17 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
       ;}
 
     private remove = async (object:any): Promise<void> => {
-        console.log(object);
         return fetch(this.props.deleteAction,{
           method: 'DELETE',
           mode: 'cors',
+          body: JSON.stringify(object),
           headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json'
-          },
-          body: JSON.stringify(object)
-        }).then(response => console.log(response.json()))
+          }
+        })
+        .then(response => console.log(response.json()))
+        .catch(error => console.log(error))
     }
 
 
@@ -142,7 +143,7 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
                 <div className="container">
                   <div className="search-wrapper">
                     <div className="title-wrapper">
-                      <img src="public/head-icon.png"/>
+                      <img src="src/assets/images/head-icon.png"/>
                       <p>{this.props.title}</p>
                     </div>
                     {this.props.render()}
