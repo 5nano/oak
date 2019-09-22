@@ -5,13 +5,14 @@ import CompanySearch from '../Companies/CompanySearch';
 import AgrochemicalsSearch from '../Agrochemicals/AgrochemicalsSearch';
 import Register from '../Users/Register';
 import LogIn from '../Users/LogIn';
+import Header from './components/Header';
 
 export interface AppProps { title: string }
 
 const App = (props: AppProps) => (
     
     <Router>
-
+        <Header />
         <Switch>
             <Route path="/" exact component={LogIn}/>
             <Route path="/register" exact component={Register}/>

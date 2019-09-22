@@ -1,0 +1,38 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgb(250, 255, 250);
+    height: 55px;
+    text-transform: uppercase;
+    padding: 0 80px;
+
+
+    .nanivo-info {
+        display: flex;
+        height: 100%;
+        align-items: center;
+
+        .nanivo-title {
+            font-size: 1.3em;
+            margin-left: 6px;
+        }
+
+        .header-logo {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+        }
+    }
+    
+    .links {
+        justify-self: last baseline;
+        display: flex;
+        justify-content: space-evenly;
+
+        .header-link {
+            font-weight: 200;
+            margin-left: 42px;
+        }
+    }
+}

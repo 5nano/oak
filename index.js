@@ -18,6 +18,11 @@ app.use("/dist", expressStaticGzip("./dist", {
     orderPreference: ['br']
 }));
 
+app.use("/assets", expressStaticGzip("./dist/assets", {
+    enableBrotli: true,
+    orderPreference: ['br']
+}));
+
 app.use('/', (req, res) => {
     res.send(template('Oak', manifest));
 });
