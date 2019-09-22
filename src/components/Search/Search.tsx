@@ -139,10 +139,10 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
         };
         return(
             <SearchContext.Provider value={context}>
-                <div className="container">
+                <div className="search">
                   <div className="search-wrapper">
                     <div className="title-wrapper">
-                      <img src="src/assets/images/head-icon.png"/>
+                      <img src="../../assets/images/head-icon.png"/>
                       <p>{this.props.title}</p>
                     </div>
                     {this.props.render()}
