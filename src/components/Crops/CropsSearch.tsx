@@ -2,16 +2,19 @@ import * as React from "react";
 import Search from '../Search/Search';
 import Criteria from '../Search/Criteria';
 import Results from '../Search/Results';
-import CropsForm from "./CropsForm";
 
-const CropsSearch: React.SFC = () => {
+export interface ICropsSearchProps{
+  searchUrl: string,
+  deleteUrl: string,
+}
+
+const CropsSearch: React.SFC<ICropsSearchProps> = (props) => {
   
   return (
     <Search
-      searchAction='https://nanivo-bush.herokuapp.com/cultivos'
-      deleteAction='https://nanivo-bush.herokuapp.com/cultivos/eliminar'
+      searchAction={props.searchUrl}
+      deleteAction={props.deleteUrl}
       title="Cultivos"
-      form={<CropsForm/>}
       render={() => (
         <React.Fragment>
         

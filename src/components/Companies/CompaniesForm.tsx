@@ -2,7 +2,11 @@ import * as React from "react";
 import { Form, IFields, required, maxLength } from "../Form/Form";
 import { Field } from "../Form/Field";
 
-const CompanyForm: React.SFC = () => {
+export interface ICompanyFormProps{
+  createUrl: string,
+}
+
+const CompaniesForm: React.SFC<ICompanyFormProps> = (props) => {
 
   //fieldName must match with fieldId
   const fields: IFields = {
@@ -22,7 +26,7 @@ const CompanyForm: React.SFC = () => {
   
   return (
     <Form
-      action='https://nanivo-bush.herokuapp.com/companias/insertar'
+      action={props.createUrl}
       fields = {fields}
       render={() => (
         <React.Fragment>
@@ -36,4 +40,4 @@ const CompanyForm: React.SFC = () => {
   );
 };
 
-export default CompanyForm;
+export default CompaniesForm;

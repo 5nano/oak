@@ -2,7 +2,11 @@ import * as React from "react";
 import { Form, IFields, required, maxLength } from "../Form/Form";
 import { Field } from "../Form/Field";
 
-const CropsForm: React.SFC = () => {
+export interface IFormProps{
+  createUrl: string,
+}
+
+const CropsForm: React.SFC<IFormProps> = (props) => {
 
   //fieldName must match with fieldId
   const fields: IFields = {
@@ -22,7 +26,7 @@ const CropsForm: React.SFC = () => {
   
   return (
     <Form
-      action='https://nanivo-bush.herokuapp.com/cultivo/insertar'
+      action={props.createUrl}
       fields = {fields}
       render={() => (
         <React.Fragment>

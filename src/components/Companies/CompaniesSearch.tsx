@@ -2,16 +2,20 @@ import * as React from "react";
 import Search from '../Search/Search';
 import Criteria from '../Search/Criteria';
 import Results from '../Search/Results';
-import CompanyForm from "./CompanyForm";
 
-const CompanySearch: React.SFC = () => {
+export interface ICompanySearchProps{
+  searchUrl: string,
+  deleteUrl: string,
+}
+
+
+const CompaniesSearch: React.SFC<ICompanySearchProps> = (props) => {
   
   return (
     <Search
-      searchAction='https://nanivo-bush.herokuapp.com/companias'
-      deleteAction='https://nanivo-bush.herokuapp.com/companias/eliminar'
+      searchAction= {props.searchUrl}
+      deleteAction= {props.deleteUrl}
       title="Companias"
-      form={<CompanyForm/>}
       render={() => (
         <React.Fragment>
         
@@ -26,4 +30,4 @@ const CompanySearch: React.SFC = () => {
   );
 };
 
-export default CompanySearch;
+export default CompaniesSearch;

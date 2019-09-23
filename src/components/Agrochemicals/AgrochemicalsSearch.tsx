@@ -2,16 +2,19 @@ import * as React from "react";
 import Search from '../Search/Search';
 import Criteria from '../Search/Criteria';
 import Results from '../Search/Results';
-import AgrochemicalsForm from "./AgrochemicalsForm";
 
-const AgrochemicalsSearch: React.SFC = () => {
+export interface IAgrochemicalSearchProps {
+    searchUrl: string,
+    deleteUrl: string,
+}
+
+const AgrochemicalsSearch: React.SFC<IAgrochemicalSearchProps> = (props) => {
   
   return (
     <Search
-      searchAction='https://nanivo-bush.herokuapp.com/agroquimicos'
-      deleteAction='https://nanivo-bush.herokuapp.com/agroquimicos/eliminar'
+      searchAction={props.searchUrl}
+      deleteAction={props.deleteUrl}
       title="Agroquimicos"
-      form={<AgrochemicalsForm/>}
       render={() => (
         <React.Fragment>
         

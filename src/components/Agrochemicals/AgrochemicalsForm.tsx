@@ -1,8 +1,13 @@
 import * as React from "react";
 import { Form, IFields, required, maxLength } from "../Form/Form";
 import { Field } from "../Form/Field";
+import { ProgressPlugin } from "webpack";
 
-const AgrochemicalsForm: React.SFC = () => {
+export interface IAgrochemicalFormProps{
+  createUrl: string
+}
+
+const AgrochemicalsForm: React.SFC<IAgrochemicalFormProps> = (props) => {
 
   //fieldName must match with fieldId
   const fields: IFields = {
@@ -22,7 +27,7 @@ const AgrochemicalsForm: React.SFC = () => {
   
   return (
     <Form
-      action='https://nanivo-bush.herokuapp.com/agroquimicos/insertar'
+      action={props.createUrl}
       fields = {fields}
       render={() => (
         <React.Fragment>

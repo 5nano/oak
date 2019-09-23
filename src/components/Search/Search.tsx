@@ -5,7 +5,6 @@ export interface ISearchProps{
     searchAction: string,
     deleteAction: string,
     title: string,
-    form: React.ReactElement,
     render: () => React.ReactNode
 }
 
@@ -22,7 +21,6 @@ export interface ISearchState {
     values: IValues;
     errors: IErrors;
     data: Array<any>;
-    registerRequested: boolean;
     searchSuccess?: boolean;
 }
 
@@ -45,12 +43,10 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
         const errors: IErrors={}
         const values: IValues = {};
         const data: Array<any> = [];
-        const registerRequested: boolean = false;
         this.state = {
             errors,
             values,
             data,
-            registerRequested
         };
     }
 
@@ -83,12 +79,6 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
       })
     }
 
-    private handleRequest = async (
-      e: React.MouseEvent<HTMLElement>
-      ): Promise<void> => {
-        e.preventDefault();
-          this.setState({registerRequested: true})
-      }
 
     private handleSearch = async (
     e: React.MouseEvent<HTMLElement>
@@ -149,8 +139,6 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
 
                     <button onClick={this.handleSearch}>Buscar</button>
                     
-                    <button onClick={this.handleRequest}>Agregar</button>                    
-                    {this.state.registerRequested && this.props.form}
                   </div>
                     
                 
