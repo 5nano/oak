@@ -8,8 +8,8 @@ const CropsSearch: React.SFC = () => {
   
   return (
     <Search
-      searchAction='https://nanivo-bush.herokuapp.com/bush/cultivos'
-      deleteAction='https://nanivo-bush.herokuapp.com/bush/cultivos/eliminar'
+      searchAction='https://nanivo-bush.herokuapp.com/cultivos'
+      deleteAction='https://nanivo-bush.herokuapp.com/cultivos/eliminar'
       title="Cultivos"
       form={<CropsForm/>}
       render={() => (

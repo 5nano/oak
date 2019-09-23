@@ -8,8 +8,8 @@ const AgrochemicalsSearch: React.SFC = () => {
   
   return (
     <Search
-      searchAction='https://nanivo-bush.herokuapp.com/bush/agroquimicos'
-      deleteAction='https://nanivo-bush.herokuapp.com/bush/agroquimicos/eliminar'
+      searchAction='https://nanivo-bush.herokuapp.com/agroquimicos'
+      deleteAction='https://nanivo-bush.herokuapp.com/agroquimicos/eliminar'
       title="Agroquimicos"
       form={<AgrochemicalsForm/>}
       render={() => (

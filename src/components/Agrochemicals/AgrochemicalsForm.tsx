@@ -22,7 +22,7 @@ const AgrochemicalsForm: React.SFC = () => {
   
   return (
     <Form
-      action='https://nanivo-bush.herokuapp.com/bush/agroquimicos/insertar'
+      action='https://nanivo-bush.herokuapp.com/agroquimicos/insertar'
       fields = {fields}
       render={() => (
         <React.Fragment>

@@ -8,8 +8,8 @@ const CompanySearch: React.SFC = () => {
   
   return (
     <Search
-      searchAction='https://nanivo-bush.herokuapp.com/bush/companias'
-      deleteAction='https://nanivo-bush.herokuapp.com/bush/companias/eliminar'
+      searchAction='https://nanivo-bush.herokuapp.com/companias'
+      deleteAction='https://nanivo-bush.herokuapp.com/companias/eliminar'
       title="Companias"
       form={<CompanyForm/>}
       render={() => (

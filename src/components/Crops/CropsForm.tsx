@@ -22,7 +22,7 @@ const CropsForm: React.SFC = () => {
   
   return (
     <Form
-      action='https://nanivo-bush.herokuapp.com/bush/cultivo/insertar'
+      action='https://nanivo-bush.herokuapp.com/cultivo/insertar'
       fields = {fields}
       render={() => (
         <React.Fragment>

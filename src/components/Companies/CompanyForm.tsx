@@ -22,7 +22,7 @@ const CompanyForm: React.SFC = () => {
   
   return (
     <Form
-      action='https://nanivo-bush.herokuapp.com/bush/companias/insertar'
+      action='https://nanivo-bush.herokuapp.com/companias/insertar'
       fields = {fields}
       render={() => (
         <React.Fragment>
