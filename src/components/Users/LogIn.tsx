@@ -48,27 +48,35 @@ export class LogIn extends React.Component<ILogInProps,ILogInState> {
 
     render(){
     return(
-        <div className="container login-background">
-            <form onSubmit={this.handleSubmit}>
-                <div className="title">Bienvenido!</div>
-                <div className="title">NANIVO</div>
-                <input
-                    id='username'
-                    type="text"
-                    value={this.state.username}
-                    onChange={this.handleChange}
-                    placeholder="username"
-                    />
-                <input
-                    id='password'
-                    type="password"
-                    value={this.state.password}
-                    onChange={this.handleChange}
-                    placeholder="password"
-                    />
-                <button type="submit">Ingresar</button>
+        <div className="login">
+            <div className="login-background" />
+            <div className="login-container">
+                <div className="title">Crop Testing Automation</div>
+                <form className="login-form" onSubmit={this.handleSubmit}>
+                    <input
+                        id='username'
+                        className="username input"
+                        type="text"
+                        value={this.state.username}
+                        onChange={this.handleChange}
+                        placeholder="Username"
+                        size={60}
+                        />
+                        <p className="help">Don't have an account? <a>Register now</a></p>
+                    <input
+                        id='password'
+                        className="password input"
+                        type="password"
+                        value={this.state.password}
+                        onChange={this.handleChange}
+                        placeholder="Password"
+                        size={60}
+                        />
+                    <a className="help">Forgot password?</a>
+                    <button type="submit" className="input">Ingresar</button>
 
-            </form>
+                </form>
+            </div>
         </div>
     )
     }

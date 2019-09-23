@@ -55,7 +55,7 @@ module.exports = {
 			{
 				test: /.(ts|tsx)?$/,
 				loader: 'ts-loader',
-				include: [path.resolve(__dirname, 'src')],
+				// include: [path.resolve(__dirname, 'src')],
 				exclude: [/node_modules/]
 			},
 			{
@@ -79,10 +79,6 @@ module.exports = {
 					  options: {
 						  url: false,
 					  }
-				  },
-				  {
-					loader: 'resolve-url-loader',
-					options: {debug: devMode}
 				  },
 				  // Compiles Sass to CSS
 				  {
@@ -140,6 +136,6 @@ module.exports = {
 		poll: 200
 	},
 	resolve: {
-		extensions: ['.tsx', '.ts', '.js']
+		extensions: ['.tsx', '.ts', '.js', '.scss']
 	}
 };
