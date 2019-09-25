@@ -50,7 +50,7 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
         };
     }
 
-    private getData()  {
+    private async getData()  {
       return fetch(this.props.searchAction, {
         method: "GET",
         mode: 'cors',
@@ -100,7 +100,7 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
         this.setState({values: {...this.state.values, ...values}});
       ;}
 
-    private remove = async (object:any): Promise<void> => {
+    private async remove(object:any):Promise<void> {
         return fetch(this.props.deleteAction,{
           method: 'DELETE',
           mode: 'cors',
@@ -110,10 +110,12 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
             Accept: 'application/json'
           }
         })
-        .then(response => console.log(response.json()))
-        .catch(error => console.log(error))
+        .then(response => {
+          return response.json()
+        })
+        .then(data => console.log(data))
+        
     }
-
 
     public componentDidMount(){
       this.getData();

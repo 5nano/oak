@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import AgrochmicalsForm from './AgrochemicalsForm';
+import AgrochemicalsForm from './AgrochemicalsForm';
 import AgrochemicalsSearch from './AgrochemicalsSearch';
 
 import CrudView from '../CRUD/CrudView';
@@ -14,7 +14,7 @@ const Agrochemicals: React.SFC = () => {
         deleteUrl= 'https://nanivo-bush.herokuapp.com/agroquimicos/eliminar'
         createUrl= 'https://nanivo-bush.herokuapp.com/agroquimicos/insertar'
         updateUrl= 'https://nanivo-bush.herokuapp.com/agroquimicos/actualizar'
-        form= {AgrochmicalsForm}
+        form= {AgrochemicalsForm}
         search= {AgrochemicalsSearch}
     />
   );

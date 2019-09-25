@@ -28,6 +28,9 @@ export const Results:React.SFC<IResultsTableProps> = ({titles}) => {
                                     
                                 </div>)
                         })}
+
+                        {context.data.length === 0 && 
+                            <div className="results-empty">No existen elementos</div>}
                 </div>
                 )}
         </SearchContext.Consumer>

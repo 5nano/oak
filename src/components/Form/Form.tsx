@@ -166,19 +166,19 @@ private async submitForm(): Promise<boolean> {
 
 
             {submitSuccess && (
-              <div className="alert alert-info" role="alert">
+              <div className="result-success" role="alert">
                 El registro fue exitoso!
               </div>
             )}
             {submitSuccess === false &&
               !this.haveErrors(errors) && (
-                <div className="alert alert-danger" role="alert">
+                <div className="result-error" role="alert">
                   Perdon, un error inesperado ocurrió
                 </div>
               )}
             {submitSuccess === false &&
               this.haveErrors(errors) && (
-                <div className="alert alert-danger" role="alert">
+                <div className="result-error" role="alert">
                   Perdón, el formulario es inválido. Porfavor, revise y vuelva a intentar.
                 </div>
               )}
