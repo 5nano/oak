@@ -2,7 +2,12 @@ import * as React from "react";
 import { Form, IFields, required} from "../Form/Form";
 import { Field } from "../Form/Field";
 
-const Register: React.SFC = () => {
+export interface IUserProps{
+  createUrl: string,
+}
+
+
+const Register: React.SFC<IUserProps> = (props) => {
 
   //fieldName must match with fieldId
   const fields: IFields = {
@@ -21,7 +26,7 @@ const Register: React.SFC = () => {
   
   return (
     <Form
-      action='http://localhost:8080/bush/usuario/insertar'
+      action={props.createUrl}
       fields = {fields}
       render={() => (
         <React.Fragment>
