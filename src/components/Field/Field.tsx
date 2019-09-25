@@ -1,42 +1,15 @@
 import * as React from "react";
-import { IErrors, IFormContext, FormContext, IValues} from "../Form/Form";
-
-/* The available editors for the field */
-type Editor = "textbox" | "multilinetextbox" | "dropdown";
-
-export interface IFieldProps {
-  /* The unique field name */
-  id: string;
-
-  /* The label text for the field */
-  label?: string;
-
-  /* The editor for the field */
-  editor?: Editor;
-
-  /* The drop down items for the field */
-  options?: string[];
-
-  /* The field value */
-  value?: any;
-
-  validation?: IValidation;
-}
+import { IErrors, IFormContext, FormContext} from "../Form/Form";
+import { IFieldProps } from './FieldProps';
 
 export interface IRule {
-    values:IValues,
+    values: {
+      [key: string]: any
+    },
     fieldName: string,
     args: any
 }
 
-export interface IValidation {
-    rule: (values: IValues, fieldName: string, args: any) => string;
-    args?: any;
-  }
-  
-
-
-  
 export const Field: React.SFC<IFieldProps> = ({
   id,
   label,
@@ -120,6 +93,7 @@ export const Field: React.SFC<IFieldProps> = ({
         </FormContext.Consumer>
     );
 }
+
 Field.defaultProps = {
   editor: "textbox"
 };

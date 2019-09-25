@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IFieldProps } from '../Field/Field';
+import { IFieldProps } from '../Field/FieldProps';
 
 export interface IFields {
   [key: string]: IFieldProps;
