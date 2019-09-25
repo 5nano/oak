@@ -4,7 +4,6 @@ import * as React from "react";
 export interface ISearchProps{
     searchAction: string,
     deleteAction: string,
-    title: string,
     render: () => React.ReactNode
 }
 
@@ -131,20 +130,11 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
         };
         return(
             <SearchContext.Provider value={context}>
-                <div className="search">
-                  <div className="search-wrapper">
-                    <div className="title-wrapper">
-                      <img src="../../assets/images/head-icon.png"/>
-                      <p>{this.props.title}</p>
-                    </div>
+                
                     {this.props.render()}
 
                     <button onClick={this.handleSearch}>Buscar</button>
-                    
-                  </div>
-                    
-                
-                </div>
+                   
             </SearchContext.Provider>
         )
     }

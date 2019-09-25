@@ -9,6 +9,7 @@ const Companies: React.SFC = () => {
   
   return (
     <CrudView 
+        title= 'Comapanias'
         searchUrl= 'https://nanivo-bush.herokuapp.com/companias'
         deleteUrl= 'https://nanivo-bush.herokuapp.com/companias/eliminar'
         createUrl= 'https://nanivo-bush.herokuapp.com/companias/insertar'

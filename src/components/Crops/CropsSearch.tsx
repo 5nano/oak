@@ -14,7 +14,6 @@ const CropsSearch: React.SFC<ICropsSearchProps> = (props) => {
     <Search
       searchAction={props.searchUrl}
       deleteAction={props.deleteUrl}
-      title="Cultivos"
       render={() => (
         <React.Fragment>
         

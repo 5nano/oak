@@ -14,7 +14,6 @@ const AgrochemicalsSearch: React.SFC<IAgrochemicalSearchProps> = (props) => {
     <Search
       searchAction={props.searchUrl}
       deleteAction={props.deleteUrl}
-      title="Agroquimicos"
       render={() => (
         <React.Fragment>
         

@@ -9,6 +9,7 @@ const Crops: React.SFC = () => {
   
   return (
     <CrudView 
+        title= 'Cultivos'
         searchUrl= 'https://nanivo-bush.herokuapp.com/cultivos'
         deleteUrl= 'https://nanivo-bush.herokuapp.com/cultivos/eliminar'
         createUrl= 'https://nanivo-bush.herokuapp.com/cultivos/insertar'

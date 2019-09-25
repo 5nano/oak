@@ -15,7 +15,6 @@ const CompaniesSearch: React.SFC<ICompanySearchProps> = (props) => {
     <Search
       searchAction= {props.searchUrl}
       deleteAction= {props.deleteUrl}
-      title="Companias"
       render={() => (
         <React.Fragment>
         
