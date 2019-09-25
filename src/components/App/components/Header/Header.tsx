@@ -1,7 +1,9 @@
 import * as React from 'react';
-import {BrowserRouter as Router,Route, Switch} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
-export interface HeaderProps {  }
+export interface HeaderProps { 
+    titles: string[],
+ }
 
 const Header = (props: HeaderProps) => (
     <div className="header">
@@ -10,9 +12,11 @@ const Header = (props: HeaderProps) => (
             <h1 className="nanivo-title">Nanivo</h1>
         </div>
         <div className="links">
-            <a className="header-link">Home</a>
-            <a className="header-link">Contact</a>
-            <a className="header-link">Signup</a>
+            {props.titles.map(title => {
+                return <a href={title} className="header-link">
+                            {title}
+                        </a>
+            })}
         </div>
     </div>
 );
