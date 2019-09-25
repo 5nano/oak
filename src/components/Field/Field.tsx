@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IErrors, IFormContext, FormContext, IValues} from "./Form";
+import { IErrors, IFormContext, FormContext, IValues} from "../Form/Form";
 
 /* The available editors for the field */
 type Editor = "textbox" | "multilinetextbox" | "dropdown";

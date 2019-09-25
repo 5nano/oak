@@ -39,6 +39,7 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
     constructor(props:ISearchProps){
         super(props);
 
+
         const errors: IErrors={}
         const values: IValues = {};
         const data: Array<any> = [];
@@ -100,6 +101,8 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
       ;}
 
     private async remove(object:any):Promise<void> {
+      console.log(object)
+      console.log(this.props.deleteAction)
         return fetch(this.props.deleteAction,{
           method: 'DELETE',
           mode: 'cors',

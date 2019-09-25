@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Form, IFields, required, maxLength } from "../Form/Form";
-import { Field } from "../Form/Field";
+import { Field } from "../Field/Field";
 
 export interface IFormProps{
   createUrl: string,
