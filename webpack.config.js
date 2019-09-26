@@ -53,12 +53,6 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /.(ts|tsx)?$/,
-				loader: 'ts-loader',
-				// include: [path.resolve(__dirname, 'src')],
-				exclude: [/node_modules/]
-			},
-			{
 				test: /\.scss$/,
 				use: [
 					{
@@ -102,6 +96,12 @@ module.exports = {
 						},
 					},
 				],
+				exclude: [/node_modules/]
+			},
+			{
+				test: /.(ts|tsx){1}?$/,
+				loader: 'ts-loader',
+				// include: [path.resolve(__dirname, 'src')],
 				exclude: [/node_modules/]
 			},
 			{ enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
