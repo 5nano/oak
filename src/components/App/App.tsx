@@ -7,6 +7,7 @@ import Register from '../Users/Register';
 import LogIn from '../Home/LogIn';
 import Header from './components/Header';
 import Users from '../Users/Users';
+import Experiment from '../Experiments/Experiment';
 
 export interface AppProps { title: string }
 
@@ -26,6 +27,7 @@ const App = (props: AppProps) => (
 
             <Route path='/users' exact component={Users}/>
 
+            <Route path='/experiments' exact component={Experiment}/>
         </Switch>
 
     </Router>

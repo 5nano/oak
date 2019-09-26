@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Form, IFields, required, maxLength } from "../Form/Form";
 import { Field } from "../Field/Field";
+import TreatmentForm from './TreatmentForm';
 
 const ExperimentsForm: React.SFC= () => {
 
@@ -51,6 +52,8 @@ const ExperimentsForm: React.SFC= () => {
           <Field {...fields.agrochemical}/>
           <Field {...fields.mix}/>
           
+          <TreatmentForm/>
+
         </React.Fragment>
       )}
     />
