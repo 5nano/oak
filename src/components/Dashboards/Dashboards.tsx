@@ -1,10 +1,7 @@
 import * as React from "react";
-import UserSearch from '../Users/UserSearch';
-import Register from "../Users/Register";
 
-import CrudView from '../CRUD/CrudView';
-
-import Plot from 'react-plotly.js';
+import Plot from 'react-plotlyjs-ts';
+import { Layout } from "plotly.js";
 
 const Dashboards: React.SFC = () => {
   /*var trace1 = {
@@ -24,19 +21,43 @@ const Dashboards: React.SFC = () => {
   var layout = {
     title: 'Horizontal Box Plot'
   };*/
+
+
+
+  const data: Plotly.Data[] = [
+    {
+    x: [1, 2, 3],
+    y: [2, 6, 3],
+    type: 'scatter',
+    mode: 'lines',
+    marker: {color: 'red'},
+    },
+    {
+      type: 'bar', 
+      x: [1, 2, 3], 
+      y: [2, 5, 3]
+    }
+  ]
+
+  const layout: Partial<Layout> = {
+    annotations: [
+      {
+        text: 'simple-annotation',
+        x: 0,
+        xref: 'paper',
+        y: 0,
+        yref: 'paper'
+      }
+    ],
+    title: 'simple-example',
+    xaxis: {
+      title: 'time'
+    }, 
+  };
   return (
        <Plot
-         data={[
-           {
-             x: [1, 2, 3],
-             y: [2, 6, 3],
-             type: 'scatter',
-             mode: 'lines+points',
-             marker: {color: 'red'},
-           },
-           {type: 'bar', x: [1, 2, 3], y: [2, 5, 3]},
-         ]}
-         layout={ {width: 320, height: 240, title: 'A Fancy Plot'} }
+         data={data}
+         layout={layout}
        />
      );
 };
