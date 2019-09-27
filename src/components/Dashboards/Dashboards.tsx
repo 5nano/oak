@@ -27,16 +27,14 @@ const Dashboards: React.SFC = () => {
   const data: Plotly.Data[] = [
     {
     x: [1, 2, 3],
-    y: [2, 6, 3],
-    type: 'scatter',
-    mode: 'lines',
+    type: 'box',
     marker: {color: 'red'},
-    },
-    {
-      type: 'bar', 
-      x: [1, 2, 3], 
-      y: [2, 5, 3]
-    }
+  },
+  {
+  x: [1, 2, 3,6,8,3,4,1,2,6,7,8],
+  type: 'box',
+  marker: {color: 'blue'},
+  }
   ]
 
   const layout: Partial<Layout> = {
@@ -52,7 +50,7 @@ const Dashboards: React.SFC = () => {
     title: 'simple-example',
     xaxis: {
       title: 'time'
-    }, 
+    },
   };
   return (
        <Plot
