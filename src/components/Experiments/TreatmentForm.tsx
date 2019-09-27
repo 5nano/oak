@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IFields, required, maxLength } from "../Form/Form";
+import Form, { IFields, required, maxLength } from "../Form/Form";
 import { Field } from "../Field/Field";
 
 const TreatmentForm: React.SFC= () => {
@@ -32,20 +32,19 @@ const TreatmentForm: React.SFC= () => {
   
   
   return (
-  
-          <div>
-          <p>Experimentos</p>
-          <button type="button" onClick={handleNewTreatment}>+</button>
-            
-          {newTreatment && (
-          <div>
+    <Form
+      action=''
+      fields={fields}
+      render={() => (
+        <React.Fragment>
           <Field {...fields.tag}/>
           <Field {...fields.description}/>
           <Field {...fields.tests}/>
-          </div>
-          )}
-          </div>
+        </React.Fragment>
+      )}
+      />
   )
 };
+
 
 export default TreatmentForm;

@@ -1,9 +1,10 @@
 import * as React from 'react'
+import TreatmentForm from './TreatmentForm'
 
 const Treatment: React.SFC = () => {
 
     return(
-        <div>Hola</div>
+        <TreatmentForm/>
     )
 }
 

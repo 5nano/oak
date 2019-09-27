@@ -9,6 +9,8 @@ import Header from './components/Header';
 import Users from '../Users/Users';
 import Experiment from '../Experiments/Experiment';
 
+import Plotly from 'react-plotly.js';
+
 export interface AppProps { title: string }
 
 const App = (props: AppProps) => (

@@ -60,11 +60,13 @@
   },
   "dependencies": {
     "@types/jquery": "^3.3.31",
+    "@types/react-plotly.js": "^2.2.4",
     "@types/react-router-dom": "^4.3.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-static-gzip": "^2.0.5",
     "helmet": "^3.21.0",
+    "plotly": "^1.0.6",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router": "^5.0.1",
