@@ -34,8 +34,8 @@ const TreatmentForm: React.SFC= () => {
   return (
   
           <div>
-          <button onClick={handleNewTreatment}>+</button>
           <p>Experimentos</p>
+          <button type="button" onClick={handleNewTreatment}>+</button>
             
           {newTreatment && (
           <div>

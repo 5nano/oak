@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Form, IFields, required, maxLength } from "../Form/Form";
 import { Field } from "../Field/Field";
-import TreatmentForm from './TreatmentForm';
+import Treatments from './Treatments';
 
 const ExperimentsForm: React.SFC= () => {
 
@@ -35,6 +35,12 @@ const ExperimentsForm: React.SFC= () => {
         label: "Mezcla",
         editor: "dropdown",
         options: ['A','B']
+    },
+    treatments: {
+      id:"treatments",
+      label: "Tratamientos",
+      editor: "custom",
+      custom: Treatments
     }
   };
   
@@ -51,8 +57,8 @@ const ExperimentsForm: React.SFC= () => {
           <Field {...fields.crop}/>
           <Field {...fields.agrochemical}/>
           <Field {...fields.mix}/>
-          
-          <TreatmentForm/>
+          <Field {...fields.treatments}/>
+   
 
         </React.Fragment>
       )}

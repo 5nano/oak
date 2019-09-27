@@ -15,7 +15,8 @@ export const Field: React.SFC<IFieldProps> = ({
   label,
   editor,
   options,
-  value
+  value,
+  custom: Custom
 }) => {
 
     const getError = (errors: IErrors): string => (errors ? errors[id] : "");
@@ -27,8 +28,12 @@ export const Field: React.SFC<IFieldProps> = ({
         <FormContext.Consumer>
           {(context: IFormContext) => (
             <div className="field-container">
-              {label && <div className="field-title">{label}</div>}
-    
+             
+              {label && 
+                <div className="field-title">{label}</div>
+                }
+              
+
               <div className="field-content">
               {editor!.toLowerCase() === "textbox" && (
                 <input
@@ -79,6 +84,10 @@ export const Field: React.SFC<IFieldProps> = ({
                       </option>
                     ))}
                 </select>
+              )}
+
+              {editor!.toLowerCase() === "custom" && (
+                  <Custom/>
               )}
     
               {getError(context.errors) && (

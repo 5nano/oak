@@ -3,8 +3,11 @@
     justify-content:center;
     align-items: center;
     align-content: center;
-    direction: column;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
 }
+
 
 .field-title{
     color:white;
