@@ -8,13 +8,13 @@ import LogIn from '../Home/LogIn';
 import Header from './components/Header';
 import Users from '../Users/Users';
 import Experiment from '../Experiments/Experiment';
+import Dashboards from '../Dashboards/Dashboards';
 
-import Plotly from 'react-plotly.js';
 
 export interface AppProps { title: string }
 
 const App = (props: AppProps) => (
-    
+
     <Router>
         <Header titles={['home','contact','signup']}/>
         <Switch>
@@ -24,13 +24,15 @@ const App = (props: AppProps) => (
             <Route path='/crops' exact component={Crops}/>
 
             <Route path='/agrochemicals' exact component={Agrochemicals}/>
-        
+
             <Route path='/companies' exact component={Companies}/>
 
             <Route path='/users' exact component={Users}/>
 
             <Route path='/experiments' exact component={Experiment}/>
-        </Switch>
+
+            <Route path='/dashboards' exact component={Dashboards}/>
+          </Switch>
 
     </Router>
 )
