@@ -2,62 +2,84 @@ import * as React from "react";
 
 import Plot from 'react-plotlyjs-ts';
 import { Layout } from "plotly.js";
+import { render } from "node-sass";
 
-const Dashboards: React.SFC = () => {
-  /*var trace1 = {
-    x: [1, 2, 3, 4, 4, 4, 8, 9, 10],
-    type: 'box',
-    name: 'Set 1'
-  };
+export interface IDashboardsState{
+  data: Array<Number>
+}
 
-  var trace2 = {
-    x: [2, 3, 3, 3, 3, 5, 6, 6, 7],
-    type: 'box',
-    name: 'Set 2'
-  };
-
-  var data = [trace1, trace2];
-
-  var layout = {
-    title: 'Horizontal Box Plot'
-  };*/
+class Dashboards extends React.Component<IDashboardsState> {
 
 
+  constructor(props:any){
+    super(props)
 
-  const data: Plotly.Data[] = [
-    {
-    x: [1, 2, 3],
-    type: 'box',
-    marker: {color: 'red'},
-  },
-  {
-  x: [1, 2, 3,6,8,3,4,1,2,6,7,8],
-  type: 'box',
-  marker: {color: 'blue'},
+    this.state={
+      data: []
+    }
+
   }
-  ]
 
-  const layout: Partial<Layout> = {
-    annotations: [
+  componentDidMount(){
+    
+      fetch('nanivo-bush.herokuapp.com/frecuencias/yellow?experimentId=1', {
+        method: "GET",
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        }
+      }).then(response => {
+            console.log(response)
+            console.log(response.json())
+            console.log(response.text())
+            
+            return response.json()
+      }).then(responseData =>{
+
+              console.log(responseData)
+              this.setState({data:responseData})
+      })
+    }
+
+  render(){
+
+      const data: Plotly.Data[] = [
+        {
+        x: [1, 2, 3],
+        type: 'box',
+        marker: {color: 'red'},
+      },
       {
-        text: 'simple-annotation',
-        x: 0,
-        xref: 'paper',
-        y: 0,
-        yref: 'paper'
+      x: [1, 2, 3,6,8,3,4,1,2,6,7,8],
+      type: 'box',
+      marker: {color: 'blue'},
       }
-    ],
-    title: 'simple-example',
-    xaxis: {
-      title: 'time'
-    },
-  };
+      ]
+
+      const layout: Partial<Layout> = {
+        annotations: [
+          {
+            text: 'simple-annotation',
+            x: 0,
+            xref: 'paper',
+            y: 0,
+            yref: 'paper'
+          }
+        ],
+        title: 'simple-example',
+        xaxis: {
+          title: 'time'
+        },
+      };
+  
   return (
        <Plot
          data={data}
          layout={layout}
        />
      );
+  }
 };
 
 export default Dashboards;
