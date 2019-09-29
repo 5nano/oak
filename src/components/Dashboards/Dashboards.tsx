@@ -64,23 +64,14 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
         type: 'box',
         marker: {color: graph.plotColor}
       }))
-      
+
       const layout: Partial<Layout> = {
-        annotations: [
-          {
-            text: 'simple-annotation',
-            x: 0,
-            xref: 'paper',
-            y: 0,
-            yref: 'paper'
-          }
-        ],
-        title: 'simple-example',
+        title: 'Mediana de frecuencias en amarillo',
         xaxis: {
-          title: 'time'
+          title: 'frecuencias'
         },
       };
-  
+
   return (
        <Plot
          data={data}
