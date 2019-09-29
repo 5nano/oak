@@ -1,6 +1,6 @@
 const React = require('react');
 
-module.exports = (title, manifest) => {     
+module.exports = (title, manifest, cdnPath) => {     
     console.log(manifest);
     return `
     <!DOCTYPE html>
@@ -15,7 +15,7 @@ module.exports = (title, manifest) => {
         ${
             Object.keys(manifest)
                 .filter(asset => manifest[asset].endsWith('.css'))
-                .map(asset => `<link href="dist/${manifest[asset]}" rel="stylesheet">`)
+                .map(asset => `<link href="${cdnPath}/dist/${manifest[asset]}" rel="stylesheet">`)
                 .join(' ')
         }
     </head>
@@ -24,7 +24,7 @@ module.exports = (title, manifest) => {
         ${
             Object.keys(manifest)
                 .filter(asset => manifest[asset].endsWith('.js'))
-                .map(asset => `<script type="text/javascript" src="dist/${manifest[asset]}"></script>`)
+                .map(asset => `<script type="text/javascript" src="${cdnPath}/dist/${manifest[asset]}"></script>`)
                 .join(' ')
         }
     </body>

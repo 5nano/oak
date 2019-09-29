@@ -13,7 +13,9 @@ import Dashboards from '../Dashboards/Dashboards';
 
 export interface AppProps { title: string }
 
-const App = (props: AppProps) => (
+const App = (props: AppProps) => {
+    debugger;
+    return (
 
     <Router>
         <Header titles={['home','contact','register']}/>
@@ -31,10 +33,10 @@ const App = (props: AppProps) => (
 
             <Route path='/assay' exact component={Assay}/>
 
-            <Route path='/dashboards' exact component={Dashboards}/>
+            <Route path='/assay/dashboard' exact component={Dashboards}/>
           </Switch>
 
     </Router>
-)
+)}
 
 export default App;
