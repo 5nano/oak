@@ -42,7 +42,7 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
 
 
   fetchFrequencies(freqType: string) {
-    return fetch(`http://nanivo-bush.herokuapp.com/frecuencias/${freqType}?assayId=${this.state.assayId}`, {
+    return fetch(`https://nanivo-bush.herokuapp.com/frecuencias/${freqType}?assayId=${this.state.assayId}`, {
       method: "GET",
       mode: 'cors',
       headers: {
