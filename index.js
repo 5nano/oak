@@ -20,8 +20,8 @@ app.use("/dist", expressStaticGzip("./dist", {
     enableBrotli: true,
     orderPreference: ['br'],
     serveStatic: {
-        maxAge: 31536000,            // will be kept 
-        cacheControl: true     // will be kept as well
+        maxAge: devMode ? 0 : 31536000,            // will be kept 
+        cacheControl: !devMode     // will be kept as well
     }
 }));
 
@@ -31,8 +31,8 @@ app.use("/assets", expressStaticGzip("./dist/assets", {
         fileExtension: 'gz'
     }],
     serveStatic: {
-        maxAge: 31536000,            // will be kept 
-        cacheControl: true     // will be kept as well
+        maxAge: devMode ? 0 : 31536000,            // will be kept 
+        cacheControl: !devMode     // will be kept as well
     }
 }));
 

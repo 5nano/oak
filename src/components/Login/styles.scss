@@ -1,0 +1,58 @@
+.login {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
+        
+    .title {
+        width: 80%;
+        margin-bottom: 60px;
+
+        font-weight: 200;
+        text-align: center;
+        font-size: 3em;
+        text-transform: uppercase;
+        color: white;
+    }
+
+    .login-background {
+        background: url('../../assets/images/home.jpg');
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        background-size: cover;
+    }
+    
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        align-content: center;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    
+    .login-form {
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+
+        .help {
+            color: white;
+            text-align: right;
+            font-weight: 100;
+            font-size: 0.7em;
+            margin: 2px 0 24px 0;
+        }
+        .input {
+            height: 24px;
+            padding: 6px;
+            border-radius: 2px;
+            border-style: none;
+        }
+    }
+}

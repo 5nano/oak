@@ -7,7 +7,8 @@ import { Layout } from "plotly.js";
 
 export interface IDashboardsState{
   assayId: string,
-  experiments: Array<IFrontExperiment>
+  experiments: Array<IFrontExperiment>,
+  loading: boolean,
 }
 
 export interface IBackendExperiment {
@@ -37,6 +38,7 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
     this.state = {
       assayId: props.match.params.assayId,
       experiments: [],
+      loading: true,
     }
     this.fetchFrequencies('yellow')
   }
@@ -62,12 +64,16 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
           this.setState({
             ...this.state,
             experiments: dataWithColors,
+            loading: false,
           });
       })
   }
 
   render(){
+      const { loading } = this.state;
 
+      if (loading) return null;
+      
       const data: Plotly.Data[] = this.state.experiments.map(experiment => ({
         x: experiment.values,
         name: experiment.experimentId,
@@ -88,13 +94,16 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
           title: 'frecuencias'
         },
       };
-
-  return (
-       <Plot
-         data={data}
-         layout={layout}
-       />
-     );
+      
+    return !loading && !(data && data.length) ? 
+      <div className="no-data-yet">
+          Aún no contamos con datos para este ensayo, comienza a sacar fotos
+      </div> : (
+      <Plot
+        data={data}
+        layout={layout}
+      />
+    );
   }
 };
 

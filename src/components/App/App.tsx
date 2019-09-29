@@ -4,11 +4,12 @@ import Crops from '../Crops/Crops';
 import Companies from '../Companies/Companies';
 import Agrochemicals from '../Agrochemicals/Agrochemicals';
 import Register from '../Users/Register';
-import LogIn from '../Home/LogIn';
+import LogIn from '../Login/LogIn';
 import Header from './components/Header';
 import Users from '../Users/Users';
 import Assay from '../Assay/Assay';
 import Dashboards from '../Dashboards/Dashboards';
+import Homes from '../Home/Home';
 
 
 export interface AppProps { title: string }
@@ -20,6 +21,7 @@ const App = (props: AppProps) => {
         <Header titles={['home','contact','register']}/>
         <Switch>
             <Route path="/" exact component={LogIn}/>
+            <Route path="/home" exact component={Homes}/>
             <Route path="/register" exact component={Register}/>
 
             <Route path='/crops' exact component={Crops}/>
