@@ -29,6 +29,9 @@ app.use("/assets", expressStaticGzip("./dist/assets", {
 }));
 
 app.use((req, res) => {
+    res.set({
+        'Cache-Control': 31536000
+    });
     res.send(template('Oak', manifest, cdnPath));
 });
 
