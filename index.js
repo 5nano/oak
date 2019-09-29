@@ -29,8 +29,10 @@ app.use('/', (req, res) => {
 
 var httpServer = http.createServer(app);
 
-httpServer.listen(8081);
+const port = 8086;
 
-console.log(`http serving on 8081\n`);
+httpServer.listen(port);
+
+console.log(`http serving on ${port}\n`);
 
 module.exports = app;
