@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 /*
  * SplitChunksPlugin is enabled by default and replaced
@@ -41,9 +42,13 @@ module.exports = {
 	},
 
 	plugins: [new webpack.ProgressPlugin(), 
-			  new ManifestPlugin(),
 			  new MiniCssExtractPlugin({}),
-			  ...(devMode ? [] : [new CleanWebpackPlugin()]),
+			  ...(devMode ? [] : [
+				  new CleanWebpackPlugin(),
+				  new CompressionPlugin({
+					deleteOriginalAssets: true,
+				  }),
+				]),
 			  new CopyPlugin([
 				{ 
 					from: './src/assets', 
@@ -51,6 +56,7 @@ module.exports = {
 					force: true,
 				},
 			  ]),
+			  new ManifestPlugin(),
 			],
 
 	module: {

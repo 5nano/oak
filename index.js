@@ -14,7 +14,7 @@ const app = express();
 app.use(helmet());
 
 const port = process.env.PORT || 8086;
-const cdnPath = devMode ? `http://localhost:${port}` : 'https://secret-peak-39503.herokuapp.com';
+const cdnPath = devMode ? `http://localhost:${port}` : 'https://nanivo.herokuapp.com';
 
 app.use("/dist", expressStaticGzip("./dist", {
     enableBrotli: true,
@@ -22,8 +22,10 @@ app.use("/dist", expressStaticGzip("./dist", {
 }));
 
 app.use("/assets", expressStaticGzip("./dist/assets", {
-    enableBrotli: true,
-    orderPreference: ['br']
+    customCompressions: [{
+        encodingName: 'deflate',
+        fileExtension: 'gz'
+    }],
 }));
 
 app.use((req, res) => {
