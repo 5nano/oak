@@ -21,25 +21,20 @@ class Dashboards extends React.Component<IDashboardsState> {
   }
 
   componentDidMount(){
-    
-      fetch('nanivo-bush.herokuapp.com/frecuencias/yellow?experimentId=1', {
+      fetch('http://nanivo-bush.herokuapp.com/frecuencias/yellow?experimentId=1', {
         method: "GET",
         mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json'
         }
-      }).then(response => {
-            console.log(response)
-            console.log(response.json())
-            console.log(response.text())
-            
-            return response.json()
-      }).then(responseData =>{
-
-              console.log(responseData)
-              this.setState({data:responseData})
       })
+        .then(response => response.json())
+        .then(responseData =>{
+            this.setState({
+              data: responseData
+            });
+        })
     }
 
   render(){
