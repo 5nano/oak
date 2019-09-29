@@ -14,7 +14,6 @@ import Dashboards from '../Dashboards/Dashboards';
 export interface AppProps { title: string }
 
 const App = (props: AppProps) => {
-    debugger;
     return (
 
     <Router>
