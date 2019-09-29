@@ -18,7 +18,11 @@ const cdnPath = devMode ? `http://localhost:${port}` : 'https://nanivo.herokuapp
 
 app.use("/dist", expressStaticGzip("./dist", {
     enableBrotli: true,
-    orderPreference: ['br']
+    orderPreference: ['br'],
+    serveStatic: {
+        maxAge: 31536000,            // will be kept 
+        cacheControl: true     // will be kept as well
+    }
 }));
 
 app.use("/assets", expressStaticGzip("./dist/assets", {
@@ -26,6 +30,10 @@ app.use("/assets", expressStaticGzip("./dist/assets", {
         encodingName: 'deflate',
         fileExtension: 'gz'
     }],
+    serveStatic: {
+        maxAge: 31536000,            // will be kept 
+        cacheControl: true     // will be kept as well
+    }
 }));
 
 app.use((req, res) => {
