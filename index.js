@@ -12,6 +12,8 @@ const app = express();
 
 app.use(helmet());
 
+const port = 8086;
+const cdnPath = `http://localhost:${port}`;
 
 app.use("/dist", expressStaticGzip("./dist", {
     enableBrotli: true,
@@ -23,13 +25,12 @@ app.use("/assets", expressStaticGzip("./dist/assets", {
     orderPreference: ['br']
 }));
 
-app.use('/', (req, res) => {
-    res.send(template('Oak', manifest));
+app.use((req, res) => {
+    res.send(template('Oak', manifest, cdnPath));
 });
 
 var httpServer = http.createServer(app);
 
-const port = 8086;
 
 httpServer.listen(port);
 

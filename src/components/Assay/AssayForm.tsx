@@ -3,7 +3,7 @@ import { Form, IFields, required, maxLength } from "../Form/Form";
 import { Field } from "../Field/Field";
 import Treatments from './Treatments';
 
-const ExperimentsForm: React.SFC= () => {
+const AssayForm: React.SFC= () => {
 
   //fieldName must match with fieldId
   const fields: IFields = {
@@ -66,4 +66,4 @@ const ExperimentsForm: React.SFC= () => {
   );
 };
 
-export default ExperimentsForm;
+export default AssayForm;

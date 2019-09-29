@@ -5,6 +5,7 @@ import { Layout } from "plotly.js";
 import { render } from "node-sass";
 
 export interface IDashboardsState{
+  assayId: string,
   experiments: Array<IFrontExperiment>
 }
 
@@ -20,7 +21,9 @@ export interface IFrontExperiment {
 }
 
 export interface IDashboardProps {
-
+  match: {
+    params: { assayId: string }
+  }
 }
 
 
@@ -31,14 +34,15 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
     super(props)
 
     this.state = {
+      assayId: props.match.params.assayId,
       experiments: [],
     }
-    this.fetchFrequencies('yellow', 1)
+    this.fetchFrequencies('yellow')
   }
 
 
-  fetchFrequencies(freqType: string, assayId: number) {
-    return fetch(`http://nanivo-bush.herokuapp.com/frecuencias/${freqType}?assayId=${assayId}`, {
+  fetchFrequencies(freqType: string) {
+    return fetch(`http://nanivo-bush.herokuapp.com/frecuencias/${freqType}?assayId=${this.state.assayId}`, {
       method: "GET",
       mode: 'cors',
       headers: {

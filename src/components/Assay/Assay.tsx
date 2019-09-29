@@ -1,8 +1,9 @@
 import * as React from 'react'
-import ExperimentsForm from './ExperimentsForm'
+import AssayForm from './AssayForm'
 import TreatmentForm from './TreatmentForm';
 
-class Experiment extends React.Component {
+class Assay extends React.Component {
+    
 
     render(){
         return(
@@ -13,7 +14,7 @@ class Experiment extends React.Component {
                     <p>Ensayos</p>
                     </div>
 
-                    <ExperimentsForm/>
+                    <AssayForm/>
                 </div>
             </div>
             
@@ -21,4 +22,4 @@ class Experiment extends React.Component {
     }
 }
 
-export default Experiment;
+export default Assay;
