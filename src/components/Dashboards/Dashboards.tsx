@@ -3,7 +3,6 @@ import * as React from "react";
 import Plot from 'react-plotlyjs-ts';
 import { Layout } from "plotly.js";
 import { render } from "node-sass";
-import { randomColor } from 'randomColor';
 
 export interface IDashboardsState{
   experiments: Array<IFrontExperiment>
@@ -51,7 +50,7 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
       .then(responseData => {
         const dataWithColors: (Array<IFrontExperiment>) = responseData.map((experiment: IBackendExperiment) => ({
           ...experiment,
-          plotColor: randomColor(),
+          plotColor: "yellow",
         }));
 
         console.log(responseData);
@@ -67,8 +66,7 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
       const data: Plotly.Data[] = this.state.experiments.map(experiment => ({
         x: experiment.values,
         name: experiment.experimentId,
-        type: 'box',
-        marker: {color: experiment.plotColor}
+        type: 'box'
       }))
 
       const layout: Partial<Layout> = {
