@@ -1,8 +1,9 @@
 import * as React from "react";
 
 import Plot from 'react-plotlyjs-ts';
+
 import { Layout } from "plotly.js";
-import { render } from "node-sass";
+
 
 export interface IDashboardsState{
   assayId: string,
