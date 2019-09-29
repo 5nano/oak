@@ -29,8 +29,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
  *
  */
 const devMode = process.env.NODE_ENV === 'development';
+console.log('FUCK, 'process.env.NODE_ENV);
 module.exports = {
 	mode: process.env.NODE_ENV,
+
 	entry: ['./src/index.tsx', './src/styles.scss'],
 
 	output: {
