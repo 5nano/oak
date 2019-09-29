@@ -32,7 +32,7 @@ const App = (props: AppProps) => {
 
             <Route path='/assay' exact component={Assay}/>
 
-            <Route path='/assay/dashboard' exact component={Dashboards}/>
+            <Route path='/assay/:assayId/dashboard' exact component={Dashboards}/>
           </Switch>
 
     </Router>
