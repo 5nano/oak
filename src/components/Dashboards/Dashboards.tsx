@@ -3,12 +3,21 @@ import * as React from "react";
 import Plot from 'react-plotlyjs-ts';
 import { Layout } from "plotly.js";
 import { render } from "node-sass";
+import { randomColor } from 'randomColor';
 
 export interface IDashboardsState{
-  [experimentId: string]: {
-    plotColor: string,
-    values: Array<number>,
-  },
+  experiments: Array<IFrontExperiment>
+}
+
+export interface IBackendExperiment {
+  experimentId: string,
+  values: Array<number>
+}
+
+export interface IFrontExperiment {
+  experimentId: string,
+  plotColor: string,
+  values: Array<number>
 }
 
 export interface IDashboardProps {
@@ -22,17 +31,15 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
   constructor(props:IDashboardProps){
     super(props)
 
-    this.state = {}
-
+    this.state = {
+      experiments: [],
+    }
+    this.fetchFrequencies('yellow', 1)
   }
 
-  componentDidMount(){
-    this.fetchFrequencies('yellow', 1, 'blue')
-    this.fetchFrequencies('yellow', 1, 'red');
-  }
 
-  fetchFrequencies(freqType: string, experimentId: number, plotColor: string) {
-    return fetch(`http://nanivo-bush.herokuapp.com/frecuencias/${freqType}?experimentId=${experimentId}`, {
+  fetchFrequencies(freqType: string, assayId: number) {
+    return fetch(`http://nanivo-bush.herokuapp.com/frecuencias/${freqType}?assayId=${assayId}`, {
       method: "GET",
       mode: 'cors',
       headers: {
@@ -42,37 +49,35 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
     })
       .then(response => response.json())
       .then(responseData => {
-          function removeBackendMapping(data: any) {
-            return Object.keys(responseData).map(backendFreqName => (responseData[backendFreqName]))[0]
-          }
+        const dataWithColors: (Array<IFrontExperiment>) = responseData.map((experiment: IBackendExperiment) => ({
+          ...experiment,
+          plotColor: randomColor(),
+        }));
 
-          const dataToSave = removeBackendMapping(responseData);
+        console.log(responseData);
           this.setState({
             ...this.state,
-            [freqType + plotColor]: {
-              plotColor,
-              values: dataToSave,
-            },
+            experiments: dataWithColors,
           });
       })
   }
 
   render(){
 
-      const data: Plotly.Data[] = Object.values(this.state).map(graph => ({
-        x: graph.values,
+      const data: Plotly.Data[] = this.state.experiments.map(experiment => ({
+        x: experiment.values,
+        name: experiment.experimentId,
         type: 'box',
-        marker: {color: graph.plotColor}
+        marker: {color: experiment.plotColor}
       }))
       
       const layout: Partial<Layout> = {
         annotations: [
           {
-            text: 'simple-annotation',
+            text: 'Experiment Ids',
             x: 0,
             xref: 'paper',
-            y: 0,
-            yref: 'paper'
+
           }
         ],
         title: 'simple-example',

@@ -16,7 +16,7 @@ export interface AppProps { title: string }
 const App = (props: AppProps) => (
 
     <Router>
-        <Header titles={['home','contact','signup']}/>
+        <Header titles={['home','contact','register']}/>
         <Switch>
             <Route path="/" exact component={LogIn}/>
             <Route path="/register" exact component={Register}/>
