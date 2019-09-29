@@ -5,17 +5,25 @@ import { Layout } from "plotly.js";
 import { render } from "node-sass";
 
 export interface IDashboardsState{
-  data: Array<Number>
+  data: {
+    yellowFrequencies: Array<number>
+  }
 }
 
-class Dashboards extends React.Component<IDashboardsState> {
+export interface IDashboardProps {
+
+}
+
+class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
 
 
-  constructor(props:any){
+  constructor(props:IDashboardProps){
     super(props)
 
-    this.state={
-      data: []
+    this.state = {
+      data: {
+        yellowFrequencies: [],
+      }
     }
 
   }
@@ -38,15 +46,15 @@ class Dashboards extends React.Component<IDashboardsState> {
     }
 
   render(){
-
+    debugger;
       const data: Plotly.Data[] = [
         {
-        x: [1, 2, 3],
+        x: this.state.data.yellowFrequencies,
         type: 'box',
         marker: {color: 'red'},
       },
       {
-      x: [1, 2, 3,6,8,3,4,1,2,6,7,8],
+      x: this.state.data.yellowFrequencies,
       type: 'box',
       marker: {color: 'blue'},
       }
