@@ -1,0 +1,16 @@
+{
+    "presets": [
+        "@babel/preset-react",
+        ["@babel/preset-typescript", { "isTSX": true }],
+        [
+            "@babel/env",
+            {
+              "modules": false,
+              "targets": {
+                "chrome": "58",
+                "ie": "11"
+              }
+            }
+        ]
+    ]
+}

@@ -1,0 +1,21 @@
+@import './components/App/styles.scss';
+@import './components/CRUD/styles.scss';
+@import './components/Field/styles.scss';
+@import './components/Form/styles.scss';
+@import './components/Home/styles.scss';
+@import './components/Search/styles.scss';
+
+body {
+    margin: 0;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    font-family: 'Montserrat';
+}
+
+#app-root {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    height: 100%;
+}

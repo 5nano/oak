@@ -1,0 +1,46 @@
+.add-element{
+    display:flex;
+    justify-self: flex-start;
+    background: url('../../assets/images/add.png');
+    height: 5%;
+    width: 5%;
+    background-size: cover;
+}
+
+.crud-container{
+    height: 100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    background-color: #3A7257;
+
+
+     .search-wrapper{
+         display:flex;
+         justify-content: center;
+         align-items: center;
+         flex-direction: column;
+         align-content: center;
+     }
+     
+     
+     .title-wrapper{
+         display:flex;
+         flex-wrap: nowrap;
+         align-items: center;
+         align-content: center;
+     }
+     .title-wrapper img{
+         flex-grow: 0;
+         flex-shrink: 0;
+         width: 5rem;
+         height: 5rem;
+     }
+     
+     .title-wrapper p{
+         color: white;
+     }
+    }
