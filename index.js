@@ -7,13 +7,14 @@ const helmet = require('helmet')
 const http = require('http');
 const fs = require('fs');
 
+const devMode = process.env.NODE_ENV === 'development';
 
 const app = express();
 
 app.use(helmet());
 
 const port = 8086;
-const cdnPath = `http://localhost:${port}`;
+const cdnPath = devMode ? `http://localhost:${port}` : 'https://secret-peak-39503.herokuapp.com/';
 
 app.use("/dist", expressStaticGzip("./dist", {
     enableBrotli: true,
