@@ -70,7 +70,7 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
         type: 'box',
         marker: {color: experiment.plotColor}
       }))
-      
+
       const layout: Partial<Layout> = {
         annotations: [
           {
@@ -80,12 +80,12 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
 
           }
         ],
-        title: 'simple-example',
+        title: 'Mediana de frecuencias en amarillo',
         xaxis: {
-          title: 'time'
+          title: 'frecuencias'
         },
       };
-  
+
   return (
        <Plot
          data={data}
