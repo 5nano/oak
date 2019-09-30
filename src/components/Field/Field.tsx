@@ -49,6 +49,21 @@ export const Field: React.SFC<IFieldProps> = ({
                   className="form-control"
                 />
               )}
+
+              {editor!.toLowerCase() === "password" && (
+                <input
+                  id={id}
+                  type="password"
+                  value={value}
+                  onChange={
+                    (e: React.FormEvent<HTMLInputElement>) =>
+                      context.setValues({ [id]: e.currentTarget.value }) 
+                  }
+                  onBlur={() => context.validate(id)}
+                  style={getEditorStyle(context.errors)} 
+                  className="form-control"
+                />
+              )}
     
               {editor!.toLowerCase() === "multilinetextbox" && (
                 <textarea

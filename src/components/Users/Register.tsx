@@ -11,15 +11,25 @@ const Register: React.SFC<IUserProps> = (props) => {
 
   //fieldName must match with fieldId
   const fields: IFields = {
-    name: {
-      id: "name",
+    firstName: {
+      id: "firstName",
       label: "Nombre",
+      validation: {rule: required}
+    },
+    lastName: {
+      id: "lastName",
+      label: "Apellido",
+      validation: {rule: required}
+    },
+    username: {
+      id: "username",
+      label: "Usuario",
       validation: {rule: required}
     },
     password: {
       id:"password",
-      label: "Descripcion",
-      editor: "multilinetextbox",
+      label: "Password",
+      editor: "password",
       validation: {rule: required}
     }
   };
@@ -33,7 +43,9 @@ const Register: React.SFC<IUserProps> = (props) => {
           <div className="alert alert-info" role="alert">
             Ingresa los datos del nuevo usuario
           </div>
-          <Field {...fields.name}/>
+          <Field {...fields.firstName}/>
+          <Field {...fields.lastName}/>
+          <Field {...fields.username}/>
           <Field {...fields.password}/>
         </React.Fragment>
       )}
