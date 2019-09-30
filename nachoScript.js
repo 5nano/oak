@@ -1,5 +1,4 @@
 module.exports = `function () {
-    debugger;
     var dataPoints = [];
     var experimentsData = [];
     var experimentData = [];
@@ -28,7 +27,7 @@ module.exports = `function () {
    
    
     $.ajax({
-          url: "http://nanivo-bush.herokuapp.com/graficoComparativo/datosExperimentosCultivo?crop=tomate"
+          url: "https://nanivo-bush.herokuapp.com/graficoComparativo/datosExperimentosCultivo?crop=tomate"
       }).then(function(data) {
          generateExperimentsData(data);
       });
@@ -54,7 +53,7 @@ module.exports = `function () {
      for (var h = 0; h < data.length; h++) {
        $.ajax({
          async: false,cache: false,type: "get",
-         url: "http://nanivo-bush.herokuapp.com/experimentos/nombre?assayId=1",
+         url: "https://nanivo-bush.herokuapp.com/experimentos/nombre?assayId=1",
          success: function (expName) {
            experimentName = expName;
          },
@@ -84,7 +83,7 @@ module.exports = `function () {
    
    }
    $.ajax({
-       type: "get", url: "http://nanivo-bush.herokuapp.com/prueba/imagenBase64?testId=1&experimentId=1",
+       type: "get", url: "https://nanivo-bush.herokuapp.com/prueba/imagenBase64?testId=1&experimentId=1",
        success: function (data, text) {
          generateTestImage(data);
        },
