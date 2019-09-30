@@ -10,7 +10,29 @@ import Users from '../Users/Users';
 import Assay from '../Assay/Assay';
 import Dashboards from '../Dashboards/Dashboards';
 import Homes from '../Home/Home';
+import * as nachoScript from '../../../nachoScript';
 
+class ChartNachoHolder extends React.Component {
+    componentDidMount() {
+        const s = document.createElement('script');
+        s.setAttribute("id", 'nacho-script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.innerHTML = `(${nachoScript})()`;
+        document.body.appendChild(s);
+    }
+    
+    componentWillUnmount() {
+        document.getElementById('nacho-script').remove();
+    }
+
+    render() { return (
+        <>
+            <div id="chartContainer" style={{height: 370, width: '100%'}} />
+            <div id='someDiv' />
+        </>
+    )}
+};
 
 export interface AppProps { title: string }
 
@@ -18,7 +40,7 @@ const App = (props: AppProps) => {
     return (
 
     <Router>
-        <Header titles={['home','contact','register']}/>
+        <Header titles={['home','nachochart','register']}/>
         <Switch>
             <Route path="/" exact component={LogIn}/>
             <Route path="/home" exact component={Homes}/>
@@ -35,6 +57,8 @@ const App = (props: AppProps) => {
             <Route path='/assay' exact component={Assay}/>
 
             <Route path='/assay/:assayId/dashboard' exact component={Dashboards}/>
+
+            <Route path='/nachochart' exact component={ChartNachoHolder} />
           </Switch>
 
     </Router>

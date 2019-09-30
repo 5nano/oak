@@ -22,7 +22,6 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
             ensayos: [],
             experimentos: [],
         };
-        debugger;
         this.fetchEnsayos();
         this.goToDashboard = this.goToDashboard.bind(this);
     }
