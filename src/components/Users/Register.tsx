@@ -40,7 +40,7 @@ const Register: React.SFC<IUserProps> = (props) => {
       fields = {fields}
       render={() => (
         <React.Fragment>
-          <div className="alert alert-info" role="alert">
+          <div className="users-comment">
             Ingresa los datos del nuevo usuario
           </div>
           <Field {...fields.firstName}/>
