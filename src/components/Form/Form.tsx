@@ -11,6 +11,10 @@ interface IFormProps {
     fields: IFields,
 
     render: () => React.ReactNode;
+
+    type?: string,
+
+    getValues?: (values:IValues) => void;
 }
 
 export interface IValues {
@@ -85,8 +89,13 @@ private handleSubmit = async (
     e.preventDefault();
  
     if (this.validateForm()) {
+      if(this.props.type === 'alternative'){
+        this.props.getValues(this.state.values);
+        /*devuelve los valores al padre*/ 
+      }else{
       const submitSuccess: boolean = await this.submitForm();
       this.setState({ submitSuccess });
+      }
     }
   };
  
