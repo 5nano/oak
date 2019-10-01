@@ -1,0 +1,35 @@
+.treatments{
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+
+    .treatments-title{
+        color:white;
+    }
+
+    .treatments-wrapper{
+    display:flex;
+    justify-content: space-around;
+    flex-direction: row;
+    }
+
+    .treatment-card{
+        display:flex;
+        justify-content: center;
+        flex-direction: column;
+        background-color: black;
+        align-items: center;
+        align-content: center;
+        flex-direction: column;
+
+        .treatment-title{
+            color:white;
+        }
+
+        p{
+            color:white;
+        }
+    }
+}

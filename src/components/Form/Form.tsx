@@ -166,7 +166,6 @@ private async submitForm(): Promise<boolean> {
             <div className="form-group">
               <button
                 type="submit"
-                className="btn btn-primary"
                 disabled={this.haveErrors(errors)}
               >
                 Agregar

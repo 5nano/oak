@@ -2,6 +2,7 @@ import * as React from "react";
 import { Form, IFields, required, maxLength, IValues } from "../Form/Form";
 import { Field } from "../Field/Field";
 import TreatmentForm from './TreatmentForm';
+import Treatments from './Treatments';
 
 export interface IAssayFormProps {
 
@@ -13,7 +14,7 @@ export interface IAssayFormState{
   crop:string,
   agrochemical:string,
   mix:string,
-  treatments: Array<any>
+  treatments: Array<IValues>
 }
 
 //fieldName must match with fieldId
@@ -48,7 +49,7 @@ export interface IAssayFormState{
           options: ['A','B']
       }
   }
-class AssayForm extends React.Component<IAssayFormProps|IAssayFormState> {
+class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
 
   constructor(props:IAssayFormProps){
     super(props)
@@ -63,11 +64,12 @@ class AssayForm extends React.Component<IAssayFormProps|IAssayFormState> {
     }
   }
  handleValues=(values:IValues):void=>{
-    console.log(values)
+    console.log(values.name)
   }
 
   handleTreatmentValues=(values:IValues):void=>{
     console.log(values)
+    this.setState({treatments:[...this.state.treatments,values]})
   }
   
   render(){
@@ -86,11 +88,11 @@ class AssayForm extends React.Component<IAssayFormProps|IAssayFormState> {
             <Field {...fields.crop}/>
             <Field {...fields.agrochemical}/>
             <Field {...fields.mix}/>
-
+            <Treatments treatments={this.state.treatments}/>
           </React.Fragment>
         )}
       />
-      <TreatmentForm handleValues={this.handleTreatmentValues}/>
+        <TreatmentForm handleValues={this.handleTreatmentValues}/>
       </div>
     );
   }

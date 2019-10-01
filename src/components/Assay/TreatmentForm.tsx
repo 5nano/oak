@@ -38,7 +38,7 @@ const TreatmentForm: React.SFC<ITreatmentFormProps>= (props) => {
         <div>
             <div className="title-wrapper">
             <img src="../../assets/images/head-icon.png"/>
-            <p>Tratamientos</p>
+            <p>Nuevo Tratamiento</p>
             </div>
 
               <Form
