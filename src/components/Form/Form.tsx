@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { IFieldProps } from '../Field/FieldProps';
+import { values } from 'd3';
 
 export interface IFields {
   [key: string]: IFieldProps;
@@ -70,6 +71,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
     }
 
 private setValues = (values: IValues) => {
+  console.log(values)
   this.setState({values: {...this.state.values, ...values}});
 ;}
 
@@ -156,10 +158,11 @@ private async submitForm(): Promise<boolean> {
       setValues: this.setValues,
       validate: this.validate
     };
+
     return (
       <FormContext.Provider value={context}>
         <div className="form-container">
-          <form>
+          <form className="form-control" noValidate={true}>
 
             {this.props.render()}
 

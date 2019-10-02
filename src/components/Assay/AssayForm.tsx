@@ -19,13 +19,11 @@ export interface IAssayFormState{
       name: {
         id: "name",
         label: "Nombre",
-        validation: {rule: required}
       },
       description: {
         id:"description",
         label: "Descripcion",
         editor: "multilinetextbox",
-        validation: {rule:required}
       },
       crop: {
           id:"crop",

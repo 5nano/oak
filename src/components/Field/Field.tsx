@@ -2,7 +2,7 @@ import * as React from "react";
 import { IErrors, IFormContext, FormContext} from "../Form/Form";
 import { IFieldProps } from './FieldProps';
 import Checkbox from './Checkbox';
-
+import Select from './Select';
 export interface IRule {
     values: {
       [key: string]: any
@@ -34,7 +34,6 @@ export const Field: React.SFC<IFieldProps> = ({
                 <div className="field-title">{label}</div>
                 }
              
-
               <div className="field-content">
               {editor!.toLowerCase() === "textbox" && (
                 <input
@@ -81,25 +80,11 @@ export const Field: React.SFC<IFieldProps> = ({
               )}
     
               {editor!.toLowerCase() === "dropdown" && (
-                <select
-                  id={id}
-                  name={id}
-                  value={value}
-                  onChange={
-                    (e: React.FormEvent<HTMLSelectElement>) =>
-                      context.setValues({ [id]: e.currentTarget.value }) 
-                  }
-                  style={getEditorStyle(context.errors)} 
-                  onBlur={() => context.validate(id)}
-                  className="form-control"
-                >
-                  {options &&
-                    options.map(option => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                </select>
+                <Select id={id} 
+                        value={value} 
+                        context={context}
+                        options={options}
+                        getEditorStyle={getEditorStyle} />
               )}
 
               {editor!.toLowerCase() === "checkbox" && (

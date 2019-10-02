@@ -1,9 +1,10 @@
 import * as React from 'react'
+import { IFormContext } from '../Form/Form'
 
 export interface ICheckboxProps {
-    id:any,
+    id:string,
     value:any,
-    context:any
+    context:IFormContext
 }
 
 const Checkbox:React.SFC<ICheckboxProps> = (props) => {
