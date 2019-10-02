@@ -10,7 +10,8 @@ export interface IAssayFormProps {
 
 export interface IAssayFormState{
   treatments: Array<IValues>,
-  newTreatment:boolean
+  newTreatment:boolean,
+  successAssay: boolean
 }
 
 //fieldName must match with fieldId
@@ -52,22 +53,24 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
 
     this.state = {
       treatments: [],
-      newTreatment: false
+      newTreatment: false,
+      successAssay: false
     }
   }
- handleValues=(values:IValues):void=>{
+ handleAssayValues=(values:IValues):void=>{
     const data = {
       name: values.name,
       description: values.description,
       crop: values.crop,
       agrochemical: values.agrochemical,
-      mix: values.mix,
-      treatments: this.state.treatments
+      mix: values.mix
     }
 
     console.log(data)
 
-    fetch('', {
+    this.setState({successAssay:true})
+
+    /*fetch('', {
       method: "POST",
       mode: 'cors',
       body: JSON.stringify(data),
@@ -79,6 +82,7 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
             console.log(response)
             console.log(response.json())
     })
+    */
   }
 
   handleTreatmentValues=(values:IValues):void=>{
@@ -90,34 +94,58 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
     this.setState({newTreatment:!this.state.newTreatment})
   }
   
+
+  handlePrevStep = (e:React.MouseEvent<HTMLElement>):void => {
+    this.setState({successAssay:false})
+  }
   render(){
     return (
-      <div>
-      <Form
-        action=''
-        fields = {fields}
-        type='alternative'
-        getValues={this.handleValues}
-        render={() => (
-          <React.Fragment>
-            
-            <Field {...fields.name}/>
-            <Field {...fields.description}/>
-            <Field {...fields.crop}/>
-            <Field {...fields.agrochemical}/>
-            <Field {...fields.mix}/>
-            <Treatments treatments={this.state.treatments}/>
-            
-            <button type="button" onClick={this.handleClick}>
-              Nuevo tratamiento
-            </button>
+      <div className="assay-wrapper">
 
-            </React.Fragment>
+        {!this.state.successAssay && (
+        <div className="assay-container">
+          <p>PASO 1: Agregue los datos del ensayo</p>
+          <Form
+            action=''
+            fields = {fields}
+            type='alternative'
+            getValues={this.handleAssayValues}
+            render={() => (
+              <React.Fragment>
+                
+                <Field {...fields.name}/>
+                <Field {...fields.description}/>
+                <Field {...fields.crop}/>
+                <Field {...fields.agrochemical}/>
+                <Field {...fields.mix}/>
+            
+              </React.Fragment>
+            )}
+            />
+        </div>
         )}
-        />
-        {this.state.newTreatment && 
-          <TreatmentForm handleValues={this.handleTreatmentValues}/>
-        }
+
+        {this.state.successAssay && (
+            <div className="treatments-container">
+                <p>PASO 2: Agregue los tratamientos del ensayo</p>
+                <Treatments treatments={this.state.treatments}/>
+                    
+                  <button type="button" onClick={this.handleClick}>
+                    Nuevo tratamiento
+                  </button>
+
+
+                  {this.state.newTreatment && 
+                    <TreatmentForm handleValues={this.handleTreatmentValues}/>
+                  }
+
+                  <button type="button" onClick={this.handlePrevStep}>
+                    Atras
+                  </button>
+
+            </div>
+        )}
+
       </div>
     );
   }

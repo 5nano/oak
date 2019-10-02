@@ -84,7 +84,7 @@ private haveErrors(errors: IErrors) {
     }
 
 private handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
+    e: React.MouseEvent
   ): Promise<void> => {
     e.preventDefault();
  
@@ -159,7 +159,7 @@ private async submitForm(): Promise<boolean> {
     return (
       <FormContext.Provider value={context}>
         <div className="form-container">
-          <form onSubmit={this.handleSubmit} noValidate={true}>
+          <form>
 
             {this.props.render()}
 
@@ -180,14 +180,16 @@ private async submitForm(): Promise<boolean> {
                   Perdón, el formulario es inválido. Porfavor, revise y vuelva a intentar.
                 </div>
               )}
+
           </form>
 
-          <button
-              type="submit"
-              disabled={this.haveErrors(errors)}
-            >
-              Agregar
-          </button>
+            <button
+                type="button"
+                disabled={this.haveErrors(errors)}
+                onClick={this.handleSubmit}
+              >
+                Agregar
+            </button>
 
         </div>
       </FormContext.Provider>
