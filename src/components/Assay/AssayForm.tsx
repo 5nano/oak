@@ -9,12 +9,8 @@ export interface IAssayFormProps {
 }
 
 export interface IAssayFormState{
-  name:string,
-  description:string,
-  crop:string,
-  agrochemical:string,
-  mix:string,
-  treatments: Array<IValues>
+  treatments: Array<IValues>,
+  newTreatment:boolean
 }
 
 //fieldName must match with fieldId
@@ -55,21 +51,42 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
     super(props)
 
     this.state = {
-      name:'',
-      description:'',
-      crop:'',
-      agrochemical:'',
-      mix:'',
-      treatments: []
+      treatments: [],
+      newTreatment: false
     }
   }
  handleValues=(values:IValues):void=>{
-    console.log(values.name)
+    const data = {
+      name: values.name,
+      description: values.description,
+      crop: values.crop,
+      agrochemical: values.agrochemical,
+      mix: values.mix,
+      treatments: this.state.treatments
+    }
+
+    console.log(data)
+
+    fetch('', {
+      method: "POST",
+      mode: 'cors',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    }).then(response => {
+            console.log(response)
+            console.log(response.json())
+    })
   }
 
   handleTreatmentValues=(values:IValues):void=>{
-    console.log(values)
     this.setState({treatments:[...this.state.treatments,values]})
+  }
+
+  handleClick = (e:React.MouseEvent<HTMLElement>):void => {
+    this.setState({newTreatment:!this.state.newTreatment})
   }
   
   render(){
@@ -89,10 +106,17 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
             <Field {...fields.agrochemical}/>
             <Field {...fields.mix}/>
             <Treatments treatments={this.state.treatments}/>
-          </React.Fragment>
+            
+            <button type="button" onClick={this.handleClick}>
+              Nuevo tratamiento
+            </button>
+
+            </React.Fragment>
         )}
-      />
-        <TreatmentForm handleValues={this.handleTreatmentValues}/>
+        />
+        {this.state.newTreatment && 
+          <TreatmentForm handleValues={this.handleTreatmentValues}/>
+        }
       </div>
     );
   }
