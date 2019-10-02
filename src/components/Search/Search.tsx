@@ -48,8 +48,6 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
             values,
             data,
         };
-
-        this.remove = this.remove.bind(this)
     }
 
     private async getData()  {

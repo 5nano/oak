@@ -40,28 +40,27 @@ const App = (props: AppProps) => {
     return (
 
     <Router>
-        
-            <Header titles={['home','nachochart','register']}/>
-            <Switch>
-                <Route path="/" exact component={LogIn}/>
-                <Route path="/home" exact component={Homes}/>
-                <Route path="/register" exact component={Register}/>
+        <Header titles={['home','nachochart','register']}/>
+        <Switch>
+            <Route path="/" exact component={LogIn}/>
+            <Route path="/home" exact component={Homes}/>
+            <Route path="/register" exact component={Register}/>
 
-                <Route path='/crops' exact component={Crops}/>
+            <Route path='/crops' exact component={Crops}/>
 
-                <Route path='/agrochemicals' exact component={Agrochemicals}/>
+            <Route path='/agrochemicals' exact component={Agrochemicals}/>
 
-                <Route path='/companies' exact component={Companies}/>
+            <Route path='/companies' exact component={Companies}/>
 
-                <Route path='/users' exact component={Users}/>
+            <Route path='/users' exact component={Users}/>
 
-                <Route path='/assay' exact component={Assay}/>
+            <Route path='/assay' exact component={Assay}/>
 
-                <Route path='/assay/:assayId/dashboard' exact component={Dashboards}/>
+            <Route path='/assay/:assayId/dashboard' exact component={Dashboards}/>
 
-                <Route path='/nachochart' exact component={ChartNachoHolder} />
-            </Switch>
-         
+            <Route path='/nachochart' exact component={ChartNachoHolder} />
+          </Switch>
+
     </Router>
 )}
 

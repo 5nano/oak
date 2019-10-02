@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { IFieldProps } from '../Field/FieldProps';
-import { values } from 'd3';
 
 export interface IFields {
   [key: string]: IFieldProps;
@@ -12,10 +11,6 @@ interface IFormProps {
     fields: IFields,
 
     render: () => React.ReactNode;
-
-    type?: string,
-
-    getValues?: (values:IValues) => void;
 }
 
 export interface IValues {
@@ -71,9 +66,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
     }
 
 private setValues = (values: IValues) => {
-  
   this.setState({values: {...this.state.values, ...values}});
- 
 ;}
 
 private haveErrors(errors: IErrors) {
@@ -87,18 +80,13 @@ private haveErrors(errors: IErrors) {
     }
 
 private handleSubmit = async (
-    e: React.MouseEvent
+    e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
  
     if (this.validateForm()) {
-      if(this.props.type === 'alternative'){
-        this.props.getValues(this.state.values);
-        /*devuelve los valores al padre*/ 
-      }else{
       const submitSuccess: boolean = await this.submitForm();
       this.setState({ submitSuccess });
-      }
     }
   };
  
@@ -159,13 +147,23 @@ private async submitForm(): Promise<boolean> {
       setValues: this.setValues,
       validate: this.validate
     };
-
     return (
       <FormContext.Provider value={context}>
         <div className="form-container">
-          <form className="form-control" noValidate={true}>
+          <form onSubmit={this.handleSubmit} noValidate={true}>
 
             {this.props.render()}
+
+            <div className="form-group">
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={this.haveErrors(errors)}
+              >
+                Agregar
+              </button>
+            </div>
+
 
             {submitSuccess && (
               <div className="result-success" role="alert">
@@ -184,17 +182,7 @@ private async submitForm(): Promise<boolean> {
                   Perdón, el formulario es inválido. Porfavor, revise y vuelva a intentar.
                 </div>
               )}
-
           </form>
-
-            <button
-                type="button"
-                disabled={this.haveErrors(errors)}
-                onClick={this.handleSubmit}
-              >
-                Agregar
-            </button>
-
         </div>
       </FormContext.Provider>
     );

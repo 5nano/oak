@@ -1,35 +1,11 @@
-import * as React from 'react';
-import { IValues } from '../Form/Form';
+import * as React from 'react'
+import TreatmentForm from './TreatmentForm'
 
-
-export interface ITreatments{
-    treatments: Array<IValues>
-}
-
-const Treatments:React.SFC<ITreatments> = (props) => {
+const Treatment: React.SFC = () => {
 
     return(
-        <div className="treatments">
-
-            <div className="treatments-title">
-                Tratamientos
-            </div>
-
-            <div className="treatments-wrapper">
-                {props.treatments.map((treatment,i)=> (
-                    <div key={i} className="treatment-card">
-                        <div className="treatment-tag">
-                            {treatment.tag}
-                        </div>
-                        <div className="treatment-tests">
-                            {treatment.tests}
-                        </div>
-                    </div>
-                ))}
-            </div>
-
-        </div>
+        <TreatmentForm/>
     )
 }
 
-export default Treatments;
+export default Treatment;
