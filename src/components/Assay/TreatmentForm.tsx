@@ -14,6 +14,7 @@ const TreatmentForm: React.SFC<ITreatmentFormProps>= (props) => {
       label: "Etiqueta",
       validation: {rule: required}
     },
+
     description: {
       id:"description",
       label: "Descripcion",
@@ -25,13 +26,20 @@ const TreatmentForm: React.SFC<ITreatmentFormProps>= (props) => {
         label: "Cantidad de pruebas",
         validation: {rule: required}
       },
+    mix:{
+      id:"mix",
+      label:"Mezcla",
+      editor: "checkbox",
+      value:false,
+    },
+    agrochemical:{
+      id:"agrochemical",
+      label:"Agroquimico",
+      editor: "checkbox",
+      value:false,
+    }
   };
-
-  const handleValues = (values:IValues) => {
-    console.log(values)
-  }
-
-  
+ 
   return (
 
       <div className="crud-container">
@@ -51,6 +59,8 @@ const TreatmentForm: React.SFC<ITreatmentFormProps>= (props) => {
                     <Field {...fields.tag}/>
                     <Field {...fields.description}/>
                     <Field {...fields.tests}/>
+                    <Field {...fields.mix}/>
+                    <Field {...fields.agrochemical}/>
                   </React.Fragment>
                 )}
             />

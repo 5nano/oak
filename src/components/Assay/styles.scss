@@ -17,18 +17,20 @@
 
     .treatment-card{
         display:flex;
-        justify-content: center;
         flex-direction: column;
-        background-color: black;
+        justify-content: center;
         align-items: center;
         align-content: center;
-        flex-direction: column;
+        background-color: black;
+        height: 100px;
+        width: 100px;
 
-        .treatment-title{
+
+        .treatment-tag{
             color:white;
         }
 
-        p{
+        .treatment-tests{
             color:white;
         }
     }

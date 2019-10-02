@@ -82,6 +82,7 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
   }
 
   handleTreatmentValues=(values:IValues):void=>{
+    console.log(values)
     this.setState({treatments:[...this.state.treatments,values]})
   }
 

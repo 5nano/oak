@@ -16,12 +16,14 @@ const Treatments:React.SFC<ITreatments> = (props) => {
             </div>
 
             <div className="treatments-wrapper">
-                {props.treatments.map(treatment=> (
-                    <div className="treatment-card">
-                        <div className="treatment-title">
+                {props.treatments.map((treatment,i)=> (
+                    <div key={i} className="treatment-card">
+                        <div className="treatment-tag">
                             {treatment.tag}
                         </div>
-                        <p>{treatment.tests}</p>
+                        <div className="treatment-tests">
+                            {treatment.tests}
+                        </div>
                     </div>
                 ))}
             </div>

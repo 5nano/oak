@@ -1,6 +1,7 @@
 import * as React from "react";
 import { IErrors, IFormContext, FormContext} from "../Form/Form";
 import { IFieldProps } from './FieldProps';
+import Checkbox from './Checkbox';
 
 export interface IRule {
     values: {
@@ -23,7 +24,7 @@ export const Field: React.SFC<IFieldProps> = ({
     
     const getEditorStyle = (errors: IErrors): any =>
     getError(errors) ? { borderColor: "red" } : {};
-
+    
     return (
         <FormContext.Consumer>
           {(context: IFormContext) => (
@@ -32,7 +33,7 @@ export const Field: React.SFC<IFieldProps> = ({
               {label && 
                 <div className="field-title">{label}</div>
                 }
-              
+             
 
               <div className="field-content">
               {editor!.toLowerCase() === "textbox" && (
@@ -99,6 +100,10 @@ export const Field: React.SFC<IFieldProps> = ({
                       </option>
                     ))}
                 </select>
+              )}
+
+              {editor!.toLowerCase() === "checkbox" && (
+                  <Checkbox id={id} value={value} context={context}/>
               )}
 
               {editor!.toLowerCase() === "custom" && (
