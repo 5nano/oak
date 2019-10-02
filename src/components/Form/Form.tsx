@@ -163,16 +163,6 @@ private async submitForm(): Promise<boolean> {
 
             {this.props.render()}
 
-            <div className="form-group">
-              <button
-                type="submit"
-                disabled={this.haveErrors(errors)}
-              >
-                Agregar
-              </button>
-            </div>
-
-
             {submitSuccess && (
               <div className="result-success" role="alert">
                 El registro fue exitoso!
@@ -191,6 +181,14 @@ private async submitForm(): Promise<boolean> {
                 </div>
               )}
           </form>
+
+          <button
+              type="submit"
+              disabled={this.haveErrors(errors)}
+            >
+              Agregar
+          </button>
+
         </div>
       </FormContext.Provider>
     );

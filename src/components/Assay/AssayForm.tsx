@@ -24,7 +24,7 @@ export interface IAssayFormState{
         id:"description",
         label: "Descripcion",
         editor: "multilinetextbox",
-        validation: {rule: maxLength, args:200}
+        validation: {rule:required}
       },
       crop: {
           id:"crop",
