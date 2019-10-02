@@ -17,7 +17,7 @@ const AgrochemicalsSearch: React.SFC<IAgrochemicalSearchProps> = (props) => {
       render={() => (
         <React.Fragment>
         
-          <Results/>
+          <Results titles={['Nombre','Descripcion']}/>
           <Criteria id="main-criteria"
                     label="Buscar por nombre">
           </Criteria>

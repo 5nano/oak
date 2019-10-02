@@ -1,10 +1,5 @@
 /* The available editors for the field */
-type Editor = "textbox" | 
-              "password" |
-              "multilinetextbox" | 
-              "dropdown" | 
-              "checkbox" |
-              "custom";
+type Editor = "textbox" | "multilinetextbox" | "dropdown" | "custom";
 
 export interface IFieldProps {
   /* The unique field name */
