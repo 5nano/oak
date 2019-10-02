@@ -19,7 +19,7 @@ export const Results:React.SFC<IResultsTableProps> = () => {
                                     Object.keys(object).map((key:any) => {
                                         console.log(object)
                                         return (
-                                        <p>{key + ': ' + object[key]}</p>)
+                                        <p>{key+ ': ' + object[key]}</p>)
                                         })}
                     
                                         <button 
