@@ -12,7 +12,7 @@ const Checkbox:React.SFC<ICheckboxProps> = (props) => {
     const [actualValue,setActualValue] = React.useState(value)
     
     React.useEffect(()=>{
-        context.setValues({[id]: value})
+        context.setValues( {[id]: value})
     },[])
 
     return(
