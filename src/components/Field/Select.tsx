@@ -23,6 +23,7 @@ const Select:React.SFC<ISelectProps> = (props) => {
 
     return(
             <select
+                  key={id}
                   id={id}
                   name={id}
                   value={value}

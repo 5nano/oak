@@ -71,8 +71,9 @@ export class Form extends React.Component<IFormProps, IFormState> {
     }
 
 private setValues = (values: IValues) => {
-  console.log(values)
+  
   this.setState({values: {...this.state.values, ...values}});
+ 
 ;}
 
 private haveErrors(errors: IErrors) {

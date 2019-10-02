@@ -9,6 +9,11 @@ export interface IAssayFormProps {
 }
 
 export interface IAssayFormState{
+  values:{name:string,
+          description:string,
+          crop:string,
+          agrochemical:string,
+          mix:string},
   treatments: Array<IValues>,
   newTreatment:boolean,
   successAssay: boolean
@@ -19,29 +24,34 @@ export interface IAssayFormState{
       name: {
         id: "name",
         label: "Nombre",
+        validation: {rule: required}
       },
       description: {
         id:"description",
         label: "Descripcion",
         editor: "multilinetextbox",
+        validation: {rule: required}
       },
       crop: {
           id:"crop",
           label: "Cultivo",
           editor: "dropdown",
-          options: ['maiz','soja']
+          options: ['maiz','soja'],
+          validation: {rule: required}
         },
       agrochemical: {
           id:"agrochemical",
           label: "Agroquimico",
           editor: "dropdown",
-          options: ['herbicida A','herbicida B']
+          options: ['herbicida A','herbicida B'],
+          validation: {rule: required}
       },
       mix: {
           id:"mix",
           label: "Mezcla",
           editor: "dropdown",
-          options: ['A','B']
+          options: ['A','B'],
+          validation: {rule: required}
       }
   }
 class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
@@ -50,23 +60,19 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
     super(props)
 
     this.state = {
+      values: {name:'',
+              description:'',
+              crop:fields.crop.options[0],
+              agrochemical:fields.agrochemical.options[0],
+              mix:fields.mix.options[0]},
       treatments: [],
       newTreatment: false,
       successAssay: false
     }
   }
  handleAssayValues=(values:IValues):void=>{
-    const data = {
-      name: values.name,
-      description: values.description,
-      crop: values.crop,
-      agrochemical: values.agrochemical,
-      mix: values.mix
-    }
-
-    console.log(data)
-
-    this.setState({successAssay:true})
+ 
+    
 
     /*fetch('', {
       method: "POST",
@@ -81,6 +87,13 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
             console.log(response.json())
     })
     */
+
+    //Proximo paso
+   this.setState({successAssay:true})
+
+   //Guardo el estado por si vuelve atras
+   this.setState({values: {...this.state.values, ...values}});
+
   }
 
   handleTreatmentValues=(values:IValues):void=>{

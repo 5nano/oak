@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { IFormContext } from '../Form/Form'
+import { IFormContext, FormContext } from '../Form/Form'
 
 export interface ICheckboxProps {
     id:string,
@@ -10,7 +10,7 @@ export interface ICheckboxProps {
 const Checkbox:React.SFC<ICheckboxProps> = (props) => {
     const {id,value,context} = props
     const [actualValue,setActualValue] = React.useState(value)
-
+    
     React.useEffect(()=>{
         context.setValues({[id]: value})
     },[])
@@ -26,6 +26,7 @@ const Checkbox:React.SFC<ICheckboxProps> = (props) => {
                     setActualValue(!actualValue)
                     }
                 }
+                onBlur={() => context.validate(id)}
                 className="form-control"
                 />
     )

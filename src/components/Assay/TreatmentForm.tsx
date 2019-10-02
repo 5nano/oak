@@ -11,29 +11,35 @@ const TreatmentForm: React.SFC<ITreatmentFormProps>= (props) => {
   const fields: IFields = {
     tag: {
       id: "tag",
-      label: "Etiqueta"
+      label: "Etiqueta",
+      validation: {rule: required}
+
     },
 
     description: {
       id:"description",
       label: "Descripcion",
-      editor: "multilinetextbox"
+      editor: "multilinetextbox",
+      validation: {rule: required}
     },
     tests: {
         id:"tests",
-        label: "Cantidad de pruebas"
+        label: "Cantidad de pruebas",
+        validation: {rule: required}
       },
     mix:{
       id:"mix",
       label:"Mezcla",
       editor: "checkbox",
       value:false,
+      validation: {rule: required}
     },
     agrochemical:{
       id:"agrochemical",
       label:"Agroquimico",
       editor: "checkbox",
       value:false,
+      validation: {rule: required}
     }
   };
  
