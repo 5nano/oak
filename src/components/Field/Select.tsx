@@ -23,7 +23,6 @@ const Select:React.SFC<ISelectProps> = (props) => {
 
     return(
             <select
-                  key={id}
                   id={id}
                   name={id}
                   value={value}
@@ -33,7 +32,7 @@ const Select:React.SFC<ISelectProps> = (props) => {
                   }
                   style={getEditorStyle(context.errors)} 
                   onBlur={() => context.validate(id)}
-                  className="form-control"
+                  className="select"
                 >
                   {options &&
                     options.map(option => (
