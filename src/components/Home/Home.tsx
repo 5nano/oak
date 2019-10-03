@@ -12,7 +12,7 @@ export interface IHomesState {
 
 
 export interface IHomesProps extends RouteComponentProps {
-    
+
 }
 
 export class Homes extends React.Component<IHomesProps,IHomesState> {

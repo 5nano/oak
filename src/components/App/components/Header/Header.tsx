@@ -2,12 +2,14 @@ import * as React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router"
 import { CSSTransitionGroup } from 'react-transition-group' // ES6
+import { RouteComponentProps } from 'react-router-dom';
 
 export interface HeaderState {
     showDataUploadMenu: boolean,
  }
-export interface HeaderProps {
+export interface HeaderProps extends RouteComponentProps {
     titles: string[],
+    loggedIn: boolean,
  }
 
 const Header = (props: HeaderProps) => {
@@ -26,19 +28,23 @@ const Header = (props: HeaderProps) => {
                         <h1 className="nanivo-title">Nanivo</h1>
                     </div>
                 </Link>
-                <div className="links">
-                    {props.titles.map(title => {
-                        return <Link to={`/${title}`} className="header-link">
-                                    {title}
-                                </Link>
-                    })}
-                    <button
-                        className="show-data-upload-button"
-                        onClick={() => toggleDataUploadMenu(!showDataUploadMenu)}
-                    >
-                        Cargar nuevos datos
-                    </button>
-                </div>
+                {
+                    props.loggedIn && (
+                    <div className="links">
+                        {props.titles.map(title => {
+                            return <Link to={`/${title}`} className="header-link">
+                                        {title}
+                                    </Link>
+                        })}
+                        <button
+                            className="show-data-upload-button"
+                            onClick={() => toggleDataUploadMenu(!showDataUploadMenu)}
+                        >
+                            Cargar nuevos datos
+                        </button>
+                    </div>
+                    )
+                }
             </div>
             {
                 showDataUploadMenu &&
