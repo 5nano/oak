@@ -1,7 +1,6 @@
 import * as React from "react";
+import UserForm from "./UserForm";
 import UserSearch from './UserSearch';
-import Register from "./Register";
-
 import CrudView from '../CRUD/CrudView';
 
 
@@ -14,8 +13,8 @@ const Users: React.SFC = () => {
         deleteUrl= 'https://nanivo-bush.herokuapp.com/usuarios/eliminar'
         createUrl= 'https://nanivo-bush.herokuapp.com/usuarios/insertar'
         updateUrl= 'https://nanivo-bush.herokuapp.com/usuarios/actualizar'
-        form= {Register}
-        search= {UserSearch}
+        form= {UserForm}
+        search={UserSearch}
     />
   );
 };
