@@ -18,7 +18,7 @@ const UsersSearch: React.SFC<IUsersSearchProps> = (props) => {
       render={() => (
         <React.Fragment>
         
-          <Results item={Item}/>
+          <Results type='user'/>
           <Criteria id="main-criteria"
                     label="Buscar por nombre">
           </Criteria>

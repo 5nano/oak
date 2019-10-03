@@ -1,7 +1,15 @@
 import * as React from 'react'
 
+export type ItemType = "agrochemical" |
+              "crop"| 
+              "mix" | 
+              "companie" | 
+              "user";
+
+
 export interface IItemProps{
     object:any;
+    type:ItemType
 }
 
 const Item:React.SFC<IItemProps> = (props) => {

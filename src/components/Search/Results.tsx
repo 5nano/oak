@@ -1,16 +1,14 @@
 import * as React from 'react';
 import {ISearchContext,SearchContext} from './Search';
-import { IItemProps } from './components/Item';
 import ResultItem from './components/ResultItem';
-
+import { ItemType } from './components/Item';
 
 export interface IResultsTableProps {
-   item: React.SFC<IItemProps>
+   type:ItemType;
 }
 
 export const Results:React.SFC<IResultsTableProps> = (props) => {
-    
-    const {item:Item} = props;
+    const {type} = props;
     return(
         <SearchContext.Consumer>
             {(context:ISearchContext) => (
@@ -18,7 +16,7 @@ export const Results:React.SFC<IResultsTableProps> = (props) => {
                         {context.data.map(object => {
                             return <ResultItem object={object}
                                                remove={context.remove}
-                                               item={Item}
+                                               type={type}
                                          />
                         })}
 
