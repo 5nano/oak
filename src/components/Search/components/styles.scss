@@ -18,6 +18,8 @@
         align-items: center;
     
         .delete{
+            font-size: 16px;
+            border: none;
             display:flex;
             justify-self: flex-start;
             background-size: cover;
@@ -27,6 +29,8 @@
         }
 
         .edit{
+            font-size: 16px;
+            border: none;
             display:flex;
             background-size: cover;
             background: url('../../../assets/images/edit-icon.png');
