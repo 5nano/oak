@@ -1,5 +1,9 @@
 /* The available editors for the field */
-type Editor = "textbox" | "multilinetextbox" | "dropdown" | "custom";
+type Editor = "textbox" |
+              "checkbox"| 
+              "multilinetextbox" | 
+              "dropdown" | 
+              "password";
 
 export interface IFieldProps {
   /* The unique field name */
@@ -16,8 +20,6 @@ export interface IFieldProps {
 
   /* The field value */
   value?: any;
-
-  custom?: React.SFC;
 
   validation?: IValidation;
 }

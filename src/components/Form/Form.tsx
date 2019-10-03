@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { IFieldProps } from '../Field/FieldProps';
+import FormButton, { IFormButtonProps } from './FormButton';
 
 export interface IFields {
   [key: string]: IFieldProps;
@@ -11,8 +12,14 @@ interface IFormProps {
     fields: IFields,
 
     render: () => React.ReactNode;
-}
 
+    type?: string,
+
+    getValues?: (values:IValues) => void;
+
+    button?:React.SFC<IFormButtonProps>;
+}
+ 
 export interface IValues {
     [key: string]: any;
 }
@@ -53,8 +60,17 @@ export const maxLength = (
     ? `Este campo no puede exceder ${length} caracteres`
     : "";
 
+
+export interface DefaultFormProps {
+  button: React.SFC<IFormButtonProps>
+}
+
 export class Form extends React.Component<IFormProps, IFormState> {
-    constructor(props: IFormProps){
+  static defaultProps:DefaultFormProps = {
+    button:FormButton
+  }
+  
+  constructor(props: IFormProps){
         super(props);
 
         const errors: IErrors={}
@@ -66,7 +82,9 @@ export class Form extends React.Component<IFormProps, IFormState> {
     }
 
 private setValues = (values: IValues) => {
+  
   this.setState({values: {...this.state.values, ...values}});
+ 
 ;}
 
 private haveErrors(errors: IErrors) {
@@ -80,13 +98,18 @@ private haveErrors(errors: IErrors) {
     }
 
 private handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
+    e: React.MouseEvent
   ): Promise<void> => {
     e.preventDefault();
  
     if (this.validateForm()) {
+      if(this.props.type === 'alternative'){
+        this.props.getValues(this.state.values);
+        /*devuelve los valores al padre*/ 
+      }else{
       const submitSuccess: boolean = await this.submitForm();
       this.setState({ submitSuccess });
+      }
     }
   };
  
@@ -147,23 +170,15 @@ private async submitForm(): Promise<boolean> {
       setValues: this.setValues,
       validate: this.validate
     };
+
+    const {button:Button} = this.props;
+
     return (
       <FormContext.Provider value={context}>
         <div className="form-container">
-          <form onSubmit={this.handleSubmit} noValidate={true}>
+          <form className="form-control" noValidate={true}>
 
             {this.props.render()}
-
-            <div className="form-group">
-              <button
-                type="submit"
-                className="btn btn-primary"
-                disabled={this.haveErrors(errors)}
-              >
-                Agregar
-              </button>
-            </div>
-
 
             {submitSuccess && (
               <div className="result-success" role="alert">
@@ -182,13 +197,20 @@ private async submitForm(): Promise<boolean> {
                   Perdón, el formulario es inválido. Porfavor, revise y vuelva a intentar.
                 </div>
               )}
+
           </form>
+
+        <Button onClick={this.handleSubmit}
+                disabled={this.haveErrors(errors)}/>
+       
         </div>
       </FormContext.Provider>
     );
   }
-}
 
+  
+
+}
 
 
 

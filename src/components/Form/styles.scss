@@ -1,16 +1,20 @@
 .form-container{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     align-content: center;
-    direction: column;
-    background-color: #3A7257;
-}
+    flex-direction: column;
 
-.result-error{
-    color:red;
-}
 
-.result-success{
-    color:white;
+    .result-error{
+        color:red;
+    }
+
+    .result-success{
+        color:white;
+    }
+
+    form{
+        width:100%;
+    }
 }

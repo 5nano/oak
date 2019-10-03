@@ -7,8 +7,8 @@ export interface ICrudViewProps {
     deleteUrl: string,
     updateUrl: string,
     createUrl: string
-    form: any,
-    search: any
+    form?: any,
+    search?: any
 }
 
 const CrudView: React.SFC <ICrudViewProps> = ({
@@ -31,21 +31,23 @@ const CrudView: React.SFC <ICrudViewProps> = ({
 
 
   return (
-    <div>
-      <button className="add-element" onClick={handleClick}>+</button>
-      {formRequest && <FormComponent createUrl={createUrl}/>}
-      
+
       <div className="crud-container">
                   <div className="search-wrapper">
                     <div className="title-wrapper">
                       <img src="../../assets/images/head-icon.png"/>
                       <p>{title}</p>
                     </div>
-                    {<SearchComponent searchUrl={searchUrl} deleteUrl={deleteUrl}/>}
+                    <SearchComponent searchUrl={searchUrl} deleteUrl={deleteUrl}/>
+                  </div>
+                  
+                  <div className="register-wrapper">
+                    <button className="add-element" onClick={handleClick}/>
+                    
+                    {formRequest && <FormComponent createUrl={createUrl}/>}
                   </div>
       </div>
-    
-    </div>
+ 
   );
 };
 

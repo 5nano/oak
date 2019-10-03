@@ -21,6 +21,7 @@ export interface ISearchState {
     errors: IErrors;
     data: Array<any>;
     searchSuccess?: boolean;
+
 }
 
 export interface ISearchContext extends ISearchState {
@@ -48,6 +49,8 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
             values,
             data,
         };
+
+        this.remove=this.remove.bind(this)
     }
 
     private async getData()  {
@@ -115,7 +118,7 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
         .then(response => {
           return response.json()
         })
-        .then(data => console.log(data))
+        .then(data => {this.getData() })
         
     }
 

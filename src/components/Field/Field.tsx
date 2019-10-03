@@ -1,7 +1,8 @@
 import * as React from "react";
 import { IErrors, IFormContext, FormContext} from "../Form/Form";
 import { IFieldProps } from './FieldProps';
-
+import Checkbox from './Checkbox';
+import Select from './Select';
 export interface IRule {
     values: {
       [key: string]: any
@@ -16,14 +17,13 @@ export const Field: React.SFC<IFieldProps> = ({
   editor,
   options,
   value,
-  custom: Custom
 }) => {
 
     const getError = (errors: IErrors): string => (errors ? errors[id] : "");
     
     const getEditorStyle = (errors: IErrors): any =>
     getError(errors) ? { borderColor: "red" } : {};
-
+    
     return (
         <FormContext.Consumer>
           {(context: IFormContext) => (
@@ -32,13 +32,27 @@ export const Field: React.SFC<IFieldProps> = ({
               {label && 
                 <div className="field-title">{label}</div>
                 }
-              
-
+             
               <div className="field-content">
               {editor!.toLowerCase() === "textbox" && (
                 <input
                   id={id}
                   type="text"
+                  value={value}
+                  onChange={
+                    (e: React.FormEvent<HTMLInputElement>) =>
+                      context.setValues({ [id]: e.currentTarget.value }) 
+                  }
+                  onBlur={() => context.validate(id)}
+                  style={getEditorStyle(context.errors)} 
+                  className="form-control"
+                />
+              )}
+
+              {editor!.toLowerCase() === "password" && (
+                <input
+                  id={id}
+                  type="password"
                   value={value}
                   onChange={
                     (e: React.FormEvent<HTMLInputElement>) =>
@@ -65,31 +79,18 @@ export const Field: React.SFC<IFieldProps> = ({
               )}
     
               {editor!.toLowerCase() === "dropdown" && (
-                <select
-                  id={id}
-                  name={id}
-                  value={value}
-                  onChange={
-                    (e: React.FormEvent<HTMLSelectElement>) =>
-                      context.setValues({ [id]: e.currentTarget.value }) 
-                  }
-                  style={getEditorStyle(context.errors)} 
-                  onBlur={() => context.validate(id)}
-                  className="form-control"
-                >
-                  {options &&
-                    options.map(option => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                </select>
+                <Select id={id} 
+                        value={value} 
+                        context={context}
+                        options={options}
+                        getEditorStyle={getEditorStyle} />
               )}
 
-              {editor!.toLowerCase() === "custom" && (
-                  <Custom/>
+              {editor!.toLowerCase() === "checkbox" && (
+                  <Checkbox id={id} value={value} context={context}/>
               )}
-    
+
+            
               {getError(context.errors) && (
                 <div style={{ color: "red", fontSize: "80%" }}>
                 <p>{getError(context.errors)}</p>
