@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router"
-import { CSSTransitionGroup } from 'react-transition-group' // ES6
+import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { RouteComponentProps } from 'react-router-dom';
 
 export interface HeaderState {
     showDataUploadMenu: boolean,
  }
-export interface HeaderProps extends RouteComponentProps {
+export interface HeaderProps extends RouteComponentProps{
     titles: string[],
     loggedIn: boolean,
  }
@@ -17,7 +17,7 @@ const Header = (props: HeaderProps) => {
 
     return (
         <>
-            <CSSTransitionGroup
+            <ReactCSSTransitionGroup
                 transitionName="header"
                 transitionEnterTimeout={250}
                 transitionLeave={false}>
@@ -68,7 +68,7 @@ const Header = (props: HeaderProps) => {
                     </div>
                 </div>
             }
-            </CSSTransitionGroup>   
+            </ReactCSSTransitionGroup>   
         </>
     )
 };
