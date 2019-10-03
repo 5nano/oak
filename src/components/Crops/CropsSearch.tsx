@@ -11,14 +11,12 @@ const CropsSearch: React.SFC<IComoponentSearchProps> = (props) => {
     <Search
       searchAction={props.searchUrl}
       deleteAction={props.deleteUrl}
+      type="crop"
       render={() => (
         <React.Fragment>
-        
-          <Results type='crop'/>
           <Criteria id="main-criteria"
                     label="Buscar por nombre">
           </Criteria>
-          
         </React.Fragment>
       )}
     />

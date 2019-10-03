@@ -1,5 +1,15 @@
 @import './components/styles.scss';
 
+.search-container{
+    display:flex;
+    flex-direction: column;
+        .search-controller{
+            display:flex;
+            justify-content: flex-end;
+        }
+}
+
+
 .results-list{
         display:flex;
         justify-content: center;

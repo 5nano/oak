@@ -10,14 +10,12 @@ const CompaniesSearch: React.SFC<IComoponentSearchProps> = (props) => {
     <Search
       searchAction= {props.searchUrl}
       deleteAction= {props.deleteUrl}
+      type='companie'
       render={() => (
         <React.Fragment>
-        
-          <Results type='companie'/>
           <Criteria id="main-criteria"
                     label="Buscar por nombre">
           </Criteria>
-          
         </React.Fragment>
       )}
     />

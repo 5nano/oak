@@ -33,18 +33,23 @@ const CrudView: React.SFC <ICrudViewProps> = ({
   return (
 
       <div className="crud-container">
-                  <div className="search-wrapper">
-                    <div className="title-wrapper">
-                      <img src="../../assets/images/head-icon.png"/>
-                      <p>{title}</p>
-                    </div>
-                    <SearchComponent searchUrl={searchUrl} deleteUrl={deleteUrl}/>
-                  </div>
                   
-                  <div className="register-wrapper">
-                    <button className="add-element" onClick={handleClick}/>
-                    
-                    {formRequest && <FormComponent createUrl={createUrl}/>}
+
+                  <div className="title-wrapper">
+                    <img src="../../assets/images/head-icon.png"/>
+                    <p>{title}</p>
+                  </div>
+
+                  <div className="layout-wrapper">
+                      <a className="add-element" onClick={handleClick}/>
+                      <SearchComponent searchUrl={searchUrl} deleteUrl={deleteUrl}/>
+                  </div> 
+                  
+                  <div className="register-container">
+                    {formRequest && [
+                    <div className="title">Ingrese los nuevos datos</div>,
+                    <FormComponent createUrl={createUrl}/>]
+                    }
                   </div>
       </div>
  
