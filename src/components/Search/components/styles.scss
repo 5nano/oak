@@ -13,29 +13,20 @@
     
     .result-controller{
         display:flex;
-        justify-content: space-around;
+        justify-content: space-between;
         align-content: center;
         align-items: center;
     
-        .delete{
-            font-size: 16px;
-            border: none;
+        .action{
             display:flex;
-            justify-self: flex-start;
-            background-size: cover;
-            background: url('../../../assets/images/delete-icon.png');
-            height: 40px;
-            width: 40px;
-        }
+            justify-content: center;
+            align-content: center;
+            align-items: center;
 
-        .edit{
-            font-size: 16px;
-            border: none;
-            display:flex;
-            background-size: cover;
-            background: url('../../../assets/images/edit-icon.png');
-            height: 40px;
-            width: 40px;
+            .icon{
+                font-size: 20px;
+                color: grey;
+            }
         }
     }
 }
