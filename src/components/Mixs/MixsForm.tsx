@@ -3,7 +3,8 @@ import { Form, IFields, required, maxLength } from "../Form/Form";
 import { Field } from "../Field/Field";
 import { IComponentFormProps } from "../Form/ComponentFormProps";
 
-const CropsForm: React.SFC<IComponentFormProps> = (props) => {
+
+const MixsForm: React.SFC<IComponentFormProps> = (props) => {
 
   //fieldName must match with fieldId
   const fields: IFields = {
@@ -37,4 +38,4 @@ const CropsForm: React.SFC<IComponentFormProps> = (props) => {
   );
 };
 
-export default CropsForm;
+export default MixsForm;

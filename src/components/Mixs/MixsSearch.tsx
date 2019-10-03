@@ -4,16 +4,18 @@ import Criteria from '../Search/Criteria';
 import Results from '../Search/Results';
 import { IComoponentSearchProps } from "../Search/ComponentSearchProps";
 
-const CompaniesSearch: React.SFC<IComoponentSearchProps> = (props) => {
+
+
+const MixsSearch: React.SFC<IComoponentSearchProps> = (props) => {
   
   return (
     <Search
-      searchAction= {props.searchUrl}
-      deleteAction= {props.deleteUrl}
+      searchAction={props.searchUrl}
+      deleteAction={props.deleteUrl}
       render={() => (
         <React.Fragment>
         
-          <Results type='companie'/>
+          <Results type='mix' />
           <Criteria id="main-criteria"
                     label="Buscar por nombre">
           </Criteria>
@@ -24,4 +26,4 @@ const CompaniesSearch: React.SFC<IComoponentSearchProps> = (props) => {
   );
 };
 
-export default CompaniesSearch;
+export default MixsSearch;
