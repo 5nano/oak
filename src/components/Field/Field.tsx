@@ -91,10 +91,7 @@ export const Field: React.SFC<IFieldProps> = ({
                   <Checkbox id={id} value={value} context={context}/>
               )}
 
-              {editor!.toLowerCase() === "custom" && (
-                  <Custom/>
-              )}
-    
+            
               {getError(context.errors) && (
                 <div style={{ color: "red", fontSize: "80%" }}>
                 <p>{getError(context.errors)}</p>

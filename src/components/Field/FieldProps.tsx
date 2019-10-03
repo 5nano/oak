@@ -17,7 +17,7 @@ export interface IFieldProps {
   /* The field value */
   value?: any;
 
-  custom?: React.SFC;
+  type?:string;
 
   validation?: IValidation;
 }

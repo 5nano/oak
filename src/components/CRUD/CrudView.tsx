@@ -7,8 +7,8 @@ export interface ICrudViewProps {
     deleteUrl: string,
     updateUrl: string,
     createUrl: string
-    form: any,
-    search: any
+    form?: any,
+    search?: any
 }
 
 const CrudView: React.SFC <ICrudViewProps> = ({

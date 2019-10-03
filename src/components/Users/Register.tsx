@@ -1,44 +1,22 @@
 import * as React from "react";
-import { Form, IFields, required} from "../Form/Form";
-import { Field } from "../Field/Field";
+import UserForm from "./UserForm";
 
-export interface IUserProps{
-  createUrl: string,
-}
+import CrudView from '../CRUD/CrudView';
 
 
-const Register: React.SFC<IUserProps> = (props) => {
-
-  //fieldName must match with fieldId
-  const fields: IFields = {
-    name: {
-      id: "name",
-      label: "Nombre",
-      validation: {rule: required}
-    },
-    password: {
-      id:"password",
-      label: "Descripcion",
-      editor: "multilinetextbox",
-      validation: {rule: required}
-    }
-  };
+const Register: React.SFC = () => {
   
   return (
-    <Form
-      action={props.createUrl}
-      fields = {fields}
-      render={() => (
-        <React.Fragment>
-          <div className="alert alert-info" role="alert">
-            Ingresa los datos del nuevo usuario
-          </div>
-          <Field {...fields.name}/>
-          <Field {...fields.password}/>
-        </React.Fragment>
-      )}
-    />
-  );
+    <div className='register'>
+      <div className='register-background'>
+        <div className='register-container'>
+        <div className="title">Crop Testing Automation</div>
+
+          <UserForm createUrl='https://nanivo-bush.herokuapp.com/usuarios/insertar'/>
+        </div>
+      </div>
+    </div>
+ );
 };
 
 export default Register;
