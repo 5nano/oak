@@ -47,7 +47,7 @@ const App = (props: AppProps) => {
     return (
 
     <Router>
-        <Header titles={['nachochart','register']} />
+        <Header titles={['nachochart','register']} loggedIn={loggedIn}/>
         <Switch>
             <Route 
                 path="/" 
