@@ -18,7 +18,19 @@ const Item:React.SFC<IItemProps> = (props) => {
     return(
         <div className="item">
             <div className="item-img">
-                <img src='../../../assets/images/agrochemical-icon.png'/>
+
+                {props.type === 'agrochemical' &&
+                    <img src='../../../assets/images/agrochemical-icon.png'/>
+                 }
+
+                {props.type === 'crop' &&
+                    <img src='../../../assets/images/crop-icon.png'/>
+                 }
+
+                {props.type === 'mix' &&
+                    <img src='../../../assets/images/mix-icon.png'/>
+                 }
+
             </div>
 
 
@@ -26,7 +38,11 @@ const Item:React.SFC<IItemProps> = (props) => {
                 {Object.keys(object).map((key:any) => {
                     return (
                             <div className="item-prop">
-                                    <p>{key+ ': ' + object[key]}</p>
+                                {object[key]===null?
+                                    <p>Sin descripción</p>
+                                    :
+                                    <p>{object[key]}</p>
+                                }
                             </div>
                             )
                     })}
