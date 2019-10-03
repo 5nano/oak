@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { withRouter } from "react-router"
+import { CSSTransitionGroup } from 'react-transition-group' // ES6
 
 export interface HeaderState {
     showDataUploadMenu: boolean,
@@ -13,6 +15,10 @@ const Header = (props: HeaderProps) => {
 
     return (
         <>
+            <CSSTransitionGroup
+                transitionName="header"
+                transitionEnterTimeout={250}
+                transitionLeave={false}>
             <div className="header">
                 <Link to="/" className="logo-link">
                     <div className="nanivo-info">
@@ -36,26 +42,29 @@ const Header = (props: HeaderProps) => {
             </div>
             {
                 showDataUploadMenu &&
-                <div className="header">
-                    <button 
-                        className="func-access" 
-                        onClick={() => props.history.push('/crops')}>
-                            Nuevo tipo de plantación
-                    </button>
-                    <button 
-                        className="func-access" 
-                        onClick={() => props.history.push('/agrochemicals')}>
-                            Nuevo tipo de agroquímico
-                    </button>
-                    <button 
-                        className="func-access" 
-                        onClick={() => props.history.push('/assay')}>
-                            Nuevos ensayos
-                    </button>
+                <div className="header submenu">
+                    <div className="links">
+                        <button 
+                            className="show-data-upload-button" 
+                            onClick={() => props.history.push('/crops')}>
+                                Nuevo tipo de plantación
+                        </button>
+                        <button 
+                            className="show-data-upload-button" 
+                            onClick={() => props.history.push('/agrochemicals')}>
+                                Nuevo tipo de agroquímico
+                        </button>
+                        <button 
+                            className="show-data-upload-button" 
+                            onClick={() => props.history.push('/assay')}>
+                                Nuevos ensayos
+                        </button>
+                    </div>
                 </div>
             }
+            </CSSTransitionGroup>   
         </>
     )
 };
     
-export default Header;
+export default withRouter(Header);
