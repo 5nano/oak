@@ -1,33 +1,23 @@
 import * as React from 'react';
 import {ISearchContext,SearchContext} from './Search';
+import ResultItem from './components/ResultItem';
+import { ItemType } from './components/Item';
 
 export interface IResultsTableProps {
-   
+   type:ItemType;
 }
 
-export const Results:React.SFC<IResultsTableProps> = () => {
-        
+export const Results:React.SFC<IResultsTableProps> = (props) => {
+    const {type} = props;
     return(
         <SearchContext.Consumer>
             {(context:ISearchContext) => (
                 <div className="results-list">
                         {context.data.map(object => {
-                            return (
-                                <div className="results-list-item">
-                                    
-                                    {
-                                    Object.keys(object).map((key:any) => {
-                                      
-                                        return (
-                                        <p>{key+ ': ' + object[key]}</p>)
-                                        })}
-                    
-                                        <button 
-                                            onClick={e => context.remove(object)}>
-                                                Eliminar
-                                        </button>
-                                    
-                                </div>)
+                            return <ResultItem object={object}
+                                               remove={context.remove}
+                                               type={type}
+                                         />
                         })}
 
                         {context.data.length === 0 && 

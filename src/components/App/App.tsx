@@ -37,13 +37,23 @@ class ChartNachoHolder extends React.Component {
 export interface AppProps { title: string }
 
 const App = (props: AppProps) => {
+    const [{logged: loggedIn}, setLogin] = React.useState({logged: false});
+    const validateLogin = () => {
+        if (document.cookie.includes('ssid') && !loggedIn)
+            setLogin({logged: true});
+    };
+    validateLogin();
+
     return (
 
     <Router>
-        <Header titles={['home','nachochart','register']}/>
+        <Header titles={['nachochart','register']} loggedIn={loggedIn}/>
         <Switch>
-            <Route path="/" exact component={LogIn}/>
-            <Route path="/home" exact component={Homes}/>
+            <Route 
+                path="/" 
+                exact 
+                render={(props) => loggedIn ? <Homes {...props} /> : <LogIn {...props} validateLogin={validateLogin} />}
+            />
             <Route path="/register" exact component={Register}/>
 
             <Route path='/crops' exact component={Crops}/>

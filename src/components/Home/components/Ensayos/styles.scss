@@ -1,7 +1,8 @@
 .ensayos {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: flex-start;
+    flex-wrap: wrap;
 
     .Ensayo {
         display: flex;
@@ -9,8 +10,9 @@
         background-color: lightgreen;
         border: 1px solid black;
         border-radius: 2px;
-        width: 350px;
+        width: 260px;
         padding: 6px;
+        margin: 16px;
 
         .title {
             font-weight: 200;

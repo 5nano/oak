@@ -7,7 +7,7 @@ export interface ILogInState {
 }
 
 export interface ILogInProps {
-
+    validateLogin: Function
 }
 
 export class LogIn extends React.Component<ILogInProps,ILogInState> {
@@ -15,7 +15,7 @@ export class LogIn extends React.Component<ILogInProps,ILogInState> {
 
     constructor(props: ILogInProps){
         super(props);
-        this.state ={
+        this.state = {
             username: '',
             password: '',
         }
@@ -27,15 +27,20 @@ export class LogIn extends React.Component<ILogInProps,ILogInState> {
        e.preventDefault();
 
 
-       fetch('',{
+       fetch('/api/login',{
            method:'POST',
-           mode:'cors',
+           redirect: 'follow',
+           credentials: 'include', // Don't forget to specify this if you need cookies
+           mode: 'same-origin',
            headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json'
           },
           body: JSON.stringify(this.state)
-       }).then(response => console.log(response))
+       })
+        .then(response => {
+            this.props.validateLogin();
+        })
       }
 
     private handleChange =  (
