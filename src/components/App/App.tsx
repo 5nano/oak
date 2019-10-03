@@ -11,6 +11,7 @@ import Assay from '../Assay/Assay';
 import Dashboards from '../Dashboards/Dashboards';
 import Homes from '../Home/Home';
 import * as nachoScript from '../../../nachoScript';
+import Mixs from '../Mixs/Mixs';
 
 class ChartNachoHolder extends React.Component {
     componentDidMount() {
@@ -63,6 +64,8 @@ const App = (props: AppProps) => {
             <Route path='/crops' exact component={Crops}/>
 
             <Route path='/agrochemicals' exact component={Agrochemicals}/>
+
+            <Route path='/mixs' exact component={Mixs}/>
 
             <Route path='/companies' exact component={Companies}/>
 

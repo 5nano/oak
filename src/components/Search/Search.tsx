@@ -1,9 +1,13 @@
 import * as React from "react";
+import { ItemType } from "./components/Item";
+import Results from "./Results";
+import SearchButton from "./SearchButton";
 
 
 export interface ISearchProps{
     searchAction: string,
     deleteAction: string,
+    type: ItemType,
     render: () => React.ReactNode
 }
 
@@ -28,6 +32,7 @@ export interface ISearchContext extends ISearchState {
     setValues: (values: IValues) => void
     data: Array<any>
     remove: (object:any) => Promise<void>
+    search: (event: React.MouseEvent) => Promise<void>
   }
 
 export const SearchContext = React.createContext<ISearchContext | undefined> (
@@ -132,15 +137,18 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
             ...this.state,
             setValues:this.setValues,
             data: this.state.data,
-            remove:this.remove
+            remove:this.remove,
+            search:this.handleSearch
         };
         return(
             <SearchContext.Provider value={context}>
-                
-                    {this.props.render()}
-
-                    <button onClick={this.handleSearch}>Buscar</button>
-                   
+               <div className="search-container">
+                <Results type={this.props.type}/>
+                <div className="search-controller">
+                  <SearchButton/>
+                  {this.props.render()}
+                </div>
+              </div>
             </SearchContext.Provider>
         )
     }
