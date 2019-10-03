@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Form, IFields, required} from "../Form/Form";
 import { Field } from "../Field/Field";
+import FormButton from "../Form/FormButton";
+import RegisterButton from "./components/RegisterButton";
 
 export interface IUserProps{
   createUrl: string,
@@ -49,6 +51,7 @@ const UserForm: React.SFC<IUserProps> = (props) => {
       <Form
         action={props.createUrl}
         fields = {fields}
+        button = {RegisterButton}
         render={() => (
           <React.Fragment>
             <Field {...fields.name}/>

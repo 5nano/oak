@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IFieldProps } from '../Field/FieldProps';
-import { values } from 'd3';
+import FormButton, { IFormButtonProps } from './FormButton';
 
 export interface IFields {
   [key: string]: IFieldProps;
@@ -16,8 +16,10 @@ interface IFormProps {
     type?: string,
 
     getValues?: (values:IValues) => void;
-}
 
+    button?:React.SFC<IFormButtonProps>;
+}
+ 
 export interface IValues {
     [key: string]: any;
 }
@@ -58,8 +60,17 @@ export const maxLength = (
     ? `Este campo no puede exceder ${length} caracteres`
     : "";
 
+
+export interface DefaultFormProps {
+  button: React.SFC<IFormButtonProps>
+}
+
 export class Form extends React.Component<IFormProps, IFormState> {
-    constructor(props: IFormProps){
+  static defaultProps:DefaultFormProps = {
+    button:FormButton
+  }
+  
+  constructor(props: IFormProps){
         super(props);
 
         const errors: IErrors={}
@@ -160,6 +171,8 @@ private async submitForm(): Promise<boolean> {
       validate: this.validate
     };
 
+    const {button:Button} = this.props;
+
     return (
       <FormContext.Provider value={context}>
         <div className="form-container">
@@ -187,20 +200,17 @@ private async submitForm(): Promise<boolean> {
 
           </form>
 
-            <button
-                type="button"
-                disabled={this.haveErrors(errors)}
-                onClick={this.handleSubmit}
-              >
-                Agregar
-            </button>
-
+        <Button onClick={this.handleSubmit}
+                disabled={this.haveErrors(errors)}/>
+       
         </div>
       </FormContext.Provider>
     );
   }
-}
 
+  
+
+}
 
 
 
