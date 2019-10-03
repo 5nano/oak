@@ -7,6 +7,10 @@
     text-transform: uppercase;
     padding: 0 80px;
 
+    .logo-link {
+        color: inherit;
+        text-decoration: none;
+    }
 
     .nanivo-info {
         display: flex;

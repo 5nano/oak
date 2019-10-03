@@ -6,6 +6,7 @@ const manifest = require('./dist/manifest');
 const helmet = require('helmet')
 const http = require('http');
 const fs = require('fs');
+const api = require('./api');
 
 const devMode = process.env.NODE_ENV === 'development';
 
@@ -36,12 +37,15 @@ app.use("/assets", expressStaticGzip("./dist/assets", {
     }
 }));
 
-app.use((req, res) => {
+app.use('/api', api);
+
+app.use((req, res, next) => {
     res.set({
         'Cache-Control': 31536000
     });
     res.send(template('Oak', manifest, cdnPath));
 });
+
 
 var httpServer = http.createServer(app);
 

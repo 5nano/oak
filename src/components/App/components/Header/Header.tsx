@@ -7,10 +7,12 @@ export interface HeaderProps {
 
 const Header = (props: HeaderProps) => (
     <div className="header">
-        <div className="nanivo-info">
-            <img src="../../../../assets/images/logo.png" className="header-logo" />
-            <h1 className="nanivo-title">Nanivo</h1>
-        </div>
+        <Link to="/" className="logo-link">
+            <div className="nanivo-info">
+                <img src="../../../../assets/images/logo.png" className="header-logo" />
+                <h1 className="nanivo-title">Nanivo</h1>
+            </div>
+        </Link>
         <div className="links">
             {props.titles.map(title => {
                 return <Link to={`/${title}`} className="header-link">
