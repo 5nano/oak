@@ -21,9 +21,9 @@ const ResultItem:React.SFC<IResultItemProps> = (props) => {
         })}
 
             <div className="result-controller">
-                    <button className="delete"
+                    <button className="delete icon-trash"
                         onClick={e => remove(object)}/>  
-                    <button className="edit"
+                    <button className="edit icon-arrows-cw"
                         onClick={e => remove(object)}/> 
             </div>
         

@@ -1,16 +1,15 @@
 @font-face {
-    @font-face {
-        font-family: 'fontello';
-        src: url('.7assets/fontello.eot?22722206');
-        src: url('.7assets/fontello.eot?22722206#iefix') format('embedded-opentype'),
-             url('.7assets/fontello.woff2?22722206') format('woff2'),
-             url('.7assets/fontello.woff?22722206') format('woff'),
-             url('.7assets/fontello.ttf?22722206') format('truetype'),
-             url('.7assets/fontello.svg?22722206#fontello') format('svg');
-        font-weight: normal;
-        font-style: normal;
-      }
-}
+    font-family: 'fontello';
+    src: url('./assets/fontello.eot?22722206');
+    src: url('./assets/fontello.eot?22722206#iefix') format('embedded-opentype'),
+          url('./assets/fontello.woff2?22722206') format('woff2'),
+          url('./assets/fontello.woff?22722206') format('woff'),
+          url('./assets/fontello.ttf?22722206') format('truetype'),
+          url('./assets/fontello.svg?22722206#fontello') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+
 
 [class^="icon-"]:before, [class*=" icon-"]:before {
     font-family: "fontello";
