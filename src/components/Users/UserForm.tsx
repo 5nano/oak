@@ -27,7 +27,7 @@ const UserForm: React.SFC<IUserProps> = (props) => {
       validation: {rule: required}
     },
     compania:{
-      id:"email",
+      id:"compania",
       label:"Compañía",
       editor:"dropdown",
       options: [],
@@ -40,7 +40,7 @@ const UserForm: React.SFC<IUserProps> = (props) => {
     password: {
       id:"password",
       label: "Contraseña",
-      editor: "multilinetextbox",
+      editor: "password",
       validation: {rule: required}
     }
   };

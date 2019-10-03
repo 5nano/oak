@@ -17,7 +17,6 @@ export const Field: React.SFC<IFieldProps> = ({
   editor,
   options,
   value,
-  custom: Custom
 }) => {
 
     const getError = (errors: IErrors): string => (errors ? errors[id] : "");
