@@ -1,25 +1,17 @@
 import * as React from 'react';
+import { IItemProps } from './Item';
 export interface IResultItemProps{
     object:any;
-    remove:(object: any) => Promise<void>
+    remove:(object: any) => Promise<void>;
+    item:React.SFC<IItemProps>
 }
 
 const ResultItem:React.SFC<IResultItemProps> = (props) => {
     
-    const {object,remove} = props;
+    const {object,remove,item:Item} = props;
     return(
         <div className="results-item">
-                                    
-        {
-        Object.keys(object).map((key:any) => {
-          
-            return (
-                    <div className="item-prop">
-                         <p>{key+ ': ' + object[key]}</p>
-                    </div>
-                    )
-        })}
-
+            <Item object={object}/>
             <div className="result-controller">
                 <a className='action' onClick={e => remove(object)}>
                     <i className="icon icon-trash"></i>

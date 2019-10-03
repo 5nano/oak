@@ -2,7 +2,7 @@ import * as React from "react";
 import Search from '../Search/Search';
 import Criteria from '../Search/Criteria';
 import Results from '../Search/Results';
-import ResultItem from "../Search/components/ResultItem";
+import Item from "../Search/components/Item";
 
 export interface IAgrochemicalSearchProps {
     searchUrl: string,
@@ -18,7 +18,7 @@ const AgrochemicalsSearch: React.SFC<IAgrochemicalSearchProps> = (props) => {
       render={() => (
         <React.Fragment>
         
-          <Results item={ResultItem} />
+          <Results item={Item} />
           <Criteria id="main-criteria"
                     label="Buscar por nombre">
           </Criteria>
