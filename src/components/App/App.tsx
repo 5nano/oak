@@ -43,10 +43,11 @@ const App = (props: AppProps) => {
             setLogin({logged: true});
     };
     validateLogin();
+
     return (
 
     <Router>
-        <Header titles={['nachochart','register']}/>
+        <Header titles={['nachochart','register']} />
         <Switch>
             <Route 
                 path="/" 

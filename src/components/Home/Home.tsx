@@ -2,10 +2,12 @@ import * as React from "react";
 import Ensayos from './components/Ensayos/Ensayos';
 import { Ensayo } from '../../Interfaces/Ensayo';
 import { RouteComponentProps } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export interface IHomesState {
     ensayos: Array<Ensayo>,
-    experimentos: Array<object>
+    experimentos: Array<object>,
+    showDataUploadMenu: boolean,
 }
 
 
@@ -21,11 +23,19 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
         this.state ={
             ensayos: [],
             experimentos: [],
+            showDataUploadMenu: false,
         };
         this.fetchEnsayos();
         this.goToDashboard = this.goToDashboard.bind(this);
+        this.showDataUploadMenu = this.showDataUploadMenu.bind(this);
     }
 
+    private showDataUploadMenu(event: any) {
+        event.preventDefault();
+        this.setState({
+            showDataUploadMenu: !this.state.showDataUploadMenu,
+        });
+    }
     private fetchEnsayos = async (): Promise<void> => {
        fetch('https://nanivo-bush.herokuapp.com/ensayos',{
            method:'GET',

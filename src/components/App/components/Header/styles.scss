@@ -1,3 +1,14 @@
+.header-enter {
+    opacity: 0.01;
+  }
+  
+  .header-enter.header-enter-active {
+    opacity: 1;
+    transition: opacity 250ms ease-in;
+  }
+
+
+
 .header {
     display: flex;
     align-items: center;
@@ -12,6 +23,7 @@
         text-decoration: none;
     }
 
+
     .nanivo-info {
         display: flex;
         height: 100%;
@@ -20,6 +32,10 @@
         .nanivo-title {
             font-size: 1.3em;
             margin-left: 6px;
+
+            &:hover {
+                color: #0000FF;
+            }
         }
 
         .header-logo {
@@ -34,9 +50,48 @@
         display: flex;
         justify-content: space-evenly;
 
+        .show-data-upload-button {
+            font-weight: 200;
+            margin-left: 42px;
+
+            border: none;
+            font-family: inherit;
+
+            font-size: inherit;
+            text-transform: uppercase;
+            cursor: pointer;
+            &:hover {
+                color: #0000FF;
+            }
+        }
+
         .header-link {
             font-weight: 200;
             margin-left: 42px;
+
+            color: inherit;
+            cursor: pointer;
+            text-decoration: none;
+            &:hover {
+                color: #0000FF;
+            }
+        }
+    }
+}
+
+.submenu {
+    justify-content: center;
+
+    .links {
+        justify-content: space-between;
+        border-top: 1px solid black;
+        padding-top: 12px;
+
+        .show-data-upload-button {
+            background-color: white;
+            border: 1px solid gray;
+            margin-bottom: 6px;
+            padding: 6px;
         }
     }
 }
