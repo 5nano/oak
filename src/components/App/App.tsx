@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BrowserRouter as Router,Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router,Route, Switch, Redirect} from 'react-router-dom';
 import Crops from '../Crops/Crops';
 import Companies from '../Companies/Companies';
 import Agrochemicals from '../Agrochemicals/Agrochemicals';
@@ -49,6 +49,10 @@ const App = (props: AppProps) => {
     <Router>
         <Header titles={['nachochart','register']} loggedIn={loggedIn}/>
         <Switch>
+            {
+                !loggedIn &&
+                <Redirect from="/:foo+" to="/"></Redirect>
+            }
             <Route 
                 path="/" 
                 exact 
