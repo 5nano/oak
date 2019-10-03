@@ -1,5 +1,5 @@
 /* The available editors for the field */
-type Editor = "textbox" | "multilinetextbox" | "dropdown" | "custom";
+type Editor = "textbox" |"checkbox"| "multilinetextbox" | "dropdown" | "custom";
 
 export interface IFieldProps {
   /* The unique field name */

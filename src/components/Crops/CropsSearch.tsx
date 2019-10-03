@@ -17,7 +17,7 @@ const CropsSearch: React.SFC<ICropsSearchProps> = (props) => {
       render={() => (
         <React.Fragment>
         
-          <Results titles={['Nombre','Descripcion']}/>
+          <Results/>
           <Criteria id="main-criteria"
                     label="Buscar por nombre">
           </Criteria>

@@ -18,7 +18,7 @@ const CompaniesSearch: React.SFC<ICompanySearchProps> = (props) => {
       render={() => (
         <React.Fragment>
         
-          <Results titles={['Nombre','Descripcion']}/>
+          <Results/>
           <Criteria id="main-criteria"
                     label="Buscar por nombre">
           </Criteria>

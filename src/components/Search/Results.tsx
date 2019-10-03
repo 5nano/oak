@@ -2,10 +2,10 @@ import * as React from 'react';
 import {ISearchContext,SearchContext} from './Search';
 
 export interface IResultsTableProps {
-    titles: string[];
+   
 }
 
-export const Results:React.SFC<IResultsTableProps> = ({titles}) => {
+export const Results:React.SFC<IResultsTableProps> = () => {
         
     return(
         <SearchContext.Consumer>
@@ -17,8 +17,9 @@ export const Results:React.SFC<IResultsTableProps> = ({titles}) => {
                                     
                                     {
                                     Object.keys(object).map((key:any) => {
+                                        console.log(object)
                                         return (
-                                        <p>{object[key]}</p>)
+                                        <p>{key+ ': ' + object[key]}</p>)
                                         })}
                     
                                         <button 
