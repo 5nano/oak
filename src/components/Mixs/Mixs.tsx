@@ -14,7 +14,7 @@ const Mixs: React.SFC = () => {
         searchUrl= 'https://nanivo-bush.herokuapp.com/mezclas'
         deleteUrl= 'https://nanivo-bush.herokuapp.com/mezclas/eliminar'
         createUrl= 'https://nanivo-bush.herokuapp.com/mezclas/insertar'
-        updateUrl= 'https://nanivo-bush.herokuapp.com/mezclas/actualizar'
+        updateUrl= 'https://nanivo-bush.herokuapp.com/mezclas/modificar'
         form= {MixsForm}
         search= {MixsSearch}
     />
