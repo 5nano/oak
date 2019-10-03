@@ -47,7 +47,7 @@ const App = (props: AppProps) => {
     return (
 
     <Router>
-        <Header titles={['nachochart','register']} loggedIn={loggedIn}/>
+        <Header titles={[{title: "Área foliar", path: 'leaf-area'}]} loggedIn={loggedIn}/>
         <Switch>
             {
                 !loggedIn &&
@@ -72,7 +72,7 @@ const App = (props: AppProps) => {
 
             <Route path='/assay/:assayId/dashboard' exact component={Dashboards}/>
 
-            <Route path='/nachochart' exact component={ChartNachoHolder} />
+            <Route path='/leaf-area' exact component={ChartNachoHolder} />
           </Switch>
 
     </Router>
