@@ -3,12 +3,15 @@ import { Form, IFields, required, maxLength, IValues } from "../Form/Form";
 import { Field } from "../Field/Field";
 import TreatmentForm from './TreatmentForm';
 import Treatments from './Treatments';
+import Agrochemicals from "../Agrochemicals/Agrochemicals";
+import { LoaderOptionsPlugin } from "webpack";
 
 export interface IAssayFormProps {
 
 }
 
 export interface IAssayFormState{
+  id:Number,
   values:{name:string,
           description:string,
           crop:string,
@@ -16,11 +19,16 @@ export interface IAssayFormState{
           mix:string},
   treatments: Array<IValues>,
   newTreatment:boolean,
-  successAssay: boolean
+  successAssay: boolean,
+  loading:{
+    agrochemicals:boolean,
+    mixs:boolean,
+    crops:boolean
+  }
 }
 
 //fieldName must match with fieldId
-  const fields:IFields = {
+  var fields:IFields = {
       name: {
         id: "name",
         label: "Nombre",
@@ -36,21 +44,21 @@ export interface IAssayFormState{
           id:"crop",
           label: "Cultivo",
           editor: "dropdown",
-          options: ['maiz','soja'],
+          options: [],
           validation: {rule: required}
         },
       agrochemical: {
           id:"agrochemical",
           label: "Agroquimico",
           editor: "dropdown",
-          options: ['herbicida A','herbicida B'],
+          options: [],
           validation: {rule: required}
       },
       mix: {
           id:"mix",
           label: "Mezcla",
           editor: "dropdown",
-          options: ['A','B'],
+          options: [],
           validation: {rule: required}
       }
   }
@@ -60,6 +68,7 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
     super(props)
 
     this.state = {
+      id:null,
       values: {name:'',
               description:'',
               crop:fields.crop.options[0],
@@ -67,27 +76,97 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
               mix:fields.mix.options[0]},
       treatments: [],
       newTreatment: false,
-      successAssay: false
+      successAssay: false,
+      loading: {
+        agrochemicals:true,
+        mixs:true,
+        crops:true,
+      }
     }
   }
- handleAssayValues=(values:IValues):void=>{
- 
-    
 
-    /*fetch('', {
-      method: "POST",
+  componentDidMount(){
+    fetch('https://nanivo-bush.herokuapp.com/cultivos', {
+      method: "GET",
       mode: 'cors',
-      body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json'
       }
-    }).then(response => {
-            console.log(response)
-            console.log(response.json())
-    })
-    */
+    }).then(response => {return response.json()})
+      .then(data=> {
+        console.log(data)
+        fields.crop.options = ["Maiz","Soja"]
+        this.setState(prevState => {
+          let loading = {...prevState.loading}
+          loading.crops = false
+          return {loading}
+        })
+      })
+    
+    fetch('https://nanivo-bush.herokuapp.com/agroquimicos', {
+      method: "GET",
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    }).then(response => {return response.json()})
+      .then(data=> {
+        console.log(data)
+        fields.agrochemical.options=["Herbicida A","Herbicida B"]
+        this.setState(prevState => {
+          let loading = {...prevState.loading}
+          loading.agrochemicals = false
+          return {loading}
+        })
+      })
+    
 
+    fetch('https://nanivo-bush.herokuapp.com/mezclas', {
+      method: "GET",
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    }).then(response => {return response.json()})
+    .then(data=> {
+      console.log(data)
+      fields.mix.options=["A","B"]
+      this.setState(prevState => {
+        let loading = {...prevState.loading}
+        loading.mixs = false
+        return {loading}
+      })
+    })
+
+  }
+
+
+ handleAssayValues=(values:IValues):void=>{
+ /*
+    const assayData = {
+      name:values.name,
+      description:values.description,
+      idMixture:this.state.values.mix,
+      idAgrochemical:this.state.values.agrochemical,
+      idCrop:this.state.values.crop
+    }
+    fetch('', {
+      method: "POST",
+      mode: 'cors',
+      body: JSON.stringify(assayData),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    }).then(response => {return response.json()})
+      .then(data =>{
+        console.log(data);
+        this.setState({id:data['idAssay'],successAssay:true})
+      })*/
+    
     //Proximo paso
    this.setState({successAssay:true})
 
@@ -98,7 +177,16 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
 
   handleTreatmentValues=(values:IValues):void=>{
     console.log(values)
-    this.setState({treatments:[...this.state.treatments,values]})
+/*
+    const data = {
+      idAssay:this.state.id,
+      name:values.name,
+      description:values.description,
+      experimentsLength:values.experimentsLength,
+      idMixture:this.state.values.mix,
+      idAgrochemical:this.state.values.agrochemical,
+    }*/
+    //this.setState({treatments:[...this.state.treatments,values]})
   }
 
   handleClick = (e:React.MouseEvent<HTMLElement>):void => {

@@ -9,21 +9,20 @@ interface ITreatmentFormProps{
 const TreatmentForm: React.SFC<ITreatmentFormProps>= (props) => {
   //fieldName must match with fieldId
   const fields: IFields = {
-    tag: {
-      id: "tag",
+    name: {
+      id: "name",
       label: "Etiqueta",
       validation: {rule: required}
 
     },
-
     description: {
       id:"description",
       label: "Descripcion",
       editor: "multilinetextbox",
       validation: {rule: required}
     },
-    tests: {
-        id:"tests",
+    experimentsLength: {
+        id:"experimentsLength",
         label: "Cantidad de pruebas",
         validation: {rule: required}
       },
@@ -53,7 +52,7 @@ const TreatmentForm: React.SFC<ITreatmentFormProps>= (props) => {
             </div>
 
               <Form
-                action=''
+                action='nanivo-bush.herokuapp.com/tratamientos/insertar'
                 fields={fields}
                 type='alternative'
                 getValues={props.handleValues}

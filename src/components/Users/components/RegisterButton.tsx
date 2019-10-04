@@ -3,10 +3,10 @@ import { IFormButtonProps } from '../../Form/FormButton'
 
 
 const RegisterButton:React.SFC<IFormButtonProps> = (props) => {
-    const {onClick,disabled} = props
+    const {onClick} = props
     return(
         <div className='register-button'>
-            <button onClick={onClick} disabled={disabled}>
+            <button onClick={onClick} >
                 Register
             </button>
         </div>

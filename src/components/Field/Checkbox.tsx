@@ -26,7 +26,6 @@ const Checkbox:React.SFC<ICheckboxProps> = (props) => {
                     setActualValue(!actualValue)
                     }
                 }
-                onBlur={() => context.validate(id)}
                 className="form-control"
                 />
     )

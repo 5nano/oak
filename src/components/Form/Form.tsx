@@ -156,11 +156,9 @@ private async submitForm(): Promise<boolean> {
       }
     }).then(response => {
             console.log(response)
-
             if (response.status > 200) return false
             else return true
     })
-
   }
  
   public render() {
@@ -200,8 +198,7 @@ private async submitForm(): Promise<boolean> {
 
           </form>
 
-        <Button onClick={this.handleSubmit}
-                disabled={this.haveErrors(errors)}/>
+        <Button onClick={this.handleSubmit}/>
        
         </div>
       </FormContext.Provider>

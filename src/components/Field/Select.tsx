@@ -19,7 +19,7 @@ const Select:React.SFC<ISelectProps> = (props) => {
 
     React.useEffect(()=>{
         context.setValues({[id]: options[0]})
-    },[])
+    },[options])
 
     return(
             <select
@@ -28,10 +28,10 @@ const Select:React.SFC<ISelectProps> = (props) => {
                   value={value}
                   onChange={
                     (e: React.FormEvent<HTMLSelectElement>) =>
-                      context.setValues({ [id]: e.currentTarget.value }) 
+                    {  e.preventDefault();
+                      context.setValues({ [id]: e.currentTarget.value })} 
                   }
-                  style={getEditorStyle(context.errors)} 
-                  onBlur={() => context.validate(id)}
+                  style={getEditorStyle(context.errors)}
                   className="select"
                 >
                   {options &&
