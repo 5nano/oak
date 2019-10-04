@@ -17,10 +17,6 @@ const Select:React.SFC<ISelectProps> = (props) => {
            context,
            getEditorStyle} = props;
 
-    React.useEffect(()=>{
-        context.setValues({[id]: options[0]})
-    },[options])
-
     return(
             <select
                   id={id}
@@ -34,6 +30,7 @@ const Select:React.SFC<ISelectProps> = (props) => {
                   style={getEditorStyle(context.errors)}
                   className="select"
                 >
+                  <option value='' selected disabled hidden/>
                   {options &&
                     options.map(option => (
                       <option key={option} value={option}>

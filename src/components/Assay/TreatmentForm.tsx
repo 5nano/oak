@@ -51,6 +51,7 @@ const TreatmentForm: React.SFC<ITreatmentFormProps>= (props) => {
             <p>Nuevo Tratamiento</p>
             </div>
 
+
               <Form
                 action='nanivo-bush.herokuapp.com/tratamientos/insertar'
                 fields={fields}
