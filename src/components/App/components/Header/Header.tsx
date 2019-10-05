@@ -8,7 +8,7 @@ export interface HeaderState {
     showDataUploadMenu: boolean,
  }
 export interface HeaderProps extends RouteComponentProps{
-    titles: string[],
+    titles: {title: string, path: string}[],
     loggedIn: boolean,
  }
 
@@ -31,9 +31,9 @@ const Header = (props: HeaderProps) => {
                 {
                     props.loggedIn && (
                     <div className="links">
-                        {props.titles.map(title => {
-                            return <Link to={`/${title}`} className="header-link">
-                                        {title}
+                        {props.titles.map(header => {
+                            return <Link to={`/${header.path}`} className="header-link">
+                                        {header.title}
                                     </Link>
                         })}
                         <button
