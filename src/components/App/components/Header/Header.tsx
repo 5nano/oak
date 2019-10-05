@@ -62,6 +62,11 @@ const Header = (props: HeaderProps) => {
                         </button>
                         <button 
                             className="show-data-upload-button" 
+                            onClick={() => props.history.push('/mixs')}>
+                                Nuevo tipo de mezcla
+                        </button>
+                        <button 
+                            className="show-data-upload-button" 
                             onClick={() => props.history.push('/assay')}>
                                 Nuevos ensayos
                         </button>

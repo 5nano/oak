@@ -1,15 +1,10 @@
 import * as React from "react";
 import { Form, IFields, required} from "../Form/Form";
 import { Field } from "../Field/Field";
-import FormButton from "../Form/FormButton";
 import RegisterButton from "./components/RegisterButton";
+import { IComponentFormProps } from "../Form/ComponentFormProps";
 
-export interface IUserProps{
-  createUrl: string,
-}
-
-
-const UserForm: React.SFC<IUserProps> = (props) => {
+const UserForm: React.SFC<IComponentFormProps> = (props) => {
 
   //fieldName must match with fieldId
   const fields: IFields = {

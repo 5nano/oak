@@ -3,15 +3,17 @@ import Search from '../Search/Search';
 import Criteria from '../Search/Criteria';
 import Results from '../Search/Results';
 import { IComoponentSearchProps } from "../Search/ComponentSearchProps";
+import SearchButton from "../Search/SearchButton";
 
 
-const AgrochemicalsSearch: React.SFC<IComoponentSearchProps> = (props) => {
+
+const MixsSearch: React.SFC<IComoponentSearchProps> = (props) => {
   
   return (
     <Search
       searchAction={props.searchUrl}
       deleteAction={props.deleteUrl}
-      type='agrochemical'
+      type='mix'
       render={() => (
         <React.Fragment>
           <Criteria id="main-criteria"
@@ -23,4 +25,4 @@ const AgrochemicalsSearch: React.SFC<IComoponentSearchProps> = (props) => {
   );
 };
 
-export default AgrochemicalsSearch;
+export default MixsSearch;

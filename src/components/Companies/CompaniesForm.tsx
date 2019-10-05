@@ -1,12 +1,9 @@
 import * as React from "react";
 import { Form, IFields, required, maxLength } from "../Form/Form";
 import { Field } from "../Field/Field";
+import { IComponentFormProps } from "../Form/ComponentFormProps";
 
-export interface ICompanyFormProps{
-  createUrl: string,
-}
-
-const CompaniesForm: React.SFC<ICompanyFormProps> = (props) => {
+const CompaniesForm: React.SFC<IComponentFormProps> = (props) => {
 
   //fieldName must match with fieldId
   const fields: IFields = {

@@ -17,7 +17,7 @@ const ResultItem:React.SFC<IResultItemProps> = (props) => {
                 <a className='action' onClick={e => remove(object)}>
                     <i className="icon icon-trash"></i>
                 </a>
-                <a className='action' onClick={e => remove(object)}>
+                <a className='action' onClick={e => console.log("Updated not done")}>
                     <i className="icon icon-arrows-cw"></i>
                 </a>
                  

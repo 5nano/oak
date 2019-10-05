@@ -1,12 +1,10 @@
 import * as React from "react";
 import { Form, IFields, required, maxLength } from "../Form/Form";
 import { Field } from "../Field/Field";
+import { IComponentFormProps } from "../Form/ComponentFormProps";
 
-export interface IAgrochemicalFormProps{
-  createUrl: string
-}
 
-const AgrochemicalsForm: React.SFC<IAgrochemicalFormProps> = (props) => {
+const AgrochemicalsForm: React.SFC<IComponentFormProps> = (props) => {
 
   //fieldName must match with fieldId
   const fields: IFields = {

@@ -2,27 +2,20 @@ import * as React from "react";
 import Search from '../Search/Search';
 import Criteria from '../Search/Criteria';
 import Results from '../Search/Results';
-import Item from "../Search/components/Item";
+import { IComoponentSearchProps } from "../Search/ComponentSearchProps";
 
-export interface IUsersSearchProps{
-  searchUrl: string,
-  deleteUrl: string,
-}
-
-const UsersSearch: React.SFC<IUsersSearchProps> = (props) => {
+const UsersSearch: React.SFC<IComoponentSearchProps> = (props) => {
   
   return (
     <Search
       searchAction={props.searchUrl}
       deleteAction={props.deleteUrl}
+      type="user"
       render={() => (
         <React.Fragment>
-        
-          <Results type='user'/>
           <Criteria id="main-criteria"
                     label="Buscar por nombre">
           </Criteria>
-          
         </React.Fragment>
       )}
     />
