@@ -1,5 +1,5 @@
 const React = require('react');
-const nachoScript = require('./nachoScript');
+const nachoScript = require('./src/components/Dashboards/dashboardsTypes/LeafArea/LeafAreaScript');
 module.exports = (title, manifest, cdnPath) => {     
     console.log(manifest);
     return `

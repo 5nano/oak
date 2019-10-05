@@ -1,3 +1,22 @@
-.no-data-yet {
-    margin: auto;
+@import './dashboardsTypes/YellowFreq/styles.scss';
+@import './components/DashboardSelector/styles.scss';
+
+.Dashboard {
+    display: flex;
+    flex-direction: row;
+    margin: 16px 64px;
+
+    .no-data-yet {
+        margin: auto;
+    }
+
+    .left-column {
+        z-index: 1000;
+    }
+
+    .right-column {
+        flex-grow: 2;
+        border: 1px solid black;
+    }
 }
+

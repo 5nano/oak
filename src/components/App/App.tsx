@@ -10,7 +10,7 @@ import Users from '../Users/Users';
 import Assay from '../Assay/Assay';
 import Dashboards from '../Dashboards/Dashboards';
 import Homes from '../Home/Home';
-import * as nachoScript from '../../../nachoScript';
+import * as nachoScript from '../Dashboards/dashboardsTypes/LeafArea/LeafAreaScript';
 
 class ChartNachoHolder extends React.Component {
     componentDidMount() {
