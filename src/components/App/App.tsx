@@ -26,7 +26,7 @@ const App = (props: AppProps) => {
     return (
 
     <Router>
-        <Header titles={[{title: "Área foliar", path: 'leaf-area'}]} loggedIn={loggedIn}/>
+        <Header titles={[]} loggedIn={loggedIn}/>
         <Switch>
             {
                 !loggedIn &&

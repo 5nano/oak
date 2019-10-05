@@ -1,13 +1,15 @@
 .dashboard-selector {
     .tab-wrapper {
         border: 1px solid black;
-        padding: 6px;
+        padding: 12px;
         border-radius: 1px;
         border-right: none;
+        background-color: rgba(0,0,0,0.3);
 
         &.selected {
             margin-right: -1px; // Trick for right margin empty when selected
+            background-color: white;
+
         }
-        background-color: white;
     }
 }
