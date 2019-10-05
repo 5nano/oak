@@ -62,17 +62,23 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
   render(){      
     return (
       <div className="Dashboard">
-        <div className="left-column">
-          <DashboardSelector 
-            dashboardTypes={this.dashboardTypes} 
-            onSelect={this.setDashboard.bind(this)}
-            currentSelection={this.state.currentDashboard}
-          />
+        <div className="dashboard-title">
+          <h1>Dashboard</h1>
+          <h2>Ensayo {this.state.assayId}</h2>
         </div>
-        <div className="right-column">
-          {
-            this.renderDashboard(this.state.currentDashboard)
-          }
+        <div className="dashboard-container">
+          <div className="left-column">
+            <DashboardSelector 
+              dashboardTypes={this.dashboardTypes} 
+              onSelect={this.setDashboard.bind(this)}
+              currentSelection={this.state.currentDashboard}
+            />
+          </div>
+          <div className="right-column">
+            {
+              this.renderDashboard(this.state.currentDashboard)
+            }
+          </div>
         </div>
       </div>
     );
