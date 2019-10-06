@@ -1,20 +1,14 @@
 import * as React from "react";
 import { Form, IFields, required, maxLength, IValues } from "../Form/Form";
 import { Field } from "../Field/Field";
+import { IFieldsOptions } from "./Assay";
 
 export interface IAssayFormProps {
   handleValues: (values:IValues) => void;
+  fieldsOptions:IFieldsOptions
 }
 
-export interface IAssayFormState{
-  loading:{
-    agrochemicals:boolean,
-    mixs:boolean,
-    crops:boolean
-  }
-}
 
-//fieldName must match with fieldId
 var fields:IFields = {
   name: {
     id: "name",
@@ -50,99 +44,21 @@ var fields:IFields = {
   }
 }
 
-class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
+const AssayForm:React.SFC<IAssayFormProps> = (props) => {
 
-  constructor(props:IAssayFormProps){
-    super(props)
-    
-    this.state = {
-      loading: {
-        agrochemicals:true,
-        mixs:true,
-        crops:true,
-      }
-    }
-    
-  }
 
-  componentDidMount(){
-
-    this.setLoading()
-    fetch('https://nanivo-bush.herokuapp.com/cultivos', {
-      method: "GET",
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      }
-    }).then(response => {return response.json()})
-      .then(data=> {
-        console.log(data)
-        fields.crop.options = ["Maiz","Soja"]
-        this.setState(prevState => {
-          let loading = {...prevState.loading}
-          loading.crops = false
-          return {loading}
-        })
-      })
-    
-    fetch('https://nanivo-bush.herokuapp.com/agroquimicos', {
-      method: "GET",
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      }
-    }).then(response => {return response.json()})
-      .then(data=> {
-        console.log(data)
-        fields.agrochemical.options=["Herbicida A","Herbicida B"]
-        this.setState(prevState => {
-          let loading = {...prevState.loading}
-          loading.agrochemicals = false
-          return {loading}
-        })
-      })
-    
-
-    fetch('https://nanivo-bush.herokuapp.com/mezclas', {
-      method: "GET",
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      }
-    }).then(response => {return response.json()})
-    .then(data=> {
-      console.log(data)
-      fields.mix.options=["A","B"]
-      this.setState(prevState => {
-        let loading = {...prevState.loading}
-        loading.mixs = false
-        return {loading}
-      })
+    React.useEffect(()=>{
+      fields.crop.options = props.fieldsOptions.cropOptions.map(option => option[0])
+      fields.agrochemical.options = props.fieldsOptions.agrochemicalOptions.map(option => option[0])
+      fields.mix.options = props.fieldsOptions.mixsOptions.map(option => option[0])
     })
-
-  }
-
-  setLoading(){
-    this.setState(prevState => {
-      let loading = {...prevState.loading}
-      loading.mixs = true
-      loading.agrochemicals =true
-      loading.crops=true;
-      return {loading}
-    })
-  }
-
-
-  render(){
+    
     return (
           <Form
             action=''
             fields = {fields}
             type='alternative'
-            getValues={this.props.handleValues}
+            getValues={props.handleValues}
             render={() => (
               <React.Fragment>
                 
@@ -156,7 +72,6 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
             )}
             />
     );
-  }
 };
 
 export default AssayForm;

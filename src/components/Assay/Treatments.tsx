@@ -1,35 +1,43 @@
 import * as React from 'react';
-import { IValues } from '../Form/Form';
 
-
-export interface ITreatments{
-    treatments: Array<IValues>
+export interface ITreatmentsProps{
+    treatments: Treatment[]
 }
 
-const Treatments:React.SFC<ITreatments> = (props) => {
+export interface Treatment{
+    experimentsLength: Number,
+    name:string,
+    description:string
+}
+export interface ITreatmentsState{
+    treatments:Treatment[]
+}
 
-    return(
-        <div className="treatments">
 
-            <div className="treatments-title">
-                Tratamientos
-            </div>
+const Treatments: React.SFC<ITreatmentsProps> = (props) => {
 
-            <div className="treatments-wrapper">
-                {props.treatments.map((treatment,i)=> (
-                    <div key={i} className="treatment-card">
-                        <div className="treatment-tag">
-                            {treatment.tag}
+        return(
+            <div className="treatments">
+
+                <div className="treatments-title">
+                    Tratamientos
+                </div>
+
+                <div className="treatments-wrapper">
+                    {props.treatments.map((treatment,i)=> (
+                        <div key={i} className="treatment-card">
+                            <div className="treatment-tag">
+                                {treatment.name}
+                            </div>
+                            <div className="treatment-tests">
+                                {treatment.experimentsLength}
+                            </div>
                         </div>
-                        <div className="treatment-tests">
-                            {treatment.tests}
-                        </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
 
-        </div>
-    )
+            </div>
+        )
 }
 
 export default Treatments;

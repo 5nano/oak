@@ -51,21 +51,20 @@ const TreatmentForm: React.SFC<ITreatmentFormProps>= (props) => {
             <p>Nuevo Tratamiento</p>
             </div>
 
-
-              <Form
-                action='nanivo-bush.herokuapp.com/tratamientos/insertar'
-                fields={fields}
-                type='alternative'
-                getValues={props.handleValues}
-                render={() => (
-                  <React.Fragment>
-                    <Field {...fields.tag}/>
-                    <Field {...fields.description}/>
-                    <Field {...fields.tests}/>
-                    <Field {...fields.mix}/>
-                    <Field {...fields.agrochemical}/>
-                  </React.Fragment>
-                )}
+            <Form
+              action='nanivo-bush.herokuapp.com/tratamientos/insertar'
+              fields={fields}
+              type='alternative'
+              getValues={props.handleValues}
+              render={() => (
+                <React.Fragment>
+                  <Field {...fields.name}/>
+                  <Field {...fields.description}/>
+                  <Field {...fields.experimentsLength}/>
+                  <Field {...fields.mix}/>
+                  <Field {...fields.agrochemical}/>
+                </React.Fragment>
+              )}
             />
         </div>
       </div>
