@@ -1,9 +1,12 @@
+import { IValidation } from "../Form/Validation";
+
 /* The available editors for the field */
 type Editor = "textbox" |
               "checkbox"| 
               "multilinetextbox" | 
               "dropdown" | 
               "password";
+
 
 export interface IFieldProps {
   /* The unique field name */
@@ -22,11 +25,4 @@ export interface IFieldProps {
   value?: any;
 
   validation?: IValidation;
-}
-
-export interface IValidation {
-  rule: (values: {
-    [key: string]: any;
-}, fieldName: string, args: any) => string;
-  args?: any;
 }

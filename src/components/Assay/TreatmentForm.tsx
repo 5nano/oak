@@ -1,6 +1,7 @@
 import * as React from "react";
-import Form, { IFields, required, maxLength, IValues } from "../Form/Form";
+import Form, { IFields, IValues } from "../Form/Form";
 import { Field } from "../Field/Field";
+import { required } from "../Form/Validation";
 
 interface ITreatmentFormProps{
   handleValues: (values:IValues) => void;

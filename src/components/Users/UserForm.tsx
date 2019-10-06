@@ -1,8 +1,9 @@
 import * as React from "react";
-import { Form, IFields, required} from "../Form/Form";
+import { Form, IFields} from "../Form/Form";
 import { Field } from "../Field/Field";
 import RegisterButton from "./components/RegisterButton";
 import { IComponentFormProps } from "../Form/ComponentFormProps";
+import { required } from "../Form/Validation";
 
 const UserForm: React.SFC<IComponentFormProps> = (props) => {
 

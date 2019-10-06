@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { IFieldProps } from '../Field/FieldProps';
 import FormButton, { IFormButtonProps } from './FormButton';
+import { IRule } from './Validation';
 
 export interface IFields {
   [key: string]: IFieldProps;
@@ -43,22 +44,6 @@ export interface IFormContext extends IFormState {
 export const FormContext = React.createContext<IFormContext | undefined> (
   undefined
 );
-
-export const required = (values: IValues, fieldName: string): string =>
-  values[fieldName] === undefined ||
-  values[fieldName] === null ||
-  values[fieldName] === ""
-    ? "Este campo debe completarse"
-    : "";
-
-export const maxLength = (
-  values: IValues,
-  fieldName: string,
-  length: number
-): string =>
-  values[fieldName] && values[fieldName].length > length
-    ? `Este campo no puede exceder ${length} caracteres`
-    : "";
 
 
 export interface DefaultFormProps {
@@ -120,11 +105,12 @@ private handleSubmit = async (
       this.props.fields[fieldName] &&
       this.props.fields[fieldName].validation
     ) {
-      newError = this.props.fields[fieldName].validation!.rule(
-        this.state.values,
-        fieldName,
-        this.props.fields[fieldName].validation!.args
-      );
+      const rule:IRule = {
+        values:this.state.values,
+        fieldName:fieldName,
+        args:this.props.fields[fieldName].validation!.args
+      }
+      newError = this.props.fields[fieldName].validation!.rule(rule);
     }
     this.state.errors[fieldName] = newError;
     this.setState({

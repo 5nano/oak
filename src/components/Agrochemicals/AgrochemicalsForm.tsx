@@ -1,7 +1,8 @@
 import * as React from "react";
-import { Form, IFields, required, maxLength } from "../Form/Form";
+import { Form, IFields} from "../Form/Form";
 import { Field } from "../Field/Field";
 import { IComponentFormProps } from "../Form/ComponentFormProps";
+import { required, maxLength } from "../Form/Validation";
 
 
 const AgrochemicalsForm: React.SFC<IComponentFormProps> = (props) => {

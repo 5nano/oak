@@ -3,13 +3,6 @@ import { IErrors, IFormContext, FormContext} from "../Form/Form";
 import { IFieldProps } from './FieldProps';
 import Checkbox from './Checkbox';
 import Select from './Select';
-export interface IRule {
-    values: {
-      [key: string]: any
-    },
-    fieldName: string,
-    args: any
-}
 
 export const Field: React.SFC<IFieldProps> = ({
   id,
