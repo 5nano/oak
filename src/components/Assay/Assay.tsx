@@ -201,7 +201,8 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
        let treatment:ITreatment = {
         name:treatmentData.name,
         description:treatmentData.description,
-        experimentsLength:treatmentData.experimentsLength
+        experimentsLength:treatmentData.experimentsLength,
+        qrs:{}
         };
 
        fetch('https://nanivo-bush.herokuapp.com/tratamientos/insertar', {
@@ -218,6 +219,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
             console.log(data)
             this.setState(prevState => {
                 let treatments = prevState.treatments
+                treatment.qrs = data
                 treatments.push(treatment)
                 return {treatments,newTreatment:!this.state.newTreatment}
             })

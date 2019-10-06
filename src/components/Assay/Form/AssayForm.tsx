@@ -19,7 +19,7 @@ var fields:IFields = {
     id:"description",
     label: "Descripcion",
     editor: "multilinetextbox",
-    validations: [requiredValidation,maxLengthValidation(200),isEmailValidation]
+    validations: [requiredValidation,maxLengthValidation(200)]
   },
   crop: {
       id:"crop",

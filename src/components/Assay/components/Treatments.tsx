@@ -5,6 +5,7 @@ export interface ITreatment{
     experimentsLength: Number,
     name:string,
     description:string
+    qrs:any
 }
 export interface ITreatmentsProps{
     treatments: ITreatment[]

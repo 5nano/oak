@@ -74,6 +74,7 @@
     "helmet": "^3.21.0",
     "plotly": "^1.0.6",
     "plotly.js": "^1.49.5",
+    "qrcode.react": "^0.9.3",
     "randomcolor": "^0.5.4",
     "react": "^16.9.0",
     "react-addons-css-transition-group": "^15.6.2",

@@ -75,8 +75,8 @@ private setValues = (values: IValues) => {
 private haveErrors(errors: IErrors) {
     let haveError: boolean = false;
     Object.keys(errors).map((key: string) => {
-        if (errors[key].length > 0) {
-        haveError = true;
+        if (errors[key].some(error => error.length>0)) {
+          haveError = true;
         }
     });
     return haveError;
