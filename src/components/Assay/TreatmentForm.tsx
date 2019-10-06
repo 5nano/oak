@@ -1,7 +1,7 @@
 import * as React from "react";
 import Form, { IFields, IValues } from "../Form/Form";
 import { Field } from "../Field/Field";
-import { required } from "../Form/Validation";
+import {requiredValidation } from "../Form/Validation";
 
 interface ITreatmentFormProps{
   handleValues: (values:IValues) => void;
@@ -13,33 +13,33 @@ const TreatmentForm: React.SFC<ITreatmentFormProps>= (props) => {
     name: {
       id: "name",
       label: "Etiqueta",
-      validation: {rule: required}
+      validations: [requiredValidation]
 
     },
     description: {
       id:"description",
       label: "Descripcion",
       editor: "multilinetextbox",
-      validation: {rule: required}
+      validations: [requiredValidation]
     },
     experimentsLength: {
         id:"experimentsLength",
         label: "Cantidad de pruebas",
-        validation: {rule: required}
+        validations: [requiredValidation]
       },
     mix:{
       id:"mix",
       label:"Mezcla",
       editor: "checkbox",
       value:false,
-      validation: {rule: required}
+      validations: [requiredValidation]
     },
     agrochemical:{
       id:"agrochemical",
       label:"Agroquimico",
       editor: "checkbox",
       value:false,
-      validation: {rule: required}
+      validations: [requiredValidation]
     }
   };
  

@@ -2,7 +2,7 @@ import * as React from "react";
 import { Form, IFields} from "../Form/Form";
 import { Field } from "../Field/Field";
 import { IComponentFormProps } from "../Form/ComponentFormProps";
-import { required, maxLength } from "../Form/Validation";
+import { requiredValidation, maxLengthValidation } from "../Form/Validation";
 
 const CompaniesForm: React.SFC<IComponentFormProps> = (props) => {
 
@@ -11,13 +11,13 @@ const CompaniesForm: React.SFC<IComponentFormProps> = (props) => {
     name: {
       id: "name",
       label: "Nombre",
-      validation: {rule: required}
+      validations: [requiredValidation]
     },
     description: {
       id:"description",
       label: "Descripcion",
       editor: "multilinetextbox",
-      validation: {rule: maxLength, args:200}
+      validations: [maxLengthValidation(200)]
     }
   };
   

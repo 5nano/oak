@@ -24,5 +24,5 @@ export interface IFieldProps {
   /* The field value */
   value?: any;
 
-  validation?: IValidation;
+  validations?: IValidation[];
 }

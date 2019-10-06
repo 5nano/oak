@@ -26,7 +26,7 @@ export interface IValues {
 }
 
 export interface IErrors {
-    [key: string]: string
+    [key: string]: string[]
 }
 
 export interface IFormState {
@@ -98,25 +98,27 @@ private handleSubmit = async (
     }
   };
  
-  private validate = (fieldName: string): string => {
-    let newError: string = "";
-  
+  private validate = (fieldName: string): string[] => {
+    let newErrors: string[] = [];
     if (
       this.props.fields[fieldName] &&
-      this.props.fields[fieldName].validation
+      this.props.fields[fieldName].validations
     ) {
-      const rule:IRule = {
-        values:this.state.values,
-        fieldName:fieldName,
-        args:this.props.fields[fieldName].validation!.args
-      }
-      newError = this.props.fields[fieldName].validation!.rule(rule);
+
+     newErrors=  this.props.fields[fieldName].validations.map(validation =>{
+        const validationRule:IRule = {
+          values:this.state.values,
+          fieldName:fieldName,
+          args:validation!.args
+        }
+        return validation!.rule(validationRule)
+      })
     }
-    this.state.errors[fieldName] = newError;
+    this.state.errors[fieldName] = newErrors;
     this.setState({
-       errors: { ...this.state.errors, [fieldName]: newError }
+       errors: { ...this.state.errors, [fieldName]: newErrors }
     });
-    return newError;
+    return newErrors;
  };
 
 

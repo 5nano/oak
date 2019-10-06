@@ -2,46 +2,45 @@ import * as React from "react";
 import { Form, IFields, IValues } from "../../Form/Form";
 import { Field } from "../../Field/Field";
 import { IFieldsOptions } from "../Assay";
-import { required } from "../../Form/Validation";
+import { requiredValidation, maxLengthValidation, isEmailValidation } from "../../Form/Validation";
 
 export interface IAssayFormProps {
   handleValues: (values:IValues) => void;
   fieldsOptions:IFieldsOptions
 }
 
-
 var fields:IFields = {
   name: {
     id: "name",
     label: "Nombre",
-    validation: {rule: required}
+    validations: [requiredValidation]
   },
   description: {
     id:"description",
     label: "Descripcion",
     editor: "multilinetextbox",
-    validation: {rule: required}
+    validations: [requiredValidation,maxLengthValidation(200),isEmailValidation]
   },
   crop: {
       id:"crop",
       label: "Cultivo",
       editor: "dropdown",
       options: [],
-      validation: {rule: required}
+      validations: [requiredValidation]
     },
   agrochemical: {
       id:"agrochemical",
       label: "Agroquimico",
       editor: "dropdown",
       options: [],
-      validation: {rule: required}
+      validations: [requiredValidation]
   },
   mix: {
       id:"mix",
       label: "Mezcla",
       editor: "dropdown",
       options: [],
-      validation: {rule: required}
+      validations: [requiredValidation]
   }
 }
 

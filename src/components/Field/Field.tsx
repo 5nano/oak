@@ -12,7 +12,7 @@ export const Field: React.SFC<IFieldProps> = ({
   value,
 }) => {
 
-    const getError = (errors: IErrors): string => (errors ? errors[id] : "");
+    const getError = (errors: IErrors): string[] => (errors ? errors[id] : []);
     
     const getEditorStyle = (errors: IErrors): any =>
     getError(errors) ? { borderColor: "red" } : {};

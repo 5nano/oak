@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Form, IFields} from "../Form/Form";
 import { Field } from "../Field/Field";
-import RegisterButton from "./components/RegisterButton";
+import   RegisterButton from "./components/RegisterButton";
 import { IComponentFormProps } from "../Form/ComponentFormProps";
-import { required } from "../Form/Validation";
+import { requiredValidation } from "../Form/Validation";
 
 const UserForm: React.SFC<IComponentFormProps> = (props) => {
 
@@ -12,17 +12,17 @@ const UserForm: React.SFC<IComponentFormProps> = (props) => {
     name: {
       id: "name",
       label: "Nombre",
-      validation: {rule: required}
+      validations: [requiredValidation]
     },
     lastname: {
       id:"lastname",
       label: "Apellido",
-      validation: {rule: required}
+      validations: [requiredValidation]
     },
     email: {
       id:"email",
       label: "Correo electrónico",
-      validation: {rule: required}
+      validations: [requiredValidation]
     },
     compania:{
       id:"compania",
@@ -33,13 +33,13 @@ const UserForm: React.SFC<IComponentFormProps> = (props) => {
     username: {
       id:"username",
       label: "Usuario",
-      validation: {rule: required}
+      validations: [requiredValidation]
     },
     password: {
       id:"password",
       label: "Contraseña",
       editor: "password",
-      validation: {rule: required}
+      validations: [requiredValidation]
     }
   };
   
