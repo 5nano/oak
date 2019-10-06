@@ -1,11 +1,12 @@
 import * as React from 'react'
-import AssayForm from './AssayForm';
+import AssayForm from './Form/AssayForm';
 import { IValues } from '../Form/Form';
-import Treatments, { Treatment } from './Treatments';
+import Treatments, { ITreatment } from './components/Treatments';
 import TreatmentForm from './TreatmentForm';
 import Stepper from '../Utilities/Stepper';
+import { RouteComponentProps } from 'react-router-dom';
 
-export interface IAssayProps{
+export interface IAssayProps extends RouteComponentProps{
 
 }
 
@@ -24,7 +25,7 @@ export interface IAssayState{
       crops:boolean
     },
     fieldsOptions:IFieldsOptions,
-    treatments: Treatment[]
+    treatments: ITreatment[]
   }
 
 
@@ -34,7 +35,7 @@ export interface IFieldsOptions{
     mixsOptions:[string,Number][]
 }
 
-
+ 
 
 class Assay extends React.Component<IAssayProps,IAssayState> {
     
@@ -197,7 +198,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
          idAgrochemical:idAgrochemical,
        }
 
-       let treatment:Treatment = {
+       let treatment:ITreatment = {
         name:treatmentData.name,
         description:treatmentData.description,
         experimentsLength:treatmentData.experimentsLength
@@ -253,15 +254,6 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                 return treatments
             })
      }*/
-   
-     handleClick = (e:React.MouseEvent<HTMLElement>):void => {
-       this.setState({newTreatment:!this.state.newTreatment})
-     }
-     
-   
-     handlePrevStep = (e:React.MouseEvent<HTMLElement>):void => {
-       this.setState({successAssay:false})
-     }
 
     render(){
         return(
@@ -290,7 +282,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                                      description="Agregue los tratamientos"/>
                             <Treatments treatments={this.state.treatments}/>
                                 
-                            <button type="button" onClick={this.handleClick}>
+                            <button type="button" onClick={()=> this.setState({newTreatment:!this.state.newTreatment})}>
                                 Nuevo tratamiento
                             </button>
 
@@ -299,8 +291,12 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                                 <TreatmentForm handleValues={this.handleTreatmentValues}/>
                             }
 
-                            <button type="button" onClick={this.handlePrevStep}>
+                            <button type="button" onClick={()=>this.setState({successAssay:false})}>
                                 Atras
+                            </button>
+                            
+                            <button type="button" onClick={()=>this.props.history.push('/')}>
+                                Finalizar
                             </button>
 
                         </div>

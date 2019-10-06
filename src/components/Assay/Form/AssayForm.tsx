@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Form, IFields, required, maxLength, IValues } from "../Form/Form";
-import { Field } from "../Field/Field";
-import { IFieldsOptions } from "./Assay";
+import { Form, IFields, required, maxLength, IValues } from "../../Form/Form";
+import { Field } from "../../Field/Field";
+import { IFieldsOptions } from "../Assay";
 
 export interface IAssayFormProps {
   handleValues: (values:IValues) => void;
