@@ -21,8 +21,6 @@ module.exports = (title, manifest, cdnPath) => {
     </head>
     <body>
         <div id="app-root"></div>
-        <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
         ${
             Object.keys(manifest)
                 .filter(asset => manifest[asset].endsWith('.js'))
