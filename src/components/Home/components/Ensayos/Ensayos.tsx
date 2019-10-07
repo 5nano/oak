@@ -2,7 +2,7 @@ import * as React from "react";
 import { Ensayo } from '../../../../Interfaces/Ensayo';
 
 export interface IEnsayosState {
-    ensayoSelected: Ensayo["id"],
+    ensayoSelected: Ensayo["idAssay"],
 }
 
 export interface IEnsayosProps {
@@ -25,8 +25,8 @@ export class Ensayos extends React.Component<IEnsayosProps,IEnsayosState> {
         const { onSelect } = this.props;
     return(
         <div className="ensayos">
-            {this.props.ensayos.map((ensayo: Ensayo, ensayoId: number) => (
-                <div className="Ensayo" onClick={() => onSelect(ensayoId)}>
+            {this.props.ensayos.map((ensayo: Ensayo) => (
+                <div className="Ensayo" onClick={() => onSelect(ensayo.idAssay)}>
                     <div className="name">
                         <div className="title">Nombre ensayo:</div> 
                         <div>{ensayo.name}</div>
