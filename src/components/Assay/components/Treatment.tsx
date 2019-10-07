@@ -1,9 +1,16 @@
 import * as React from 'react'
-import { ITreatmentProps } from './ITreatment'
+import ITreatment from './ITreatment';
+
+
+export  interface ITreatmentProps{
+    treatment:ITreatment,
+    setQrRequest:(treatmentName:string) => void
+}
+
 
 const Treatment:React.SFC<ITreatmentProps> = (props) => {
 
-    const {treatment} = props;
+    const {treatment,setQrRequest} = props;
 
     return(
         <div  className="treatment-card">
@@ -13,6 +20,10 @@ const Treatment:React.SFC<ITreatmentProps> = (props) => {
             <div className="treatment-tests">
                 {treatment.experimentsLength}
             </div>
+            <button type="button" 
+                    onClick={()=>setQrRequest(treatment.name)}>
+            QR's
+            </button>   
         </div>
     )
 }

@@ -28,12 +28,13 @@ const maxLength = (rule:IRule): string =>{
 
 }
 
-const isNumber = (rule:IRule): string =>{
-  if(rule.values[rule.fieldName] && typeof rule.values[rule.fieldName] != 'number')
-     return `Este campo debe tener un valor númerico`
-  else return "";
-
-}
+const isNumber = (rule:IRule): string =>
+  rule.values[rule.fieldName] &&
+  rule.values[rule.fieldName].search(
+    /^-?[0-9]*$/
+  )
+   ? `Este campo debe tener un valor númerico`
+   :"";
 
 const isEmail = (rule:IRule): string =>
   rule.values[rule.fieldName] &&

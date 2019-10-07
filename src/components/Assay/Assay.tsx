@@ -1,24 +1,32 @@
 import * as React from 'react'
 import AssayForm from './Form/AssayForm';
 import { IValues } from '../Form/Form';
-import Treatments, { ITreatment } from './components/Treatments';
+import Treatments from './components/Treatments';
 import TreatmentForm from './TreatmentForm';
 import Stepper from '../Utilities/Stepper';
 import { RouteComponentProps } from 'react-router-dom';
+import ITreatment from './components/ITreatment';
+import TreatmentQrs from './components/QR/TreatmentQrs';
+
 
 export interface IAssayProps extends RouteComponentProps{
 
 }
 
 export interface IAssayState{
-    id:Number,
-    values:{name:string,
-            description:string,
-            crop:string,
-            agrochemical:string,
-            mix:string},
-    newTreatment:boolean,
+    assay:{
+      id:Number,
+      name:string,
+      description:string,
+      idCrop:Number,
+      idAgrochemical:Number,
+      idMix:Number
+    },
     successAssay: boolean,
+    qrRequest: {
+      flag:boolean,
+      treatmentName:string
+    }
     loading:{
       agrochemicals:boolean,
       mixs:boolean,
@@ -43,15 +51,19 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
         super(props)
 
         this.state = {
-            id:null,
-            values: {name:'',
-                    description:'',
-                    crop:'',
-                    agrochemical:'',
-                    mix:'',
-                    },
-            newTreatment: false,
+            assay: {
+              id:null,
+              name:'',
+              description:'',
+              idCrop: null,
+              idAgrochemical:null,
+              idMix:null
+            },
             successAssay: false,
+            qrRequest: {
+              flag:false,
+              treatmentName:''
+            },
             loading: {
               agrochemicals:true,
               mixs:true,
@@ -64,6 +76,9 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
             },
             treatments: []
           }
+
+          this.setTreatment=this.setTreatment.bind(this)
+          this.setQrRequest=this.setQrRequest.bind(this)
     }
 
     setLoading(){
@@ -145,8 +160,12 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
  handleAssayValues=(values:IValues):void=>{
      
 
-        let idCrop = this.state.fieldsOptions.cropOptions.filter(option => option[0] === values.crop).pop()[1]
-       const assayData = {
+      let idAgrochemical = this.state.fieldsOptions.agrochemicalOptions.filter(option => option[0] === values.agrochemical).pop()[1]
+      let idCrop = this.state.fieldsOptions.cropOptions.filter(option => option[0] === values.crop).pop()[1]
+      let idMix = this.state.fieldsOptions.mixsOptions.filter(option => option[0] === values.mix).pop()[1]
+
+
+      const assayData = {
          idCrop:idCrop,
          name:values.name,
          description:values.description,
@@ -163,108 +182,44 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
          }
        }).then(response => response.json())
          .then(data => {
-            console.log(data)
-            this.setState({id:data['idAssay'],successAssay:true})
-           
-            this.setState({values: {...this.state.values, ...values}});
+            let assayId = data["idAssay"]
+            let newAssay = {
+              id:assayId,
+              name:values.name,
+              description: values.description,
+              idCrop: idCrop,
+              idAgrochemical: idAgrochemical,
+              idMix: idMix
+            }
+            this.setState({assay:newAssay,successAssay:true})
+        })
+     }
+
+     setTreatment(treatment:ITreatment){
+      this.setState(prevState => {
+        let treatments = prevState.treatments
+        treatments.push(treatment)
+        return {treatments}
+        })
+     }
+
+     setQrRequest(treatmentName:string){
+        this.setState(prevState => {
+          let qrRequest = {flag:true,treatmentName:treatmentName}
+          return {qrRequest}
         })
      }
    
-     handleTreatmentValues=(values:IValues):void=>{
-       console.log(values)
-   
-       let idMixture,idAgrochemical;
-
-       if(values.mix) idMixture= this.state
-                                     .fieldsOptions
-                                     .mixsOptions
-                                     .filter(option => option[0] === this.state.values.mix)
-                                     .pop()[1]
-       else idMixture=null
-
-       if(values.agrochemical) idAgrochemical=this.state
-                                                  .fieldsOptions
-                                                  .agrochemicalOptions
-                                                  .filter(option => option[0] === this.state.values.agrochemical)
-                                                  .pop()[1]
-       else idAgrochemical=null
-
-       const treatmentData = {
-         idAssay:this.state.id,
-         name:values.name,
-         description:values.description,
-         experimentsLength:values.experimentsLength,
-         idMixture:idMixture,
-         idAgrochemical:idAgrochemical,
-       }
-
-       let treatment:ITreatment = {
-        name:treatmentData.name,
-        description:treatmentData.description,
-        experimentsLength:treatmentData.experimentsLength,
-        qrs:{}
-        };
-
-       fetch('https://nanivo-bush.herokuapp.com/tratamientos/insertar', {
-         method: "POST",
-         mode: 'cors',
-         body: JSON.stringify(treatmentData),
-         headers: {
-           'Content-Type': 'application/json',
-           Accept: 'application/json'
-         }
-       }).then(response => response.json())
-         .then(data => {
-             //aca estan los QR
-            console.log(data)
-            this.setState(prevState => {
-                let treatments = prevState.treatments
-                treatment.qrs = data
-                treatments.push(treatment)
-                return {treatments,newTreatment:!this.state.newTreatment}
-            })
-         })
-     }
-
-    /* async fetchTreatments(){
-         var treatments: Treatment[];
-          fetch(
-                buildUrl('https://nanivo-bush.herokuapp.com/ensayo/tratamientos',{
-                    idAssay:1
-                }), {
-             method: "GET",
-             mode: 'cors',
-             headers: {
-               'Content-Type': 'application/json',
-               Accept: 'application/json'
-             }
-           }).then(response => response.json())
-             .then(data => {
-                console.log(data)
-                Object.keys(data).forEach(key => {
-
-                    var treatment:Treatment
-                    treatment.idAssay = data[key].idAssay
-                    treatment.idTreatment = data[key].idTreatment
-                    treatment.idMixture = data[key].idMixture
-                    treatment.idAgrochemical = data[key].idAgrochemical
-                    treatment.name = data[key].name
-                    treatment.description = data[key].description
-
-                    treatments.push(treatment)
-                })
-                return treatments
-            })
-     }*/
-
     render(){
         return(
             <div className="crud-container">
-                <div>
+               
                     <div className="title-wrapper">
                     <img src="../../assets/images/head-icon.png"/>
                     <p>Ensayos</p>
                     </div>
+
+                    {!this.state.qrRequest.flag?
 
                     <div className="assay-wrapper">
 
@@ -282,17 +237,13 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                         <div className="treatments-container">
                             <Stepper title="PASO 2" 
                                      description="Agregue los tratamientos"/>
-                            <Treatments treatments={this.state.treatments}/>
-                                
-                            <button type="button" onClick={()=> this.setState({newTreatment:!this.state.newTreatment})}>
-                                Nuevo tratamiento
-                            </button>
-
-
-                            {this.state.newTreatment && 
-                                <TreatmentForm handleValues={this.handleTreatmentValues}/>
-                            }
-
+                            <Treatments treatments={this.state.treatments}
+                                        idAgrochemical={this.state.assay.idAgrochemical}
+                                        idMixture={this.state.assay.idMix}
+                                        idAssay={this.state.assay.id}
+                                        setTreatment={this.setTreatment}
+                                        setQrRequest={this.setQrRequest}
+                                       />  
                             <button type="button" onClick={()=>this.setState({successAssay:false})}>
                                 Atras
                             </button>
@@ -300,13 +251,18 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                             <button type="button" onClick={()=>this.props.history.push('/')}>
                                 Finalizar
                             </button>
-
                         </div>
                     )}
 
                     </div>
+                    :
+                    <div className="qr-wrapper">
+                      
+                      <TreatmentQrs treatment={this.state.treatments.find(treatment => treatment.name === this.state.qrRequest.treatmentName)}/>
 
-                </div>
+                    </div>
+                    }
+                    
             </div>
             
         )
