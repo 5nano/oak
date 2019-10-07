@@ -259,7 +259,9 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                     <div className="qr-wrapper">
                       
                       <TreatmentQrs treatment={this.state.treatments.find(treatment => treatment.name === this.state.qrRequest.treatmentName)}/>
-
+                      <button type="button" onClick={()=>this.setState({qrRequest:{flag:false,treatmentName:''}})}>
+                                Atras
+                      </button>
                     </div>
                     }
                     
