@@ -1,6 +1,5 @@
 
 import * as React from "react";
-import * as leafAreaScript from './LeafAreaScript';
 import { RouteComponentProps } from 'react-router-dom';
 import { withRouter } from "react-router"
 import { DashboardType } from '../InterfaceDashboardTypes';
