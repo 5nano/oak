@@ -85,7 +85,7 @@ class YellowFreqComponent extends React.Component<YellowFreqComponentProps, Yell
         ],
         title: name,
         xaxis: {
-          title: 'frecuencias'
+          title: 'frecuencias',
         },
         autosize: false,
       };

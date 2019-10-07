@@ -1,6 +1,6 @@
 
 import * as React from "react";
-import * as nachoScript from './LeafAreaScript';
+import * as leafAreaScript from './LeafAreaScript';
 import { RouteComponentProps } from 'react-router-dom';
 import { withRouter } from "react-router"
 import { DashboardType } from '../InterfaceDashboardTypes';
@@ -21,7 +21,7 @@ class LeafArea extends React.Component<LeafAreaProps> {
         s.setAttribute("id", 'nacho-script');
         s.type = 'text/javascript';
         s.async = true;
-        s.innerHTML = `(${nachoScript})()`;
+        s.innerHTML = `(${leafAreaScript(this.props.match.params.assayId)})()`;
         document.body.appendChild(s);
     }
     

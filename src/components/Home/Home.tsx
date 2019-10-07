@@ -54,7 +54,7 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
         })
       }
 
-    private goToDashboard(assayId: Ensayo["id"]){
+    private goToDashboard(assayId: Ensayo["idAssay"]){
         this.props.history.push(`/assay/${assayId}/dashboard`);
     }
 

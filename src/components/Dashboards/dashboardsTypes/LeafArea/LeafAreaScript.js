@@ -1,4 +1,4 @@
-module.exports = `function () {
+module.exports = (assayId) => `function () {
 
  var dataPoints = [];
  var experimentsData = [];
@@ -29,7 +29,7 @@ module.exports = `function () {
 
  $.ajax({
    async: false,cache: false,type: "get",
-   url: "https://nanivo-bush.herokuapp.com/graficoComparativo/experimentos?assayId=1",
+   url: "https://nanivo-bush.herokuapp.com/graficoComparativo/experimentos?assayId=${assayId}",
    success: function (expName) {
      experimentName = expName;
      generateExperimentsData(experimentName);
@@ -83,7 +83,7 @@ function toggleDataSeries(e) {
 
 /*
 $.ajax({
-    type: "get", url: "https://nanivo-bush.herokuapp.com/pruebas/imagenBase64?experimentId=1&assayId=1",
+    type: "get", url: "https://nanivo-bush.herokuapp.com/pruebas/imagenBase64?experimentId=1&assayId=${assayId}",
     success: function (data, text) {
       generateTestImage(data);
     },
