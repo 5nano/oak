@@ -12,10 +12,11 @@ export const Field: React.SFC<IFieldProps> = ({
   value,
 }) => {
 
-    const getError = (errors: IErrors): string[] => (errors ? errors[id] : []);
+    const getError = (errors: IErrors): string[] => (errors? errors[id] : null);
     
-    const getEditorStyle = (errors: IErrors): any =>
-    getError(errors) ? { borderColor: "red" } : {};
+    const getEditorStyle = (errors: IErrors): any =>{
+    getError(errors)?{ borderColor: "red" } : {};
+  }
     
     return (
         <FormContext.Consumer>
@@ -82,9 +83,12 @@ export const Field: React.SFC<IFieldProps> = ({
 
             
               {getError(context.errors) && (
-                <div style={{ color: "red", fontSize: "80%" }}>
-                <p>{getError(context.errors)}</p>
-                </div>
+                getError(context.errors).filter(error => error.length!=0)
+                                        .map(error => {
+                                          return <div className="field-error">
+                                                    <p>{error}</p>
+                                                </div>
+                                        })
                 )}
 
               </div>

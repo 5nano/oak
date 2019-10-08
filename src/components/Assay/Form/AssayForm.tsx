@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Form, IFields, IValues } from "../../Form/Form";
 import { Field } from "../../Field/Field";
-import { IFieldsOptions } from "../Assay";
+import { IFieldsOptions, IAssay } from "../Assay";
 import { requiredValidation, maxLengthValidation, isEmailValidation } from "../../Form/Validation";
 
 export interface IAssayFormProps {
   handleValues: (values:IValues) => void;
-  fieldsOptions:IFieldsOptions
+  fieldsOptions:IFieldsOptions;
 }
 
 var fields:IFields = {
@@ -46,12 +46,11 @@ var fields:IFields = {
 
 const AssayForm:React.SFC<IAssayFormProps> = (props) => {
 
-
-    React.useEffect(()=>{
-      fields.crop.options = props.fieldsOptions.cropOptions.map(option => option[0])
-      fields.agrochemical.options = props.fieldsOptions.agrochemicalOptions.map(option => option[0])
-      fields.mix.options = props.fieldsOptions.mixsOptions.map(option => option[0])
-    })
+  React.useEffect(()=>{
+    fields.crop.options = props.fieldsOptions.cropOptions.map(option => option[0])
+    fields.agrochemical.options = props.fieldsOptions.agrochemicalOptions.map(option => option[0])
+    fields.mix.options = props.fieldsOptions.mixsOptions.map(option => option[0])
+  })
     
     return (
           <Form
