@@ -83,9 +83,11 @@ export const Field: React.SFC<IFieldProps> = ({
 
             
               {getError(context.errors) && (
-                <div style={{ color: "red", fontSize: "80%" }}>
-                <p>{getError(context.errors)}</p>
-                </div>
+                getError(context.errors).map(error => {
+                  return <div className="field-error">
+                            <p>{error}</p>
+                        </div>
+                })
                 )}
 
               </div>
