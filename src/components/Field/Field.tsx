@@ -83,11 +83,12 @@ export const Field: React.SFC<IFieldProps> = ({
 
             
               {getError(context.errors) && (
-                getError(context.errors).map(error => {
-                  return <div className="field-error">
-                            <p>{error}</p>
-                        </div>
-                })
+                getError(context.errors).filter(error => error.length!=0)
+                                        .map(error => {
+                                          return <div className="field-error">
+                                                    <p>{error}</p>
+                                                </div>
+                                        })
                 )}
 
               </div>

@@ -13,15 +13,17 @@ export interface IAssayProps extends RouteComponentProps{
 
 }
 
+export interface IAssay{
+  id:Number,
+  name:string,
+  description:string,
+  idCrop:Number,
+  idAgrochemical:Number,
+  idMix:Number
+}
+
 export interface IAssayState{
-    assay:{
-      id:Number,
-      name:string,
-      description:string,
-      idCrop:Number,
-      idAgrochemical:Number,
-      idMix:Number
-    },
+    assay:IAssay
     successAssay: boolean,
     qrRequest: {
       flag:boolean,
@@ -229,7 +231,8 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                             <Stepper title="PASO 1" 
                                      description="Agregue los datos del nuevo ensayo"/>
                             <AssayForm handleValues={this.handleAssayValues}
-                                       fieldsOptions={this.state.fieldsOptions}/>
+                                       fieldsOptions={this.state.fieldsOptions}
+                                       />
                         </div>
                     )}
 
