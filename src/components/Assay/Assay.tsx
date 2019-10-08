@@ -225,32 +225,26 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
 
                     <div className="assay-wrapper">
 
-                    {!this.state.successAssay && (
+                    {!this.state.successAssay && 
                     
                         <div className="assay-container">
-                            <Stepper title="PASO 1" 
-                                     description="Agregue los datos del nuevo ensayo"/>
+                            <Stepper description="Agregue los datos del nuevo ensayo"/>
                             <AssayForm handleValues={this.handleAssayValues}
                                        fieldsOptions={this.state.fieldsOptions}
                                        />
                         </div>
-                    )}
+                    }
 
                     {this.state.successAssay && (
                         <div className="treatments-container">
-                            <Stepper title="PASO 2" 
-                                     description="Agregue los tratamientos"/>
+                            <Stepper description="Agregue los tratamientos"/>
                             <Treatments treatments={this.state.treatments}
                                         idAgrochemical={this.state.assay.idAgrochemical}
                                         idMixture={this.state.assay.idMix}
                                         idAssay={this.state.assay.id}
                                         setTreatment={this.setTreatment}
                                         setQrRequest={this.setQrRequest}
-                                       />  
-                            <button type="button" onClick={()=>this.setState({successAssay:false})}>
-                                Atras
-                            </button>
-                            
+                                       /> 
                             <button type="button" onClick={()=>this.props.history.push('/')}>
                                 Finalizar
                             </button>
