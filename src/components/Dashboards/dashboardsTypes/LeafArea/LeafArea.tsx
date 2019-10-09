@@ -11,7 +11,8 @@ type AssayParamsType = {
 }
 type Experiment = {
     y: Array<number>,
-    text: Array<string>
+    text: Array<string>,
+    name: string,
 }
   
 interface LeafAreaProps extends RouteComponentProps<AssayParamsType> {
@@ -53,7 +54,7 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
     generateExperimentData(data: Array<{dataPoints: Array<{label: string, y: number}>}>) {
         const experimentsData = [];
         for (var i = 0; i < data.length; i++) {
-            const experimentData : Experiment = { y: [], text: []};
+            const experimentData : Experiment = { y: [], text: [], name: `Experimento ${i}`};
             for (var j = 0; j < data[i].dataPoints.length; j++) {
                 experimentData.y.push(data[i].dataPoints[j].y);
                 experimentData.text.push(data[i].dataPoints[j].label);
@@ -69,10 +70,10 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
         const data: Plotly.Data[] = this.state.experimentsData.map(experiment => ({
             y: experiment.y,
             text: experiment.text,
-            name: 'experimentos',
+            name: experiment.name,
             type: 'scatter'
           }))
-    
+
           const layout: Partial<Layout> = {
             annotations: [
               {
