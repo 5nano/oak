@@ -1,0 +1,30 @@
+.treatment-qrs-container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+
+    .treatment-qrs-title{
+        display:flex
+    }
+
+    .treatment-qrs{
+        display:flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+
+        .qr-card{
+            display:flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            align-content: center;
+            margin: 0px 20px;
+
+            .qr-title{
+                display:flex;
+            }
+        }
+    }
+}
