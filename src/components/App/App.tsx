@@ -11,6 +11,7 @@ import Assay from '../Assay/Assay';
 import Dashboards from '../Dashboards/Dashboards';
 import Homes from '../Home/Home';
 import Mixs from '../Mixs/Mixs';
+import Qrs from '../Qrs/Qrs';
 
 
 export interface AppProps { title: string }
@@ -53,6 +54,7 @@ const App = (props: AppProps) => {
 
             <Route path='/assay/:assayId/dashboard' exact component={Dashboards}/>
 
+            <Route path='/assay/:assayId/qrs' exact component={Qrs}/>
           </Switch>
 
     </Router>

@@ -6,7 +6,7 @@ import TreatmentForm from './TreatmentForm';
 import Stepper from '../Utilities/Stepper';
 import { RouteComponentProps } from 'react-router-dom';
 import ITreatment from './components/ITreatment';
-import TreatmentQrs from './components/QR/TreatmentQrs';
+import TreatmentQrs from '../Qrs/TreatmentQr/TreatmentQrs';
 
 
 export interface IAssayProps extends RouteComponentProps{

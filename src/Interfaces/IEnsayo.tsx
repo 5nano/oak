@@ -1,5 +1,5 @@
 
-export type Ensayo = {
+export type IEnsayo = {
     idAssay: number,
     idCrop: number,
     idUserCreator: number

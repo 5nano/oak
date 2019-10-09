@@ -1,13 +1,16 @@
 import * as React from "react";
-import { Ensayo } from '../../../../Interfaces/Ensayo';
+import { IEnsayo } from '../../../../Interfaces/IEnsayo';
+import Ensayo from "../Ensayo/Ensayo";
+
 
 export interface IEnsayosState {
-    ensayoSelected: Ensayo["idAssay"],
+    ensayoSelected: IEnsayo["idAssay"],
 }
 
 export interface IEnsayosProps {
-    ensayos: Array<Ensayo>,
+    ensayos: Array<IEnsayo>,
     onSelect: Function,
+    onQrs: Function
 }
 
 export class Ensayos extends React.Component<IEnsayosProps,IEnsayosState> {
@@ -22,20 +25,13 @@ export class Ensayos extends React.Component<IEnsayosProps,IEnsayosState> {
 
 
     render(){
-        const { onSelect } = this.props;
+        const { onSelect, onQrs } = this.props;
     return(
         <div className="ensayos">
-            {this.props.ensayos.map((ensayo: Ensayo) => (
-                <div className="Ensayo" onClick={() => onSelect(ensayo.idAssay)}>
-                    <div className="name">
-                        <div className="title">Nombre ensayo:</div> 
-                        <div>{ensayo.name}</div>
-                    </div>
-                    <div className="description">
-                        <div className="title">Descripción:</div>
-                        <div>{ensayo.description}</div>
-                    </div>
-                </div>
+            {this.props.ensayos.map((ensayo: IEnsayo) => (
+               <Ensayo ensayo={ensayo} 
+                       onSelect={onSelect}
+                       onQrs={onQrs}/>
             ))}
         </div>
     )

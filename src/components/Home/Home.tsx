@@ -1,11 +1,11 @@
 import * as React from "react";
 import Ensayos from './components/Ensayos/Ensayos';
-import { Ensayo } from '../../Interfaces/Ensayo';
+import { IEnsayo } from '../../Interfaces/IEnsayo';
 import { RouteComponentProps } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export interface IHomesState {
-    ensayos: Array<Ensayo>,
+    ensayos: Array<IEnsayo>,
     experimentos: Array<object>,
     showDataUploadMenu: boolean,
 }
@@ -54,8 +54,12 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
         })
       }
 
-    private goToDashboard(assayId: Ensayo["idAssay"]){
+    private goToDashboard(assayId: IEnsayo["idAssay"]){
         this.props.history.push(`/assay/${assayId}/dashboard`);
+    }
+
+    private goToQrs(assayId: IEnsayo["idAssay"]){
+        this.props.history.push(`/assay/${assayId}/qrs`);
     }
 
     private showExperimentos = async (assayId: number): Promise<void> => {
@@ -84,7 +88,9 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
         return(
             <div className="home">
                 <div className="home-title">Selecciona el ensayo que deseas ver:</div>
-                <Ensayos ensayos={this.state.ensayos} onSelect={this.goToDashboard.bind(this)} />
+                <Ensayos ensayos={this.state.ensayos} 
+                         onSelect={this.goToDashboard.bind(this)}  
+                         onQrs={this.goToQrs.bind(this)} />
             </div>
         )
     }

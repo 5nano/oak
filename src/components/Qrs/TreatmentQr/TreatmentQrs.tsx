@@ -1,5 +1,5 @@
 import * as React from 'react'
-import ITreatment from '../ITreatment'
+import ITreatment from '../../Assay/components/ITreatment'
 
 var QrCode = require('qrcode.react');
 

@@ -1,0 +1,33 @@
+.ensayo-wrapper{
+    display:flex;
+    flex-direction: column;
+
+    .ensayo {
+        display: flex;
+        flex-direction: column;
+
+        width: 260px;
+        padding: 6px;
+        margin: 16px;
+
+        border: 1px solid black;
+        border-radius: 1px;
+        background-color: white;
+        -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
+        -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
+
+        .title {
+            font-weight: 200;
+        }
+        .name {
+            text-align: center;
+            padding: 16px;
+        }
+
+        .description {
+            border-top: 1px solid black;
+            padding: 16px;
+        }
+    }
+}

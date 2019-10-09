@@ -4,9 +4,10 @@ import { IErrors, IFormContext } from '../Form/Form';
 export interface ISelectProps{
     id:string,
     value:any,
-    context:IFormContext,
+    setValues: Function,
+    errors: any,
     options:string[],
-    getEditorStyle: (errors: IErrors) => any
+    getEditorStyle?: (errors: IErrors) => any
 }
 
 const Select:React.SFC<ISelectProps> = (props) => {
@@ -14,7 +15,8 @@ const Select:React.SFC<ISelectProps> = (props) => {
     const {id,
            value,
            options,
-           context,
+           setValues,
+           errors,
            getEditorStyle} = props;
 
     return(
@@ -25,9 +27,9 @@ const Select:React.SFC<ISelectProps> = (props) => {
                   onChange={
                     (e: React.FormEvent<HTMLSelectElement>) =>
                     {  e.preventDefault();
-                      context.setValues({ [id]: e.currentTarget.value })} 
+                      setValues({ [id]: e.currentTarget.value })} 
                   }
-                  style={getEditorStyle(context.errors)}
+                  style={getEditorStyle(errors)}
                   className="select"
                 >
                   <option value='' selected disabled hidden/>
