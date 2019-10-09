@@ -99,7 +99,10 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
                 <div className="qrs-title">
                     Códigos QRs del ensayo
                 </div>
-                {!this.state.loading && 
+
+                
+
+                {!this.state.loading && this.state.treatments.length>0 &&
                 <div className="qrs-selector">
                         <p>Eliga el tratamiento para ver sus QRs</p>
                         <TreatmentSelector treatments={this.state.treatments}
@@ -108,12 +111,19 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
                 </div>
                 }
 
-                {this.state.qrsRequest&& 
+                {!this.state.loading && this.state.treatments.length===0 &&
+                    <div>
+                        Este ensayo no presenta tratamientos
+                    </div>
+                }
+
+                {this.state.qrsRequest && 
                     <div className="qrs-container">
                         <p>Imprima los qrs del tratamiento {this.state.actualTreatment.name}</p>
                         <TreatmentQrs treatment={this.state.actualTreatment}/>
                     </div>
                 }
+
 
                 
                 
