@@ -1,29 +1,23 @@
 import * as React from 'react'
 import ITreatment from '../Assay/components/ITreatment';
 interface TreatmentSelectorProps{
-    treatments: Array<ITreatment>
+    treatments: Array<ITreatment>,
+    onSelect:Function,
+    actualTreatment: ITreatment
 }
 const TreatmentSelector:React.SFC<TreatmentSelectorProps> = (props) => {
 
-    const [treatment,setTreatment] = React.useState(props.treatments[0])
-    
-    const {treatments} = props;
-
-    const setNewTreatment = (treatmentName:string) => {
-        let treatment:ITreatment;
-        treatment = treatments.find(treatment => treatment.name === treatmentName)
-        setTreatment(treatment)
-    }
+    const {treatments, onSelect, actualTreatment} = props;
 
     return(
-        <select   id={treatment.idTreatment.toString()}
-                  key={treatment.name}
-                  name={treatment.name}
-                  value={treatment.name}
+        <select   id={actualTreatment.idTreatment.toString()}
+                  key={actualTreatment.name}
+                  name={actualTreatment.name}
+                  value={actualTreatment.name}
                   onChange={
                     (e: React.FormEvent<HTMLSelectElement>) =>
                     {  e.preventDefault();
-                      setNewTreatment(e.currentTarget.value)} 
+                      onSelect(e.currentTarget.value)} 
                   }
                 >
                   <option value='' selected disabled hidden/>
