@@ -2,18 +2,19 @@ import * as React from 'react'
 import { IEnsayo } from '../../../../Interfaces/IEnsayo'
 
 export interface IEnsayoProps{
-    ensayo: IEnsayo;
-    onSelect: Function;
+    ensayo: IEnsayo
+    onSelect: Function
     onQrs: Function
+    onRemove: Function
 }
 
 const Ensayo:React.SFC<IEnsayoProps> = (props) => {
 
-    const {ensayo,onSelect,onQrs} = props;
+    const {ensayo,onSelect,onQrs,onRemove} = props;
 
     return(
         <div className="ensayo-wrapper">
-            <div className="ensayo" onClick={() => onSelect(ensayo.idAssay)}>
+            <div className="ensayo">
                 <div className="name">
                     <div className="title">Nombre ensayo:</div> 
                     <div>{ensayo.name}</div>
@@ -24,7 +25,12 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                     <div>{ensayo.description}</div>
                 </div>
             </div>
-            <a onClick={()=>onQrs(ensayo.idAssay)}>QRs</a>
+
+            <div className="ensayo-actions">
+                <a onClick={() => onSelect(ensayo.idAssay)}>Dashboard</a>
+                <a onClick={()=>onQrs(ensayo.idAssay)}>QRs</a>
+                <a onClick={() => onRemove(ensayo.idAssay)}>Eliminar</a>
+            </div>
         </div>
     )
 }

@@ -10,7 +10,8 @@ export interface IEnsayosState {
 export interface IEnsayosProps {
     ensayos: Array<IEnsayo>,
     onSelect: Function,
-    onQrs: Function
+    onQrs: Function,
+    onRemove: Function,
 }
 
 export class Ensayos extends React.Component<IEnsayosProps,IEnsayosState> {
@@ -25,13 +26,14 @@ export class Ensayos extends React.Component<IEnsayosProps,IEnsayosState> {
 
 
     render(){
-        const { onSelect, onQrs } = this.props;
+        const { onSelect, onQrs , onRemove} = this.props;
     return(
         <div className="ensayos">
             {this.props.ensayos.map((ensayo: IEnsayo) => (
                <Ensayo ensayo={ensayo} 
                        onSelect={onSelect}
-                       onQrs={onQrs}/>
+                       onQrs={onQrs}
+                       onRemove={onRemove}/>
             ))}
         </div>
     )

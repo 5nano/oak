@@ -83,6 +83,18 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
             });
     }
 
+    private removeAssay(assayId: IEnsayo['idAssay']){
+        fetch('https://nanivo-bush.herokuapp.com/ensayos/eliminar',{
+            method:'DELETE',
+            mode:'cors',
+            body: JSON.stringify({assayId:assayId}),
+            headers: {
+             'Content-Type': 'application/json',
+             Accept: 'application/json'
+           }
+        }).then(res=>console.log(res.json()))
+    }
+
 
     render(){
         return(
@@ -90,7 +102,8 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
                 <div className="home-title">Selecciona el ensayo que deseas ver:</div>
                 <Ensayos ensayos={this.state.ensayos} 
                          onSelect={this.goToDashboard.bind(this)}  
-                         onQrs={this.goToQrs.bind(this)} />
+                         onQrs={this.goToQrs.bind(this)}
+                         onRemove={this.removeAssay.bind(this)} />
             </div>
         )
     }
