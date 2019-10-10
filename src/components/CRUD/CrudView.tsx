@@ -44,13 +44,16 @@ const CrudView: React.SFC <ICrudViewProps> = ({
                       <a className="add-element" onClick={handleClick}/>
                       <SearchComponent searchUrl={searchUrl} deleteUrl={deleteUrl}/>
                   </div> 
-                  
-                  <div className="register-container">
-                    {formRequest && [
-                    <div className="title">Ingrese los nuevos datos</div>,
-                    <FormComponent createUrl={createUrl}/>]
-                    }
+
+                  {formRequest &&
+                  <div className="form-wrapper">
+                      <div className="form-content">
+                          <div className="form-helper">Ingrese los datos</div>
+                          <FormComponent createUrl={createUrl}/>                   
+                      </div>
                   </div>
+                  }
+                  
       </div>
  
   );

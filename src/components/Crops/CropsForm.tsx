@@ -3,6 +3,7 @@ import { Form, IFields} from "../Form/Form";
 import { Field } from "../Field/Field";
 import { IComponentFormProps } from "../Form/ComponentFormProps";
 import { requiredValidation, maxLengthValidation } from "../Form/Validation";
+import NewComponentButton from "../Utilities/Buttons/NewComponentButton";
 
 const CropsForm: React.SFC<IComponentFormProps> = (props) => {
 
@@ -26,6 +27,7 @@ const CropsForm: React.SFC<IComponentFormProps> = (props) => {
     <Form
       action={props.createUrl}
       fields = {fields}
+      button = {NewComponentButton}
       render={() => (
         <React.Fragment>
           
