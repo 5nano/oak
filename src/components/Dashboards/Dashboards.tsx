@@ -11,6 +11,7 @@ import DashboardSelector from './components/DashboardSelector/DashboardSelector'
 interface IDashboardsState{
   assayId: string,
   currentDashboard: DashboardType,
+  dashboardsData: { [key:string]: Array<number> }
 }
 
 interface IDashboardProps {
@@ -29,14 +30,38 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
   constructor(props:IDashboardProps){
     super(props)
 
-    this.state = {
-      assayId: props.match.params.assayId,
-      currentDashboard: YellowFreq,
-    }
     this.dashboardTypes = [
       YellowFreq,
       LeafArea
-    ]
+    ];
+
+    this.state = {
+      assayId: props.match.params.assayId,
+      currentDashboard: YellowFreq,
+      dashboardsData: this.dashboardTypes.reduce((acc:{ [key:string]: Array<number> }, dash) => {
+        acc[dash.id] = []; return acc }, {}
+      ),
+    };
+    this.fetchDataFromdashboards();
+  }
+
+  fetchDataFromdashboards() {
+    const componentsToFetch : Set<DashboardType> = new Set([this.state.currentDashboard, ...this.dashboardTypes]);
+    componentsToFetch.forEach(({component, id: dashboardId}) => {
+      component.fetchData(this.props.match.params.assayId)
+        .then(data => this.storeDataFromDashboard(data, dashboardId));
+    });
+
+    
+  }
+
+  storeDataFromDashboard(data:any, dashboardId: DashboardType["id"]) {
+    this.setState({
+      dashboardsData: {
+        ...this.state.dashboardsData,
+        [dashboardId]: data,
+      }
+    })
   }
 
 
@@ -56,7 +81,7 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
 
   renderDashboard(type : DashboardType) {
     const Dashboard = type.component;
-    return <Dashboard onEmptyRender={this.renderEmptyDashboard} />;
+    return <Dashboard onEmptyRender={this.renderEmptyDashboard} data={this.state.dashboardsData[type.id]} />;
   }
 
   render(){      

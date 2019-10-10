@@ -1,7 +1,6 @@
 
 import * as React from "react";
 import { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from "react-router"
 import { DashboardType } from '../InterfaceDashboardTypes';
 import Plot from 'react-plotlyjs-ts';
 import { Layout } from "plotly.js";
@@ -17,10 +16,24 @@ type Experiment = {
 }
   
 interface LeafAreaProps extends RouteComponentProps<AssayParamsType> {
-    onEmptyRender: Function
+    onEmptyRender: Function,
+    data: Array<Experiment>,
 }
 interface LeafAreaState {
-    experimentsData: Array<Experiment>,
+}
+
+const generateExperimentData = (data: Array<{dataPoints: Array<{label: string, y: number}>}>) => {
+    const experimentsData = [];
+    for (var i = 0; i < data.length; i++) {
+        const experimentData : Experiment = { dates:[], values: [], text: [], name: `Experimento ${i}`};
+        for (var j = 0; j < data[i].dataPoints.length; j++) {
+            experimentData.dates.push(`2019-08-${Math.floor(Math.random()*30 + 1)}`);
+            experimentData.values.push(data[i].dataPoints[j].y);
+            experimentData.text.push(data[i].dataPoints[j].label);
+        }
+        experimentsData.push(experimentData);
+    }
+    return experimentsData;
 }
 
 
@@ -28,14 +41,10 @@ const name = "Área foliar";
 class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
     constructor(props: LeafAreaProps) {
         super(props);
-        this.state = {
-            experimentsData: [],
-        }
-        this.fetchGraph(this.props.match.params.assayId);
     }
 
-    fetchGraph(assayId: string) {
-        fetch(`https://nanivo-bush.herokuapp.com/graficoComparativo/experimentos?assayId=${assayId}`,{
+    static fetchData(assayId: string) {
+        return fetch(`https://nanivo-bush.herokuapp.com/graficoComparativo/experimentos?assayId=${assayId}`,{
             method: 'GET',
             mode: 'cors',
             headers: {
@@ -44,32 +53,13 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
             }
           })
             .then(res => res.json())
-            .then(this.generateExperimentData)
-            .then((experimentsData) => {
-                this.setState({
-                    experimentsData,
-                });
-            })
-    }
-
-    generateExperimentData(data: Array<{dataPoints: Array<{label: string, y: number}>}>) {
-        const experimentsData = [];
-        for (var i = 0; i < data.length; i++) {
-            const experimentData : Experiment = { dates:[], values: [], text: [], name: `Experimento ${i}`};
-            for (var j = 0; j < data[i].dataPoints.length; j++) {
-                experimentData.dates.push(`2019-08-${Math.floor(Math.random()*30 + 1)}`);
-                experimentData.values.push(data[i].dataPoints[j].y);
-                experimentData.text.push(data[i].dataPoints[j].label);
-            }
-            experimentsData.push(experimentData);
-        }
-        return experimentsData;
+            .then(generateExperimentData)
     }
 
     
 
     render() { 
-        const data: Plotly.Data[] = this.state.experimentsData.map(experiment => ({
+        const data: Plotly.Data[] = this.props.data.map(experiment => ({
             x: experiment.dates,
             y: experiment.values,
             name: experiment.name,
@@ -123,7 +113,7 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
 const leafAreaType : DashboardType = {
     id: 'leaf-area',
     name,
-    component: withRouter(LeafArea),
+    component: LeafArea,
   };
   
   export default leafAreaType;
