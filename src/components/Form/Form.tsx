@@ -33,6 +33,7 @@ export interface IFormState {
     values: IValues;
     errors: IErrors;
     submitSuccess?: boolean;
+    serverError?:string
 }
 
 export interface IFormContext extends IFormState {
@@ -144,9 +145,14 @@ private async submitForm(): Promise<boolean> {
       }
     }).then(response => {
             console.log(response)
-            if (response.status > 200) return false
+            if (!response.ok) throw response
             else return true
-    })
+    }).catch(error => error.json()
+                           .then((error:any) => {
+                             console.log(error.message)
+                             this.setState({serverError:error.message})
+                             return false;
+                            }))
   }
  
   public render() {
@@ -174,7 +180,7 @@ private async submitForm(): Promise<boolean> {
             {submitSuccess === false &&
               !this.haveErrors(errors) && (
                 <div className="result-error" role="alert">
-                  Perdon, un error inesperado ocurrió
+                  {this.state.serverError}
                 </div>
               )}
             {submitSuccess === false &&
