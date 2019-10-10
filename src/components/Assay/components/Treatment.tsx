@@ -1,5 +1,5 @@
 import * as React from 'react'
-import ITreatment from './ITreatment';
+import ITreatment from '../../../Interfaces/ITreatment';
 
 
 export  interface ITreatmentProps{
@@ -14,12 +14,21 @@ const Treatment:React.SFC<ITreatmentProps> = (props) => {
 
     return(
         <div  className="treatment-card">
+
+            <div className="treatment-content-title">
+                Etiqueta
+            </div>
             <div className="treatment-tag">
                 {treatment.name}
+            </div>
+
+            <div className="treatment-content-title">
+                Cantidad de pruebas
             </div>
             <div className="treatment-tests">
                 {treatment.experimentsLength}
             </div>
+
             <button type="button" 
                     onClick={()=>setQrRequest(treatment.name)}>
             QR's

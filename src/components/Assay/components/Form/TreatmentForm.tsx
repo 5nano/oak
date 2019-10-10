@@ -1,7 +1,8 @@
 import * as React from "react";
-import Form, { IFields, IValues } from "../Form/Form";
-import { Field } from "../Field/Field";
-import {requiredValidation, isNumberValidation } from "../Form/Validation";
+import Form, { IFields, IValues } from "../../../Form/Form";
+import { Field } from "../../../Field/Field";
+import {requiredValidation, isNumberValidation } from "../../../Form/Validation";
+import NewComponentButton from "../../../Utilities/Buttons/NewComponentButton";
 
 interface ITreatmentFormProps{
   handleValues: (values:IValues) => void;
@@ -47,6 +48,7 @@ const TreatmentForm: React.SFC<ITreatmentFormProps>= (props) => {
       <Form
         action='nanivo-bush.herokuapp.com/tratamientos/insertar'
         fields={fields}
+        button = {NewComponentButton}
         type='alternative'
         getValues={props.handleValues}
         render={() => (
@@ -54,8 +56,10 @@ const TreatmentForm: React.SFC<ITreatmentFormProps>= (props) => {
             <Field {...fields.name}/>
             <Field {...fields.description}/>
             <Field {...fields.experimentsLength}/>
-            <Field {...fields.mix}/>
-            <Field {...fields.agrochemical}/>
+            <div className="checkboxes">
+              <Field {...fields.mix}/>
+              <Field {...fields.agrochemical}/>
+            </div>
           </React.Fragment>
         )}
       />

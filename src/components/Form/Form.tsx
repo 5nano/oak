@@ -168,7 +168,7 @@ private async submitForm(): Promise<boolean> {
     return (
       <FormContext.Provider value={context}>
         <div className="form-container">
-          <form className="form-control" noValidate={true}>
+          <form className="form" noValidate={true}>
 
             {this.props.render()}
 

@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Form, IFields, IValues } from "../../Form/Form";
-import { Field } from "../../Field/Field";
-import { IFieldsOptions, IAssay } from "../Assay";
-import { requiredValidation, maxLengthValidation, isEmailValidation } from "../../Form/Validation";
-import NewComponentButton from "../../Utilities/Buttons/NewComponentButton";
+import { Form, IFields, IValues } from "../../../Form/Form";
+import { Field } from "../../../Field/Field";
+import { IFieldsOptions, IAssay } from "../../Assay";
+import { requiredValidation, maxLengthValidation, isEmailValidation } from "../../../Form/Validation";
+import NewComponentButton from "../../../Utilities/Buttons/NewComponentButton";
 
 export interface IAssayFormProps {
   handleValues: (values:IValues) => void;

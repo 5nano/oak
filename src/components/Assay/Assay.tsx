@@ -1,11 +1,11 @@
 import * as React from 'react'
-import AssayForm from './Form/AssayForm';
+import AssayForm from './components/Form/AssayForm';
 import { IValues } from '../Form/Form';
 import Treatments from './components/Treatments';
-import TreatmentForm from './TreatmentForm';
+import TreatmentForm from './components/Form/TreatmentForm';
 import Stepper from '../Utilities/Stepper';
 import { RouteComponentProps } from 'react-router-dom';
-import ITreatment from './components/ITreatment';
+import ITreatment from '../../Interfaces/ITreatment';
 import TreatmentQrs from '../Qrs/TreatmentQr/TreatmentQrs';
 
 
@@ -252,16 +252,18 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                     }
 
                     {!this.state.qrRequest.flag && this.state.successAssay && (
-                            <Treatments treatments={this.state.treatments}
+                            [<Treatments treatments={this.state.treatments}
                                         idAgrochemical={this.state.assay.idAgrochemical}
                                         idMixture={this.state.assay.idMix}
                                         idAssay={this.state.assay.id}
                                         setTreatment={this.setTreatment}
                                         setQrRequest={this.setQrRequest}
-                                       /> 
+                            />,
+                            <button type='button' onClick={()=>this.props.history.push('/')}>
+                            Finalizar
+                            </button>]
                     )}
-                    
-
+              
                     {this.state.qrRequest.flag &&
                       <div className="qr-wrapper">
                         <TreatmentQrs treatment={this.state.treatments.find(treatment => treatment.name === this.state.qrRequest.treatmentName)}/>
@@ -270,7 +272,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                         </button>
                       </div>
                     }
-                    
+
             </div>
             
         )

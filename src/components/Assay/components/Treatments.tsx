@@ -1,8 +1,9 @@
 import * as React from 'react';
 import Treatment from './Treatment';
-import ITreatment from './ITreatment';
-import TreatmentForm from '../TreatmentForm';
+import ITreatment from '../../../Interfaces/ITreatment';
+import TreatmentForm from './Form/TreatmentForm';
 import { IValues } from '../../Form/Form';
+import { RouteComponentProps } from 'react-router-dom';
 
 
 export  interface ITreatmentsProps{
@@ -58,6 +59,7 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                  treatment.qrs.push(data.experimentsQR[key])
              })
              setTreatment(treatment)
+             setNewTreatment(false)
           })
       }
     
@@ -70,19 +72,17 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                 </div>
 
                 <div className="treatments-wrapper">
+                    
                     {treatments.map((treatment)=> (
                         <Treatment treatment={treatment}
                                    setQrRequest={setQrRequest}/>
                     ))}
                 </div>
 
-
-                    
                 <button type="button" onClick={()=> setNewTreatment(!newTreatment)}>
                     Nuevo tratamiento
                 </button>
-
-
+        
                 {newTreatment && 
                 <div className="form-wrapper">
                     <div className="form-content">
