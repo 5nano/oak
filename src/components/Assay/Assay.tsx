@@ -233,14 +233,12 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                     <p>Ensayos</p>
                     </div>
 
-                    {!this.state.qrRequest.flag?
 
-                    <div className="assay-wrapper">
+                    {!this.state.qrRequest.flag && !this.state.successAssay && 
 
-                    {!this.state.successAssay && 
-                    
-                        <div className="assay-content">
-                          <div className="assay-helper">Ingrese los datos del nuevo ensayo</div>
+                    <div className="form-wrapper">
+                        <div className="form-content">
+                          <div className="form-helper">Ingrese los datos del nuevo ensayo</div>
                             {this.state.error.length>0 &&
                               <div>
                                   Error del servidor: {this.state.error}
@@ -250,11 +248,10 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                                        fieldsOptions={this.state.fieldsOptions}
                                        />
                         </div>
+                      </div>
                     }
 
-                    {this.state.successAssay && (
-                        <div className="treatments-container">
-                            <Stepper description="Agregue los tratamientos"/>
+                    {!this.state.qrRequest.flag && this.state.successAssay && (
                             <Treatments treatments={this.state.treatments}
                                         idAgrochemical={this.state.assay.idAgrochemical}
                                         idMixture={this.state.assay.idMix}
@@ -262,21 +259,16 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                                         setTreatment={this.setTreatment}
                                         setQrRequest={this.setQrRequest}
                                        /> 
-                            <button type="button" onClick={()=>this.props.history.push('/')}>
-                                Finalizar
-                            </button>
-                        </div>
                     )}
+                    
 
-                    </div>
-                    :
-                    <div className="qr-wrapper">
-                      
-                      <TreatmentQrs treatment={this.state.treatments.find(treatment => treatment.name === this.state.qrRequest.treatmentName)}/>
-                      <button type="button" onClick={()=>this.setState({qrRequest:{flag:false,treatmentName:''}})}>
-                                Atras
-                      </button>
-                    </div>
+                    {this.state.qrRequest.flag &&
+                      <div className="qr-wrapper">
+                        <TreatmentQrs treatment={this.state.treatments.find(treatment => treatment.name === this.state.qrRequest.treatmentName)}/>
+                        <button type="button" onClick={()=>this.setState({qrRequest:{flag:false,treatmentName:''}})}>
+                                  Atras
+                        </button>
+                      </div>
                     }
                     
             </div>

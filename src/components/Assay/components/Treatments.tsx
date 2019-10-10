@@ -84,7 +84,12 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
 
 
                 {newTreatment && 
-                    <TreatmentForm handleValues={handleTreatmentValues}/>
+                <div className="form-wrapper">
+                    <div className="form-content">
+                        <div className="form-helper">Ingrese los datos del nuevo tratamiento</div>
+                        <TreatmentForm handleValues={handleTreatmentValues}/>
+                    </div>
+                </div>
                 }
             </div>
         )

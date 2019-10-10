@@ -44,32 +44,21 @@ const TreatmentForm: React.SFC<ITreatmentFormProps>= (props) => {
   };
  
   return (
-
-      <div className="crud-container">
-        <div>
-            <div className="title-wrapper">
-            <img src="../../assets/images/head-icon.png"/>
-            <p>Nuevo Tratamiento</p>
-            </div>
-
-            <Form
-              action='nanivo-bush.herokuapp.com/tratamientos/insertar'
-              fields={fields}
-              type='alternative'
-              getValues={props.handleValues}
-              render={() => (
-                <React.Fragment>
-                  <Field {...fields.name}/>
-                  <Field {...fields.description}/>
-                  <Field {...fields.experimentsLength}/>
-                  <Field {...fields.mix}/>
-                  <Field {...fields.agrochemical}/>
-                </React.Fragment>
-              )}
-            />
-        </div>
-      </div>
-   
+      <Form
+        action='nanivo-bush.herokuapp.com/tratamientos/insertar'
+        fields={fields}
+        type='alternative'
+        getValues={props.handleValues}
+        render={() => (
+          <React.Fragment>
+            <Field {...fields.name}/>
+            <Field {...fields.description}/>
+            <Field {...fields.experimentsLength}/>
+            <Field {...fields.mix}/>
+            <Field {...fields.agrochemical}/>
+          </React.Fragment>
+        )}
+      />
   )
 };
 
