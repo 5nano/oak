@@ -118,10 +118,7 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
                 }
 
                 {this.state.qrsRequest && 
-                    <div className="qrs-container">
-                        <p>Imprima los qrs del tratamiento {this.state.actualTreatment.name}</p>
-                        <TreatmentQrs treatment={this.state.actualTreatment}/>
-                    </div>
+                <TreatmentQrs treatment={this.state.actualTreatment}/>
                 }
 
 
