@@ -5,11 +5,9 @@ import { DashboardType } from '../InterfaceDashboardTypes';
 import { Layout } from "plotly.js";
 import { IFrontExperiment, IBackendExperiment } from '../../../../Interfaces/Experimento';
 import { RouteComponentProps } from 'react-router-dom';
-import { withRouter } from "react-router"
 
 
 export interface YellowFreqComponentState{
-  assayId: string,
   experiments: Array<IFrontExperiment>,
   loading: boolean,
 }
@@ -18,7 +16,8 @@ type AssayParamsType = {
 }
 
 export interface YellowFreqComponentProps extends RouteComponentProps<AssayParamsType> {
-  onEmptyRender: Function
+  onEmptyRender: Function,
+  data: Array<IFrontExperiment>,
 }
 
 const name = "Mediana de frecuencias en amarillo";
@@ -28,18 +27,11 @@ class YellowFreqComponent extends React.Component<YellowFreqComponentProps, Yell
 
   constructor(props:YellowFreqComponentProps){
     super(props)
-
-    this.state = {
-      assayId: props.match.params.assayId,
-      experiments: [],
-      loading: true,
-    }
-
-    this.fetchFrequencies('yellow')
   }
   
-  fetchFrequencies(freqType: string) {
-    return fetch(`https://nanivo-bush.herokuapp.com/frecuencias/${freqType}?assayId=${this.state.assayId}`, {
+  static fetchData(assayId: string) {
+    const freqType = 'yellow'; // Por ahora solo ofrecemos frecuencia amarilla
+    return fetch(`https://nanivo-bush.herokuapp.com/frecuencias/${freqType}?assayId=${assayId}`, {
       method: "GET",
       mode: 'cors',
       headers: {
@@ -54,43 +46,30 @@ class YellowFreqComponent extends React.Component<YellowFreqComponentProps, Yell
           plotColor: "yellow",
         }));
 
-        console.log(responseData);
-          this.setState({
-            ...this.state,
-            experiments: dataWithColors,
-            loading: false,
-          });
+        return dataWithColors;
       })
   }
 
   render(){
-      const { loading } = this.state;
-
-      if (loading) return null;
-      
-      const data: Plotly.Data[] = this.state.experiments.map(experiment => ({
+      if (!(this.props.data && this.props.data.length)) return null;
+      const data: Plotly.Data[] = this.props.data.map(experiment => ({
         x: experiment.values,
         name: experiment.experimentId,
         type: 'box'
       }))
 
       const layout: Partial<Layout> = {
-        annotations: [
-          {
-            text: 'Experiment aIds',
-            x: 0,
-            xref: 'paper',
-
-          }
-        ],
         title: name,
         xaxis: {
           title: 'frecuencias',
         },
+        yaxis: {
+          tickprefix: "Experiment ",
+        },
         autosize: false,
       };
 
-    if (!loading && !(data && data.length)) return this.props.onEmptyRender();
+    if (!(data && data.length)) return this.props.onEmptyRender();
     return (
         <div className="YellowFreq">
           <Plot
@@ -105,7 +84,7 @@ class YellowFreqComponent extends React.Component<YellowFreqComponentProps, Yell
 const yellowFreq : DashboardType = {
   id: 'yellow-frequency',
   name,
-  component: withRouter(YellowFreqComponent),
+  component: YellowFreqComponent,
 };
 
 export default yellowFreq;
