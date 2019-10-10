@@ -59,6 +59,7 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
     
 
     render() { 
+        if (!(this.props.data && this.props.data.length)) return null;
         const data: Plotly.Data[] = this.props.data.map(experiment => ({
             x: experiment.dates,
             y: experiment.values,

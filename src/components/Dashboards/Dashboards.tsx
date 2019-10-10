@@ -51,8 +51,6 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
       component.fetchData(this.props.match.params.assayId)
         .then(data => this.storeDataFromDashboard(data, dashboardId));
     });
-
-    
   }
 
   storeDataFromDashboard(data:any, dashboardId: DashboardType["id"]) {
@@ -63,7 +61,6 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
       }
     })
   }
-
 
   renderEmptyDashboard() {
     return (
