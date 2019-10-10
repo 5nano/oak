@@ -7,7 +7,7 @@ const RegisterButton:React.SFC<IFormButtonProps> = (props) => {
     return(
         <div className='register-button'>
             <button onClick={onClick} >
-                Register
+                Registrar
             </button>
         </div>
     )

@@ -226,9 +226,9 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
    
     render(){
         return(
-            <div className="crud-container">
+            <div className="assay-container">
                
-                    <div className="title-wrapper">
+                    <div className="assay-title">
                     <img src="../../assets/images/head-icon.png"/>
                     <p>Ensayos</p>
                     </div>
@@ -239,8 +239,8 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
 
                     {!this.state.successAssay && 
                     
-                        <div className="assay-container">
-                            <Stepper description="Agregue los datos del nuevo ensayo"/>
+                        <div className="assay-content">
+                          <div className="assay-helper">Ingrese los datos del nuevo ensayo</div>
                             {this.state.error.length>0 &&
                               <div>
                                   Error del servidor: {this.state.error}

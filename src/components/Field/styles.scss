@@ -18,7 +18,7 @@
 
 
 .field-title{
-    color:white;
+    color:black;
     justify-content: center;
     text-justify: center;
 }
@@ -32,6 +32,16 @@
     align-content: center;
 
     select{
-        width:100%;
+        width:200px;
+    }
+
+    .multitext{
+        width: 500px;
+        height: 150px;
+        resize:none;
+    }
+
+    .textbox{
+        width:200px;
     }
 }

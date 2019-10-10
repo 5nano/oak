@@ -39,7 +39,7 @@ export const Field: React.SFC<IFieldProps> = ({
                       context.setValues({ [id]: e.currentTarget.value }) 
                   }
                   style={getEditorStyle(context.errors)} 
-                  className="form-control"
+                  className="textbox"
                 />
               )}
 
@@ -66,7 +66,7 @@ export const Field: React.SFC<IFieldProps> = ({
                       context.setValues({ [id]: e.currentTarget.value }) 
                   }
                   style={getEditorStyle(context.errors)}
-                  className="form-control"
+                  className="multitext"
                 />
               )}
     
