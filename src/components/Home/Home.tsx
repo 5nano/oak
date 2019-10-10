@@ -3,6 +3,7 @@ import Ensayos from './components/Ensayos/Ensayos';
 import { IEnsayo } from '../../Interfaces/IEnsayo';
 import { RouteComponentProps } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { buildUrl } from "../Utilities/QueryParamsURLBuilder";
 
 export interface IHomesState {
     ensayos: Array<IEnsayo>,
@@ -84,10 +85,12 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
     }
 
     private removeAssay(assayId: IEnsayo['idAssay']){
-        fetch('https://nanivo-bush.herokuapp.com/ensayos/eliminar',{
+
+        fetch(buildUrl('https://nanivo-bush.herokuapp.com/ensayos/eliminar',{
+            assayId:assayId
+         }),{
             method:'DELETE',
             mode:'cors',
-            body: JSON.stringify({assayId:assayId}),
             headers: {
              'Content-Type': 'application/json',
              Accept: 'application/json'

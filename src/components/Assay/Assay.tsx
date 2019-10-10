@@ -35,7 +35,8 @@ export interface IAssayState{
       crops:boolean
     },
     fieldsOptions:IFieldsOptions,
-    treatments: ITreatment[]
+    treatments: ITreatment[],
+    error:string
   }
 
 
@@ -76,7 +77,8 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                 agrochemicalOptions:[],
                 mixsOptions:[]
             },
-            treatments: []
+            treatments: [],
+            error: ''
           }
 
           this.setTreatment=this.setTreatment.bind(this)
@@ -182,8 +184,13 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
            'Content-Type': 'application/json',
            Accept: 'application/json'
          }
-       }).then(response => response.json())
+       }).then(response =>{
+         console.log(response)
+         if(!response.ok) throw response
+         else return response.json()
+          })
          .then(data => {
+           console.log(data)
             let assayId = data["idAssay"]
             let newAssay = {
               id:assayId,
@@ -194,6 +201,11 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
               idMix: idMix
             }
             this.setState({assay:newAssay,successAssay:true})
+        })
+        .catch(error => {
+          console.log(error)
+          error.json()
+               .then((error: any) => this.setState({error:error.message}))
         })
      }
 
@@ -229,6 +241,11 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                     
                         <div className="assay-container">
                             <Stepper description="Agregue los datos del nuevo ensayo"/>
+                            {this.state.error.length>0 &&
+                              <div>
+                                  Error del servidor: {this.state.error}
+                              </div>
+                            }
                             <AssayForm handleValues={this.handleAssayValues}
                                        fieldsOptions={this.state.fieldsOptions}
                                        />
