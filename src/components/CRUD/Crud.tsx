@@ -47,7 +47,8 @@ const CrudView: React.SFC <ICrudViewProps> = ({
                              console.log(error.message)
                              setError({serverError:error.message})
                              return false;
-                           }))
+                           })
+    )
   }
 
   return (
