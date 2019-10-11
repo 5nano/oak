@@ -16,6 +16,9 @@ const TreatmentQrs:React.SFC<ITreatmentQrsProps> = (props) => {
               <div className="treatment-qrs-title">
                   Códigos QR del tratamiento {treatment.name}
               </div>
+              <button type='button'>
+                  Imprimir
+              </button>
 
               <div className="treatment-qrs">
                 {treatment.qrs
@@ -23,11 +26,11 @@ const TreatmentQrs:React.SFC<ITreatmentQrsProps> = (props) => {
                                 return (
                                 <div className="qr-card">
                                     <div className="qr-title">
-                                        {value}
+                                        ID: {value}
                                     </div>
                                     <QrCode id={value}
                                             value={value}
-                                            size={150}
+                                            size={250}
                                             level={"H"}
                                             includeMargin={true}
                                             />

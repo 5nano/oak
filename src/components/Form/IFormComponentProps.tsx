@@ -1,3 +1,3 @@
 export interface IComponentFormProps{
-    createUrl: string
+    submitForm: Function;
   }

@@ -8,11 +8,13 @@
     margin: 10px 0px;
 
     .result-error{
+        margin: 10px 0px;
         color:red;
     }
 
     .result-success{
-        color:white;
+        margin: 10px 0px;
+        color:#3A7257
     }
 
     form{
@@ -30,7 +32,7 @@
 
     padding: 6px;
     margin: 16px;
-    width: 800px;
+    width: 600px;
 
     border: 1px solid black;
     border-radius: 1px;

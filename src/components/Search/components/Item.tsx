@@ -15,6 +15,8 @@ export interface IItemProps{
 const Item:React.SFC<IItemProps> = (props) => {
     
     const {object} = props;
+    const name = object['name']
+    const description = object['description']? object['description']:'Sin descripción'
     return(
         <div className="item">
             <div className="item-img">
@@ -35,17 +37,12 @@ const Item:React.SFC<IItemProps> = (props) => {
 
 
             <div className="item-props">
-                {Object.keys(object).map((key:any) => {
-                    return (
-                            <div className="item-prop">
-                                {object[key]===null?
-                                    <p>Sin descripción</p>
-                                    :
-                                    <p>{object[key]}</p>
-                                }
-                            </div>
-                            )
-                    })}
+                <div className="item-prop">
+                    <p>Nombre: {name}</p>
+                </div>
+                <div className="item-prop">
+                    <p>Descripción: {description} </p>
+                </div>
             </div>
         </div>
     )

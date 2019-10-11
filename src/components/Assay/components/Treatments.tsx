@@ -3,8 +3,6 @@ import Treatment from './Treatment';
 import ITreatment from '../../../Interfaces/ITreatment';
 import TreatmentForm from './Form/TreatmentForm';
 import { IValues } from '../../Form/Form';
-import { RouteComponentProps } from 'react-router-dom';
-
 
 export  interface ITreatmentsProps{
     treatments: ITreatment[],
@@ -26,7 +24,7 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
            setTreatment,
            setQrRequest} = props
     
-    const handleTreatmentValues=(values:IValues):void=>{
+    const submitTreatmentForm=(values:IValues,setError:Function):void=>{
         console.log(values)
     
         const treatmentData = {
@@ -87,7 +85,7 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                 <div className="form-wrapper">
                     <div className="form-content">
                         <div className="form-helper">Ingrese los datos del nuevo tratamiento</div>
-                        <TreatmentForm handleValues={handleTreatmentValues}/>
+                        <TreatmentForm submitTreatmentForm={submitTreatmentForm}/>
                     </div>
                 </div>
                 }

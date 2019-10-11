@@ -8,15 +8,11 @@ export interface IFields {
 }
 
 interface IFormProps {
-    action: string;
+    submitForm: Function,
 
     fields: IFields,
 
     render: () => React.ReactNode;
-
-    type?: string,
-
-    getValues?: (values:IValues) => void;
 
     button?:React.SFC<IFormButtonProps>;
 }
@@ -87,17 +83,12 @@ private handleSubmit = async (
     e: React.MouseEvent
   ): Promise<void> => {
     e.preventDefault();
- 
+    
     if (this.validateForm()) {
-      if(this.props.type === 'alternative'){
-        this.props.getValues(this.state.values);
-        /*devuelve los valores al padre*/ 
-      }else{
-      const submitSuccess: boolean = await this.submitForm();
+      const submitSuccess: boolean = await this.props.submitForm(this.state.values)
       this.setState({ submitSuccess });
       }
-    }
-  };
+    };
  
   private validate = (fieldName: string): string[] => {
     let newErrors: string[] = [];
@@ -132,28 +123,10 @@ private handleSubmit = async (
   this.setState({ errors });
   return !this.haveErrors(errors);
 }
- 
-private async submitForm(): Promise<boolean> {
 
-    return fetch(this.props.action, {
-      method: "POST",
-      mode: 'cors',
-      body: JSON.stringify(this.state.values),
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      }
-    }).then(response => {
-            console.log(response)
-            if (!response.ok) throw response
-            else return true
-    }).catch(error => error.json()
-                           .then((error:any) => {
-                             console.log(error.message)
-                             this.setState({serverError:error.message})
-                             return false;
-                            }))
-  }
+private setError = (error:string) => {
+  this.setState({serverError: error})
+}
  
   public render() {
     const { submitSuccess, errors } = this.state;

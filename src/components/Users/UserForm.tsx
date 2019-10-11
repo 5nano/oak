@@ -2,7 +2,7 @@ import * as React from "react";
 import { Form, IFields} from "../Form/Form";
 import { Field } from "../Field/Field";
 import   RegisterButton from "./components/RegisterButton";
-import { IComponentFormProps } from "../Form/ComponentFormProps";
+import { IComponentFormProps } from "../Form/IFormComponentProps";
 import { requiredValidation } from "../Form/Validation";
 
 const UserForm: React.SFC<IComponentFormProps> = (props) => {
@@ -43,9 +43,10 @@ const UserForm: React.SFC<IComponentFormProps> = (props) => {
     }
   };
   
+  const{submitForm}=props;
   return (
       <Form
-        action={props.createUrl}
+       submitForm={submitForm}
         fields = {fields}
         button = {RegisterButton}
         render={() => (
