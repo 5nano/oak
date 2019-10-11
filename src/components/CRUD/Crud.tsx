@@ -1,4 +1,5 @@
 import * as React from "react";
+import { IValues } from "../Form/Form";
 
 
 export interface ICrudViewProps {
@@ -27,14 +28,31 @@ const CrudView: React.SFC <ICrudViewProps> = ({
     setFormRequest(!formRequest)
   )
 
- 
+  const submitForm = (values:IValues,setError:Function): Promise<boolean> => {
 
+    return fetch(createUrl, {
+      method: "POST",
+      mode: 'cors',
+      body: JSON.stringify(values),
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    }).then(response => {
+            console.log(response)
+            if (!response.ok) throw response
+            else return true
+    }).catch(error => error.json()
+                           .then((error:any) => {
+                             console.log(error.message)
+                             setError({serverError:error.message})
+                             return false;
+                           }))
+  }
 
   return (
 
       <div className="crud-container">
-                  
-
                   <div className="title-wrapper">
                     <img src="../../assets/images/head-icon.png"/>
                     <p>{title}</p>
@@ -49,11 +67,10 @@ const CrudView: React.SFC <ICrudViewProps> = ({
                   <div className="form-wrapper">
                       <div className="form-content">
                           <div className="form-helper">Ingrese los datos</div>
-                          <FormComponent createUrl={createUrl}/>                   
+                          <FormComponent submitForm={submitForm}/>                   
                       </div>
                   </div>
                   }
-                  
       </div>
  
   );

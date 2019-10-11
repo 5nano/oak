@@ -3,7 +3,7 @@ import * as React from "react";
 import AgrochemicalsForm from './AgrochemicalsForm';
 import AgrochemicalsSearch from './AgrochemicalsSearch';
 
-import CrudView from '../CRUD/CrudView';
+import CrudView from '../CRUD/Crud';
 
 
 const Agrochemicals: React.SFC = () => {

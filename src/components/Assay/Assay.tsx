@@ -161,7 +161,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
 
 
 
- handleAssayValues=(values:IValues):void=>{
+ submitAssayForm=(values:IValues,setError:Function):void=>{
      
 
       let idAgrochemical = this.state.fieldsOptions.agrochemicalOptions.filter(option => option[0] === values.agrochemical).pop()[1]
@@ -205,7 +205,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
         .catch(error => {
           console.log(error)
           error.json()
-               .then((error: any) => this.setState({error:error.message}))
+               .then((error: any) => setError({error:error.message}))
         })
      }
 
@@ -244,7 +244,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                                   Error del servidor: {this.state.error}
                               </div>
                             }
-                            <AssayForm handleValues={this.handleAssayValues}
+                            <AssayForm submitAssayForm={this.submitAssayForm}
                                        fieldsOptions={this.state.fieldsOptions}
                                        />
                         </div>

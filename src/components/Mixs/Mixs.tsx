@@ -1,7 +1,7 @@
 import * as React from "react";
 
 
-import CrudView from '../CRUD/CrudView';
+import CrudView from '../CRUD/Crud';
 import MixsForm from "./MixsForm";
 import MixsSearch from "./MixsSearch";
 

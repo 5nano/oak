@@ -6,7 +6,7 @@ import { requiredValidation, maxLengthValidation, isEmailValidation } from "../.
 import NewComponentButton from "../../../Utilities/Buttons/NewComponentButton";
 
 export interface IAssayFormProps {
-  handleValues: (values:IValues) => void;
+  submitAssayForm: (values:IValues,setError:Function) => void;
   fieldsOptions:IFieldsOptions;
 }
 
@@ -52,13 +52,11 @@ const AssayForm:React.SFC<IAssayFormProps> = (props) => {
     fields.agrochemical.options = props.fieldsOptions.agrochemicalOptions.map(option => option[0])
     fields.mix.options = props.fieldsOptions.mixsOptions.map(option => option[0])
   })
-    
+    const{submitAssayForm} = props;
     return (
           <Form
-            action=''
+            submitForm={submitAssayForm}
             fields = {fields}
-            type='alternative'
-            getValues={props.handleValues}
             button = {NewComponentButton}
             render={() => (
               <React.Fragment>
