@@ -2,6 +2,7 @@ import * as React from "react";
 
 import YellowFreq from './dashboardsTypes/YellowFreq/YellowFreq';
 import LeafArea from './dashboardsTypes/LeafArea/LeafArea';
+import Overall from './dashboardsTypes/Overall/Overall';
 
 import { DashboardType } from './dashboardsTypes/InterfaceDashboardTypes';
 import { RouteComponentProps } from 'react-router-dom';
@@ -31,13 +32,14 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
     super(props)
 
     this.dashboardTypes = [
+      Overall,
       YellowFreq,
-      LeafArea
+      LeafArea,
     ];
 
     this.state = {
       assayId: props.match.params.assayId,
-      currentDashboard: YellowFreq,
+      currentDashboard: this.dashboardTypes[0],
       dashboardsData: this.dashboardTypes.reduce((acc:{ [key:string]: Array<number> }, dash) => {
         acc[dash.id] = []; return acc }, {}
       ),
@@ -78,16 +80,16 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
 
   renderDashboard(type : DashboardType) {
     const Dashboard = type.component;
+
+    // Special case
+    if (type.id === 'overall') return <Dashboard onEmptyRender={this.renderEmptyDashboard} data={this.state.dashboardsData} />
+    
     return <Dashboard onEmptyRender={this.renderEmptyDashboard} data={this.state.dashboardsData[type.id]} />;
   }
 
   render(){      
     return (
       <div className="Dashboard">
-        <div className="dashboard-title">
-          <h1>Dashboard</h1>
-          <h2>Ensayo {this.state.assayId}</h2>
-        </div>
         <div className="dashboard-container">
           <div className="left-column">
             <DashboardSelector 

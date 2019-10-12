@@ -54,24 +54,27 @@ class YellowFreqComponent extends React.Component<YellowFreqComponentProps, Yell
       if (!(this.props.data && this.props.data.length)) return null;
       const data: Plotly.Data[] = this.props.data.map(experiment => ({
         x: experiment.values,
+        boxpoints: 'suspectedoutliers',
         name: experiment.experimentId,
         type: 'box'
       }))
 
       const layout: Partial<Layout> = {
         title: name,
+        
         xaxis: {
           title: 'frecuencias',
+          
         },
         yaxis: {
           tickprefix: "Experiment ",
         },
-        autosize: false,
+        autosize: true,
       };
 
     if (!(data && data.length)) return this.props.onEmptyRender();
     return (
-        <div className="YellowFreq">
+        <div className="PlotlyGraph YellowFreq">
           <Plot
             data={data}
             layout={layout}

@@ -1,0 +1,15 @@
+.Overall {
+    display: flex;
+    flex-wrap: wrap;
+
+    .left-panel {
+        width: 50%;
+        padding: 6px;
+    }
+
+    .right-panel {
+        border-left: 1px solid gray;
+        width: 47%;
+        padding: 6px;
+    }
+}

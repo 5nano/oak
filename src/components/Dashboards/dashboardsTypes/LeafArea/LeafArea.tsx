@@ -96,17 +96,17 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
                 ticksuffix: " mm2",
                 showticksuffix: "all"
             },
-            autosize: false,
+            autosize: true,
           };
 
         return (
-            <>
+            <div className="PlotlyGraph" >
                 <Plot
                     data={data}
                     layout={layout}
                 />
                 <div id='someDiv' />
-            </>
+            </div>
         )
     }
 };
