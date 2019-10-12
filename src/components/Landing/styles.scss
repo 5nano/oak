@@ -1,0 +1,89 @@
+.landing{
+   height: 100%; 
+
+   .landing-header{
+        display:flex;
+        flex-direction: row;
+        justify-content: space-around;
+
+        background-color: rgba(0, 0, 0, 0);
+        height: 80px;
+        margin: 0px 20px;
+        padding: 10px 0;
+
+        .landing-logo{
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            
+            img{
+                height: 50px;
+                width: 200px;
+            }
+        }
+
+        .landing-links{
+            display:flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-content: center;
+            align-items: center;
+
+            .link{
+                display:flex;
+                color:white;
+
+                margin: 0px 20px;
+            }
+        }
+
+        .landing-user{
+            display:flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-content: center;
+            align-items: center;
+
+                .signup-button{
+                    color:white;
+                    background-color:#6AC1A9;
+                    border:none;
+                    padding: 10px 20px;
+                    text-align: center;
+                    text-decoration: none;
+                    display:inline-block;
+                    font-size: 16px;
+                    border-radius: 8px;
+                    
+                }
+        }
+   }
+
+   .landing-container{
+       display:flex;
+       flex-direction: row;
+       justify-content: flex-end;
+       align-content: flex-start;
+       align-items: center;
+       padding: 50px 0px;
+
+       .login{
+           display:flex;
+           flex-direction: column;
+           justify-content: flex-start;
+           align-items: center;
+
+           width: 400px;
+           height: 400px;
+           background: rgba(106, 193, 169,0.2);
+       }
+
+   }
+
+   .landing-background {
+    background: url('../../assets/images/landing.png');
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    }
+}

@@ -12,6 +12,7 @@ import Dashboards from '../Dashboards/Dashboards';
 import Homes from '../Home/Home';
 import Mixs from '../Mixs/Mixs';
 import Qrs from '../Qrs/Qrs';
+import Landing from '../Landing/Landing';
 
 
 export interface AppProps { title: string }
@@ -27,7 +28,10 @@ const App = (props: AppProps) => {
     return (
 
     <Router>
-        <Header titles={[]} loggedIn={loggedIn}/>
+
+       
+
+        {/*<Header titles={[]} loggedIn={loggedIn}/>*/}
         <Switch>
             {
                 !loggedIn &&
@@ -38,6 +42,9 @@ const App = (props: AppProps) => {
                 exact 
                 render={(props) => loggedIn ? <Homes {...props} /> : <LogIn {...props} validateLogin={validateLogin} />}
             />
+
+            <Route path="/landing" exact component={Landing}/>
+
             <Route path="/register" exact component={Register}/>
 
             <Route path='/crops' exact component={Crops}/>
