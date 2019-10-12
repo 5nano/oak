@@ -24,6 +24,8 @@ interface Dashboards extends React.Component<IDashboardProps, IDashboardsState> 
   dashboardTypes: Array<DashboardType>
 }
 
+/*Mock data*/ 
+const tags = ["Importante","Corto","Secuencial"];
 
 class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
 
@@ -81,12 +83,19 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
     return <Dashboard onEmptyRender={this.renderEmptyDashboard} data={this.state.dashboardsData[type.id]} />;
   }
 
+ 
+
   render(){      
     return (
       <div className="Dashboard">
-        <div className="dashboard-title">
-          <h1>Dashboard</h1>
-          <h2>Ensayo {this.state.assayId}</h2>
+        <div className="dashboard-header">
+          <div className="dashboard-tags">
+            {tags.map(tag => {return <div className="tag">{tag}</div>})}
+          </div>
+          <div className="dashboard-title">
+            <h1>Dashboard</h1>
+            <h2>Ensayo {this.state.assayId}</h2>
+          </div>
         </div>
         <div className="dashboard-container">
           <div className="left-column">
