@@ -100,6 +100,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
         fetch('https://nanivo-bush.herokuapp.com/cultivos', {
           method: "GET",
           mode: 'cors',
+          credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json'
@@ -121,6 +122,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
         fetch('https://nanivo-bush.herokuapp.com/agroquimicos', {
           method: "GET",
           mode: 'cors',
+          credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json'
@@ -141,6 +143,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
         fetch('https://nanivo-bush.herokuapp.com/mezclas', {
           method: "GET",
           mode: 'cors',
+          credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json'
@@ -179,6 +182,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
        fetch('https://nanivo-bush.herokuapp.com/ensayos/insertar', {
          method: "POST",
          mode: 'cors',
+         credentials: 'include',
          body: JSON.stringify(assayData),
          headers: {
            'Content-Type': 'application/json',

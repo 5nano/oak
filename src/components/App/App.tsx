@@ -19,7 +19,7 @@ export interface AppProps { title: string }
 const App = (props: AppProps) => {
     const [{logged: loggedIn}, setLogin] = React.useState({logged: false});
     const validateLogin = () => {
-        if (document.cookie.includes('ssid') && !loggedIn)
+        if (document.cookie.includes('JSESSIONID') && !loggedIn)
             setLogin({logged: true});
     };
     validateLogin();

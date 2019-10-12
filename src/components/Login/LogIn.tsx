@@ -26,12 +26,12 @@ export class LogIn extends React.Component<ILogInProps,ILogInState> {
       ): Promise<void> => {
        e.preventDefault();
 
-
-       fetch('/api/login',{
-           method:'POST',
+    
+       fetch('https://nanivo-bush.herokuapp.com/usuarios/validar',{
+           method:'PUT',
            redirect: 'follow',
-           credentials: 'include', // Don't forget to specify this if you need cookies
-           mode: 'same-origin',
+           credentials: 'include', 
+           mode: 'cors',
            headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json'

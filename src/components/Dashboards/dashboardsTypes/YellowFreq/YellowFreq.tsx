@@ -34,6 +34,7 @@ class YellowFreqComponent extends React.Component<YellowFreqComponentProps, Yell
     return fetch(`https://nanivo-bush.herokuapp.com/frecuencias/${freqType}?assayId=${assayId}`, {
       method: "GET",
       mode: 'cors',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json'

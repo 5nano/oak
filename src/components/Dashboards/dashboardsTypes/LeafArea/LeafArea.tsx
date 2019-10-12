@@ -47,6 +47,7 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
         return fetch(`https://nanivo-bush.herokuapp.com/graficoComparativo/experimentos?assayId=${assayId}`,{
             method: 'GET',
             mode: 'cors',
+            credentials: 'include',
             headers: {
               'Content-Type': 'application/json',
               Accept: 'application/json',

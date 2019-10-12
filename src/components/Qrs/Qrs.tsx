@@ -41,6 +41,7 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
             }), {
             method: "GET",
             mode: 'cors',
+            credentials: 'include',
             headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json'
@@ -77,6 +78,7 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
             }), {
             method: "GET",
             mode: 'cors',
+            credentials: 'include',
             headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json'

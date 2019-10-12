@@ -7,6 +7,7 @@ const submitForm = (values:IValues,setError:Function): Promise<boolean> => {
   return fetch('https://nanivo-bush.herokuapp.com/usuarios/insertar', {
     method: "POST",
     mode: 'cors',
+    credentials: 'include',
     body: JSON.stringify(values),
     headers: {
       'Content-Type': 'application/json',

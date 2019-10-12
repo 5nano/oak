@@ -46,6 +46,7 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
         fetch('https://nanivo-bush.herokuapp.com/tratamientos/insertar', {
           method: "POST",
           mode: 'cors',
+          credentials: 'include',
           body: JSON.stringify(treatmentData),
           headers: {
             'Content-Type': 'application/json',

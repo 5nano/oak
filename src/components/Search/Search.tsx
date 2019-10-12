@@ -62,6 +62,7 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
       return fetch(this.props.searchAction, {
         method: "GET",
         mode: 'cors',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json'
@@ -114,6 +115,7 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
         return fetch(this.props.deleteAction,{
           method: 'DELETE',
           mode: 'cors',
+          credentials: 'include',
           body: JSON.stringify(object),
           headers: {
             'Content-Type': 'application/json',

@@ -41,6 +41,7 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
        fetch('https://nanivo-bush.herokuapp.com/ensayos',{
            method:'GET',
            mode:'cors',
+           credentials: 'include',
            headers: {
             'Content-Type': 'application/json',
             Accept: 'application/json'
@@ -70,6 +71,7 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
         fetch(`https://nanivo-bush.herokuapp.com/experimentosDe?assayId=${assayId}`,{
             method:'GET',
             mode:'cors',
+            credentials: 'include',
             headers: {
              'Content-Type': 'application/json',
              Accept: 'application/json'
@@ -91,6 +93,7 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
          }),{
             method:'DELETE',
             mode:'cors',
+            credentials: 'include',
             headers: {
              'Content-Type': 'application/json',
              Accept: 'application/json'

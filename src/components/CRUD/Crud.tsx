@@ -33,6 +33,7 @@ const CrudView: React.SFC <ICrudViewProps> = ({
     return fetch(createUrl, {
       method: "POST",
       mode: 'cors',
+      credentials: 'include',
       body: JSON.stringify(values),
       headers: {
         'Content-Type': 'application/json',
