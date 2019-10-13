@@ -2,6 +2,7 @@ import * as React from "react";
 import { ItemType } from "./components/Item";
 import Results from "./Results";
 import SearchButton from "./SearchButton";
+import BushService from '../../services/bush';
 
 
 export interface ISearchProps{
@@ -59,32 +60,13 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
     }
 
     private async getData()  {
-      return fetch(this.props.searchAction, {
-        method: "GET",
-        mode: 'cors',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json'
-        }
-      }).then(response => {
-        if (response.status > 200) {
-            // Map the validation errors to IErrors 
-            let responseBody: any;
-            responseBody = response.json();
-            const errors: IErrors = {};
-          
-            Object.keys(responseBody).map((key: string) => {
-              // For ASP.NET core, the field names are in title case - so convert to camel case
-              const fieldName = key.charAt(0).toLowerCase() + key.substring(1);
-              errors[fieldName] = responseBody[key];
-            });
-            this.setState({ errors });
-          }
-        return response.json()
-    }).then(data =>{
+      return BushService.get(this.props.searchAction)
+      .then(data =>{
                
               this.setData(data)
+      })
+      .catch(e => {
+          this.setState({ errors: e });
       })
     }
 
@@ -112,21 +94,8 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
     private async remove(object:any):Promise<void> {
       console.log(object)
       console.log(this.props.deleteAction)
-        return fetch(this.props.deleteAction,{
-          method: 'DELETE',
-          mode: 'cors',
-          credentials: 'include',
-          body: JSON.stringify(object),
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-          }
-        })
-        .then(response => {
-          return response.json()
-        })
+      return BushService.delete(this.props.deleteAction)
         .then(data => {this.getData() })
-        
     }
 
     public componentDidMount(){

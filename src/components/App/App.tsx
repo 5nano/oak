@@ -12,14 +12,14 @@ import Dashboards from '../Dashboards/Dashboards';
 import Homes from '../Home/Home';
 import Mixs from '../Mixs/Mixs';
 import Qrs from '../Qrs/Qrs';
-
+import BushService from '../../services/bush';
 
 export interface AppProps { title: string }
 
 const App = (props: AppProps) => {
     const [{logged: loggedIn}, setLogin] = React.useState({logged: false});
     const validateLogin = () => {
-        if (document.cookie.includes('JSESSIONID') && !loggedIn)
+        if (document.cookie.includes('user') && !loggedIn)
             setLogin({logged: true});
     };
     validateLogin();
