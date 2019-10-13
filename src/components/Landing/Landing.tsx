@@ -1,5 +1,14 @@
 import * as React from 'react'
-const Landing:React.SFC = () => {
+import LogIn from '../Login/LogIn'
+import Button from '../Utilities/Buttons/DefaultButton/Button';
+
+interface ILandingProps {
+    validateLogin: Function
+}
+
+
+const Landing:React.SFC<ILandingProps> = (props) => {
+    const {validateLogin} = props;
     return(
         <div className="landing">
             <div className="landing-background">
@@ -16,13 +25,22 @@ const Landing:React.SFC = () => {
                         </div>
                     </div>
                     <div className="landing-user">
-                        <button className="signup-button">Sign Up</button>
+                        <Button title="Sign Up"/>
                     </div>
                 </div>
                 <div className="landing-container">
-                    <div className="login">
-                        
+                    <div className="landing-info">
+                        <div className="info-heading">
+                             Automatización para ensayos de cultivos en laboratorios.
+                        </div>
+                        <div className="info-content">
+                            Nanivo hace más fácil ensayar con cultivos en tiempo real.
+                        </div>
+
                     </div>
+
+                    <LogIn validateLogin={validateLogin}/>
+
                 </div>
             </div>
             

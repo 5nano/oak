@@ -1,4 +1,5 @@
 import * as React from "react";
+import Button from "../Utilities/Buttons/DefaultButton/Button";
 
 
 export interface ILogInState {
@@ -53,35 +54,28 @@ export class LogIn extends React.Component<ILogInProps,ILogInState> {
 
     render(){
     return(
-        <div className="login">
-            <div className="login-background" />
-            <div className="login-container">
-                <div className="title">Crop Testing Automation</div>
-                <form className="login-form" onSubmit={this.handleSubmit}>
-                    <input
-                        id='username'
-                        className="username input"
-                        type="text"
-                        value={this.state.username}
-                        onChange={this.handleChange}
-                        placeholder="Username"
-                        size={60}
-                        />
-                        <p className="help">Don't have an account? <a>Register now</a></p>
-                    <input
-                        id='password'
-                        className="password input"
-                        type="password"
-                        value={this.state.password}
-                        onChange={this.handleChange}
-                        placeholder="Password"
-                        size={60}
-                        />
-                    <a className="help">Forgot password?</a>
-                    <button type="submit" className="input">Ingresar</button>
-
-                </form>
-            </div>
+        <div className="login-container">
+            <form className="login-form" onSubmit={this.handleSubmit}>
+                <input
+                    id='username'
+                    className="username input"
+                    type="text"
+                    value={this.state.username}
+                    onChange={this.handleChange}
+                    placeholder="Username"
+                    />
+                    <p className="help">Don't have an account? <a>Register now</a></p>
+                <input
+                    id='password'
+                    className="password input"
+                    type="password"
+                    value={this.state.password}
+                    onChange={this.handleChange}
+                    placeholder="Password"
+                    />
+                <a className="help">Forgot password?</a>
+                <Button type="submit" title="Ingresar"/>
+            </form>
         </div>
     )
     }

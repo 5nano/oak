@@ -43,7 +43,10 @@ const App = (props: AppProps) => {
                 render={(props) => loggedIn ? <Homes {...props} /> : <LogIn {...props} validateLogin={validateLogin} />}
             />
 
-            <Route path="/landing" exact component={Landing}/>
+            <Route path="/landing"
+                   exact
+                   render={(props) =>  <Landing {...props} validateLogin={validateLogin}/>}
+            />
 
             <Route path="/register" exact component={Register}/>
 
