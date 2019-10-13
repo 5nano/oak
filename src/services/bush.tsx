@@ -1,7 +1,7 @@
 class BushService {
   static bushUrl = 'https://nanivo-bush.herokuapp.com';
   static doRequest = (path, method, body?) => {
-    const bodyToSend = body ? JSON.stringify(body) : {};
+    const bodyToSend = body ? {body: JSON.stringify(body)} : {};
     return fetch(BushService.bushUrl + path, {
         method,
         mode:'cors',
@@ -14,8 +14,7 @@ class BushService {
     })
      .then(response => {
         if(!response.ok) throw response
-        debugger;
-       return response.json()
+        return response.json()
       })
      .catch(err => {
        if (err.status === 401) {
