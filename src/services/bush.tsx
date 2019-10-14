@@ -14,7 +14,7 @@ class BushService {
     })
      .then(response => {
         if(!response.ok || (response.status > 300 || response.status < 200)) throw response
-        return response.json()
+        return response.json() 
       })
      .catch(err => {
        if (err.status === 401) {

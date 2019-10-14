@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router"
 import * as ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { RouteComponentProps } from 'react-router-dom';
+import BushService from '../../../../services/bush';
+import Button from '../../../Utilities/Buttons/DefaultButton/Button';
 
 export interface HeaderState {
     showDataUploadMenu: boolean,
@@ -11,6 +13,14 @@ export interface HeaderProps extends RouteComponentProps{
     titles: {title: string, path: string}[],
     loggedIn: boolean,
  }
+
+const logout = () => {
+    BushService.post('/logout',{})
+               .then((response)=>{
+                    document.cookie = `user=;Expires=Thu, 01 Jan 1970 00:00:01 GMT;`; // Logout
+                    window.location.href = '/';
+            })
+}
 
 const Header = (props: HeaderProps) => {
     const [showDataUploadMenu, toggleDataUploadMenu] = React.useState(false);
@@ -24,8 +34,7 @@ const Header = (props: HeaderProps) => {
             <div className="header">
                 <Link to="/" className="logo-link">
                     <div className="nanivo-info">
-                        <img src="../../../../assets/images/logo.png" className="header-logo" />
-                        <h1 className="nanivo-title">Nanivo</h1>
+                        <img src="../../../../assets/images/nanivo-logo.png" className="header-logo" />
                     </div>
                 </Link>
                 {
@@ -42,6 +51,8 @@ const Header = (props: HeaderProps) => {
                         >
                             Cargar nuevos datos
                         </button>
+                        <Button title="Cerrar Sesion" onClick={logout}/>
+                        
                     </div>
                     )
                 }
