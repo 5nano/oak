@@ -12,7 +12,6 @@ import Dashboards from '../Dashboards/Dashboards';
 import Homes from '../Home/Home';
 import Mixs from '../Mixs/Mixs';
 import Qrs from '../Qrs/Qrs';
-import BushService from '../../services/bush';
 import Landing from '../Landing/Landing';
 import PrivateRoute from '../Utilities/ProtectedRoute/PrivateRoute';
 
@@ -39,7 +38,7 @@ const App = (props: AppProps) => {
 
             <PrivateRoute path='/home' exact component={Homes} isLoggedIn={loggedIn}/>
         
-            <PrivateRoute path="/register" exact component={Register} isLoggedIn={loggedIn}/>
+            <Route path="/register" exact component={Register} isLoggedIn={loggedIn}/>
 
             <PrivateRoute path='/crops' exact component={Crops} isLoggedIn={loggedIn}/>
 
