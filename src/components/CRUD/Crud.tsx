@@ -1,4 +1,6 @@
 import * as React from "react";
+import { IValues } from "../Form/Form";
+import BushService from '../../services/bush';
 
 
 export interface ICrudViewProps {
@@ -27,14 +29,22 @@ const CrudView: React.SFC <ICrudViewProps> = ({
     setFormRequest(!formRequest)
   )
 
- 
+  const submitForm = (values:IValues,setError:Function): Promise<boolean> => {
 
+    return BushService.post(createUrl, values)
+      .then(() => true)
+      .catch(error => error.json()
+          .then((error:any) => {
+            console.log(error.message)
+            setError({serverError:error.message})
+            return false;
+          })
+      )
+  }
 
   return (
 
       <div className="crud-container">
-                  
-
                   <div className="title-wrapper">
                     <img src="../../assets/images/head-icon.png"/>
                     <p>{title}</p>
@@ -44,13 +54,15 @@ const CrudView: React.SFC <ICrudViewProps> = ({
                       <a className="add-element" onClick={handleClick}/>
                       <SearchComponent searchUrl={searchUrl} deleteUrl={deleteUrl}/>
                   </div> 
-                  
-                  <div className="register-container">
-                    {formRequest && [
-                    <div className="title">Ingrese los nuevos datos</div>,
-                    <FormComponent createUrl={createUrl}/>]
-                    }
+
+                  {formRequest &&
+                  <div className="form-wrapper">
+                      <div className="form-content">
+                          <div className="form-helper">Ingrese los datos</div>
+                          <FormComponent submitForm={submitForm}/>                   
+                      </div>
                   </div>
+                  }
       </div>
  
   );

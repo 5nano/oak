@@ -3,6 +3,7 @@ import ITreatment from '../../Interfaces/ITreatment'
 import { buildUrl } from '../Utilities/QueryParamsURLBuilder';
 import TreatmentSelector from '../Treatment/TreatmentSelector';
 import TreatmentQrs from './TreatmentQr/TreatmentQrs';
+import BushService from '../../services/bush';
 
   interface IQrsState{
       assayId: string,
@@ -35,17 +36,9 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
     componentDidMount(){
         var treatments: ITreatment[] = [];
         
-        fetch(
-            buildUrl('https://nanivo-bush.herokuapp.com/ensayo/tratamientos',{
-                idAssay:this.props.match.params.assayId
-            }), {
-            method: "GET",
-            mode: 'cors',
-            headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-            }
-        }).then(response => response.json())
+        BushService.get(buildUrl('/ensayo/tratamientos',{
+            idAssay:this.props.match.params.assayId
+        }))
           .then(data => {
               console.log(data)
                 Object.keys(data).forEach(key => {
@@ -71,17 +64,9 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
         treatment = this.state.treatments.find(treatment => treatment.name === treatmentName)
         treatment.qrs = [];
        
-        fetch(
-            buildUrl('https://nanivo-bush.herokuapp.com/tratamiento/QRs',{
-                idTreatment:treatment.idTreatment
-            }), {
-            method: "GET",
-            mode: 'cors',
-            headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-            }
-        }).then(response => response.json())
+        BushService.get(buildUrl('/tratamiento/QRs',{
+            idTreatment:treatment.idTreatment
+        }))
           .then(data => {
               console.log(data)
         
@@ -118,10 +103,7 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
                 }
 
                 {this.state.qrsRequest && 
-                    <div className="qrs-container">
-                        <p>Imprima los qrs del tratamiento {this.state.actualTreatment.name}</p>
-                        <TreatmentQrs treatment={this.state.actualTreatment}/>
-                    </div>
+                <TreatmentQrs treatment={this.state.actualTreatment}/>
                 }
 
 

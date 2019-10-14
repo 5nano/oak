@@ -4,6 +4,7 @@ import { IEnsayo } from '../../Interfaces/IEnsayo';
 import { RouteComponentProps } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { buildUrl } from "../Utilities/QueryParamsURLBuilder";
+import BushService from '../../services/bush';
 
 export interface IHomesState {
     ensayos: Array<IEnsayo>,
@@ -37,21 +38,13 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
         });
     }
     private fetchEnsayos = async (): Promise<void> => {
-       fetch('https://nanivo-bush.herokuapp.com/ensayos',{
-           method:'GET',
-           mode:'cors',
-           headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-          }
-       })
-        .then(response => response.json())
-        .then(ensayos => {
-            this.setState({
-                ...this.state,
-                ensayos
-            });
-        })
+        BushService.get('/ensayos')
+            .then(ensayos => {
+                this.setState({
+                    ...this.state,
+                    ensayos
+                });
+            })
       }
 
     private goToDashboard(assayId: IEnsayo["idAssay"]){
@@ -66,15 +59,7 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
         /**
          * Currently unused, we'll probably want to show some info like experiment count in the future
          */
-        fetch(`https://nanivo-bush.herokuapp.com/experimentosDe?assayId=${assayId}`,{
-            method:'GET',
-            mode:'cors',
-            headers: {
-             'Content-Type': 'application/json',
-             Accept: 'application/json'
-           }
-        })
-            .then(res => res.json())
+        BushService.get(`/experimentosDe?assayId=${assayId}`)
             .then((experimentos: any) => {
                 this.setState({
                     ...this.state,
@@ -84,17 +69,9 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
     }
 
     private removeAssay(assayId: IEnsayo['idAssay']){
-
-        fetch(buildUrl('https://nanivo-bush.herokuapp.com/ensayos/eliminar',{
+        BushService.delete(buildUrl('/ensayos/eliminar',{
             assayId:assayId
-         }),{
-            method:'DELETE',
-            mode:'cors',
-            headers: {
-             'Content-Type': 'application/json',
-             Accept: 'application/json'
-           }
-        }).then(res=>console.log(res.json()))
+         }))
     }
 
 

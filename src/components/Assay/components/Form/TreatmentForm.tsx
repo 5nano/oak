@@ -5,7 +5,7 @@ import {requiredValidation, isNumberValidation } from "../../../Form/Validation"
 import NewComponentButton from "../../../Utilities/Buttons/NewComponentButton";
 
 interface ITreatmentFormProps{
-  handleValues: (values:IValues) => void;
+  submitTreatmentForm: (values:IValues,setError:Function) => void;
 }
 
 const TreatmentForm: React.SFC<ITreatmentFormProps>= (props) => {
@@ -44,13 +44,12 @@ const TreatmentForm: React.SFC<ITreatmentFormProps>= (props) => {
     }
   };
  
+  const {submitTreatmentForm} = props;
   return (
       <Form
-        action='nanivo-bush.herokuapp.com/tratamientos/insertar'
+        submitForm={submitTreatmentForm}
         fields={fields}
         button = {NewComponentButton}
-        type='alternative'
-        getValues={props.handleValues}
         render={() => (
           <React.Fragment>
             <Field {...fields.name}/>

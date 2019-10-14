@@ -1,12 +1,14 @@
 import * as React from "react";
-
+import BushService from '../../services/bush';
+import Button from "../Utilities/Buttons/DefaultButton/Button";
+import { RouteComponentProps } from "react-router-dom";
 
 export interface ILogInState {
     username:string,
     password:string
 }
 
-export interface ILogInProps {
+export interface ILogInProps extends RouteComponentProps{
     validateLogin: Function
 }
 
@@ -26,21 +28,12 @@ export class LogIn extends React.Component<ILogInProps,ILogInState> {
       ): Promise<void> => {
        e.preventDefault();
 
-
-       fetch('/api/login',{
-           method:'POST',
-           redirect: 'follow',
-           credentials: 'include', // Don't forget to specify this if you need cookies
-           mode: 'same-origin',
-           headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-          },
-          body: JSON.stringify(this.state)
-       })
+       BushService.put('/usuarios/validar', this.state)
         .then(response => {
+            document.cookie = `user=${this.state.username};max-age=${60*60*24*365};`
             this.props.validateLogin();
-        })
+            this.props.history.push('/home')
+        });
       }
 
     private handleChange =  (
@@ -53,35 +46,28 @@ export class LogIn extends React.Component<ILogInProps,ILogInState> {
 
     render(){
     return(
-        <div className="login">
-            <div className="login-background" />
-            <div className="login-container">
-                <div className="title">Crop Testing Automation</div>
-                <form className="login-form" onSubmit={this.handleSubmit}>
-                    <input
-                        id='username'
-                        className="username input"
-                        type="text"
-                        value={this.state.username}
-                        onChange={this.handleChange}
-                        placeholder="Username"
-                        size={60}
-                        />
-                        <p className="help">Don't have an account? <a>Register now</a></p>
-                    <input
-                        id='password'
-                        className="password input"
-                        type="password"
-                        value={this.state.password}
-                        onChange={this.handleChange}
-                        placeholder="Password"
-                        size={60}
-                        />
-                    <a className="help">Forgot password?</a>
-                    <button type="submit" className="input">Ingresar</button>
-
-                </form>
-            </div>
+        <div className="login-container">
+            <form className="login-form" onSubmit={this.handleSubmit}>
+                <input
+                    id='username'
+                    className="username input"
+                    type="text"
+                    value={this.state.username}
+                    onChange={this.handleChange}
+                    placeholder="Username"
+                    />
+                    <p className="help">Don't have an account? <a>Register now</a></p>
+                <input
+                    id='password'
+                    className="password input"
+                    type="password"
+                    value={this.state.password}
+                    onChange={this.handleChange}
+                    placeholder="Password"
+                    />
+                <a className="help">Forgot password?</a>
+                <Button type="submit" title="Ingresar"/>
+            </form>
         </div>
     )
     }

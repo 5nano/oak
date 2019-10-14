@@ -12,14 +12,16 @@ import Dashboards from '../Dashboards/Dashboards';
 import Homes from '../Home/Home';
 import Mixs from '../Mixs/Mixs';
 import Qrs from '../Qrs/Qrs';
-
+import BushService from '../../services/bush';
+import Landing from '../Landing/Landing';
+import PrivateRoute from '../Utilities/ProtectedRoute/PrivateRoute';
 
 export interface AppProps { title: string }
 
 const App = (props: AppProps) => {
     const [{logged: loggedIn}, setLogin] = React.useState({logged: false});
     const validateLogin = () => {
-        if (document.cookie.includes('ssid') && !loggedIn)
+        if (document.cookie.includes('user') && !loggedIn)
             setLogin({logged: true});
     };
     validateLogin();
@@ -27,34 +29,32 @@ const App = (props: AppProps) => {
     return (
 
     <Router>
-        <Header titles={[]} loggedIn={loggedIn}/>
+
         <Switch>
-            {
-                !loggedIn &&
-                <Redirect from="/:foo+" to="/"></Redirect>
-            }
-            <Route 
-                path="/" 
-                exact 
-                render={(props) => loggedIn ? <Homes {...props} /> : <LogIn {...props} validateLogin={validateLogin} />}
+            <Route path='/' 
+                   exact 
+                   render={(props)=><Landing {...props} validateLogin={validateLogin} />}
             />
-            <Route path="/register" exact component={Register}/>
 
-            <Route path='/crops' exact component={Crops}/>
+            <PrivateRoute path='/home' exact component={Homes} isLoggedIn={loggedIn}/>
+        
+            <PrivateRoute path="/register" exact component={Register} isLoggedIn={loggedIn}/>
 
-            <Route path='/agrochemicals' exact component={Agrochemicals}/>
+            <PrivateRoute path='/crops' exact component={Crops} isLoggedIn={loggedIn}/>
 
-            <Route path='/mixs' exact component={Mixs}/>
+            <PrivateRoute path='/agrochemicals' exact component={Agrochemicals} isLoggedIn={loggedIn}/>
 
-            <Route path='/companies' exact component={Companies}/>
+            <PrivateRoute path='/mixs' exact component={Mixs} isLoggedIn={loggedIn}/>
 
-            <Route path='/users' exact component={Users}/>
+            <PrivateRoute path='/companies' exact component={Companies} isLoggedIn={loggedIn}/>
 
-            <Route path='/assay' exact component={Assay}/>
+            <PrivateRoute path='/users' exact component={Users} isLoggedIn={loggedIn}/>
 
-            <Route path='/assay/:assayId/dashboard' exact component={Dashboards}/>
+            <PrivateRoute path='/assay' exact component={Assay} isLoggedIn={loggedIn}/>
 
-            <Route path='/assay/:assayId/qrs' exact component={Qrs}/>
+            <PrivateRoute path='/assay/:assayId/dashboard' exact component={Dashboards} isLoggedIn={loggedIn}/>
+
+            <PrivateRoute path='/assay/:assayId/qrs' exact component={Qrs} isLoggedIn={loggedIn}/>
           </Switch>
 
     </Router>

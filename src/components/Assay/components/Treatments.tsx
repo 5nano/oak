@@ -3,8 +3,7 @@ import Treatment from './Treatment';
 import ITreatment from '../../../Interfaces/ITreatment';
 import TreatmentForm from './Form/TreatmentForm';
 import { IValues } from '../../Form/Form';
-import { RouteComponentProps } from 'react-router-dom';
-
+import BushService from '../../../services/bush';
 
 export  interface ITreatmentsProps{
     treatments: ITreatment[],
@@ -26,7 +25,7 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
            setTreatment,
            setQrRequest} = props
     
-    const handleTreatmentValues=(values:IValues):void=>{
+    const submitTreatmentForm=(values:IValues,setError:Function):void=>{
         console.log(values)
     
         const treatmentData = {
@@ -45,22 +44,15 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
          qrs:[]
          };
     
-        fetch('https://nanivo-bush.herokuapp.com/tratamientos/insertar', {
-          method: "POST",
-          mode: 'cors',
-          body: JSON.stringify(treatmentData),
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-          }
-        }).then(response => response.json())
-          .then(data => {
-             Object.keys(data.experimentsQR).forEach(key=>{
-                 treatment.qrs.push(data.experimentsQR[key])
-             })
-             setTreatment(treatment)
-             setNewTreatment(false)
-          })
+         BushService.post('/tratamientos/insertar', treatmentData)
+            .then(data => {
+                Object.keys(data.experimentsQR).forEach(key=>{
+                    treatment.qrs.push(data.experimentsQR[key])
+                })
+                setTreatment(treatment)
+                setNewTreatment(false)
+            })
+
       }
     
 
@@ -87,7 +79,7 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                 <div className="form-wrapper">
                     <div className="form-content">
                         <div className="form-helper">Ingrese los datos del nuevo tratamiento</div>
-                        <TreatmentForm handleValues={handleTreatmentValues}/>
+                        <TreatmentForm submitTreatmentForm={submitTreatmentForm}/>
                     </div>
                 </div>
                 }
