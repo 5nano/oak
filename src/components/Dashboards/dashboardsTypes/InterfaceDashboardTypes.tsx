@@ -1,5 +1,5 @@
 
-interface DashboardComponent extends React.ComponentClass<{onEmptyRender: Function, data:any}> {
+interface DashboardComponent extends React.ComponentClass<{onEmptyRender: Function, data:any, graphPosition?: 'left' | 'right'}> {
     fetchData: Function 
 };
 export type DashboardType = {

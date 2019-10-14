@@ -24,7 +24,7 @@ export interface OverallComponentProps extends RouteComponentProps<AssayParamsTy
   },
 }
 
-const name = "Overall";
+const name = "Overview";
 
 class OverallComponent extends React.Component<OverallComponentProps, OverallComponentState> {
   constructor(props:OverallComponentProps){
@@ -42,7 +42,7 @@ class OverallComponent extends React.Component<OverallComponentProps, OverallCom
                 <LeafArea.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[LeafArea.id]}/>
             </div>
             <div className="right-panel">
-                <YellowFreq.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[YellowFreq.id]}/>
+                <YellowFreq.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[YellowFreq.id]} graphPosition="right"/>
             </div>
         </div>
     );

@@ -20,6 +20,7 @@ type AssayParamsType = {
 export interface YellowFreqComponentProps extends RouteComponentProps<AssayParamsType> {
   onEmptyRender: Function,
   data: Array<IFrontExperiment>,
+  graphPosition?: 'left' | 'right', 
 }
 
 const name = "Mediana de frecuencias en amarillo";
@@ -70,21 +71,21 @@ class YellowFreqComponent extends React.Component<YellowFreqComponentProps, Yell
     if (!(data && data.length)) return this.props.onEmptyRender();
     const mockedValues = {
       "13-10-2019": {
-        0: mockedYellowVal,
+        2: mockedYellowVal,
         89: mockedYellowVal
       },
       "15-10-2019": {
-        0: mockedYellowVal,
+        2: mockedYellowVal,
         89: mockedYellowVal
       },
       "16-10-2019": {
-        0: mockedYellowVal,
+        2: mockedYellowVal,
       }
     }
 
     return (
         <div className="PlotlyGraph YellowFreq">
-          <BoxPlot data={mockedValues} dataSuffix="mm^2" title={name} />
+          <BoxPlot data={mockedValues} dataSuffix="mm^2" title={name} graphPosition={this.props.graphPosition} />
         </div>
     );
   }

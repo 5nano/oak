@@ -64,6 +64,7 @@
     "webpack-manifest-plugin": "^2.0.4"
   },
   "dependencies": {
+    "@material-ui/core": "^4.5.1",
     "@types/jquery": "^3.3.31",
     "@types/qrcode.react": "^0.9.0",
     "@types/react-plotly.js": "^2.2.4",
