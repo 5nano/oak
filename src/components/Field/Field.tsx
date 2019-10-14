@@ -34,12 +34,13 @@ export const Field: React.SFC<IFieldProps> = ({
                   id={id}
                   type="text"
                   value={value}
+                  placeholder={label}
                   onChange={
                     (e: React.FormEvent<HTMLInputElement>) =>
                       context.setValues({ [id]: e.currentTarget.value }) 
                   }
                   style={getEditorStyle(context.errors)} 
-                  className="textbox"
+                  className="input"
                 />
               )}
 
@@ -48,12 +49,13 @@ export const Field: React.SFC<IFieldProps> = ({
                   id={id}
                   type="password"
                   value={value}
+                  placeholder={label}
                   onChange={
                     (e: React.FormEvent<HTMLInputElement>) =>
                       context.setValues({ [id]: e.currentTarget.value }) 
                   }
                   style={getEditorStyle(context.errors)} 
-                  className="form-control"
+                  className="input"
                 />
               )}
     

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { IFieldProps } from '../Field/FieldProps';
 import FormButton, { IFormButtonProps } from './FormButton';
 import { IRule } from './Validation';
+import Button from '../Utilities/Buttons/DefaultButton/Button';
 
 export interface IFields {
   [key: string]: IFieldProps;
@@ -14,7 +15,7 @@ interface IFormProps {
 
     render: () => React.ReactNode;
 
-    button?:React.SFC<IFormButtonProps>;
+    title:string,
 }
  
 export interface IValues {
@@ -136,7 +137,7 @@ private setError = (error:string) => {
       validate: this.validate
     };
 
-    const {button:Button} = this.props;
+    const {title} = this.props;
 
     return (
       <FormContext.Provider value={context}>
@@ -164,9 +165,8 @@ private setError = (error:string) => {
               )}
 
           </form>
+          <Button title={title} onClick={this.handleSubmit}/>
 
-        <Button onClick={this.handleSubmit}/>
-       
         </div>
       </FormContext.Provider>
     );

@@ -49,7 +49,7 @@ const TreatmentForm: React.SFC<ITreatmentFormProps>= (props) => {
       <Form
         submitForm={submitTreatmentForm}
         fields={fields}
-        button = {NewComponentButton}
+        title = "Registrar"
         render={() => (
           <React.Fragment>
             <Field {...fields.name}/>

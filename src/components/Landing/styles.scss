@@ -75,7 +75,28 @@
                 
                 color:white;
                 font-size: 24px;
+            }
+        }
 
+        .signup{
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 350px;
+
+            padding-left: 40px;
+
+            .signup-success{
+                display:flex;
+                justify-content: center;
+                align-items: center;
+                
+                width: 100%;
+                background-color:rgba(106, 193, 169,0.5);
+                color:white;
+                border-radius: 4px;
+                font-size: 18px;
             }
         }
 

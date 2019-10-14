@@ -57,7 +57,7 @@ const AssayForm:React.SFC<IAssayFormProps> = (props) => {
           <Form
             submitForm={submitAssayForm}
             fields = {fields}
-            button = {NewComponentButton}
+            title = "Registrar"
             render={() => (
               <React.Fragment>
                 

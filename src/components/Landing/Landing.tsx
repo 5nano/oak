@@ -7,7 +7,6 @@ interface ILandingProps extends RouteComponentProps{
     validateLogin: Function
 }
 
-
 const Landing:React.SFC<ILandingProps> = (props) => {
     const {validateLogin} = props;
     return(
@@ -26,7 +25,9 @@ const Landing:React.SFC<ILandingProps> = (props) => {
                         </div>
                     </div>
                     <div className="landing-user">
-                        <Button title="Sign Up" />
+                        <Button type="button" 
+                                title="Sign Up" 
+                                onClick={()=>props.history.push('/register')} />
                     </div>
                 </div>
                 <div className="landing-container">

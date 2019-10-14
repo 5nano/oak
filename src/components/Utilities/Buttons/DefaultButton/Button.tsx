@@ -2,14 +2,14 @@ import * as React from 'react'
 
 interface IButtonProps {
     title:string,
-    onClick?:Function,
+    onClick?:(e:React.MouseEvent)=>void,
     type?:any
 }
 
 const Button: React.SFC<IButtonProps> = (props) => {
     const {type,title,onClick} = props;
     return(
-        <button type={type} className="button" onClick={()=>onClick}>
+        <button type={type} className="button" onClick={onClick}>
             {title}
         </button>
     )
@@ -17,6 +17,6 @@ const Button: React.SFC<IButtonProps> = (props) => {
 
 Button.defaultProps = {
     type:'button',
-    onClick: (e:MouseEvent) => e.preventDefault()
+    onClick:()=>{}
 }
 export default Button;

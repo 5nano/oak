@@ -21,6 +21,7 @@ class BushService {
          document.cookie = `user=;Expires=Thu, 01 Jan 1970 00:00:01 GMT;`; // Logout
          window.location.href = '/';
         }
+        throw err;
      })
   }
 
