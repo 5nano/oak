@@ -22,7 +22,6 @@ const Register: React.SFC = () => {
       <div className='register-background'>
         <div className='register-container'>
         <div className="title">Crop Testing Automation</div>
-
           <UserForm submitForm={submitForm}/>
         </div>
       </div>

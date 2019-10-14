@@ -9,13 +9,13 @@ const UserForm: React.SFC<IComponentFormProps> = (props) => {
 
   //fieldName must match with fieldId
   const fields: IFields = {
-    name: {
-      id: "name",
+    firstName: {
+      id: "firstName",
       label: "Nombre",
       validations: [requiredValidation]
     },
-    lastname: {
-      id:"lastname",
+    lastName: {
+      id:"lastName",
       label: "Apellido",
       validations: [requiredValidation]
     },
@@ -28,7 +28,10 @@ const UserForm: React.SFC<IComponentFormProps> = (props) => {
       id:"compania",
       label:"Compañía",
       editor:"dropdown",
-      options: [],
+      //pedir las companias al back
+      options: [
+        "Nanotica"
+      ],
     },
     username: {
       id:"username",
@@ -51,8 +54,8 @@ const UserForm: React.SFC<IComponentFormProps> = (props) => {
         button = {RegisterButton}
         render={() => (
           <React.Fragment>
-            <Field {...fields.name}/>
-            <Field {...fields.lastname}/>
+            <Field {...fields.firstName}/>
+            <Field {...fields.lastName}/>
             <Field {...fields.email}/>
             <Field {...fields.compania}/>
             <Field {...fields.username}/>
