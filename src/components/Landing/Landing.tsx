@@ -1,8 +1,9 @@
 import * as React from 'react'
 import LogIn from '../Login/LogIn'
 import Button from '../Utilities/Buttons/DefaultButton/Button';
+import { RouteComponentProps } from 'react-router-dom';
 
-interface ILandingProps {
+interface ILandingProps extends RouteComponentProps{
     validateLogin: Function
 }
 
@@ -39,7 +40,7 @@ const Landing:React.SFC<ILandingProps> = (props) => {
 
                     </div>
 
-                    <LogIn validateLogin={validateLogin}/>
+                    <LogIn {...props} validateLogin={validateLogin}/>
 
                 </div>
             </div>

@@ -1,13 +1,14 @@
 import * as React from "react";
 import BushService from '../../services/bush';
 import Button from "../Utilities/Buttons/DefaultButton/Button";
+import { RouteComponentProps } from "react-router-dom";
 
 export interface ILogInState {
     username:string,
     password:string
 }
 
-export interface ILogInProps {
+export interface ILogInProps extends RouteComponentProps{
     validateLogin: Function
 }
 
@@ -31,6 +32,7 @@ export class LogIn extends React.Component<ILogInProps,ILogInState> {
         .then(response => {
             document.cookie = `user=${this.state.username};max-age=${60*60*24*365};`
             this.props.validateLogin();
+            this.props.history.push('/home')
         });
       }
 

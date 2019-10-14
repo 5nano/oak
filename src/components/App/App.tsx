@@ -14,6 +14,7 @@ import Mixs from '../Mixs/Mixs';
 import Qrs from '../Qrs/Qrs';
 import BushService from '../../services/bush';
 import Landing from '../Landing/Landing';
+import PrivateRoute from '../Utilities/ProtectedRoute/PrivateRoute';
 
 export interface AppProps { title: string }
 
@@ -29,42 +30,31 @@ const App = (props: AppProps) => {
 
     <Router>
 
-       
-
-        {/*<Header titles={[]} loggedIn={loggedIn}/>*/}
         <Switch>
-            {
-                !loggedIn &&
-                <Redirect from="/:foo+" to="/"></Redirect>
-            }
-            <Route 
-                path="/" 
-                exact 
-                render={(props) => loggedIn ? <Homes {...props} /> : <LogIn {...props} validateLogin={validateLogin} />}
+            <Route path='/' 
+                   exact 
+                   render={(props)=><Landing {...props} validateLogin={validateLogin} />}
             />
 
-            <Route path="/landing"
-                   exact
-                   render={(props) =>  <Landing {...props} validateLogin={validateLogin}/>}
-            />
+            <PrivateRoute path='/home' exact component={Homes} isLoggedIn={loggedIn}/>
+        
+            <PrivateRoute path="/register" exact component={Register} isLoggedIn={loggedIn}/>
 
-            <Route path="/register" exact component={Register}/>
+            <PrivateRoute path='/crops' exact component={Crops} isLoggedIn={loggedIn}/>
 
-            <Route path='/crops' exact component={Crops}/>
+            <PrivateRoute path='/agrochemicals' exact component={Agrochemicals} isLoggedIn={loggedIn}/>
 
-            <Route path='/agrochemicals' exact component={Agrochemicals}/>
+            <PrivateRoute path='/mixs' exact component={Mixs} isLoggedIn={loggedIn}/>
 
-            <Route path='/mixs' exact component={Mixs}/>
+            <PrivateRoute path='/companies' exact component={Companies} isLoggedIn={loggedIn}/>
 
-            <Route path='/companies' exact component={Companies}/>
+            <PrivateRoute path='/users' exact component={Users} isLoggedIn={loggedIn}/>
 
-            <Route path='/users' exact component={Users}/>
+            <PrivateRoute path='/assay' exact component={Assay} isLoggedIn={loggedIn}/>
 
-            <Route path='/assay' exact component={Assay}/>
+            <PrivateRoute path='/assay/:assayId/dashboard' exact component={Dashboards} isLoggedIn={loggedIn}/>
 
-            <Route path='/assay/:assayId/dashboard' exact component={Dashboards}/>
-
-            <Route path='/assay/:assayId/qrs' exact component={Qrs}/>
+            <PrivateRoute path='/assay/:assayId/qrs' exact component={Qrs} isLoggedIn={loggedIn}/>
           </Switch>
 
     </Router>
