@@ -38,9 +38,9 @@
             margin-block-start: 10px;
 
             .tag {
-                background: #eee;
+                background: #48ffc2;
                 border-radius: 3px 0 0 3px;
-                color: #999;
+                color: white;
                 display: inline-block;
                 height: 26px;
                 line-height: 26px;
@@ -66,7 +66,7 @@
               .tag::after {
                 background: #fff;
                 border-bottom: 13px solid transparent;
-                border-left: 10px solid #eee;
+                border-left: 10px solid #48ffc2;
                 border-top: 13px solid transparent;
                 content: '';
                 position: absolute;
@@ -74,14 +74,6 @@
                 top: 0;
               }
               
-              .tag:hover {
-                background-color: crimson;
-                color: white;
-              }
-              
-              .tag:hover::after {
-                 border-left-color: crimson; 
-              }
         }
     }
 

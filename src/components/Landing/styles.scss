@@ -1,0 +1,91 @@
+.landing{
+   height: 100%; 
+
+   .landing-header{
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        background-color: rgba(0, 0, 0, 0);
+        height: 80px;
+        margin: 0px 100px;
+        padding: 10px 0px;
+
+        .landing-logo{
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            
+            img{
+                height: 50px;
+                width: 200px;
+            }
+        }
+
+        .landing-links{
+            display:flex;
+            flex-direction: row;
+            justify-content: space-around;
+
+            .link{
+                display:flex;
+                color:white;
+
+                margin: 0px 20px;
+            }
+        }
+
+        .landing-user{
+            display:flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-content: center;
+            align-items: center;
+
+        }
+   }
+
+   .landing-container{
+       display:flex;
+       flex-direction: row;
+       justify-content: space-between;
+
+       margin: 40px 100px;
+       padding: 50px 0px;
+
+        .landing-info{
+            display:flex;
+            flex-direction: column;
+            justify-content: flex-start;
+
+            width:450px;
+
+
+            .info-heading{
+                display:flex;
+
+                color: white;
+                font-size: 48px;
+                
+            }
+            .info-content{
+                display:flex;
+                flex-direction: column;
+                justify-content: center;
+                
+                color:white;
+                font-size: 24px;
+
+            }
+        }
+
+   }
+
+   .landing-background {
+    background: url('../../assets/images/landing.png');
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    position: absolute;
+    }
+}
