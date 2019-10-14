@@ -6,6 +6,8 @@ import { Layout } from "plotly.js";
 import { IFrontExperiment, IBackendExperiment } from '../../../../Interfaces/Experimento';
 import { RouteComponentProps } from 'react-router-dom';
 import BushService from '../../../../services/bush';
+import BoxPlot from '../../components/BoxPlot/BoxPlot';
+import mockedYellowVal from './mockedYellowFreqVal';
 
 export interface YellowFreqComponentState{
   experiments: Array<IFrontExperiment>,
@@ -44,6 +46,7 @@ class YellowFreqComponent extends React.Component<YellowFreqComponentProps, Yell
 
   render(){
       if (!(this.props.data && this.props.data.length)) return null;
+
       const data: Plotly.Data[] = this.props.data.map(experiment => ({
         x: experiment.values,
         boxpoints: 'suspectedoutliers',
@@ -65,12 +68,23 @@ class YellowFreqComponent extends React.Component<YellowFreqComponentProps, Yell
       };
 
     if (!(data && data.length)) return this.props.onEmptyRender();
+    const mockedValues = {
+      "13-10-2019": {
+        0: mockedYellowVal,
+        89: mockedYellowVal
+      },
+      "15-10-2019": {
+        0: mockedYellowVal,
+        89: mockedYellowVal
+      },
+      "16-10-2019": {
+        0: mockedYellowVal,
+      }
+    }
+
     return (
         <div className="PlotlyGraph YellowFreq">
-          <Plot
-            data={data}
-            layout={layout}
-          />
+          <BoxPlot data={mockedValues} dataSuffix="mm^2" title={name} />
         </div>
     );
   }

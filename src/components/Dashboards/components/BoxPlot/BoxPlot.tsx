@@ -3,7 +3,6 @@ import * as React from "react";
 import Plot from 'react-plotlyjs-ts';
 import { Layout } from "plotly.js";
 import { IFrontExperiment, IBackendExperiment } from '../../../../Interfaces/Experimento';
-import { RouteComponentProps } from 'react-router-dom';
 
 
 type GraphData = {
@@ -16,25 +15,22 @@ export interface BoxPlotState{
 
 }
 
-type AssayParamsType = {
-  assayId: string,
-}
 
-export interface BoxPlotProps extends RouteComponentProps<AssayParamsType> {
+export interface BoxPlotProps {
   data: GraphData,
+  dataSuffix?: string,
+  title: string,
 }
 
 
 class BoxPlot extends React.Component<BoxPlotProps, BoxPlotState> {
-
-
   constructor(props:BoxPlotProps){
     super(props)
   }
   
 
   render(){
-      if (!(this.props.data && this.props.data.length)) return null;
+      if (!(this.props.data && Object.keys(this.props.data).length)) return null;
 
       const experimentValues = {};
 
@@ -59,19 +55,19 @@ class BoxPlot extends React.Component<BoxPlotProps, BoxPlotState> {
       const data: Plotly.Data[] = Object.keys(experimentValues).map(experimentId => ({
         y: experimentValues[experimentId].y,
         x: experimentValues[experimentId].x,
-        // boxpoints: 'suspectedoutliers',
-        name: `Experimento ${experimentId}`,
+        name: `Experiment ${experimentId}`,
         type: 'box'
       }))
 
       const layout: Partial<Layout> = {
-        title: name,
+        title: this.props.title,
         xaxis: {
-          title: 'frecuencias',
+          tickprefix: '',
         },
         yaxis: {
-          tickprefix: "Experiment ",
+          ticksuffix: ` ${this.props.dataSuffix}`,
         },
+        boxmode: "group",
         autosize: true,
       };
 
