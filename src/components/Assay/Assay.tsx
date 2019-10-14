@@ -7,7 +7,7 @@ import Stepper from '../Utilities/Stepper';
 import { RouteComponentProps } from 'react-router-dom';
 import ITreatment from '../../Interfaces/ITreatment';
 import TreatmentQrs from '../Qrs/TreatmentQr/TreatmentQrs';
-
+import BushService from '../../services/bush';
 
 export interface IAssayProps extends RouteComponentProps{
 
@@ -97,17 +97,9 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
 
     componentDidMount(){
         this.setLoading();
-        fetch('https://nanivo-bush.herokuapp.com/cultivos', {
-          method: "GET",
-          mode: 'cors',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-          }
-        }).then(response => {return response.json()})
+        BushService.get('/cultivos')
           .then(data=> {
-            
+              
             Object.keys(data).forEach(key => {
               this.state.fieldsOptions.cropOptions.push([data[key].name,data[key].idCrop])
             })
@@ -118,16 +110,8 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
               return {loading}
             })
           })
-        
-        fetch('https://nanivo-bush.herokuapp.com/agroquimicos', {
-          method: "GET",
-          mode: 'cors',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-          }
-        }).then(response => {return response.json()})
+
+        BushService.get('/agroquimicos')
           .then(data=> {
             Object.keys(data).forEach(key => {
                 this.state.fieldsOptions.agrochemicalOptions.push([data[key].name,data[key].idAgrochemical])
@@ -139,26 +123,17 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
             })
           })
         
-    
-        fetch('https://nanivo-bush.herokuapp.com/mezclas', {
-          method: "GET",
-          mode: 'cors',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-          }
-        }).then(response => {return response.json()})
-        .then(data=> {
-          Object.keys(data).forEach(key => {
-            this.state.fieldsOptions.mixsOptions.push([data[key].name,data[key].idMixture])
+        BushService.get('/mezclas')
+          .then(data=> {
+            Object.keys(data).forEach(key => {
+              this.state.fieldsOptions.mixsOptions.push([data[key].name,data[key].idMixture])
+            })
+            this.setState(prevState => {
+              let loading = {...prevState.loading}
+              loading.mixs= false
+              return {loading}
+            })
           })
-          this.setState(prevState => {
-            let loading = {...prevState.loading}
-            loading.mixs= false
-            return {loading}
-          })
-        })
     
       }
 
@@ -179,20 +154,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
          idUserCreator:1
        }
 
-       fetch('https://nanivo-bush.herokuapp.com/ensayos/insertar', {
-         method: "POST",
-         mode: 'cors',
-         credentials: 'include',
-         body: JSON.stringify(assayData),
-         headers: {
-           'Content-Type': 'application/json',
-           Accept: 'application/json'
-         }
-       }).then(response =>{
-         console.log(response)
-         if(!response.ok) throw response
-         else return response.json()
-          })
+       BushService.post('/ensayos/insertar', assayData)
          .then(data => {
            console.log(data)
             let assayId = data["idAssay"]

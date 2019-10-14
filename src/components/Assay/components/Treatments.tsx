@@ -3,6 +3,7 @@ import Treatment from './Treatment';
 import ITreatment from '../../../Interfaces/ITreatment';
 import TreatmentForm from './Form/TreatmentForm';
 import { IValues } from '../../Form/Form';
+import BushService from '../../../services/bush';
 
 export  interface ITreatmentsProps{
     treatments: ITreatment[],
@@ -43,23 +44,15 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
          qrs:[]
          };
     
-        fetch('https://nanivo-bush.herokuapp.com/tratamientos/insertar', {
-          method: "POST",
-          mode: 'cors',
-          credentials: 'include',
-          body: JSON.stringify(treatmentData),
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-          }
-        }).then(response => response.json())
-          .then(data => {
-             Object.keys(data.experimentsQR).forEach(key=>{
-                 treatment.qrs.push(data.experimentsQR[key])
-             })
-             setTreatment(treatment)
-             setNewTreatment(false)
-          })
+         BushService.post('/tratamientos/insertar', treatmentData)
+            .then(data => {
+                Object.keys(data.experimentsQR).forEach(key=>{
+                    treatment.qrs.push(data.experimentsQR[key])
+                })
+                setTreatment(treatment)
+                setNewTreatment(false)
+            })
+
       }
     
 

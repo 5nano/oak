@@ -5,7 +5,7 @@ import { DashboardType } from '../InterfaceDashboardTypes';
 import { Layout } from "plotly.js";
 import { IFrontExperiment, IBackendExperiment } from '../../../../Interfaces/Experimento';
 import { RouteComponentProps } from 'react-router-dom';
-
+import BushService from '../../../../services/bush';
 
 export interface YellowFreqComponentState{
   experiments: Array<IFrontExperiment>,
@@ -31,16 +31,7 @@ class YellowFreqComponent extends React.Component<YellowFreqComponentProps, Yell
   
   static fetchData(assayId: string) {
     const freqType = 'yellow'; // Por ahora solo ofrecemos frecuencia amarilla
-    return fetch(`https://nanivo-bush.herokuapp.com/frecuencias/${freqType}?assayId=${assayId}`, {
-      method: "GET",
-      mode: 'cors',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      }
-    })
-      .then(response => response.json())
+    return BushService.get(`/frecuencias/${freqType}?assayId=${assayId}`)
       .then(responseData => {
         const dataWithColors: (Array<IFrontExperiment>) = responseData.map((experiment: IBackendExperiment) => ({
           ...experiment,

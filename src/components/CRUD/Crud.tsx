@@ -1,5 +1,6 @@
 import * as React from "react";
 import { IValues } from "../Form/Form";
+import BushService from '../../services/bush';
 
 
 export interface ICrudViewProps {
@@ -30,26 +31,15 @@ const CrudView: React.SFC <ICrudViewProps> = ({
 
   const submitForm = (values:IValues,setError:Function): Promise<boolean> => {
 
-    return fetch(createUrl, {
-      method: "POST",
-      mode: 'cors',
-      credentials: 'include',
-      body: JSON.stringify(values),
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json'
-      }
-    }).then(response => {
-            console.log(response)
-            if (!response.ok) throw response
-            else return true
-    }).catch(error => error.json()
-                           .then((error:any) => {
-                             console.log(error.message)
-                             setError({serverError:error.message})
-                             return false;
-                           })
-    )
+    return BushService.post(createUrl, values)
+      .then(() => true)
+      .catch(error => error.json()
+          .then((error:any) => {
+            console.log(error.message)
+            setError({serverError:error.message})
+            return false;
+          })
+      )
   }
 
   return (

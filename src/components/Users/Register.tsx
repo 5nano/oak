@@ -1,23 +1,13 @@
 import * as React from "react";
 import UserForm from "./UserForm";
 import { IValues } from "../Form/Form";
+import BushService from '../../services/bush';
 
 const submitForm = (values:IValues,setError:Function): Promise<boolean> => {
 
-  return fetch('https://nanivo-bush.herokuapp.com/usuarios/insertar', {
-    method: "POST",
-    mode: 'cors',
-    credentials: 'include',
-    body: JSON.stringify(values),
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json'
-    }
-  }).then(response => {
-          console.log(response)
-          if (!response.ok) throw response
-          else return true
-  }).catch(error => error.json()
+  return BushService.post('/usuarios/insertar', values) 
+    .then(() => true)
+    .catch(error => error.json()
                          .then((error:any) => {
                            console.log(error.message)
                            setError({serverError:error.message})

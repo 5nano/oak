@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import BushService from '../../services/bush';
 
 export interface ILogInState {
     username:string,
@@ -26,21 +26,11 @@ export class LogIn extends React.Component<ILogInProps,ILogInState> {
       ): Promise<void> => {
        e.preventDefault();
 
-    
-       fetch('https://nanivo-bush.herokuapp.com/usuarios/validar',{
-           method:'PUT',
-           redirect: 'follow',
-           credentials: 'include', 
-           mode: 'cors',
-           headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-          },
-          body: JSON.stringify(this.state)
-       })
+       BushService.put('/usuarios/validar', this.state)
         .then(response => {
+            document.cookie = `user=${this.state.username};max-age=${60*60*24*365};`
             this.props.validateLogin();
-        })
+        });
       }
 
     private handleChange =  (

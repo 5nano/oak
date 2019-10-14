@@ -4,6 +4,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { DashboardType } from '../InterfaceDashboardTypes';
 import Plot from 'react-plotlyjs-ts';
 import { Layout } from "plotly.js";
+import BushService from '../../../../services/bush';
 
 type AssayParamsType = {
     assayId: string,
@@ -44,17 +45,7 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
     }
 
     static fetchData(assayId: string) {
-        return fetch(`https://nanivo-bush.herokuapp.com/graficoComparativo/experimentos?assayId=${assayId}`,{
-            method: 'GET',
-            mode: 'cors',
-            credentials: 'include',
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-            }
-          })
-            .then(res => res.json())
-            .then(generateExperimentData)
+      return BushService.get(`/graficoComparativo/experimentos?assayId=${assayId}`).then(generateExperimentData)
     }
 
     
