@@ -9,10 +9,10 @@ const Users: React.SFC = () => {
   return (
     <CrudView 
         title= 'Usuarios'
-        searchUrl= 'https://nanivo-bush.herokuapp.com/usuarios'
-        deleteUrl= 'https://nanivo-bush.herokuapp.com/usuarios/eliminar'
-        createUrl= 'https://nanivo-bush.herokuapp.com/usuarios/insertar'
-        updateUrl= 'https://nanivo-bush.herokuapp.com/usuarios/actualizar'
+        searchUrl= '/usuarios'
+        deleteUrl= '/usuarios/eliminar'
+        createUrl= '/usuarios/insertar'
+        updateUrl= '/usuarios/actualizar'
         form= {UserForm}
         search={UserSearch}
     />
