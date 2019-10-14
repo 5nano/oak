@@ -11,10 +11,10 @@ const Agrochemicals: React.SFC = () => {
   return (
     <CrudView 
         title="Agroquimicos"
-        searchUrl= 'https://nanivo-bush.herokuapp.com/agroquimicos'
-        deleteUrl= 'https://nanivo-bush.herokuapp.com/agroquimicos/eliminar'
-        createUrl= 'https://nanivo-bush.herokuapp.com/agroquimicos/insertar'
-        updateUrl= 'https://nanivo-bush.herokuapp.com/agroquimicos/actualizar'
+        searchUrl= '/agroquimicos'
+        deleteUrl= '/agroquimicos/eliminar'
+        createUrl= '/agroquimicos/insertar'
+        updateUrl= '/agroquimicos/actualizar'
         form= {AgrochemicalsForm}
         search= {AgrochemicalsSearch}
     />
