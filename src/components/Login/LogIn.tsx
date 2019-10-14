@@ -28,7 +28,7 @@ export class LogIn extends React.Component<ILogInProps,ILogInState> {
       ): Promise<void> => {
        e.preventDefault();
 
-       BushService.put('/usuarios/validar', this.state)
+       BushService.post('/login', this.state)
         .then(response => {
             document.cookie = `user=${this.state.username};max-age=${60*60*24*365};`
             this.props.validateLogin();

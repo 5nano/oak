@@ -26,7 +26,7 @@ const Landing:React.SFC<ILandingProps> = (props) => {
                         </div>
                     </div>
                     <div className="landing-user">
-                        <Button title="Sign Up"/>
+                        <Button title="Sign Up" />
                     </div>
                 </div>
                 <div className="landing-container">
