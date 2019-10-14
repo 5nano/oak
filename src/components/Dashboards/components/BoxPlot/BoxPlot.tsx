@@ -104,7 +104,7 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
         type: 'box'
       }))
 
-      const layout: Partial<Layout> = {
+      const layout = {
         title: this.props.title,
         xaxis: {
           tickprefix: '',
