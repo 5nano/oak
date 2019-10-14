@@ -31,9 +31,10 @@ const App = (props: AppProps) => {
     <Router>
 
         <Switch>
+
             <Route path='/' 
                    exact 
-                   render={(props)=><Landing {...props} validateLogin={validateLogin} />}
+                   render={(props)=>loggedIn? <Redirect to="/home"/> : <Landing {...props} validateLogin={validateLogin} />}
             />
 
             <PrivateRoute path='/home' exact component={Homes} isLoggedIn={loggedIn}/>
