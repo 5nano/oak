@@ -120,10 +120,10 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
       return (
       <>
           {
-            this.props.graphPosition === 'right' && this.state.selectedBox &&
+            this.state.selectedBox &&
             <Popper
               open={true}
-              placement="right"
+              placement={this.props.graphPosition}
               disablePortal={true}
               anchorEl={document.querySelector(`#graph-${this.props.title.replace(/\s/g, '-')}`)}
               modifiers={{
@@ -138,12 +138,14 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
                   enabled: true,
                 },
               }}
+              style={{zIndex: 1000}}
             >
               <DrillDown 
                 treatmentId={this.state.selectedBox.treatmentId} 
                 date={this.state.selectedBox.date}
                 data={this.state.treatmentsData[this.state.selectedBox.treatmentId]}
                 close={this.closeDrilldown.bind(this)}
+                pointerDirection={this.props.graphPosition}
               />
             </Popper>
         }

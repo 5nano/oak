@@ -11,6 +11,7 @@ export interface DrillDownProps {
     date: string,
     data: Array<Experimento>,
     close: Function,
+    pointerDirection: 'left' | 'right' 
 }
 
 class DrillDown extends React.Component<DrillDownProps, DrillDownState> {
@@ -34,7 +35,7 @@ class DrillDown extends React.Component<DrillDownProps, DrillDownState> {
               <h1>Detalle de tratamiento {this.props.treatmentId}</h1>
               <h2>Fecha: {this.props.date}</h2>
             </div>
-            <div className="close icon-right-open" onClick={() => this.props.close()}></div>
+            <div className={`close icon-${this.props.pointerDirection}-open`} onClick={() => this.props.close()}></div>
             <div className="sub-title"> Ver imágen del experimento:</div>
             <div className="experimentos">
               {

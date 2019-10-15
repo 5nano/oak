@@ -5,6 +5,7 @@ import { DashboardType } from '../InterfaceDashboardTypes';
 import Plot from 'react-plotly.js';
 import { Layout } from "plotly.js";
 import BushService from '../../../../services/bush';
+import BoxPlot from '../../components/BoxPlot/BoxPlot';
 
 type AssayParamsType = {
     assayId: string,
@@ -18,7 +19,11 @@ type Experiment = {
   
 interface LeafAreaProps extends RouteComponentProps<AssayParamsType> {
     onEmptyRender: Function,
-    data: Array<Experiment>,
+    data: {
+      linear: Array<Experiment>,
+      box
+    },
+    graphPosition?: 'left' | 'right', 
 }
 interface LeafAreaState {
 }
@@ -45,14 +50,24 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
     }
 
     static fetchData(assayId: string) {
-      return BushService.get(`/graficoComparativo/experimentos?assayId=${assayId}`).then(generateExperimentData)
+      return Promise.all([
+        BushService.get(`/graficoComparativo/experimentos?assayId=${assayId}`).then(generateExperimentData),
+        BushService.get(`/medians/area?assayId=${assayId}`)
+      ])
+        .then(([ linear, box ]) => {
+          // I'll just remap this so then we can access this data as this.props.data.linear and this.props.data.box
+          return {
+            linear,
+            box
+          }
+        })
     }
 
     
 
     render() { 
-        if (!(this.props.data && this.props.data.length)) return null;
-        const data: Plotly.Data[] = this.props.data.map(experiment => ({
+        if (!(this.props.data && this.props.data.box &&  Object.keys(this.props.data.box).length)) return this.props.onEmptyRender();
+        const linearData: Plotly.Data[] = this.props.data.linear.map(experiment => ({
             x: experiment.dates,
             y: experiment.values,
             name: experiment.name,
@@ -93,11 +108,21 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
 
         return (
             <div className="PlotlyGraph" >
-                <Plot
-                    data={data}
-                    layout={layout}
-                    style={{position: 'relative', display: 'flex', width: "100%", height: "100%"}}
-                />
+                {
+                  true ?
+                  <BoxPlot 
+                    data={this.props.data.box} 
+                    dataSuffix="mm^2" 
+                    title={name} 
+                    graphPosition={this.props.graphPosition} 
+                  /> :
+                  <Plot
+                      data={linearData}
+                      layout={layout}
+                      style={{position: 'relative', display: 'flex', width: "100%", height: "100%"}}
+                  />
+                }
+
                 <div id='someDiv' />
             </div>
         )

@@ -7,7 +7,6 @@ import { IFrontExperiment, IBackendExperiment } from '../../../../Interfaces/Exp
 import { RouteComponentProps } from 'react-router-dom';
 import BushService from '../../../../services/bush';
 import BoxPlot from '../../components/BoxPlot/BoxPlot';
-import mockedYellowVal from './mockedYellowFreqVal';
 
 export interface YellowFreqComponentState{
   experiments: Array<IFrontExperiment>,
@@ -19,7 +18,7 @@ type AssayParamsType = {
 
 export interface YellowFreqComponentProps extends RouteComponentProps<AssayParamsType> {
   onEmptyRender: Function,
-  data: Array<IFrontExperiment>,
+  data: any,
   graphPosition?: 'left' | 'right', 
 }
 
@@ -35,57 +34,13 @@ class YellowFreqComponent extends React.Component<YellowFreqComponentProps, Yell
   static fetchData(assayId: string) {
     const freqType = 'yellow'; // Por ahora solo ofrecemos frecuencia amarilla
     return BushService.get(`/frecuencias/${freqType}?assayId=${assayId}`)
-      .then(responseData => {
-        const dataWithColors: (Array<IFrontExperiment>) = responseData.map((experiment: IBackendExperiment) => ({
-          ...experiment,
-          plotColor: "yellow",
-        }));
-
-        return dataWithColors;
-      })
   }
 
   render(){
-      if (!(this.props.data && this.props.data.length)) return null;
-
-      const data: Plotly.Data[] = this.props.data.map(experiment => ({
-        x: experiment.values,
-        boxpoints: 'suspectedoutliers',
-        name: experiment.experimentId,
-        type: 'box'
-      }))
-
-      const layout: Partial<Layout> = {
-        title: name,
-        
-        xaxis: {
-          title: 'frecuencias',
-          
-        },
-        yaxis: {
-          tickprefix: "Experiment ",
-        },
-        autosize: true,
-      };
-
-    if (!(data && data.length)) return this.props.onEmptyRender();
-    const mockedValues = {
-      "13-10-2019": {
-        2: mockedYellowVal,
-        89: mockedYellowVal
-      },
-      "15-10-2019": {
-        2: mockedYellowVal,
-        89: mockedYellowVal
-      },
-      "16-10-2019": {
-        2: mockedYellowVal,
-      }
-    }
-
+    if (!(this.props.data && Object.keys(this.props.data).length)) return this.props.onEmptyRender();
     return (
         <div className="PlotlyGraph YellowFreq">
-          <BoxPlot data={mockedValues} dataSuffix="mm^2" title={name} graphPosition={this.props.graphPosition} />
+          <BoxPlot data={this.props.data} dataSuffix="mm^2" title={name} graphPosition={this.props.graphPosition} />
         </div>
     );
   }

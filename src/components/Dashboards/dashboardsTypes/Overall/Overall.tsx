@@ -9,7 +9,6 @@ import YellowFreq from '../YellowFreq/YellowFreq';
 import LeafArea from '../LeafArea/LeafArea';
 
 export interface OverallComponentState {
-  experiments: Array<IFrontExperiment>,
   loading: boolean,
 }
 
@@ -20,7 +19,7 @@ type AssayParamsType = {
 export interface OverallComponentProps extends RouteComponentProps<AssayParamsType> {
   onEmptyRender: Function,
   data: {
-      [key: string]: Array<IFrontExperiment>
+      [key: string]: {box, linear}
   },
 }
 
@@ -36,10 +35,15 @@ class OverallComponent extends React.Component<OverallComponentProps, OverallCom
   }
 
   render(){
+    const leafAreaHasData = this.props.data[LeafArea.id] && this.props.data[LeafArea.id].box && Object.keys(this.props.data[LeafArea.id].box).length;
+    const yellowFreqHasData = this.props.data[YellowFreq.id] && Object.keys(this.props.data[YellowFreq.id]).length;
+
+    if (!leafAreaHasData && !yellowFreqHasData) return this.props.onEmptyRender();
+
     return (
         <div className="Overall">
             <div className="left-panel">
-                <LeafArea.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[LeafArea.id]}/>
+                <LeafArea.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[LeafArea.id]} graphPosition="left"/>
             </div>
             <div className="right-panel">
                 <YellowFreq.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[YellowFreq.id]} graphPosition="right"/>
