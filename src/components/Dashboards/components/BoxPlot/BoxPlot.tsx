@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import Plot from 'react-plotlyjs-ts';
 import { Layout } from "plotly.js";
 import { IFrontExperiment, IBackendExperiment } from '../../../../Interfaces/Experimento';
 import Popper from '@material-ui/core/Popper';
 import DrillDown from "./components/Drilldown/Drilldown";
 import BushService from '../../../../services/bush';
 import { Experimento } from './ExperimentoType';
+import Plot from 'react-plotly.js';
 
 type GraphData = {
   [key: string /* date */]: {
@@ -39,13 +39,14 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
       selectedBox: null,
       treatmentsData: {}
     }
+    this.handleBoxClick = this.handleBoxClick.bind(this);
   }
   
   handleBoxClick(e) {
     const date = e.points[0].x;
     const treatmentId = Number(e.points[0].data.name.replace(namePrefix, ''));
     this.showDetail(treatmentId, date);
-    this.fetchExperiments(treatmentId);
+    return this.fetchExperiments(treatmentId);
   }
 
   fetchExperiments(treatmentId:number) {
@@ -104,7 +105,7 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
         type: 'box'
       }))
 
-      const layout: Partial<Layout> = {
+      const layout = {
         title: this.props.title,
         xaxis: {
           tickprefix: '',
@@ -115,7 +116,6 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
         boxmode: "group",
         autosize: true,
       };
-      this.state.treatmentsData;
 
       return (
       <>
@@ -151,7 +151,9 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
           <Plot
             data={data}
             layout={layout}
-            onClick={(e) => this.handleBoxClick(e)}
+            onClick={this.handleBoxClick}
+            style={{position: 'relative', display: 'flex', width: "100%", height: "100%"}}
+            useResizeHandler={true}
           />
         </div>
       </>
