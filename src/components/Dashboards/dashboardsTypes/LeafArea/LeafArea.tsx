@@ -2,7 +2,7 @@
 import * as React from "react";
 import { RouteComponentProps } from 'react-router-dom';
 import { DashboardType } from '../InterfaceDashboardTypes';
-import Plot from 'react-plotlyjs-ts';
+import Plot from 'react-plotly.js';
 import { Layout } from "plotly.js";
 import BushService from '../../../../services/bush';
 
@@ -96,6 +96,7 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
                 <Plot
                     data={data}
                     layout={layout}
+                    style={{position: 'relative', display: 'flex', width: "100%", height: "100%"}}
                 />
                 <div id='someDiv' />
             </div>

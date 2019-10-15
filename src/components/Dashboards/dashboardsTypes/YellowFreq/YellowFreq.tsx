@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import Plot from 'react-plotlyjs-ts';
+import Plot from 'react-plotly.js';
 import { DashboardType } from '../InterfaceDashboardTypes';
 import { Layout } from "plotly.js";
 import { IFrontExperiment, IBackendExperiment } from '../../../../Interfaces/Experimento';
