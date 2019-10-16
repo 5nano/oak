@@ -2,14 +2,15 @@ import * as React from "react";
 import Ensayos from './components/Ensayos/Ensayos';
 import { IEnsayo } from '../../Interfaces/IEnsayo';
 import { RouteComponentProps } from 'react-router-dom';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { buildUrl } from "../Utilities/QueryParamsURLBuilder";
 import BushService from '../../services/bush';
+import Spinner from "react-spinner-material";
 
 export interface IHomesState {
     ensayos: Array<IEnsayo>,
     experimentos: Array<object>,
     showDataUploadMenu: boolean,
+    loading:boolean,
 }
 
 
@@ -25,6 +26,7 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
             ensayos: [],
             experimentos: [],
             showDataUploadMenu: false,
+            loading:true
         };
         this.fetchEnsayos();
         this.goToDashboard = this.goToDashboard.bind(this);
@@ -42,8 +44,10 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
             .then(ensayos => {
                 this.setState({
                     ...this.state,
+                    loading:false,
                     ensayos
                 });
+                
             })
       }
 
@@ -79,10 +83,20 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
         return(
             <div className="home">
                 <div className="home-title">Selecciona el ensayo que deseas ver:</div>
+                
+                {!this.state.loading?
                 <Ensayos ensayos={this.state.ensayos} 
                          onSelect={this.goToDashboard.bind(this)}  
                          onQrs={this.goToQrs.bind(this)}
                          onRemove={this.removeAssay.bind(this)} />
+                :
+                <div className="home-loading">
+                    <Spinner size={240} 
+                        spinnerColor={"#6AC1A9"} 
+                        spinnerWidth={3} 
+                        visible={true}/>
+                </div>
+                }
             </div>
         )
     }
