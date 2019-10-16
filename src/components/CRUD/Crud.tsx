@@ -57,7 +57,7 @@ const CrudView: React.SFC <ICrudViewProps> = ({
                     <div className="layout-wrapper">
                         <SearchComponent searchUrl={searchUrl} deleteUrl={deleteUrl}/>
                         <div className="form-request">
-                          <Button title={`Agregar nuevo ${title.substring(0,title.length - 1)} `}
+                          <Button title={`Agregar ${title.substring(0,title.length - 1).toLowerCase()} `}
                                   onClick={showForm}
                                   />
                         </div>

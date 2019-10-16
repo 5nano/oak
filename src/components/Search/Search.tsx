@@ -1,9 +1,9 @@
 import * as React from "react";
 import { ItemType } from "./components/Item";
 import Results from "./Results";
-import SearchButton from "./SearchButton";
 import BushService from '../../services/bush';
-
+import Spinner from 'react-spinner-material';
+import { setTimeout } from "timers";
 
 export interface ISearchProps{
     searchAction: string,
@@ -26,6 +26,7 @@ export interface ISearchState {
     errors: IErrors;
     data: Array<any>;
     searchSuccess?: boolean;
+    loading: boolean;
 
 }
 
@@ -54,6 +55,7 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
             errors,
             values,
             data,
+            loading:true
         };
 
         this.remove=this.remove.bind(this)
@@ -63,7 +65,7 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
       return BushService.get(this.props.searchAction)
       .then(data =>{
                
-              this.setData(data)
+        this.setState({data: data,loading:false})
       })
       .catch(e => {
           this.setState({ errors: e });
@@ -82,10 +84,6 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
     return this.getData();
 
     };
-
-    private setData = (data:Array<any>) => {
-        this.setState({data: data})
-    }
 
     private setValues = (values: IValues) => {
         this.setState({values: {...this.state.values, ...values}});
@@ -112,9 +110,19 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
             search:this.handleSearch
         };
         return(
+          
             <SearchContext.Provider value={context}>
                <div className="search-container">
-                <Results type={this.props.type}/>
+                  {!this.state.loading?
+                    <Results type={this.props.type}/>
+                  :
+                  <div className="search-loading">
+                    <Spinner size={240} 
+                    spinnerColor={"#6AC1A9"} 
+                    spinnerWidth={3} 
+                    visible={true}/>
+                  </div>
+                  }
               </div>
             </SearchContext.Provider>
         )
