@@ -49,7 +49,7 @@ const CrudView: React.SFC <ICrudViewProps> = ({
   return (
 
       <div className="crud-container">
-                  <div className="title-wrapper">
+                  <div className="curd-title">
                     {title}
                   </div>
 

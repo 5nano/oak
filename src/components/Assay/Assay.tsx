@@ -1,13 +1,15 @@
 import * as React from 'react'
 import AssayForm from './components/Form/AssayForm';
 import { IValues } from '../Form/Form';
-import Treatments from './components/Treatments';
+import Treatments from './components/Treatments/Treatments';
 import TreatmentForm from './components/Form/TreatmentForm';
 import Stepper from '../Utilities/Stepper';
 import { RouteComponentProps } from 'react-router-dom';
 import ITreatment from '../../Interfaces/ITreatment';
 import TreatmentQrs from '../Qrs/TreatmentQr/TreatmentQrs';
 import BushService from '../../services/bush';
+import Error from '../Utilities/Messages/Error';
+import Button from '../Utilities/Buttons/DefaultButton/Button';
 
 export interface IAssayProps extends RouteComponentProps{
 
@@ -83,6 +85,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
 
           this.setTreatment=this.setTreatment.bind(this)
           this.setQrRequest=this.setQrRequest.bind(this)
+          this.submitAssayForm=this.submitAssayForm.bind(this)
     }
 
     setLoading(){
@@ -192,55 +195,48 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
    
     render(){
         return(
-            <div className="assay-container">
+            <div className="crud-container">
                
-                    <div className="assay-title">
-                    <img src="../../assets/images/head-icon.png"/>
-                    <p>Ensayos</p>
+              <div className="crud-title">
+                {this.state.successAssay? 'Ensayos/Tratamientos':'Ensayos'}
+              </div>
+
+              {!this.state.qrRequest.flag && !this.state.successAssay && 
+                <div className="form-wrapper">
+                    <div className="form-content">
+                        {this.state.error.length>0 &&
+                          <Error message={this.state.error}/>
+                        }
+                        <AssayForm submitAssayForm={this.submitAssayForm}
+                                    fieldsOptions={this.state.fieldsOptions}
+                                    />
                     </div>
+                  </div>
+              }
 
-
-                    {!this.state.qrRequest.flag && !this.state.successAssay && 
-
-                    <div className="form-wrapper">
-                        <div className="form-content">
-                          <div className="form-helper">Ingrese los datos del nuevo ensayo</div>
-                            {this.state.error.length>0 &&
-                              <div>
-                                  Error del servidor: {this.state.error}
-                              </div>
-                            }
-                            <AssayForm submitAssayForm={this.submitAssayForm}
-                                       fieldsOptions={this.state.fieldsOptions}
-                                       />
-                        </div>
-                      </div>
-                    }
-
-                    {!this.state.qrRequest.flag && this.state.successAssay && (
-                            [<Treatments treatments={this.state.treatments}
-                                        idAgrochemical={this.state.assay.idAgrochemical}
-                                        idMixture={this.state.assay.idMix}
-                                        idAssay={this.state.assay.id}
-                                        setTreatment={this.setTreatment}
-                                        setQrRequest={this.setQrRequest}
-                            />,
-                            <button type='button' onClick={()=>this.props.history.push('/')}>
-                            Finalizar
-                            </button>]
-                    )}
-              
-                    {this.state.qrRequest.flag &&
-                      <div className="qr-wrapper">
-                        <TreatmentQrs treatment={this.state.treatments.find(treatment => treatment.name === this.state.qrRequest.treatmentName)}/>
-                        <button type="button" onClick={()=>this.setState({qrRequest:{flag:false,treatmentName:''}})}>
-                                  Atras
-                        </button>
-                      </div>
-                    }
-
+              {!this.state.qrRequest.flag && this.state.successAssay && (
+                [<Treatments treatments={this.state.treatments}
+                            idAgrochemical={this.state.assay.idAgrochemical}
+                            idMixture={this.state.assay.idMix}
+                            idAssay={this.state.assay.id}
+                            setTreatment={this.setTreatment}
+                            setQrRequest={this.setQrRequest}
+                />,
+                <div className="step-button">
+                  <Button title="Finalizar" onClick={()=>this.props.history.push('/')}/>
+                </div>
+                ]
+              )}
+        
+              {this.state.qrRequest.flag &&
+                <div className="qr-wrapper">
+                  <TreatmentQrs treatment={this.state.treatments.find(treatment => treatment.name === this.state.qrRequest.treatmentName)}/>
+                  <button type="button" onClick={()=>this.setState({qrRequest:{flag:false,treatmentName:''}})}>
+                            Atras
+                  </button>
+                </div>
+              }
             </div>
-            
         )
     }
 }

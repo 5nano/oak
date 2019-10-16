@@ -4,13 +4,15 @@ interface IButtonProps {
     title:string,
     onClick?:(e:React.MouseEvent)=>void,
     type?:any,
-    className?:string
+    className?:string,
 }
 
 const Button: React.SFC<IButtonProps> = (props) => {
     const {type,title,onClick,className} = props;
     return(
-        <button type={type} className={`button ${className}`} onClick={onClick}>
+        <button type={type} 
+                className={`button ${className}`}
+                onClick={onClick}>
             {title}
         </button>
     )
@@ -19,6 +21,6 @@ const Button: React.SFC<IButtonProps> = (props) => {
 Button.defaultProps = {
     type:'button',
     onClick:()=>{},
-    className:''
+    className:'',
 }
 export default Button;
