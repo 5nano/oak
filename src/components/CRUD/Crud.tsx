@@ -63,14 +63,13 @@ const CrudView: React.SFC <ICrudViewProps> = ({
                         </div>
                     </div> 
                     :
-                    <div className="form-wrapper">
-                        <div className="form-content">
-                            <div className="form-helper">Ingrese los datos</div>
+                    <div className="layout-wrapper">
                             <FormComponent submitForm={submitForm}/>                   
-                            <Button title="Volver"
-                                    onClick={showSearch}
-                                    />
-                        </div>
+                            <div className="form-return">
+                              <Button title="Volver"
+                                      onClick={showSearch}
+                                      />
+                            </div>
                     </div>
                   }
       </div>

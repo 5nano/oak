@@ -63,6 +63,7 @@ export const Field: React.SFC<IFieldProps> = ({
                 <textarea
                   id={id}
                   value={value}
+                  placeholder={label}
                   onChange={
                     (e: React.FormEvent<HTMLTextAreaElement>) =>
                       context.setValues({ [id]: e.currentTarget.value }) 
