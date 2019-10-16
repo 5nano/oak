@@ -3,22 +3,26 @@
 .search-container{
     display:flex;
     flex-direction: column;
-        .search-controller{
+    width:100%;
+        .results-list{
+                display:flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                flex-wrap: wrap;
+       
+                .results-empty{
+                    color:white;
+                }
+        }
+
+        .search-loading{
             display:flex;
-            justify-content: flex-end;
+            justify-content: center;
+            margin: 30px 0;
         }
 }
 
 
-.results-list{
-        display:flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        flex-wrap: wrap;
-}
 
-.results-empty{
-    color:white;
-}
 

@@ -19,30 +19,27 @@ const Item:React.SFC<IItemProps> = (props) => {
     const description = object['description']? object['description']:'Sin descripción'
     return(
         <div className="item">
-            <div className="item-img">
+            <div className="item-header">
+                <div className="item-img">
+                    {props.type === 'agrochemical' &&
+                        <img src='../../../assets/images/agrochemical-icon.png'/>
+                    }
 
-                {props.type === 'agrochemical' &&
-                    <img src='../../../assets/images/agrochemical-icon.png'/>
-                 }
+                    {props.type === 'crop' &&
+                        <img src='../../../assets/images/crop-icon.png'/>
+                    }
 
-                {props.type === 'crop' &&
-                    <img src='../../../assets/images/crop-icon.png'/>
-                 }
-
-                {props.type === 'mix' &&
-                    <img src='../../../assets/images/mix-icon.png'/>
-                 }
-
+                    {props.type === 'mix' &&
+                        <img src='../../../assets/images/mix-icon.png'/>
+                    }
+                </div>
+                <div className="item-name">
+                    {name}
+                </div>
             </div>
 
-
-            <div className="item-props">
-                <div className="item-prop">
-                    <p>Nombre: {name}</p>
-                </div>
-                <div className="item-prop">
-                    <p>Descripción: {description} </p>
-                </div>
+            <div className="item-content">
+              {description} 
             </div>
         </div>
     )

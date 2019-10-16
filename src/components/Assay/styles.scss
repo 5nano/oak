@@ -1,38 +1,14 @@
 @import './components/styles.scss';
-.assay-container{
+.qr-wrapper{
     display:flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: center;
     align-content: center;
-    background-color: #3A7257;
-    height: 100%;
+    align-items: center;
+}
 
-   .assay-title{
-        display:flex;
-        flex-wrap: nowrap;
-        align-items: center;
-        align-content: center;
-     
-            img{
-                flex-grow: 0;
-                flex-shrink: 0;
-                width: 5rem;
-                height: 5rem;
-            }
-            p{
-                color: white;
-            }
-    }
-
-
-    .qr-wrapper{
-        display:flex;
-        flex-direction: column;
-        justify-content: center;
-        align-content: center;
-        align-items: center;
-    }
-
+.step-button{
+    width: 300px;
 }
 
 

@@ -9,10 +9,6 @@ import Button from '../../../Utilities/Buttons/DefaultButton/Button';
 export interface HeaderState {
     showDataUploadMenu: boolean,
  }
-export interface HeaderProps extends RouteComponentProps{
-    titles: {title: string, path: string}[],
-    loggedIn: boolean,
- }
 
 const logout = () => {
     BushService.post('/logout',{})
@@ -22,7 +18,7 @@ const logout = () => {
             })
 }
 
-const Header = (props: HeaderProps) => {
+const Header = (props:RouteComponentProps) => {
     const [showDataUploadMenu, toggleDataUploadMenu] = React.useState(false);
 
     return (
@@ -37,50 +33,39 @@ const Header = (props: HeaderProps) => {
                         <img src="../../../../assets/images/nanivo-logo.png" className="header-logo" />
                     </div>
                 </Link>
-                {
-                    props.loggedIn && (
-                    <div className="links">
-                        {props.titles.map(header => {
-                            return <Link to={`/${header.path}`} className="header-link">
-                                        {header.title}
-                                    </Link>
-                        })}
-                        <button
-                            className="show-data-upload-button"
-                            onClick={() => toggleDataUploadMenu(!showDataUploadMenu)}
-                        >
-                            Cargar nuevos datos
-                        </button>
-                        <Button title="Cerrar Sesion" onClick={logout}/>
-                        
-                    </div>
-                    )
-                }
+
+            <div className="header-controller">
+                <Button title="Cargar datos" 
+                        onClick={()=>toggleDataUploadMenu(!showDataUploadMenu)}
+                        className="show-data-upload-button header-action"
+                        />
+                <Button title="Cerrar Sesion" 
+                        onClick={logout}
+                        className="header-action"
+                        />
+            </div>
+
             </div>
             {
                 showDataUploadMenu &&
                 <div className="header submenu">
                     <div className="links">
-                        <button 
-                            className="show-data-upload-button" 
-                            onClick={() => props.history.push('/crops')}>
-                                Nuevo tipo de plantación
-                        </button>
-                        <button 
-                            className="show-data-upload-button" 
-                            onClick={() => props.history.push('/agrochemicals')}>
-                                Nuevo tipo de agroquímico
-                        </button>
-                        <button 
-                            className="show-data-upload-button" 
-                            onClick={() => props.history.push('/mixs')}>
-                                Nuevo tipo de mezcla
-                        </button>
-                        <button 
-                            className="show-data-upload-button" 
-                            onClick={() => props.history.push('/assay')}>
-                                Nuevos ensayos
-                        </button>
+                        <Button title="Cultivos" 
+                                className="show-data-upload-button" 
+                                onClick={() => props.history.push('/crops')}
+                        />
+                        <Button title="Agroquimicos" 
+                                className="show-data-upload-button" 
+                                onClick={() => props.history.push('/agrochemicals')}
+                        />
+                        <Button title="Mezcla" 
+                                className="show-data-upload-button" 
+                                onClick={() => props.history.push('/mixs')}
+                        />
+                        <Button title="Ensayos" 
+                                className="show-data-upload-button" 
+                                onClick={() => props.history.push('/assay')}
+                        />
                     </div>
                 </div>
             }

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Item, { ItemType } from './Item';
+import ResultActions from './ResultActions';
 
 export interface IResultItemProps{
     object:any;
@@ -8,22 +9,12 @@ export interface IResultItemProps{
 }
 
 const ResultItem:React.SFC<IResultItemProps> = (props) => {
-    
     const {object,remove,type} = props;
     return(
         <div className="results-item">
             <Item object={object} type={type}/>
-            <div className="result-controller">
-                <a className='action' onClick={e => remove(object)}>
-                    <i className="icon icon-trash"></i>
-                </a>
-                <a className='action' onClick={e => console.log("Updated not done")}>
-                    <i className="icon icon-arrows-cw"></i>
-                </a>
-                 
-            </div>
-        
-    </div>
+            <ResultActions remove={remove} update={()=>console.log("Update not done")}/>
+        </div>
     )
 }
 
