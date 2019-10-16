@@ -11,7 +11,6 @@ const Landing:React.SFC<ILandingProps> = (props) => {
     const {validateLogin} = props;
     return(
         <div className="landing">
-            <div className="landing-background">
                 <div className="landing-header">
                     <div className="landing-logo">
                         <img src='../../assets/images/nanivo-logo.png'/>
@@ -44,7 +43,6 @@ const Landing:React.SFC<ILandingProps> = (props) => {
                     <LogIn {...props} validateLogin={validateLogin}/>
 
                 </div>
-            </div>
             
         </div>
     )
