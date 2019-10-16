@@ -4,7 +4,7 @@ import Header from "../../App/components/Header";
 
 const PrivateRoute = ({component:Component,isLoggedIn,...rest}) => (
     <Route {...rest} render={(props) => (
-        isLoggedIn? ([<Header titles={[]} loggedIn={isLoggedIn}/>
+        isLoggedIn? ([<Header/>
                     ,<Component {...props} />])
                 : <Redirect to={{
                     pathname:"/",
