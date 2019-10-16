@@ -115,10 +115,6 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
             <SearchContext.Provider value={context}>
                <div className="search-container">
                 <Results type={this.props.type}/>
-                <div className="search-controller">
-                  <SearchButton/>
-                  {this.props.render()}
-                </div>
               </div>
             </SearchContext.Provider>
         )

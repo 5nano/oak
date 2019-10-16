@@ -3,9 +3,11 @@
 .search-container{
     display:flex;
     flex-direction: column;
+    width:100%;
         .search-controller{
             display:flex;
             justify-content: flex-end;
+            width: 300px;
         }
 }
 

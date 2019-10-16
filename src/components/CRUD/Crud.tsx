@@ -1,6 +1,7 @@
 import * as React from "react";
 import { IValues } from "../Form/Form";
 import BushService from '../../services/bush';
+import Button from "../Utilities/Buttons/DefaultButton/Button";
 
 
 export interface ICrudViewProps {
@@ -25,9 +26,12 @@ const CrudView: React.SFC <ICrudViewProps> = ({
   
   const [formRequest,setFormRequest] = React.useState(false);
 
-  const handleClick = (e:React.MouseEvent<HTMLElement>) => (
-    setFormRequest(!formRequest)
+  const showForm = () => (
+    setFormRequest(true)
   )
+  const showSearch = () => {
+    setFormRequest(false)
+  }
 
   const submitForm = (values:IValues,setError:Function): Promise<boolean> => {
 
@@ -46,22 +50,28 @@ const CrudView: React.SFC <ICrudViewProps> = ({
 
       <div className="crud-container">
                   <div className="title-wrapper">
-                    <img src="../../assets/images/head-icon.png"/>
-                    <p>{title}</p>
+                    {title}
                   </div>
 
-                  <div className="layout-wrapper">
-                      <a className="add-element" onClick={handleClick}/>
-                      <SearchComponent searchUrl={searchUrl} deleteUrl={deleteUrl}/>
-                  </div> 
-
-                  {formRequest &&
-                  <div className="form-wrapper">
-                      <div className="form-content">
-                          <div className="form-helper">Ingrese los datos</div>
-                          <FormComponent submitForm={submitForm}/>                   
-                      </div>
-                  </div>
+                  {!formRequest?
+                    <div className="layout-wrapper">
+                        <SearchComponent searchUrl={searchUrl} deleteUrl={deleteUrl}/>
+                        <div className="form-request">
+                          <Button title={`Agregar nuevo ${title.substring(0,title.length - 1)} `}
+                                  onClick={showForm}
+                                  />
+                        </div>
+                    </div> 
+                    :
+                    <div className="form-wrapper">
+                        <div className="form-content">
+                            <div className="form-helper">Ingrese los datos</div>
+                            <FormComponent submitForm={submitForm}/>                   
+                            <Button title="Volver"
+                                    onClick={showSearch}
+                                    />
+                        </div>
+                    </div>
                   }
       </div>
  
