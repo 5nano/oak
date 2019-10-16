@@ -1,11 +1,11 @@
 import * as React from "react";
 
-import YellowFreq from './dashboardsTypes/YellowFreq/YellowFreq';
 import LeafArea from './dashboardsTypes/LeafArea/LeafArea';
 import Overall from './dashboardsTypes/Overall/Overall';
+import GreenFreq from './dashboardsTypes/GreenFrequency/GreenFrequency';
+import YellowFreq from './dashboardsTypes/YellowFrequency/YellowFrequency';
 
 import { DashboardType } from './dashboardsTypes/InterfaceDashboardTypes';
-import { RouteComponentProps } from 'react-router-dom';
 
 import DashboardSelector from './components/DashboardSelector/DashboardSelector';
 
@@ -35,8 +35,9 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
 
     this.dashboardTypes = [
       Overall,
-      YellowFreq,
       LeafArea,
+      YellowFreq,
+      GreenFreq,
     ];
 
     this.state = {

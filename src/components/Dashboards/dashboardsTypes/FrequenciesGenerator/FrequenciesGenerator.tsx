@@ -22,18 +22,16 @@ export interface YellowFreqComponentProps extends RouteComponentProps<AssayParam
   graphPosition?: 'left' | 'right', 
 }
 
-const name = "Mediana de frecuencias en amarillo";
 
-class YellowFreqComponent extends React.Component<YellowFreqComponentProps, YellowFreqComponentState> {
+const freqComponentGenerator = (color, name) => class YellowFreqComponent extends React.Component<YellowFreqComponentProps, YellowFreqComponentState> {
 
 
   constructor(props:YellowFreqComponentProps){
-    super(props)
+    super(props);
   }
   
   static fetchData(assayId: string) {
-    const freqType = 'yellow'; // Por ahora solo ofrecemos frecuencia amarilla
-    return BushService.get(`/frecuencias/${freqType}?assayId=${assayId}`)
+    return BushService.get(`/frecuencias/${color}?assayId=${assayId}`)
   }
 
   render(){
@@ -46,10 +44,10 @@ class YellowFreqComponent extends React.Component<YellowFreqComponentProps, Yell
   }
 };
 
-const yellowFreq : DashboardType = {
-  id: 'yellow-frequency',
+const frequencyGenerator : ((freqColor: string, name: string) => DashboardType) = (freqColor, name) => ({
+  id: `${freqColor}-frequency`,
   name,
-  component: YellowFreqComponent,
-};
+  component: freqComponentGenerator(freqColor, name),
+});
 
-export default yellowFreq;
+export default frequencyGenerator;
