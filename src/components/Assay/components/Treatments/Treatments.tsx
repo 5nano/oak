@@ -1,9 +1,10 @@
 import * as React from 'react';
-import Treatment from './Treatment';
-import ITreatment from '../../../Interfaces/ITreatment';
-import TreatmentForm from './Form/TreatmentForm';
-import { IValues } from '../../Form/Form';
-import BushService from '../../../services/bush';
+import Treatment from '../Treatment/Treatment';
+import ITreatment from '../../../../Interfaces/ITreatment';
+import TreatmentForm from '../Form/TreatmentForm';
+import { IValues } from '../../../Form/Form';
+import BushService from '../../../../services/bush';
+import Button from '../../../Utilities/Buttons/DefaultButton/Button';
 
 export  interface ITreatmentsProps{
     treatments: ITreatment[],
@@ -64,21 +65,20 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                 </div>
 
                 <div className="treatments-wrapper">
-                    
                     {treatments.map((treatment)=> (
                         <Treatment treatment={treatment}
                                    setQrRequest={setQrRequest}/>
                     ))}
                 </div>
 
-                <button type="button" onClick={()=> setNewTreatment(!newTreatment)}>
-                    Nuevo tratamiento
-                </button>
-        
+                <div className="new-treatment-button">
+                    <Button title="Nuevo Tratamiento" 
+                            onClick={()=> setNewTreatment(!newTreatment)}/>    
+                </div>
+
                 {newTreatment && 
                 <div className="form-wrapper">
                     <div className="form-content">
-                        <div className="form-helper">Ingrese los datos del nuevo tratamiento</div>
                         <TreatmentForm submitTreatmentForm={submitTreatmentForm}/>
                     </div>
                 </div>
