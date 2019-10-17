@@ -39,6 +39,7 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
             showDataUploadMenu: !this.state.showDataUploadMenu,
         });
     }
+    
     private fetchEnsayos = async (): Promise<void> => {
         BushService.get('/ensayos')
             .then(ensayos => {
@@ -82,7 +83,10 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
     render(){
         return(
             <div className="home">
-                <div className="home-title">Selecciona el ensayo que deseas ver:</div>
+               
+                <div className="home-title">
+                    Selecciona el ensayo que deseas ver:
+                </div>
                 
                 {!this.state.loading?
                 <Ensayos ensayos={this.state.ensayos} 
