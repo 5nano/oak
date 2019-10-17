@@ -42,7 +42,7 @@ class DrillDown extends React.Component<DrillDownProps, DrillDownState> {
                 this.props.data && this.props.data.map(experiment => {
                   return (
                     <div className="experiment" onClick={() => this.showExperimentImage(experiment.experimentId)}>
-                      {experiment.nombre}
+                      Experimento {experiment.experimentId}
                       {
                         this.state.showExperimentImage === experiment.experimentId &&
                         <div className="experiment-image">

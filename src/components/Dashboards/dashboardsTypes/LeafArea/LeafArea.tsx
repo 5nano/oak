@@ -51,13 +51,13 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
 
     static fetchData(assayId: string) {
       return Promise.all([
-        BushService.get(`/graficoComparativo/experimentos?assayId=${assayId}`).then(generateExperimentData),
+        // BushService.get(`/graficoComparativo/experimentos?assayId=${assayId}`).then(generateExperimentData),
         BushService.get(`/medians/area?assayId=${assayId}`)
       ])
-        .then(([ linear, box ]) => {
+        .then(([ /* linear, */ box ]) => {
           // I'll just remap this so then we can access this data as this.props.data.linear and this.props.data.box
           return {
-            linear,
+            // linear,
             box
           }
         })
@@ -66,13 +66,14 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
     
 
     render() { 
+      debugger;
         if (!(this.props.data && this.props.data.box &&  Object.keys(this.props.data.box).length)) return this.props.onEmptyRender();
-        const linearData: Plotly.Data[] = this.props.data.linear.map(experiment => ({
-            x: experiment.dates,
-            y: experiment.values,
-            name: experiment.name,
-            type: 'scatter'
-          }))
+        // const linearData: Plotly.Data[] = this.props.data.linear.map(experiment => ({
+        //     x: experiment.dates,
+        //     y: experiment.values,
+        //     name: experiment.name,
+        //     type: 'scatter'
+        //   }))
 
           const layout: Partial<Layout> = {
               showlegend: true,
@@ -109,18 +110,18 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
         return (
             <div className="PlotlyGraph" >
                 {
-                  true ?
+                  true &&
                   <BoxPlot 
                     data={this.props.data.box} 
                     dataSuffix="mm^2" 
                     title={name} 
                     graphPosition={this.props.graphPosition} 
-                  /> :
-                  <Plot
-                      data={linearData}
-                      layout={layout}
-                      style={{position: 'relative', display: 'flex', width: "100%", height: "100%"}}
-                  />
+                  /> 
+                  // <Plot
+                  //     data={linearData}
+                  //     layout={layout}
+                  //     style={{position: 'relative', display: 'flex', width: "100%", height: "100%"}}
+                  // />
                 }
 
                 <div id='someDiv' />
