@@ -1,0 +1,14 @@
+.assay-searcher{
+    display:flex;
+    flex-direction: row;
+    width: 500px;;
+    height: 50px;
+
+    border: 1px solid black;
+    border-radius: 4px;
+
+    .input-search{
+        width: 100%;
+        font-size: 18px;
+    }
+}
