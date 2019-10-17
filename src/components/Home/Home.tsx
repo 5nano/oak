@@ -5,6 +5,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { buildUrl } from "../Utilities/QueryParamsURLBuilder";
 import BushService from '../../services/bush';
 import Spinner from "react-spinner-material";
+import HomeSearcher from "./components/HomeSearcher/HomeSearcher";
 
 export interface IHomesState {
     ensayos: Array<IEnsayo>,
@@ -39,6 +40,7 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
             showDataUploadMenu: !this.state.showDataUploadMenu,
         });
     }
+    
     private fetchEnsayos = async (): Promise<void> => {
         BushService.get('/ensayos')
             .then(ensayos => {
@@ -82,7 +84,8 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
     render(){
         return(
             <div className="home">
-                <div className="home-title">Selecciona el ensayo que deseas ver:</div>
+               
+                <HomeSearcher/>
                 
                 {!this.state.loading?
                 <Ensayos ensayos={this.state.ensayos} 

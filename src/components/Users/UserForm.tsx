@@ -8,6 +8,7 @@ import BushService from "../../services/bush";
 import Companies from "../Companies/Companies";
 import { object } from "prop-types";
 import { ICompany } from "../../Interfaces/ICompany";
+import Spinner from "react-spinner-material";
 
 const UserForm: React.SFC<IComponentFormProps> = (props) => {
 
@@ -80,22 +81,29 @@ const UserForm: React.SFC<IComponentFormProps> = (props) => {
 
   return (
 
-    !loading && 
-      <Form
-       submitForm={submitForm.bind(this)}
-        fields = {fields}
-        title="Registrar"
-        render={() => (
-          <React.Fragment>
-            <Field {...fields.firstName}/>
-            <Field {...fields.lastName}/>
-            <Field {...fields.email}/>
-            <Field {...companieField.compania}/>
-            <Field {...fields.username}/>
-            <Field {...fields.password}/>
-          </React.Fragment>
-        )}
-      />
+    !loading?
+        <Form
+        submitForm={submitForm.bind(this)}
+          fields = {fields}
+          title="Registrar"
+          render={() => (
+            <React.Fragment>
+              <Field {...fields.firstName}/>
+              <Field {...fields.lastName}/>
+              <Field {...fields.email}/>
+              <Field {...companieField.compania}/>
+              <Field {...fields.username}/>
+              <Field {...fields.password}/>
+            </React.Fragment>
+          )}
+        />
+      :
+      <div className="user-loading">
+        <Spinner  size={240} 
+                  spinnerColor={"#6AC1A9"} 
+                  spinnerWidth={3} 
+                  visible={true}/>
+      </div>
   );
 };
 

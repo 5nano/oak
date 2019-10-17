@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { IEnsayo } from '../../../../Interfaces/IEnsayo'
+import Button from '../../../Utilities/Buttons/DefaultButton/Button';
 export interface IEnsayoProps{
     ensayo: IEnsayo
     onSelect: Function
@@ -11,18 +12,14 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
 
     const {ensayo,onSelect,onQrs,onRemove} = props;
 
-    React.useEffect(()=>{
-        
-    },[])
     return(
-        <div className="ensayo-wrapper">
-            <div className="ensayo">
-                <div className="name">
-                    <div className="title">Nombre ensayo:</div> 
-                    <div>{ensayo.name}</div>
+        <div className="assay-wrapper">
+            <div className="assay">
+                <div className="assay-header">
+                    {ensayo.name}
                 </div>
 
-                <div className="content">
+                <div className="assay-components">
                     <div className="component">
                         <div className="component-img">
                             <img src='../../../../assets/images/agrochemical-icon.png'/>
@@ -51,15 +48,26 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                     </div>
                 </div>
 
-                <div className="description">
-                    <div className="title">Descripción:</div>
-                    <div>{ensayo.description}</div>
+                <div className="assay-description">
+                    <div className="title">Descripción</div>
+                    <div className="content">{ensayo.description}</div>
                 </div>
 
-                <div className="actions">
-                    <a onClick={() => onSelect(ensayo.idAssay)}>Dashboard</a>
-                    <a onClick={()=>onQrs(ensayo.idAssay)}>QRs</a>
-                    <a onClick={() => onRemove(ensayo.idAssay)}>Eliminar</a>
+                <div className="assay-actions">
+                    <div className="buttons">
+                        <Button title="Dashboard"
+                                className="action-button"
+                                onClick={()=>onSelect(ensayo.idAssay)}
+                            />
+                        <Button title="QRs"
+                                className="action-button"
+                                onClick={()=>onQrs(ensayo.idAssay)}
+                            />
+                         <Button title="Eliminar"
+                                className="action-button"
+                                onClick={()=>onRemove(ensayo.idAssay)}
+                            />
+                    </div>
                 </div>
             </div>
 
