@@ -25,7 +25,6 @@ const Signup: React.SFC<RouteComponentProps> = (props) => {
   
   return (
       <div className="landing">
-        <div className="landing-background">
             <div className="landing-header">
                 <div className="landing-logo">
                     <img src='../../assets/images/nanivo-logo.png'/>
@@ -61,7 +60,6 @@ const Signup: React.SFC<RouteComponentProps> = (props) => {
                     <UserForm submitForm={submitForm}/>
                 </div>
             </div>
-        </div>
       </div>
  );
 };

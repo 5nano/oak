@@ -58,7 +58,7 @@ const Header = (props:RouteComponentProps) => {
                                 className="show-data-upload-button" 
                                 onClick={() => props.history.push('/agrochemicals')}
                         />
-                        <Button title="Mezcla" 
+                        <Button title="Mezclas" 
                                 className="show-data-upload-button" 
                                 onClick={() => props.history.push('/mixs')}
                         />
