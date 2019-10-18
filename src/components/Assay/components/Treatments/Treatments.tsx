@@ -7,20 +7,18 @@ import BushService from '../../../../services/bush';
 import Button from '../../../Utilities/Buttons/DefaultButton/Button';
 
 export  interface ITreatmentsProps{
-    treatments: ITreatment[],
-    idAssay: Number,
-    setTreatment: (treatment:ITreatment) => void;
-    setQrRequest:(treatmentName:string) => void;
+    idAssay: Number
 }
-
-
 const Treatments: React.SFC<ITreatmentsProps> = (props) => {
 
     const [newTreatment,setNewTreatment] = React.useState(false)
-    const {treatments,
-           idAssay,
-           setTreatment,
-           setQrRequest} = props
+    const [treatments,setTreatments] = React.useState<ITreatment[]>([])
+    const {idAssay} = props
+
+
+    const setTreatment = (treatment:ITreatment) => {
+        treatments.push(treatment)
+       }
     
     const submitTreatmentForm=(values:IValues):Promise<boolean>=>{
         const treatmentData = {
@@ -62,8 +60,7 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
 
                 <div className="treatments-wrapper">
                     {treatments.map((treatment)=> (
-                        <Treatment treatment={treatment}
-                                   setQrRequest={setQrRequest}/>
+                        <Treatment treatment={treatment}/>
                     ))}
                 </div>
 

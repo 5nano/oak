@@ -5,13 +5,12 @@ import Button from '../../../Utilities/Buttons/DefaultButton/Button';
 
 export  interface ITreatmentProps{
     treatment:ITreatment,
-    setQrRequest:(treatmentName:string) => void
 }
 
 
 const Treatment:React.SFC<ITreatmentProps> = (props) => {
 
-    const {treatment,setQrRequest} = props;
+    const {treatment} = props;
 
     return(
         <div className="treatment-card">
@@ -35,10 +34,6 @@ const Treatment:React.SFC<ITreatmentProps> = (props) => {
                     {treatment.experimentsLength}
                 </div>
             </div>
-
-            <Button title="QR" 
-                    onClick={()=> setQrRequest(treatment.name)}
-            /> 
         </div>
     )
 }

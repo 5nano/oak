@@ -22,16 +22,11 @@ export interface IAssay{
 export interface IAssayState{
     assay:IAssay
     successAssay: boolean,
-    qrRequest: {
-      flag:boolean,
-      treatmentName:string
-    }
     loading:{
       agrochemicals:boolean,
       mixs:boolean,
       crops:boolean
-    },
-    treatments: ITreatment[],
+    }
   }
 
 
@@ -48,21 +43,14 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
               idCrop: null,
             },
             successAssay: false,
-            qrRequest: {
-              flag:false,
-              treatmentName:''
-            },
             loading: {
               agrochemicals:true,
               mixs:true,
               crops:true,
-            },
-            treatments: [],
+            }
           }
-
-          this.setTreatment=this.setTreatment.bind(this)
-          this.setQrRequest=this.setQrRequest.bind(this)
-          this.submitAssayForm=this.submitAssayForm.bind(this)
+        
+         this.submitAssayForm=this.submitAssayForm.bind(this)
     }
 
     setLoading(){
@@ -96,21 +84,6 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
         })
      }
 
-     setTreatment(treatment:ITreatment){
-      this.setState(prevState => {
-        let treatments = prevState.treatments
-        treatments.push(treatment)
-        return {treatments}
-        })
-     }
-
-     setQrRequest(treatmentName:string){
-        this.setState(prevState => {
-          let qrRequest = {flag:true,treatmentName:treatmentName}
-          return {qrRequest}
-        })
-     }
-   
     render(){
         return(
             <div className="crud-container">
@@ -119,32 +92,19 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                 {this.state.successAssay? 'Ensayos/Tratamientos':'Ensayos'}
               </div>
 
-              {!this.state.qrRequest.flag && !this.state.successAssay && 
+              {!this.state.successAssay && 
                 <div className="assay-form-wrapper">
                         <AssayForm submitAssayForm={this.submitAssayForm.bind(this)}/>
                   </div>
               }
 
-              {!this.state.qrRequest.flag && this.state.successAssay && (
-                [<Treatments treatments={this.state.treatments}
-                            idAssay={this.state.assay.id}
-                            setTreatment={this.setTreatment}
-                            setQrRequest={this.setQrRequest}
-                />,
+              {this.state.successAssay && (
+                [<Treatments idAssay={this.state.assay.id}/>,
                 <div className="step-button">
                   <Button title="Finalizar" onClick={()=>this.props.history.push('/')}/>
                 </div>
                 ]
               )}
-        
-              {this.state.qrRequest.flag &&
-                <div className="qr-wrapper">
-                  <TreatmentQrs treatment={this.state.treatments.find(treatment => treatment.name === this.state.qrRequest.treatmentName)}/>
-                  <button type="button" onClick={()=>this.setState({qrRequest:{flag:false,treatmentName:''}})}>
-                            Atras
-                  </button>
-                </div>
-              }
             </div>
         )
     }

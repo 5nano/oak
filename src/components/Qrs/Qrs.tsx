@@ -45,6 +45,7 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
                     let treatment:ITreatment={
                         idAssay:data[key].idAssay,
                         idTreatment:data[key].idTreatment,
+                        pressure:data[key].pressure,
                         name:data[key].name,
                         description:data[key].description,
                         experimentsLength: data[key].experimentsLength
