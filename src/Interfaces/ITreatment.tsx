@@ -8,6 +8,7 @@ export default interface ITreatment{
     agrochemical?:IAgrochemical,
     experimentsLength: Number,
     name:string,
-    description:string
+    description:string,
+    pressure: Number,
     qrs?:string[];
 }

@@ -27,6 +27,7 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
           idAssay:idAssay,
           name:values.name,
           description:values.description,
+          pressure: values.pressure,
           experimentsLength:values.experimentsLength,
           idMixture: values.mix.id,
           idAgrochemical: values.agrochemical.id
@@ -35,6 +36,7 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
         let treatment:ITreatment = {
          name:treatmentData.name,
          description:treatmentData.description,
+         pressure:treatmentData.pressure,
          experimentsLength:treatmentData.experimentsLength,
          mixture:values.mix,
          agrochemical: values.agrochemical,

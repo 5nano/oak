@@ -21,13 +21,17 @@ var fields: IFields = {
     id: "name",
     label: "Etiqueta",
     validations: [requiredValidation]
-
   },
   description: {
     id:"description",
     label: "Descripcion",
     editor: "multilinetextbox",
     validations: [requiredValidation]
+  },
+  pressure: {
+    id: "pressure",
+    label: "Presión",
+    validations: [requiredValidation,isNumberValidation]
   },
   experimentsLength: {
       id:"experimentsLength",
@@ -106,6 +110,7 @@ class TreatmentForm extends React.Component<ITreatmentFormProps,ITreatmentFormSt
             <React.Fragment>
               <Field {...fields.name}/>
               <Field {...fields.description}/>
+              <Field {...fields.pressure}/>
               <Field {...fields.experimentsLength}/>
               <Field {...fields.mix}/>
               <Field {...fields.agrochemical}/>
