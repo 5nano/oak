@@ -34,16 +34,8 @@ const CrudView: React.SFC <ICrudViewProps> = ({
   }
 
   const submitForm = (values:IValues,setError:Function): Promise<boolean> => {
-
     return BushService.post(createUrl, values)
-      .then(() => true)
-      .catch(error => error.json()
-          .then((error:any) => {
-            console.log(error.message)
-            setError({serverError:error.message})
-            return false;
-          })
-      )
+      .then(() => {return true})
   }
 
   return (

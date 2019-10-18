@@ -8,8 +8,6 @@ import Button from '../../../Utilities/Buttons/DefaultButton/Button';
 
 export  interface ITreatmentsProps{
     treatments: ITreatment[],
-    idMixture: Number,
-    idAgrochemical: Number,
     idAssay: Number,
     setTreatment: (treatment:ITreatment) => void;
     setQrRequest:(treatmentName:string) => void;
@@ -20,43 +18,39 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
 
     const [newTreatment,setNewTreatment] = React.useState(false)
     const {treatments,
-           idAgrochemical,
-           idMixture,
            idAssay,
            setTreatment,
            setQrRequest} = props
     
-    const submitTreatmentForm=(values:IValues,setError:Function):void=>{
-        console.log(values)
-    
+    const submitTreatmentForm=(values:IValues):Promise<boolean>=>{
         const treatmentData = {
           idAssay:idAssay,
           name:values.name,
           description:values.description,
           experimentsLength:values.experimentsLength,
-          idMixture: values.mix? idMixture:null,
-          idAgrochemical: values.agrochemical? idAgrochemical:null
+          idMixture: values.mix.id,
+          idAgrochemical: values.agrochemical.id
         }
     
         let treatment:ITreatment = {
          name:treatmentData.name,
          description:treatmentData.description,
          experimentsLength:treatmentData.experimentsLength,
+         mixture:values.mix,
+         agrochemical: values.agrochemical,
          qrs:[]
          };
     
-         BushService.post('/tratamientos/insertar', treatmentData)
+         return BushService.post('/tratamientos/insertar', treatmentData)
             .then(data => {
                 Object.keys(data.experimentsQR).forEach(key=>{
                     treatment.qrs.push(data.experimentsQR[key])
                 })
                 setTreatment(treatment)
                 setNewTreatment(false)
+                return true
             })
-
       }
-    
-
         return(
             <div className="treatments">
 

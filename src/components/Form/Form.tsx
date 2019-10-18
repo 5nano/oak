@@ -3,13 +3,15 @@ import { IFieldProps } from '../Field/FieldProps';
 import FormButton, { IFormButtonProps } from './FormButton';
 import { IRule } from './Validation';
 import Button from '../Utilities/Buttons/DefaultButton/Button';
+import Error from '../Utilities/Messages/Error';
+import Success from '../Utilities/Messages/Success';
 
 export interface IFields {
   [key: string]: IFieldProps;
 }
 
 interface IFormProps {
-    submitForm: Function,
+    submitForm: (values:IValues)=>Promise<boolean>,
 
     fields: IFields,
 
@@ -60,7 +62,9 @@ export class Form extends React.Component<IFormProps, IFormState> {
         const values: IValues = {};
         this.state = {
             errors,
-            values
+            values,
+            submitSuccess:false,
+            serverError: null
         };
     }
 
@@ -86,8 +90,13 @@ private handleSubmit = async (
     e.preventDefault();
     
     if (this.validateForm()) {
-      const submitSuccess: boolean = await this.props.submitForm(this.state.values)
-      this.setState({ submitSuccess });
+      this.props.submitForm(this.state.values)
+      .then(()=>{
+        this.setState({submitSuccess:true})
+      })
+      .catch(error => {
+        error.json().then(error => this.setState({serverError:error.message,submitSuccess:false}))
+      })
       }
     };
  
@@ -130,7 +139,6 @@ private setError = (error:string) => {
 }
  
   public render() {
-    const { submitSuccess, errors } = this.state;
     const context: IFormContext = {
       ...this.state,
       setValues: this.setValues,
@@ -142,31 +150,19 @@ private setError = (error:string) => {
     return (
       <FormContext.Provider value={context}>
         <div className="form-container">
+          <div className="form-result">
+            {!this.state.submitSuccess && this.state.serverError &&
+              <Error message={this.state.serverError}/>
+            }
+
+            {this.state.submitSuccess &&
+              <Success message="Registro exitoso"/>
+            }
+          </div>
           <form className="form" noValidate={true}>
-
             {this.props.render()}
-
-            {submitSuccess && (
-              <div className="result-success" role="alert">
-                El registro fue exitoso!
-              </div>
-            )}
-            {submitSuccess === false &&
-              !this.haveErrors(errors) && (
-                <div className="result-error" role="alert">
-                  {this.state.serverError}
-                </div>
-              )}
-            {submitSuccess === false &&
-              this.haveErrors(errors) && (
-                <div className="result-error" role="alert">
-                  Perdón, el formulario es inválido. Porfavor, revise y vuelva a intentar.
-                </div>
-              )}
-
           </form>
           <Button title={title} onClick={this.handleSubmit}/>
-
         </div>
       </FormContext.Provider>
     );
