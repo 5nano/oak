@@ -1,11 +1,7 @@
 import * as React from "react";
 import Search from '../Search/Search';
 import Criteria from '../Search/Criteria';
-import Results from '../Search/Results';
 import { IComoponentSearchProps } from "../Search/ComponentSearchProps";
-import SearchButton from "../Search/SearchButton";
-
-
 
 const MixsSearch: React.SFC<IComoponentSearchProps> = (props) => {
   
@@ -13,6 +9,7 @@ const MixsSearch: React.SFC<IComoponentSearchProps> = (props) => {
     <Search
       searchAction={props.searchUrl}
       deleteAction={props.deleteUrl}
+      updateAction={props.updateUrl}
       type='mix'
       render={() => (
         <React.Fragment>

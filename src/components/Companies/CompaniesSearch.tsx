@@ -9,6 +9,7 @@ const CompaniesSearch: React.SFC<IComoponentSearchProps> = (props) => {
     <Search
       searchAction= {props.searchUrl}
       deleteAction= {props.deleteUrl}
+      updateAction={props.updateUrl}
       type='companie'
       render={() => (
         <React.Fragment>

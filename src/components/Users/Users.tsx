@@ -12,7 +12,7 @@ const Users: React.SFC = () => {
         searchUrl= '/usuarios'
         deleteUrl= '/usuarios/eliminar'
         createUrl= '/usuarios/insertar'
-        updateUrl= '/usuarios/actualizar'
+        updateUrl= '/usuarios/modificar'
         form= {UserForm}
         search={UserSearch}
     />

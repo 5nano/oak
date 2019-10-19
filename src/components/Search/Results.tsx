@@ -13,9 +13,10 @@ export const Results:React.SFC<IResultsTableProps> = (props) => {
         <SearchContext.Consumer>
             {(context:ISearchContext) => (
                 <div className="results-list">
-                        {context.data.map(object => {
-                            return <ResultItem object={object}
+                        {context.data.map(item => {
+                            return <ResultItem item={item}
                                                remove={context.remove}
+                                               update={context.update}
                                                type={type}
                                          />
                         })}

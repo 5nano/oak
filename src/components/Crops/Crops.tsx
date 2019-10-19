@@ -13,7 +13,7 @@ const Crops: React.SFC = () => {
         searchUrl= '/cultivos'
         deleteUrl= '/cultivos/eliminar'
         createUrl= '/cultivos/insertar'
-        updateUrl= '/cultivos/actualizar'
+        updateUrl= '/cultivos/modificar'
         form= {CropsForm}
         search= {CropsSearch}
     />

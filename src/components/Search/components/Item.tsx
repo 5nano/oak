@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { ISearchItem } from '../../../Interfaces/SearchItem';
 
 export type ItemType = "agrochemical" |
               "crop"| 
@@ -8,15 +9,20 @@ export type ItemType = "agrochemical" |
 
 
 export interface IItemProps{
-    object:any;
+    item:ISearchItem
+    onChange:Function,
+    updateItem:Function
     type:ItemType
 }
 
 const Item:React.SFC<IItemProps> = (props) => {
     
-    const {object} = props;
-    const name = object['name']
-    const description = object['description']? object['description']:'Sin descripción'
+    const {item,onChange,updateItem} = props;
+    const name = item.name
+    const description = item.description? item.description:'Sin descripción'
+    
+    const [isUpdate,setUpdate] = React.useState(false)
+    
     return(
         <div className="item">
             <div className="item-header">
@@ -33,13 +39,38 @@ const Item:React.SFC<IItemProps> = (props) => {
                         <img src='../../../assets/images/mix-icon.png'/>
                     }
                 </div>
-                <div className="item-name">
-                    {name}
+                <div className="item-name" onClick={()=>setUpdate(true)}>
+                    {isUpdate? 
+                        <input type="text"
+                               value={name}
+                               onChange={(e) => {
+                                   onChange(e.currentTarget.value,'name')
+                               }}
+                               onBlur={()=>{
+                                   updateItem()
+                                   setUpdate(false)
+                                }}
+                               />
+                             :
+                                name
+                    }
                 </div>
             </div>
 
-            <div className="item-content">
-              {description} 
+            <div className="item-content" onClick={()=>setUpdate(true)}>
+            {isUpdate? <input type="text" 
+                              value={description}
+                              onChange={(e) => {
+                                onChange(e.currentTarget.value,'description')
+                            }}
+                            onBlur={()=>{
+                                updateItem()
+                                setUpdate(false)
+                             }}
+                              />
+                             :
+                                description
+                    }
             </div>
         </div>
     )

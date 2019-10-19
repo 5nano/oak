@@ -33,7 +33,7 @@ const CrudView: React.SFC <ICrudViewProps> = ({
     setFormRequest(false)
   }
 
-  const submitForm = (values:IValues,setError:Function): Promise<boolean> => {
+  const submitForm = (values:IValues): Promise<boolean> => {
     return BushService.post(createUrl, values)
       .then(() => {return true})
   }
@@ -47,7 +47,9 @@ const CrudView: React.SFC <ICrudViewProps> = ({
 
                   {!formRequest?
                     <div className="layout-wrapper">
-                        <SearchComponent searchUrl={searchUrl} deleteUrl={deleteUrl}/>
+                        <SearchComponent searchUrl={searchUrl} 
+                                         deleteUrl={deleteUrl}
+                                         updateUrl={updateUrl}/>
                         <div className="form-request">
                           <Button title={`Agregar ${title.substring(0,title.length - 1).toLowerCase()} `}
                                   onClick={showForm}

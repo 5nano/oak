@@ -1,5 +1,5 @@
 import * as React from "react";
-import {IErrors, ISearchContext,SearchContext} from "./Search"
+import {ISearchContext,SearchContext} from "./Search"
 
 export interface ICriteriaSearch {
     onSearch: (criteria:string) => any;
