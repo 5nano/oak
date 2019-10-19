@@ -84,27 +84,20 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
         })
      }
 
+     goToTreatments(){
+        this.props.history.push(`/assay/${this.state.assay.id}/treatments`)
+     }
+
     render(){
         return(
             <div className="crud-container">
-               
-              <div className="crud-title">
-                {this.state.successAssay? 'Ensayos/Tratamientos':'Ensayos'}
-              </div>
-
-              {!this.state.successAssay && 
                 <div className="assay-form-wrapper">
                         <AssayForm submitAssayForm={this.submitAssayForm.bind(this)}/>
-                  </div>
-              }
-
-              {this.state.successAssay && (
-                [<Treatments idAssay={this.state.assay.id}/>,
-                <div className="step-button">
-                  <Button title="Finalizar" onClick={()=>this.props.history.push('/')}/>
                 </div>
-                ]
-              )}
+
+              <Button title="Ingresar tratamientos" 
+                      onClick={()=>this.goToTreatments()}
+                      />
             </div>
         )
     }

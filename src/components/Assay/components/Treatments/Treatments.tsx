@@ -7,14 +7,20 @@ import BushService from '../../../../services/bush';
 import Button from '../../../Utilities/Buttons/DefaultButton/Button';
 
 export  interface ITreatmentsProps{
-    idAssay: Number
+        match: {
+          params: { assayId: string },
+        },
 }
 const Treatments: React.SFC<ITreatmentsProps> = (props) => {
 
     const [newTreatment,setNewTreatment] = React.useState(false)
-    const [treatments,setTreatments] = React.useState<ITreatment[]>([])
-    const {idAssay} = props
+    const [treatments,setTreatments] = React.useState<Array<ITreatment>>([])
+    const idAssay = props.match.params.assayId
 
+    React.useEffect(()=>{
+        BushService.get(`/ensayo/tratamientos?idAssay=${idAssay}`)
+                   .then((data:Array<ITreatment>)=>setTreatments(data)) 
+    },[])
 
     const setTreatment = (treatment:ITreatment) => {
         treatments.push(treatment)
@@ -52,30 +58,31 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
             })
       }
         return(
-            <div className="treatments">
+            <div className="crud-container">
 
-                <div className="treatments-title">
-                    Tratamientos
+                <div className="crud-title">
+                 Ensayo/Tratamientos
                 </div>
 
-                <div className="treatments-wrapper">
-                    {treatments.map((treatment)=> (
-                        <Treatment treatment={treatment}/>
-                    ))}
-                </div>
-
-                <div className="new-treatment-button">
-                    <Button title="Nuevo Tratamiento" 
-                            onClick={()=> setNewTreatment(!newTreatment)}/>    
-                </div>
-
-                {newTreatment && 
+                {!newTreatment?
+                    ([<div className="treatments-wrapper">
+                        {treatments.map((treatment)=> (
+                            <Treatment treatment={treatment}/>
+                        ))}
+                    </div>
+                    ,
+                    <div className="new-treatment-button">
+                        <Button title="Nuevo Tratamiento" 
+                                onClick={()=> setNewTreatment(!newTreatment)}/>    
+                    </div>])
+                :
                 <div className="form-wrapper">
                     <div className="form-content">
                         <TreatmentForm submitTreatmentForm={submitTreatmentForm}/>
                     </div>
                 </div>
                 }
+
             </div>
         )
 }
