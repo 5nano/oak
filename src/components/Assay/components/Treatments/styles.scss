@@ -1,18 +1,10 @@
-.treatments{
-    display:flex;
-    justify-content: flex-start;
-    align-items: center;
-    align-content: center;
-    flex-direction: column;
 
-    margin:20px 0;
-    width:100%;
 
-    .treatments-title{
-        color:white;
-    }
+.treatments-title{
+    color:white;
+}
 
-    .treatments-wrapper{
+.treatments-wrapper{
     display:flex;
     align-items: flex-start;
     align-content: space-around;
@@ -29,17 +21,16 @@
     background-color: #E0E0E0;
 }
 
-    .treatment-qr{
-        display:flex;
-        justify-content: flex-start;
-        
-        .qr{
-            display:flex
-        }
+.treatment-qr{
+    display:flex;
+    justify-content: flex-start;
+    
+    .qr{
+        display:flex
     }
+}
 
-    .new-treatment-button{
-        width:300px;
-        margin: 20px 0px;
-    }
+.new-treatment-button{
+    width:300px;
+    margin: 20px 0px;
 }

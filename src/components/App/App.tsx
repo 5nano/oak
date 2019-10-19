@@ -12,6 +12,7 @@ import Mixs from '../Mixs/Mixs';
 import Qrs from '../Qrs/Qrs';
 import Landing from '../Landing/Landing';
 import PrivateRoute from '../Utilities/ProtectedRoute/PrivateRoute';
+import Treatments from '../Assay/components/Treatments/Treatments';
 
 export interface AppProps { title: string }
 
@@ -56,6 +57,9 @@ const App = (props: AppProps) => {
             <PrivateRoute path='/assay/:assayId/dashboard' exact component={Dashboards} isLoggedIn={loggedIn}/>
 
             <PrivateRoute path='/assay/:assayId/qrs' exact component={Qrs} isLoggedIn={loggedIn}/>
+          
+            <PrivateRoute path='/assay/:assayId/treatments' exact component={Treatments} isLoggedIn={loggedIn}/>
+
           </Switch>
 
     </Router>

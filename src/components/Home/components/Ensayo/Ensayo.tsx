@@ -6,11 +6,12 @@ export interface IEnsayoProps{
     onSelect: Function
     onQrs: Function
     onRemove: Function
+    onTreatments:Function
 }
 
 const Ensayo:React.SFC<IEnsayoProps> = (props) => {
 
-    const {ensayo,onSelect,onQrs,onRemove} = props;
+    const {ensayo,onSelect,onQrs,onRemove,onTreatments} = props;
 
     return(
         <div className="assay-wrapper">
@@ -59,6 +60,10 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                                 className="action-button"
                                 onClick={()=>onSelect(ensayo.idAssay)}
                             />
+                        <Button title="Tratamientos"
+                                className="action-button"
+                                onClick={()=>onTreatments(ensayo.idAssay)}
+                                />
                         <Button title="QRs"
                                 className="action-button"
                                 onClick={()=>onQrs(ensayo.idAssay)}
@@ -67,6 +72,8 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                                 className="action-button"
                                 onClick={()=>onRemove(ensayo.idAssay)}
                             />
+
+                        
                     </div>
                 </div>
             </div>

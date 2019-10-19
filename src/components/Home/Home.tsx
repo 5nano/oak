@@ -61,6 +61,10 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
         this.props.history.push(`/assay/${assayId}/qrs`);
     }
 
+    private goToTreatments(assayId: IEnsayo["idAssay"]){
+        this.props.history.push(`/assay/${assayId}/treatments`);
+    }
+
     private showExperimentos = async (assayId: number): Promise<void> => {
         /**
          * Currently unused, we'll probably want to show some info like experiment count in the future
@@ -91,7 +95,8 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
                 <Ensayos ensayos={this.state.ensayos} 
                          onSelect={this.goToDashboard.bind(this)}  
                          onQrs={this.goToQrs.bind(this)}
-                         onRemove={this.removeAssay.bind(this)} />
+                         onRemove={this.removeAssay.bind(this)} 
+                         onTreatments={this.goToTreatments.bind(this)}/>
                 :
                 <div className="home-loading">
                     <Spinner size={240} 
