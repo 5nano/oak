@@ -14,7 +14,7 @@ const Agrochemicals: React.SFC = () => {
         searchUrl= '/agroquimicos'
         deleteUrl= '/agroquimicos/eliminar'
         createUrl= '/agroquimicos/insertar'
-        updateUrl= '/agroquimicos/actualizar'
+        updateUrl= '/agroquimicos/modificar'
         form= {AgrochemicalsForm}
         search= {AgrochemicalsSearch}
     />

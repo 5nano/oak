@@ -1,4 +1,12 @@
 @import './components/styles.scss';
+
+.assay-form-wrapper{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .qr-wrapper{
     display:flex;
     flex-direction: column;

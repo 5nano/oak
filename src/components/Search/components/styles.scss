@@ -38,6 +38,13 @@
                 font-size: 24px;
                 color:#6AC1A9;
                 margin: 0px 10px;
+
+                input{
+                    font-size: inherit;
+                    font-family: inherit;
+                    color:inherit;
+                    border: none;
+                }
             }
         }
 
@@ -48,6 +55,13 @@
             height: 40px;
             font-size: 14px;
             color: black;
+
+            input{
+                font-size: inherit;
+                font-family: inherit;
+                color:inherit;
+                border: none;
+            }
         }
 
     }

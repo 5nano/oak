@@ -12,16 +12,11 @@
     padding: 40px 20px;
     margin: 10px 0px;
 
-    .result-error{
-        margin: 10px 0px;
-        color:red;
-    }
 
-    .result-success{
-        margin: 10px 0px;
-        color:#6AC1A9;
+    .form-result{
+        display:flex;
+        width: 100%;
     }
-
     form{
         display:flex;
         flex-direction: column;

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Button from '../../../Utilities/Buttons/DefaultButton/Button'
 
 const HomeSearcher:React.SFC = () => {
     return(

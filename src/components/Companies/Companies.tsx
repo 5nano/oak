@@ -13,7 +13,7 @@ const Companies: React.SFC = () => {
         searchUrl= '/companias'
         deleteUrl= '/companias/eliminar'
         createUrl= '/companias/insertar'
-        updateUrl= '/companias/actualizar'
+        updateUrl= '/companias/modificar'
         form= {CompaniesForm}
         search= {CompaniesSearch}
     />

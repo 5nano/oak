@@ -1,3 +1,5 @@
+import { IValues } from "./Form";
+
 export interface IComponentFormProps{
-    submitForm: Function;
+    submitForm: (values:IValues)=>Promise<boolean>;
   }

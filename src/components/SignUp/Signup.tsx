@@ -12,15 +12,13 @@ const Signup: React.SFC<RouteComponentProps> = (props) => {
 
     const [successSignUp,setSuccessSignUp] = React.useState(false)
     const [serverError,setServerError] = React.useState(null)
-    const submitForm = (values:IValues,setError:Function): Promise<boolean> => {
+    const submitForm = (values:IValues): Promise<boolean> => {
     
       return BushService.post('/usuarios/insertar', values) 
-        .then(() => setSuccessSignUp(true))
-        .catch(error => error.json()
-                             .then((error:any) => {
-                               setServerError(error.message)
-                               return false;
-                             }))
+        .then(() => {
+            setSuccessSignUp(true)
+            return true
+        })
     }
   
   return (

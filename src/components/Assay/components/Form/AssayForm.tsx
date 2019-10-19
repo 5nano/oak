@@ -1,13 +1,18 @@
 import * as React from "react";
 import { Form, IFields, IValues } from "../../../Form/Form";
 import { Field } from "../../../Field/Field";
-import { IFieldsOptions, IAssay } from "../../Assay";
 import { requiredValidation, maxLengthValidation, isEmailValidation } from "../../../Form/Validation";
-import NewComponentButton from "../../../Utilities/Buttons/NewComponentButton";
+import BushService from "../../../../services/bush";
+import { ICrop } from "../../../../Interfaces/Crop";
 
-export interface IAssayFormProps {
-  submitAssayForm: (values:IValues,setError:Function) => void;
-  fieldsOptions:IFieldsOptions;
+interface IAssayFormProps {
+  submitAssayForm: (values:IValues) => Promise<boolean>;
+}
+
+interface IAssayFormState{
+  crops: Array<ICrop>,
+  loading: boolean,
+  error:string
 }
 
 var fields:IFields = {
@@ -29,33 +34,42 @@ var fields:IFields = {
       options: [],
       validations: [requiredValidation]
     },
-  agrochemical: {
-      id:"agrochemical",
-      label: "Agroquimico",
-      editor: "dropdown",
-      options: [],
-      validations: [requiredValidation]
-  },
-  mix: {
-      id:"mix",
-      label: "Mezcla",
-      editor: "dropdown",
-      options: [],
-      validations: [requiredValidation]
-  }
 }
 
-const AssayForm:React.SFC<IAssayFormProps> = (props) => {
+class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
 
-  React.useEffect(()=>{
-    fields.crop.options = props.fieldsOptions.cropOptions.map(option => option[0])
-    fields.agrochemical.options = props.fieldsOptions.agrochemicalOptions.map(option => option[0])
-    fields.mix.options = props.fieldsOptions.mixsOptions.map(option => option[0])
-  })
-    const{submitAssayForm} = props;
+  constructor(props:IAssayFormProps){
+    super(props)
+
+    this.state = {
+      crops: [],
+      loading: true,
+      error: ''
+    }
+
+    BushService.get('/cultivos')
+    .then(data=> {
+      Object.keys(data).forEach(key => {
+        this.state.crops.push({name:data[key].name,
+                  description:data[key].description,
+                  id:data[key].idCrop})
+        })
+      fields.crop.options=this.state.crops.map(crop => {return crop.name})
+      this.setState({loading:false})
+    })
+  }
+
+  submitForm(values:IValues):Promise<boolean>{
+    let crop = this.state.crops.find(crop => crop.name === values.crop)
+    values.crop = crop
+    return this.props.submitAssayForm(values)
+  }
+
+  render(){
     return (
+      !this.state.loading &&
           <Form
-            submitForm={submitAssayForm}
+            submitForm={this.submitForm.bind(this)}
             fields = {fields}
             title = "Registrar"
             render={() => (
@@ -64,13 +78,12 @@ const AssayForm:React.SFC<IAssayFormProps> = (props) => {
                 <Field {...fields.name}/>
                 <Field {...fields.description}/>
                 <Field {...fields.crop}/>
-                <Field {...fields.agrochemical}/>
-                <Field {...fields.mix}/>
             
               </React.Fragment>
-            )}
-            />
-    );
+              )}
+              />
+      );
+  }
 };
 
 export default AssayForm;

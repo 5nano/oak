@@ -3,11 +3,13 @@ import { ItemType } from "./components/Item";
 import Results from "./Results";
 import BushService from '../../services/bush';
 import Spinner from 'react-spinner-material';
-import { setTimeout } from "timers";
+import { ISearchItem } from "../../Interfaces/SearchItem";
+import Error from "../Utilities/Messages/Error";
 
 export interface ISearchProps{
     searchAction: string,
     deleteAction: string,
+    updateAction:string,
     type: ItemType,
     render: () => React.ReactNode
 }
@@ -16,14 +18,9 @@ export interface IValues {
     [key: string]: any;
 }
 
-export interface IErrors {
-    [key: string]: string
-}
-
-
 export interface ISearchState {
     values: IValues;
-    errors: IErrors;
+    error: string;
     data: Array<any>;
     searchSuccess?: boolean;
     loading: boolean;
@@ -34,6 +31,7 @@ export interface ISearchContext extends ISearchState {
     setValues: (values: IValues) => void
     data: Array<any>
     remove: (object:any) => Promise<void>
+    update: (object:any) => Promise<void>
     search: (event: React.MouseEvent) => Promise<void>
   }
 
@@ -47,29 +45,29 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
     constructor(props:ISearchProps){
         super(props);
 
-
-        const errors: IErrors={}
+        const error:string = '';
         const values: IValues = {};
         const data: Array<any> = [];
         this.state = {
-            errors,
+            error,
             values,
             data,
             loading:true
         };
 
         this.remove=this.remove.bind(this)
+        this.update=this.update.bind(this)
     }
 
-    private async getData()  {
+    private async getData(){
+      this.setState({loading:true})
       return BushService.get(this.props.searchAction)
       .then(data =>{
-               
         this.setState({data: data,loading:false})
       })
-      .catch(e => {
-          this.setState({ errors: e });
-      })
+      .catch(error => {
+        error.json().then(error=> this.setState({error:error.message}))
+      })   
     }
 
 
@@ -89,11 +87,28 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
         this.setState({values: {...this.state.values, ...values}});
       ;}
 
-    private async remove(object:any):Promise<void> {
+    private async remove(object:ISearchItem):Promise<void> {
       console.log(object)
-      console.log(this.props.deleteAction)
-      return BushService.delete(this.props.deleteAction)
-        .then(data => {this.getData() })
+      return BushService.delete(this.props.deleteAction,object)
+                        .then(() => {this.getData()})
+                        .catch(error => {
+                          error.json().then(error=> {
+                            this.setState({error:error.message})
+                            this.getData()
+                          })
+                        })  
+    }
+
+    private async update(object:ISearchItem):Promise<void> {
+      console.log(object)
+      return BushService.patch(this.props.updateAction,object)
+                        .then(() => {this.getData() })
+                        .catch(error => {
+                          error.json().then(error=> {
+                            this.setState({error:error.message})
+                            this.getData()
+                          })
+                        }) 
     }
 
     public componentDidMount(){
@@ -101,18 +116,21 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
     }
 
     public render (){
-        const {searchSuccess, errors} = this.state
         const context: ISearchContext = {
             ...this.state,
             setValues:this.setValues,
             data: this.state.data,
             remove:this.remove,
+            update:this.update,
             search:this.handleSearch
         };
         return(
           
             <SearchContext.Provider value={context}>
                <div className="search-container">
+                  {this.state.error.length>0 && 
+                  <Error message={this.state.error}/>
+                  }
                   {!this.state.loading?
                     <Results type={this.props.type}/>
                   :

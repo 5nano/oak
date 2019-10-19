@@ -11,6 +11,7 @@ const AgrochemicalsSearch: React.SFC<IComoponentSearchProps> = (props) => {
     <Search
       searchAction={props.searchUrl}
       deleteAction={props.deleteUrl}
+      updateAction={props.updateUrl}
       type='agrochemical'
       render={() => (
         <React.Fragment>
