@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { IEnsayo } from '../../../../Interfaces/IEnsayo'
 import Button from '../../../Utilities/Buttons/DefaultButton/Button';
+import Popper from '@material-ui/core/Popper';
+import AssayOptions from '../AssayOptions/AssayOptions';
 export interface IEnsayoProps{
     ensayo: IEnsayo
     onSelect: Function
@@ -11,13 +13,38 @@ export interface IEnsayoProps{
 
 const Ensayo:React.SFC<IEnsayoProps> = (props) => {
 
-    const {ensayo,onSelect,onQrs,onRemove,onTreatments} = props;
+    const {ensayo,onSelect,onTreatments,onQrs,onRemove} = props;
+    const [anchorEl,setAnchorEl] = React.useState(null);
+    const [placement,setPlacement] = React.useState();
+    const [options,setOptions] = React.useState(false);
+
+    const handleOptions = (newPlacement,event) => {
+        setAnchorEl(event.currentTarget);
+        setOptions(prev => placement !== newPlacement || !prev)
+        setPlacement(newPlacement)
+    }
 
     return(
         <div className="assay-wrapper">
             <div className="assay">
                 <div className="assay-header">
-                    {ensayo.name}
+                    <div className="name">
+                        {ensayo.name}
+                    </div>
+                    <div className="options" onClick={e => handleOptions('right-start',e)}>
+                        ...
+                        <Popper open={options}
+                                anchorEl={anchorEl}
+                                placement={placement}
+                                transition
+                            >
+                         <AssayOptions idAssay={ensayo.idAssay}
+                                       onTreatments={onTreatments}
+                                       onQrs={onQrs}
+                                       onRemove={onRemove}
+                        />
+                        </Popper>
+                    </div>
                 </div>
 
                 <div className="assay-components">
@@ -54,28 +81,11 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                     <div className="content">{ensayo.description}</div>
                 </div>
 
-                <div className="assay-actions">
-                    <div className="buttons">
-                        <Button title="Dashboard"
-                                className="action-button"
-                                onClick={()=>onSelect(ensayo.idAssay)}
-                            />
-                        <Button title="Tratamientos"
-                                className="action-button"
-                                onClick={()=>onTreatments(ensayo.idAssay)}
-                                />
-                        <Button title="QRs"
-                                className="action-button"
-                                onClick={()=>onQrs(ensayo.idAssay)}
-                            />
-                         <Button title="Eliminar"
-                                className="action-button"
-                                onClick={()=>onRemove(ensayo.idAssay)}
-                            />
-
-                        
-                    </div>
-                </div>
+               
+                <Button title="Dashboard"
+                        className="action-button"
+                        onClick={()=>onSelect(ensayo.idAssay)}
+                    /> 
             </div>
 
         </div>
