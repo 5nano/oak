@@ -3,6 +3,8 @@ import { IEnsayo } from '../../../../Interfaces/IEnsayo'
 import Button from '../../../Utilities/Buttons/DefaultButton/Button';
 import Popper from '@material-ui/core/Popper';
 import AssayOptions from '../AssayOptions/AssayOptions';
+import BushService from '../../../../services/bush';
+import { ITag } from '../../../../Interfaces/Tags';
 export interface IEnsayoProps{
     ensayo: IEnsayo
     onSelect: Function
@@ -18,10 +20,29 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
     const [placement,setPlacement] = React.useState();
     const [options,setOptions] = React.useState(false);
 
+    const [tags,setTags] = React.useState<Array<ITag>>([])
+
+    React.useEffect(()=>{
+        BushService.get(`/ensayo/tags?idAssay=${ensayo.idAssay}`)
+                   .then((data:Array<ITag>) => setTags(data))
+    },[])
+
     const handleOptions = (newPlacement,event) => {
         setAnchorEl(event.currentTarget);
         setOptions(prev => placement !== newPlacement || !prev)
         setPlacement(newPlacement)
+    }
+
+    const setNewTag = (tag:ITag) => {
+        tags.push(tag)
+        setTags(tags);
+    }
+
+    const handleTag= (tag:ITag) => {
+        tags.some(selectedTag => selectedTag.name === tag.name)?
+            setTags(tags.filter(selectedTag => selectedTag.name != tag.name))
+            :
+            setNewTag(tag)
     }
 
     return(
@@ -31,20 +52,34 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                     <div className="name">
                         {ensayo.name}
                     </div>
-                    <div className="options" onClick={e => handleOptions('right-start',e)}>
-                        ...
+                    <div className="options">
+                        <button type="button" onClick={e => handleOptions('right-start',e)}>
+                            ...
+                        </button>
                         <Popper open={options}
                                 anchorEl={anchorEl}
                                 placement={placement}
                                 transition
                             >
-                         <AssayOptions idAssay={ensayo.idAssay}
-                                       onTreatments={onTreatments}
-                                       onQrs={onQrs}
-                                       onRemove={onRemove}
+                        <AssayOptions idAssay={ensayo.idAssay}
+                                    onTreatments={onTreatments}
+                                    onQrs={onQrs}
+                                    onRemove={onRemove}
+                                    handleTag={handleTag}
+                                    selectedTags={tags}
                         />
                         </Popper>
                     </div>
+                </div>
+
+                <div className="assay-tags">
+                    {tags.map(tag => {
+                        return (
+                            <div className="assay-tag">
+                                {tag.name}
+                            </div>
+                        )
+                    })}
                 </div>
 
                 <div className="assay-components">

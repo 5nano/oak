@@ -3,4 +3,34 @@
     flex-direction: column;
 
     width:300px;
+
+    .tags-container{
+        display:flex;
+        flex-direction: column;
+        background-color: white;
+
+        .tag{
+            display:flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+
+            
+            border-radius: 4px;
+            padding: 5px 10px;
+            margin: 2px 5px;
+            height: 30px;
+
+            .tag-name{
+                color:white;
+            }
+
+            .tag-check{
+                
+            }
+            
+            cursor:pointer;
+
+        }
+    }
 }

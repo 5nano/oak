@@ -34,6 +34,20 @@
                 align-items: center;
             }
         }
+            
+
+        .assay-tags{
+            display:flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+
+            .assay-tag{
+                height: 10px;
+                margin: 10px 5px 10px 0;
+            }
+        }
 
         .assay-description{
             display:flex;
