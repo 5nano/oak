@@ -5,6 +5,9 @@ import Popper from '@material-ui/core/Popper';
 import AssayOptions from '../AssayOptions/AssayOptions';
 import BushService from '../../../../services/bush';
 import { ITag } from '../../../../Interfaces/Tags';
+var randomColor = require('randomcolor');
+
+
 export interface IEnsayoProps{
     ensayo: IEnsayo
     onSelect: Function
@@ -24,7 +27,13 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
 
     React.useEffect(()=>{
         BushService.get(`/ensayo/tags?idAssay=${ensayo.idAssay}`)
-                   .then((data:Array<ITag>) => setTags(data))
+                   .then((data:Array<ITag>) => {
+                       data.map(tag => {
+                           tag.color = randomColor();
+                           return {tag}
+                       })
+                       setTags(data)
+                   })
     },[])
 
     const handleOptions = (newPlacement,event) => {
@@ -78,7 +87,8 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                 <div className="assay-tags">
                     {tags.map(tag => {
                         return (
-                            <div className="assay-tag">
+                            <div className="assay-tag"
+                                 style={{backgroundColor:tag.color}}>
                                 {tag.name}
                             </div>
                         )
