@@ -22,29 +22,23 @@ class TagForm extends React.Component<ITagFormProps,ITagFormState> {
         }
     }
 
+    handleChange = (e,fieldName:string) => {
+        this.setState({
+            tag: {...this.state.tag, [fieldName]:e.currentTarget.value}
+        })
+    }
+
     render(){
         return(
             <div className="new-tag-container">
                 <div className="new-tag-form">
                     <input type="text"
                         value={this.state.tag.name}
-                        onChange={e=> {
-                            this.setState(prevState=> {
-                                let tag = Object.assign({},prevState.tag)
-                                tag.name = e.currentTarget.value
-                                return {tag}
-                            })
-                        }}
+                        onChange={e=> this.handleChange(e,'name')}
                         placeholder="Nombre"/>
                     <input type="text"
                             value={this.state.tag.description}
-                            onChange={e=> {
-                                this.setState(prevState=> {
-                                    let tag = Object.assign({},prevState.tag)
-                                    tag.description = e.currentTarget.value
-                                    return {tag}
-                                })
-                            }}
+                            onChange={e=> this.handleChange(e,'description')}
                             placeholder="Descripción"/>
                 </div>
                 <Button title="Crear"

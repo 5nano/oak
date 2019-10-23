@@ -34,7 +34,7 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
     }
 
     const removeTag = (tag:ITag) => {
-        BushService.delete(`/tags/ensayo/eliminar?idTag=${tag.idTag}&idAssay=${ensayo.idAssay}`,{})
+        BushService.delete(`/tags/ensayo/eliminar?idTag=${tag.idTag}&idAssay=${ensayo.idAssay}`)
                     .then(()=>setTags(tags.filter(selectedTag => selectedTag.name != tag.name)))
     }
 
