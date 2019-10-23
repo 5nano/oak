@@ -1,36 +1,77 @@
-.assay-options{
+.assay-options-container{
     display:flex;
     flex-direction: column;
+    align-items: center;
+    width: 300px;
+    
+    background-color: #DCDCDC;
 
-    width:300px;
+    .assay-options{
+        display:flex;
+        flex-direction: column;
+        width: 250px;
+
+        margin: 10px 0;
+
+        .option-button{
+            background-color: grey;
+
+            margin: 5px 0;
+        }
+    }
 
     .tags-container{
         display:flex;
         flex-direction: column;
-        background-color: white;
+        align-items: center;
+
+        border-radius: 4px;
+        
+        padding: 20px 0;
+        .tags-header{
+            display:flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            width:250px;
+            padding: 10px 5px;
+
+            .tags-title{
+                font-size: 18px;
+                color: white;
+                margin: 0 0 0 85px
+            }
+        }
 
         .tag{
             display:flex;
             flex-direction: row;
-            justify-content: flex-start;
+            justify-content: space-between;
             align-items: center;
+            width:250px;
 
-            
             border-radius: 4px;
             padding: 5px 10px;
             margin: 2px 5px;
-            height: 30px;
+            height: 25px;
 
             .tag-name{
                 color:white;
+                
             }
 
             .tag-check{
-                
+
             }
             
             cursor:pointer;
 
+        }
+
+        .tag-create{
+            background-color: grey;
+            margin: 30px 0 0 0;
+            width: 150px;
         }
     }
 }

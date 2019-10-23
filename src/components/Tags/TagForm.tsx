@@ -5,46 +5,53 @@ import BushService from '../../services/bush';
 
 interface ITagFormProps{
     setNewTagRequest: Function
+    handleNewTag:Function
 }
 interface ITagFormState{
-    idTag:Number,
-    name:string,
-    description:string
+    tag:ITag
 }
 class TagForm extends React.Component<ITagFormProps,ITagFormState> {
     constructor(props:ITagFormProps){
         super(props)
         this.state = {
-            idTag: null,
-            name: '',
-            description: ''
+            tag: {
+                idTag:null,
+                name:'',
+                description:''
+            }
         }
     }
-
-    handleNewTag(){
-        BushService.post('/tags/insertar',this.state)
-                   .then(()=> console.log("insertado"))
-    }
-
 
     render(){
         return(
             <div className="new-tag-container">
-                <input type="text"
-                    value={this.state.name}
-                    onChange={e=> {
-                        this.setState({name:e.currentTarget.value})
-                    }}
-                    placeholder="Nombre"/>
-                <input type="text"
-                        value={this.state.description}
+                <div className="new-tag-form">
+                    <input type="text"
+                        value={this.state.tag.name}
                         onChange={e=> {
-                            this.setState({description:e.currentTarget.value})
+                            this.setState(prevState=> {
+                                let tag = Object.assign({},prevState.tag)
+                                tag.name = e.currentTarget.value
+                                return {tag}
+                            })
                         }}
-                        placeholder="Descripción"/>
+                        placeholder="Nombre"/>
+                    <input type="text"
+                            value={this.state.tag.description}
+                            onChange={e=> {
+                                this.setState(prevState=> {
+                                    let tag = Object.assign({},prevState.tag)
+                                    tag.description = e.currentTarget.value
+                                    return {tag}
+                                })
+                            }}
+                            placeholder="Descripción"/>
+                </div>
                 <Button title="Crear"
-                        onClick={()=>this.handleNewTag()}/>
+                        className='tag-form-button'
+                        onClick={()=>this.props.handleNewTag(this.state.tag)}/>
                 <Button title="Cancelar"
+                        className='tag-form-button'
                         onClick={()=>this.props.setNewTagRequest(false)} />
             </div>
         )
