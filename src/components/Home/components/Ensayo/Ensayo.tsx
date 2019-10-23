@@ -33,16 +33,19 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
         setPlacement(newPlacement)
     }
 
-    const setNewTag = (tag:ITag) => {
-        tags.push(tag)
-        setTags(tags);
+    const removeTag = (tag:ITag) => {
+        BushService.delete(`/tags/ensayo/eliminar?idTag=${tag.idTag}&idAssay=${ensayo.idAssay}`,{})
+                    .then(()=>setTags(tags.filter(selectedTag => selectedTag.name != tag.name)))
+    }
+
+    const addTag = (tag:ITag) => {
+        BushService.post(`/tags/ensayo/insertar?idTag=${tag.idTag}&idAssay=${ensayo.idAssay}`,{})
+                    .then(()=>setTags(tags.concat([tag])))
     }
 
     const handleTag= (tag:ITag) => {
         tags.some(selectedTag => selectedTag.name === tag.name)?
-            setTags(tags.filter(selectedTag => selectedTag.name != tag.name))
-            :
-            setNewTag(tag)
+            removeTag(tag):addTag(tag)
     }
 
     return(
@@ -61,12 +64,12 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                                 placement={placement}
                                 transition
                             >
-                        <AssayOptions idAssay={ensayo.idAssay}
-                                    onTreatments={onTreatments}
-                                    onQrs={onQrs}
-                                    onRemove={onRemove}
-                                    handleTag={handleTag}
-                                    selectedTags={tags}
+                        <AssayOptions   idAssay={ensayo.idAssay}
+                                        onTreatments={onTreatments}
+                                        onQrs={onQrs}
+                                        onRemove={onRemove}
+                                        handleTag={handleTag}
+                                        selectedTags={tags}
                         />
                         </Popper>
                     </div>
