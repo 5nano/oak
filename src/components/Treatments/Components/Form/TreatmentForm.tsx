@@ -5,6 +5,8 @@ import {requiredValidation, isNumberValidation } from "../../../Form/Validation"
 import BushService from "../../../../services/bush";
 import { IAgrochemical } from "../../../../Interfaces/Agrochemical";
 import { IMix } from "../../../../Interfaces/Mix";
+import ITreatment from "../../../../Interfaces/ITreatment";
+
 
 interface ITreatmentFormProps{
   submitTreatmentForm: (values:IValues) => Promise<boolean>;
@@ -95,9 +97,17 @@ class TreatmentForm extends React.Component<ITreatmentFormProps,ITreatmentFormSt
   submitForm(values:IValues){
     let agrochemical = this.state.agrochemicals.find(agrochemical=> agrochemical.name === values.agrochemical)
     let mix = this.state.mixs.find(mix=> mix.name === values.mix)
-    values.agrochemical = agrochemical
-    values.mix = mix
-    return this.props.submitTreatmentForm(values)
+   
+    const newTreatment:ITreatment = {
+      name:values.name,
+      description:values.description,
+      pressure: values.pressure,
+      experimentsLength:values.experimentsLength,
+      mix: mix,
+      agrochemical: agrochemical
+    }
+
+    return this.props.submitTreatmentForm(newTreatment)
   }
 
   render(){

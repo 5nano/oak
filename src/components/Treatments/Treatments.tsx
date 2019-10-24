@@ -26,33 +26,25 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
         treatments.push(treatment)
        }
     
-    const submitTreatmentForm=(values:IValues):Promise<boolean>=>{
+    const submitTreatmentForm=(newTreatment:ITreatment):Promise<boolean>=>{
         const treatmentData = {
           idAssay:idAssay,
-          name:values.name,
-          description:values.description,
-          pressure: values.pressure,
-          experimentsLength:values.experimentsLength,
-          idMixture: values.mix.id,
-          idAgrochemical: values.agrochemical.id
+          name:newTreatment.name,
+          description:newTreatment.description,
+          pressure: newTreatment.pressure,
+          experimentsLength:newTreatment.experimentsLength,
+          idMixture: newTreatment.mix.id,
+          idAgrochemical: newTreatment.agrochemical.id
         }
     
-        let treatment:ITreatment = {
-         name:treatmentData.name,
-         description:treatmentData.description,
-         pressure:treatmentData.pressure,
-         experimentsLength:treatmentData.experimentsLength,
-         mixture:values.mix,
-         agrochemical: values.agrochemical,
-         qrs:[]
-         };
-    
+        newTreatment.qrs=[]
+
          return BushService.post('/tratamientos/insertar', treatmentData)
             .then(data => {
                 Object.keys(data.experimentsQR).forEach(key=>{
-                    treatment.qrs.push(data.experimentsQR[key])
+                    newTreatment.qrs.push(data.experimentsQR[key])
                 })
-                setTreatment(treatment)
+                setTreatment(newTreatment)
                 setNewTreatment(false)
                 return true
             })

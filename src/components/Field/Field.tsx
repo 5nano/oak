@@ -1,9 +1,7 @@
 import * as React from "react";
 import { IErrors, IFormContext, FormContext} from "../Form/Form";
 import { IFieldProps } from './FieldProps';
-import Checkbox from './Checkbox';
 import Select from './Select';
-import { ContextReplacementPlugin } from "webpack";
 
 export const Field: React.SFC<IFieldProps> = ({
   id,

@@ -61,7 +61,6 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
   }
 
   submitForm(values:IValues):Promise<boolean>{
-    console.log(values)
     let crop = this.state.crops.find(crop => crop.name === values.crop)
     let assay:IAssay = {
       name:values.name,

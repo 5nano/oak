@@ -87,8 +87,6 @@ private handleSubmit = async (
     e: React.MouseEvent
   ): Promise<void> => {
     e.preventDefault();
-    console.log("submiting")
-    console.log(this.state.values)
     if (this.validateForm()) {
       this.props.submitForm(this.state.values)
       .then(()=>{
