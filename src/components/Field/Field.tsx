@@ -76,17 +76,10 @@ export const Field: React.SFC<IFieldProps> = ({
               {editor!.toLowerCase() === "dropdown" && (
                 <Select id={id} 
                         value={value}
-                        setValues={context.setValues} 
-                        errors={context.errors}
                         options={options}
                         getEditorStyle={getEditorStyle} />
               )}
 
-              {editor!.toLowerCase() === "checkbox" && (
-                  <Checkbox id={id} value={value} context={context}/>
-              )}
-
-            
               {getError(context.errors) && (
                 getError(context.errors).filter(error => error.length!=0)
                                         .map(error => {

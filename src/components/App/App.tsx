@@ -12,7 +12,7 @@ import Mixs from '../Mixs/Mixs';
 import Qrs from '../Qrs/Qrs';
 import Landing from '../Landing/Landing';
 import PrivateRoute from '../Utilities/ProtectedRoute/PrivateRoute';
-import Treatments from '../Assay/components/Treatments/Treatments';
+import Treatments from '../Treatments/Treatments';
 
 export interface AppProps { title: string }
 

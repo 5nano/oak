@@ -1,5 +1,5 @@
 import * as React from 'react'
-import ITreatment from '../../Interfaces/ITreatment';
+import ITreatment from '../../../../Interfaces/ITreatment';
 interface TreatmentSelectorProps{
     treatments: Array<ITreatment>,
     onSelect:Function,

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import Treatment from '../Treatment/Treatment';
-import ITreatment from '../../../../Interfaces/ITreatment';
-import TreatmentForm from '../Form/TreatmentForm';
-import { IValues } from '../../../Form/Form';
-import BushService from '../../../../services/bush';
-import Button from '../../../Utilities/Buttons/DefaultButton/Button';
+import Treatment from './Components/TreatmentCard/Treatment';
+import ITreatment from '../../Interfaces/ITreatment';
+import TreatmentForm from './Components/Form/TreatmentForm';
+import { IValues } from '../Form/Form';
+import BushService from '../../services/bush';
+import Button from '../Utilities/Buttons/DefaultButton/Button';
 
 export  interface ITreatmentsProps{
         match: {

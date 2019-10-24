@@ -69,7 +69,6 @@ export class Form extends React.Component<IFormProps, IFormState> {
     }
 
 private setValues = (values: IValues) => {
-  
   this.setState({values: {...this.state.values, ...values}});
  
 ;}
@@ -88,14 +87,16 @@ private handleSubmit = async (
     e: React.MouseEvent
   ): Promise<void> => {
     e.preventDefault();
-    
+    console.log("submiting")
+    console.log(this.state.values)
     if (this.validateForm()) {
       this.props.submitForm(this.state.values)
       .then(()=>{
         this.setState({submitSuccess:true})
       })
       .catch(error => {
-        error.json().then(error => this.setState({serverError:error.message,submitSuccess:false}))
+        error.json()
+             .then(error => this.setState({serverError:error.message,submitSuccess:false}))
       })
       }
     };
@@ -133,10 +134,6 @@ private handleSubmit = async (
   this.setState({ errors });
   return !this.haveErrors(errors);
 }
-
-private setError = (error:string) => {
-  this.setState({serverError: error})
-}
  
   public render() {
     const context: IFormContext = {
@@ -158,6 +155,7 @@ private setError = (error:string) => {
             {this.state.submitSuccess &&
               <Success message="Registro exitoso"/>
             }
+
           </div>
           <form className="form" noValidate={true}>
             {this.props.render()}

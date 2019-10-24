@@ -4,6 +4,7 @@ import { Field } from "../../../Field/Field";
 import { requiredValidation, maxLengthValidation, isEmailValidation } from "../../../Form/Validation";
 import BushService from "../../../../services/bush";
 import { ICrop } from "../../../../Interfaces/Crop";
+import { IAssay } from "../../Assay";
 
 interface IAssayFormProps {
   submitAssayForm: (values:IValues) => Promise<boolean>;
@@ -60,9 +61,15 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
   }
 
   submitForm(values:IValues):Promise<boolean>{
+    console.log(values)
     let crop = this.state.crops.find(crop => crop.name === values.crop)
-    values.crop = crop
-    return this.props.submitAssayForm(values)
+    let assay:IAssay = {
+      name:values.name,
+      description:values.description,
+      idUserCreator: 1,
+      idCrop:crop.id
+    }
+    return this.props.submitAssayForm(assay)
   }
 
   render(){

@@ -2,21 +2,19 @@ import * as React from 'react'
 import AssayForm from './components/Form/AssayForm';
 import { IValues } from '../Form/Form';
 import { RouteComponentProps } from 'react-router-dom';
-import ITreatment from '../../Interfaces/ITreatment';
-import TreatmentQrs from '../Qrs/TreatmentQr/TreatmentQrs';
 import BushService from '../../services/bush';
 import Button from '../Utilities/Buttons/DefaultButton/Button';
-import Treatments from './components/Treatments/Treatments';
 
 export interface IAssayProps extends RouteComponentProps{
 
 }
 
 export interface IAssay{
-  id:Number,
+  id?:Number,
   name:string,
   description:string,
   idCrop:Number,
+  idUserCreator:Number
 }
 
 export interface IAssayState{
@@ -41,6 +39,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
               name:'',
               description:'',
               idCrop: null,
+              idUserCreator: null
             },
             successAssay: false,
             loading: {
@@ -62,23 +61,12 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
             return {loading}
         })
     }
- submitAssayForm=(values:IValues):Promise<boolean> => {
-      const assayData = {
-         idCrop:values.crop.id,
-         name:values.name,
-         description:values.description,
-         idUserCreator:1
-       }
-
-       return BushService.post('/ensayos/insertar', assayData)
+ submitAssayForm=(newAssay:IAssay):Promise<boolean> => {
+    
+       return BushService.post('/ensayos/insertar', newAssay)
          .then(data => {
             let assayId = data["idAssay"]
-            let newAssay = {
-              id:assayId,
-              name:values.name,
-              description: values.description,
-              idCrop: values.crop,
-            }
+            newAssay.id = assayId
             this.setState({assay:newAssay,successAssay:true})
             return true;
         })
@@ -91,13 +79,16 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
     render(){
         return(
             <div className="crud-container">
-                <div className="assay-form-wrapper">
-                        <AssayForm submitAssayForm={this.submitAssayForm.bind(this)}/>
+                <div className="crud-title">
+                  Nuevo ensayo
                 </div>
-
-              <Button title="Ingresar tratamientos" 
-                      onClick={()=>this.goToTreatments()}
-                      />
+                <div className="assay-form-wrapper">
+                    {this.state.successAssay && 
+                      <Button title="Ingresar tratamientos" 
+                            onClick={this.goToTreatments.bind(this)}/>
+                    }
+                    <AssayForm submitAssayForm={this.submitAssayForm.bind(this)}/>
+                </div>
             </div>
         )
     }
