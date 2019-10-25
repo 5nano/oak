@@ -45,7 +45,7 @@ const Signup: React.SFC<RouteComponentProps> = (props) => {
                         Automatización para ensayos de cultivos en laboratorios.
                     </div>
                     <div className="info-content">
-                        Bienvenido! Registrate para comenzar a monitorear tus ensayos en tiempor real.
+                        Bienvenido! Registrate para comenzar a monitorear tus ensayos en tiempo real.
                     </div>
                 </div>
                 <div className="signup">
