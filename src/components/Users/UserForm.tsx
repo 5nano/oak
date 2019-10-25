@@ -3,12 +3,9 @@ import { Form, IFields, IValues} from "../Form/Form";
 import { Field } from "../Field/Field";
 import { IComponentFormProps } from "../Form/IFormComponentProps";
 import { requiredValidation, isEmailValidation } from "../Form/Validation";
-import Button from "../Utilities/Buttons/DefaultButton/Button";
 import BushService from "../../services/bush";
-import Companies from "../Companies/Companies";
-import { object } from "prop-types";
 import { ICompany } from "../../Interfaces/ICompany";
-import Spinner from "react-spinner-material";
+import Loader from "../Utilities/Loader/Loader";
 
 const UserForm: React.SFC<IComponentFormProps> = (props) => {
 
@@ -75,8 +72,16 @@ const UserForm: React.SFC<IComponentFormProps> = (props) => {
 
   const submitForm = (values:IValues) => {
     let companieId = companies.find(company => company.name === values.compania).companyId
-    values.compania = companieId
-    props.submitForm(values)
+    
+    let newUser = {
+      username: values.username,
+      password: values.password,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      compania: companieId
+    }
+    return props.submitForm(newUser)
   }
 
   return (
@@ -98,12 +103,7 @@ const UserForm: React.SFC<IComponentFormProps> = (props) => {
           )}
         />
       :
-      <div className="user-loading">
-        <Spinner  size={240} 
-                  spinnerColor={"#6AC1A9"} 
-                  spinnerWidth={3} 
-                  visible={true}/>
-      </div>
+      <Loader/>
   );
 };
 
