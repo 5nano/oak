@@ -6,10 +6,16 @@
     width:100%;
         .results-list{
                 display:flex;
-                justify-content: center;
-                align-items: center;
                 flex-direction: column;
-                flex-wrap: wrap;
+                justify-content: flex-start;
+                align-items: center;
+                flex-wrap: nowrap;
+                overflow-y: auto;
+                
+                
+                height: 400px;
+                margin: 20px 0 20px 0;
+                background-color: rgba(128, 128, 128, 0.2);
        
                 .results-empty{
                     color:white;

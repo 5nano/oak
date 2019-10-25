@@ -5,6 +5,8 @@ import TreatmentForm from './Components/Form/TreatmentForm';
 import { IValues } from '../Form/Form';
 import BushService from '../../services/bush';
 import Button from '../Utilities/Buttons/DefaultButton/Button';
+import Info from '../Utilities/Messages/Info';
+import Loader from '../Utilities/Loader/Loader';
 
 export  interface ITreatmentsProps{
         match: {
@@ -15,11 +17,14 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
 
     const [newTreatment,setNewTreatment] = React.useState(false)
     const [treatments,setTreatments] = React.useState<Array<ITreatment>>([])
+    const [loading,setLoading] = React.useState(true)
     const idAssay = props.match.params.assayId
 
     React.useEffect(()=>{
         BushService.get(`/ensayo/tratamientos?idAssay=${idAssay}`)
-                   .then((data:Array<ITreatment>)=>setTreatments(data)) 
+                   .then((data:Array<ITreatment>)=>{
+                       setTreatments(data)
+                       setLoading(false)}) 
     },[])
 
     const setTreatment = (treatment:ITreatment) => {
@@ -53,27 +58,37 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
             <div className="crud-container">
 
                 <div className="crud-title">
-                 Ensayo/Tratamientos
+                 Ensayo {idAssay}/Tratamientos
                 </div>
 
-                {!newTreatment?
-                    ([<div className="treatments-wrapper">
-                        {treatments.map((treatment)=> (
-                            <Treatment treatment={treatment}/>
-                        ))}
-                    </div>
-                    ,
-                    <div className="new-treatment-button">
+                {loading
+                ? 
+                    <Loader/>
+                :
+                !newTreatment?
+                    <div className="search-container">
+
+                        <div className="results-list">
+                            {treatments.length===0? 
+                            <Info message="No existen tratamientos"/>
+                            :
+                            treatments.map((treatment)=> (
+                                <Treatment treatment={treatment}/>
+                            ))
+                        }
+                        </div>
+
                         <Button title="Nuevo Tratamiento" 
                                 onClick={()=> setNewTreatment(!newTreatment)}/>    
-                    </div>])
+                    </div>
+                    
                 :
                 <div className="form-wrapper">
                     <div className="form-content">
                         <TreatmentForm submitTreatmentForm={submitTreatmentForm}/>
                     </div>
                 </div>
-                }
+            }
 
             </div>
         )

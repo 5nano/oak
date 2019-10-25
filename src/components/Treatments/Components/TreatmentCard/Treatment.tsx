@@ -15,7 +15,7 @@ const Treatment:React.SFC<ITreatmentProps> = (props) => {
     return(
         <div className="treatment-card">
 
-            <div className="treatment-card-header">
+            <div className="treatment-attribute">
                 <div className="title">
                     Etiqueta
                 </div>
@@ -25,7 +25,37 @@ const Treatment:React.SFC<ITreatmentProps> = (props) => {
                 </div>
             </div>
 
-            <div className="treatment-card-content">
+            <div className="treatment-attribute">
+                <div className="title">
+                    Agroquimico
+                </div>
+
+                <div className="content">
+                    {treatment.agrochemical}
+                </div>
+            </div>
+
+            <div className="treatment-attribute">
+                <div className="title">
+                    Mezcla
+                </div>
+
+                <div className="content">
+                    {treatment.mix}
+                </div>
+            </div>
+
+            <div className="treatment-attribute">
+                <div className="title">
+                    Presión
+                </div>
+
+                <div className="content">
+                    {treatment.pressure}
+                </div>
+            </div>
+
+            <div className="treatment-attribute">
                 <div className="title">
                     Plantas
                 </div>
@@ -34,6 +64,7 @@ const Treatment:React.SFC<ITreatmentProps> = (props) => {
                     {treatment.experimentsLength}
                 </div>
             </div>
+
         </div>
     )
 }
