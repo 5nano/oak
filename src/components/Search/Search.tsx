@@ -100,7 +100,6 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
     }
 
     private async update(object:ISearchItem):Promise<void> {
-      console.log(object)
       return BushService.patch(this.props.updateAction,object)
                         .then(() => {this.getData() })
                         .catch(error => {

@@ -128,13 +128,12 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                     <div className="title">Descripción</div>
                     <div className="content">{ensayo.description}</div>
                 </div>
-
-               
-                <Button title="Dashboard"
-                        className="action-button"
-                        onClick={()=>onSelect(ensayo.idAssay)}
-                    /> 
             </div>
+            
+            <Button title="Dashboard"
+                    className="action-button"
+                    onClick={()=>onSelect(ensayo.idAssay)}
+                /> 
 
         </div>
     )

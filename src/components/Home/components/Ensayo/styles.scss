@@ -1,7 +1,7 @@
 .assay-wrapper{
     display:flex;
     flex-direction: column;
-
+    justify-content: space-between;
     width: 260px;
     padding: 6px;
     margin: 16px;
@@ -17,6 +17,7 @@
     .assay{
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
 
         .assay-header{
             display:flex;
