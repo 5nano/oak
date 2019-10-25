@@ -16,7 +16,7 @@ class Signup extends React.Component<RouteComponentProps> {
         return (
             <div className="landing">
                     <div className="landing-header">
-                        <div className="landing-logo">
+                        <div className="landing-logo" onClick={()=>this.props.history.push('/')}>
                             <img src='../../assets/images/nanivo-logo.png'/>
                         </div>
                         <div className="landing-links">
