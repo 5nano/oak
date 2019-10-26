@@ -1,11 +1,6 @@
 import * as React from "react";
-
 import AgrochemicalsForm from './AgrochemicalsForm';
-import AgrochemicalsSearch from './AgrochemicalsSearch';
-
 import CrudView from '../CRUD/Crud';
-
-
 const Agrochemicals: React.SFC = () => {
   
   return (
@@ -16,7 +11,7 @@ const Agrochemicals: React.SFC = () => {
         createUrl= '/agroquimicos/insertar'
         updateUrl= '/agroquimicos/modificar'
         form= {AgrochemicalsForm}
-        search= {AgrochemicalsSearch}
+        type="agrochemical"
     />
   );
 };

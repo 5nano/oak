@@ -20,17 +20,22 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
     const [loading,setLoading] = React.useState(true)
     const idAssay = props.match.params.assayId
 
+
     React.useEffect(()=>{
-        BushService.get(`/ensayo/tratamientos?idAssay=${idAssay}`)
-                   .then((data:Array<ITreatment>)=>{
-                       setTreatments(data)
-                       setLoading(false)}) 
+        fetchTreatments()
     },[])
 
-    const setTreatment = (treatment:ITreatment) => {
-        treatments.push(treatment)
-       }
-    
+    const fetchTreatments = ():Promise<boolean> => {
+         setLoading(true)
+         return BushService.get(`/ensayo/tratamientos?idAssay=${idAssay}`)
+                   .then((data:Array<ITreatment>)=>{
+                       setTreatments(data)
+                       setLoading(false)
+                       return true
+                    }) 
+    }
+
+   
     const submitTreatmentForm=(newTreatment:ITreatment):Promise<boolean>=>{
         const treatmentData = {
           idAssay:idAssay,
@@ -42,16 +47,13 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
           idAgrochemical: newTreatment.agrochemical.id
         }
     
-        newTreatment.qrs=[]
-
          return BushService.post('/tratamientos/insertar', treatmentData)
             .then(data => {
                 Object.keys(data.experimentsQR).forEach(key=>{
                     newTreatment.qrs.push(data.experimentsQR[key])
                 })
-                setTreatment(newTreatment)
-                setNewTreatment(false)
-                return true
+                fetchTreatments()
+                return true;
             })
       }
         return(
@@ -65,9 +67,8 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                 ? 
                     <Loader/>
                 :
-                !newTreatment?
+                <div className="layout-wrapper">
                     <div className="search-container">
-
                         <div className="results-list">
                             {treatments.length===0? 
                             <Info message="No existen tratamientos"/>
@@ -77,16 +78,18 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                             ))
                         }
                         </div>
-
-                        <Button title="Nuevo Tratamiento" 
+                        <Button title="Nuevo Tratamiento"
+                                disabled={newTreatment}
                                 onClick={()=> setNewTreatment(!newTreatment)}/>    
                     </div>
-                    
-                :
-                <div className="form-wrapper">
-                    <div className="form-content">
-                        <TreatmentForm submitTreatmentForm={submitTreatmentForm}/>
-                    </div>
+                    {newTreatment && 
+                        <div className="form-wrapper">
+                            <div className="form-content">
+                                <TreatmentForm submitTreatmentForm={submitTreatmentForm}/>
+                            </div>
+                            
+                        </div>
+                    }
                 </div>
             }
 

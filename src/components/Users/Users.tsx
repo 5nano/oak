@@ -1,6 +1,5 @@
 import * as React from "react";
 import UserForm from "./UserForm";
-import UserSearch from './UserSearch';
 import CrudView from '../CRUD/Crud';
 
 
@@ -14,8 +13,8 @@ const Users: React.SFC = () => {
         createUrl= '/usuarios/insertar'
         updateUrl= '/usuarios/modificar'
         form= {UserForm}
-        search={UserSearch}
-    />
+        type="user"
+            />
   );
 };
 

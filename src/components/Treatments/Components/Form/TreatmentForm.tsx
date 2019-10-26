@@ -104,7 +104,8 @@ class TreatmentForm extends React.Component<ITreatmentFormProps,ITreatmentFormSt
       pressure: values.pressure,
       experimentsLength:values.experimentsLength,
       mix: mix,
-      agrochemical: agrochemical
+      agrochemical: agrochemical,
+      qrs:[]
     }
 
     return this.props.submitTreatmentForm(newTreatment)

@@ -1,13 +1,9 @@
 import * as React from 'react'
 import ITreatment from '../../../../Interfaces/ITreatment';
-import Button from '../../../Utilities/Buttons/DefaultButton/Button';
-
 
 export  interface ITreatmentProps{
     treatment:ITreatment,
 }
-
-
 const Treatment:React.SFC<ITreatmentProps> = (props) => {
 
     const {treatment} = props;

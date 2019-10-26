@@ -18,11 +18,14 @@
 
     padding: 0px 80px;
 
+    overflow: auto;
+
     .layout-wrapper{
         display:flex;
         width:100%;
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-evenly;
 
         .form-request{
             display:flex;
@@ -32,6 +35,12 @@
         .form-return{
             display:flex;
             width: 200px;
+        }
+
+        .search-container-wrapper{
+            display:flex;
+            flex-direction: column;
+            
         }
     }
 

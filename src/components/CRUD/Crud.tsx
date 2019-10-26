@@ -2,73 +2,95 @@ import * as React from "react";
 import { IValues } from "../Form/Form";
 import BushService from '../../services/bush';
 import Button from "../Utilities/Buttons/DefaultButton/Button";
+import { ISearchItem } from "../../Interfaces/SearchItem";
+import Search from "../Search/Search";
+import { ItemType } from "../Search/components/Item";
 
 
-export interface ICrudViewProps {
+export interface ICrudViewProps{
     title:string,
     searchUrl: string,
     deleteUrl: string,
     updateUrl: string,
     createUrl: string
     form?: any,
-    search?: any
+    type:ItemType,
 }
 
-const CrudView: React.SFC <ICrudViewProps> = ({
-    searchUrl,
-    deleteUrl,
-    updateUrl,
-    createUrl,
-    title,
-    form: FormComponent,
-    search: SearchComponent
-}) => {
+interface ICrudViewState{
+  formRequest:boolean
+}
+
+class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
   
-  const [formRequest,setFormRequest] = React.useState(false);
+  constructor(props){
+    super(props)
 
-  const showForm = () => (
-    setFormRequest(true)
-  )
-  const showSearch = () => {
-    setFormRequest(false)
+    this.state = {
+      formRequest: false
+    }
+
+    this.submitForm = this.submitForm.bind(this)
+    this.retrieve = this.retrieve.bind(this)
+    this.remove = this.remove.bind(this)
+    this.update = this.update.bind(this)
   }
 
-  const submitForm = (values:IValues): Promise<boolean> => {
-    return BushService.post(createUrl, values)
-      .then(() => {return true})
+  setFormRequest (value:boolean) {
+    this.setState({formRequest:value})  
   }
 
-  return (
+  submitForm(values:IValues): Promise<boolean> {
+    return BushService.post(this.props.createUrl, values)
+      .then(() => {
+        this.setFormRequest(false)
 
-      <div className="crud-container">
-                  <div className="crud-title">
-                    {title}
+        return true
+      })
+  }
+  
+  retrieve():Promise<Array<any>> {
+    return BushService.get(this.props.searchUrl)
+                      .then(data => {
+                        return data
+                      })
+  }
+
+   remove (object:ISearchItem):Promise<void> {
+      return BushService.delete(this.props.deleteUrl,object)
+                        .then(() => {this.retrieve()})  
+    }
+
+    update(object:ISearchItem):Promise<void> {
+      return BushService.patch(this.props.updateUrl,object)
+                        .then(() => {this.retrieve()})
+    }
+
+    render(){
+     const {title,type,form:Form} = this.props
+     
+      return (
+          <div className="crud-container">
+              <div className="crud-title">
+                {title}
+              </div>
+
+              <div className="layout-wrapper">
+                  <div className="search-container-wrapper">
+                      <Search retrieve={this.retrieve} 
+                              remove={this.remove}
+                              update={this.update}
+                              type={type}/>
+                      <Button title={`Nuevo ${title.substring(0,title.length - 1).toLowerCase()} `}
+                              onClick={()=>this.setFormRequest(true)}
+                              />
                   </div>
-
-                  {!formRequest?
-                    <div className="layout-wrapper">
-                        <SearchComponent searchUrl={searchUrl} 
-                                         deleteUrl={deleteUrl}
-                                         updateUrl={updateUrl}/>
-                        <div className="form-request">
-                          <Button title={`Agregar ${title.substring(0,title.length - 1).toLowerCase()} `}
-                                  onClick={showForm}
-                                  />
-                        </div>
-                    </div> 
-                    :
-                    <div className="layout-wrapper">
-                            <FormComponent submitForm={submitForm}/>                   
-                            <div className="form-return">
-                              <Button title="Volver"
-                                      onClick={showSearch}
-                                      />
-                            </div>
-                    </div>
-                  }
-      </div>
- 
-  );
+                  {this.state.formRequest && <Form submitForm={this.submitForm}/>}
+              </div>
+          </div>
+    
+      );
+    }
 };
 
 export default CrudView;
