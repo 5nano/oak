@@ -11,13 +11,24 @@ interface IAssayOptionsProps{
     onTreatments:Function,
     onQrs:Function,
     onRemove:Function,
+    finishAssay:Function,
+    archiveAssay:Function,
+    activeAssay:Function,
     handleTag:Function,
     selectedTags:Array<ITag>
 }
 
 
 const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
-    const {onTreatments,onRemove,onQrs, selectedTags,handleTag, idAssay} = props;
+    const {onTreatments,
+           onRemove,
+           onQrs,
+           finishAssay,
+           archiveAssay,
+           activeAssay,
+           selectedTags,
+           handleTag,
+           idAssay} = props;
 
     const [tagsRequest,setTagsRequest] = React.useState(false)
    
@@ -46,6 +57,15 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
                             className="option-button"
                             onClick={()=>onRemove(idAssay)}
                     />
+                    <Button title="Finalizar"
+                            className="option-button"
+                            onClick={()=>finishAssay(idAssay)}/>
+                    <Button title="Archivar"
+                            className="option-button"
+                            onClick={()=>archiveAssay(idAssay)}/>
+                    <Button title="Activar"
+                            className="option-button"
+                            onClick={()=>activeAssay(idAssay)}/>
                 </div>
             :
             <Tags isSelected={isSelected} 

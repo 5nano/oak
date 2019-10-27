@@ -5,20 +5,17 @@ import Popper from '@material-ui/core/Popper';
 import AssayOptions from '../AssayOptions/AssayOptions';
 import BushService from '../../../../services/bush';
 import { ITag } from '../../../../Interfaces/Tags';
+import { RouteComponentProps } from 'react-router';
 var randomColor = require('randomcolor');
 
 
-export interface IEnsayoProps{
-    ensayo: IEnsayo
-    onSelect: Function
-    onQrs: Function
-    onRemove: Function
-    onTreatments:Function
+export interface IEnsayoProps extends RouteComponentProps{
+    ensayo: IEnsayo,
 }
 
 const Ensayo:React.SFC<IEnsayoProps> = (props) => {
 
-    const {ensayo,onSelect,onTreatments,onQrs,onRemove} = props;
+    const {ensayo} = props;
     const [anchorEl,setAnchorEl] = React.useState(null);
     const [placement,setPlacement] = React.useState();
     const [options,setOptions] = React.useState(false);
@@ -57,6 +54,36 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
             removeTag(tag):addTag(tag)
     }
 
+    const goToQrs = () => {
+        props.history.push(`/assay/${ensayo.idAssay}/qrs`);
+    }
+
+    const goToTreatments = () => {
+        props.history.push(`/assay/${ensayo.idAssay}/treatments`);
+    }
+
+    const  remove = () =>{
+        BushService.delete(`/ensayo/eliminar/idAssay=${ensayo.idAssay}`)
+    }
+
+    const goToDashboard = () =>{
+        props.history.push(`/assay/${ensayo.idAssay}/dashboard`);
+    }
+
+    const activeAssay = () => {
+
+    }
+
+    const finishAssay = () => {
+        
+    }
+
+    const archiveAssay = () => {
+        
+    }
+
+
+
     return(
         <div className="assay-wrapper">
             <div className="assay">
@@ -74,11 +101,14 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                                 transition
                             >
                         <AssayOptions   idAssay={ensayo.idAssay}
-                                        onTreatments={onTreatments}
-                                        onQrs={onQrs}
-                                        onRemove={onRemove}
+                                        onTreatments={goToTreatments}
+                                        onQrs={goToQrs}
+                                        onRemove={remove}
                                         handleTag={handleTag}
                                         selectedTags={tags}
+                                        activeAssay={activeAssay}
+                                        finishAssay={finishAssay}
+                                        archiveAssay={archiveAssay}
                         />
                         </Popper>
                     </div>
@@ -132,7 +162,7 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
             
             <Button title="Dashboard"
                     className="action-button"
-                    onClick={()=>onSelect(ensayo.idAssay)}
+                    onClick={()=>goToDashboard}
                 /> 
 
         </div>

@@ -2,47 +2,23 @@ import * as React from "react";
 import { IEnsayo } from '../../../../Interfaces/IEnsayo';
 import Ensayo from "../Ensayo/Ensayo";
 import Info from "../../../Utilities/Messages/Info";
+import { RouteComponentProps } from "react-router";
 
-
-export interface IEnsayosState {
-    ensayoSelected: IEnsayo["idAssay"],
+export interface IEnsayosProps extends RouteComponentProps{
+    ensayos: Array<IEnsayo>
 }
 
-export interface IEnsayosProps {
-    ensayos: Array<IEnsayo>,
-    onSelect: Function,
-    onQrs: Function,
-    onRemove: Function,
-    onTreatments:Function,
-}
+const Ensayos:React.SFC<IEnsayosProps> = (props) => {
 
-export class Ensayos extends React.Component<IEnsayosProps,IEnsayosState> {
-
-
-    constructor(props: IEnsayosProps){
-        super(props);
-        this.state ={
-            ensayoSelected: null,
-        };
-    }
-
-
-    render(){
-        const { onSelect, onQrs , onRemove, onTreatments} = this.props;
     return(
         <div className="ensayos">
-            {this.props.ensayos.length === 0 && 
+            {props.ensayos.length === 0 && 
             <Info message="No se registran ensayos en este estado"/>}
-            {this.props.ensayos.map((ensayo: IEnsayo) => (
-               <Ensayo ensayo={ensayo} 
-                       onSelect={onSelect}
-                       onQrs={onQrs}
-                       onRemove={onRemove}
-                       onTreatments={onTreatments}/>
+            {props.ensayos.map((ensayo: IEnsayo) => (
+               <Ensayo {...props} ensayo={ensayo} />
             ))}
         </div>
     )
-    }
 }
 
 export default Ensayos;
