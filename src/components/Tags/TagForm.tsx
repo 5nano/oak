@@ -44,9 +44,6 @@ class TagForm extends React.Component<ITagFormProps,ITagFormState> {
                 <Button title="Crear"
                         className='tag-form-button'
                         onClick={()=>this.props.handleNewTag(this.state.tag)}/>
-                <Button title="Cancelar"
-                        className='tag-form-button'
-                        onClick={()=>this.props.setNewTagRequest(false)} />
             </div>
         )
     }

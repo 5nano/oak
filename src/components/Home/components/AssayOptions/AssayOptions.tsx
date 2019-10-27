@@ -70,12 +70,15 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
             :
             <div className="tags-container">
                 <div className="tags-header">
+                    <a onClick={()=> {setNewTagRequest(false)}}>
+                        {newTagRequest && <i className="icon-left-open"/>}
+                    </a>
                     <div className="tags-title">
-                        Etiquetas
+                        {newTagRequest? 'Nueva Etiqueta' : 'Etiquetas'}
                     </div>
-                    <div onClick={() => {setTagsRequest(false)}}>
-                        X
-                    </div>
+                    <a onClick={() => {setTagsRequest(false)}}>
+                        <i className="icon icon-cancel"/>
+                    </a>
                 </div>
                 {!newTagRequest?
                     [tags.map(tag => (
@@ -87,7 +90,8 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
                                 </div>
 
                                 <div className="tag-check">
-                                {isSelected(tag) && 'Check'}
+                                {isSelected(tag) && 
+                                <i className="icon icon-ok-circled2"/>}
                                 </div>
                               
                             </div>

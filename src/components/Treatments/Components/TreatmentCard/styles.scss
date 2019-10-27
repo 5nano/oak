@@ -1,0 +1,34 @@
+.treatment-card{
+    display:flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-content: stretch;
+
+    width:600px;
+    height: 100px;
+    padding: 5px 20px 5px 20px;
+    margin: 10px;
+
+    border-radius: 8px;
+    border-style: solid;
+    border-color: #6AC1A9;
+    background-color: #FCFCFC;
+
+    .treatment-attribute{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .title{
+            font-size: 24px;
+            color:#6AC1A9;
+    
+        }
+        .content{
+            font-size: 18px;
+            color:black;
+        }
+
+    }
+}

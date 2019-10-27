@@ -1,6 +1,9 @@
 .landing{
-   height: 100%; 
    background-image: url('../../assets/images/landing.png');
+   background-size: cover;
+   height: 100%;
+   overflow: auto;
+  
 
    .landing-header{
         display:flex;
@@ -9,8 +12,7 @@
 
         background-color: rgba(0, 0, 0, 0);
         height: 80px;
-        margin: 0px 100px;
-        padding: 10px 0px;
+        padding: 20px 40px;
 
         .landing-logo{
             display:flex;
@@ -51,8 +53,7 @@
        flex-direction: row;
        justify-content: space-around;
 
-       margin: 40px 100px;
-       padding: 50px 0px;
+       padding: 20px 40px;
 
         .landing-info{
             display:flex;
@@ -60,6 +61,7 @@
             justify-content: flex-start;
 
             width:450px;
+            margin: 0px 40px;
 
 
             .info-heading{
@@ -77,24 +79,6 @@
             }
         }
 
-        .signup{
-            display:flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-
-            .signup-success{
-                display:flex;
-                justify-content: center;
-                align-items: center;
-                
-                width: 100%;
-                background-color:rgba(106, 193, 169,0.5);
-                color:white;
-                border-radius: 4px;
-                font-size: 18px;
-            }
-        }
 
    }
 }

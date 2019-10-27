@@ -1,9 +1,7 @@
 import * as React from "react";
 import { IErrors, IFormContext, FormContext} from "../Form/Form";
 import { IFieldProps } from './FieldProps';
-import Checkbox from './Checkbox';
 import Select from './Select';
-import { ContextReplacementPlugin } from "webpack";
 
 export const Field: React.SFC<IFieldProps> = ({
   id,
@@ -76,17 +74,10 @@ export const Field: React.SFC<IFieldProps> = ({
               {editor!.toLowerCase() === "dropdown" && (
                 <Select id={id} 
                         value={value}
-                        setValues={context.setValues} 
-                        errors={context.errors}
                         options={options}
                         getEditorStyle={getEditorStyle} />
               )}
 
-              {editor!.toLowerCase() === "checkbox" && (
-                  <Checkbox id={id} value={value} context={context}/>
-              )}
-
-            
               {getError(context.errors) && (
                 getError(context.errors).filter(error => error.length!=0)
                                         .map(error => {

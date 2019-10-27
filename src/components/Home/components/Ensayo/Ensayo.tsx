@@ -65,9 +65,9 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                         {ensayo.name}
                     </div>
                     <div className="options">
-                        <button type="button" onClick={e => handleOptions('right-start',e)}>
-                            ...
-                        </button>
+                        <a onClick={e=>handleOptions('right-start',e)}>
+                            <i className="icon icon-menu"/>
+                        </a>
                         <Popper open={options}
                                 anchorEl={anchorEl}
                                 placement={placement}
@@ -128,13 +128,12 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                     <div className="title">Descripción</div>
                     <div className="content">{ensayo.description}</div>
                 </div>
-
-               
-                <Button title="Dashboard"
-                        className="action-button"
-                        onClick={()=>onSelect(ensayo.idAssay)}
-                    /> 
             </div>
+            
+            <Button title="Dashboard"
+                    className="action-button"
+                    onClick={()=>onSelect(ensayo.idAssay)}
+                /> 
 
         </div>
     )

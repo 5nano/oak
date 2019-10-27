@@ -1,15 +1,23 @@
-.success{
+.message {
+    display:flex;
+    justify-content: center;
+    
     padding:20px;
-    background-color: rgba(106, 193, 169,0.5);
     color:white;
     border-radius: 4px;
+    font-size: 18px;
     width: 100%;
 }
 
+.success{
+    background-color: rgba(106, 193, 169,0.5);
+    
+}
+
 .error{
-    padding:20px;
     background-color: rgba(224, 77, 77,0.5);
-    color:white;
-    border-radius: 4px;
-    width: 100%;
+}
+
+.info{ 
+    background-color: rgba(250, 234, 15, 0.6);
 }

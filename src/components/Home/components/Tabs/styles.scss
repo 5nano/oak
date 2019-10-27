@@ -1,0 +1,27 @@
+.home-tabs{
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        width: 500px;
+        margin: 20px 0;
+
+        .tab{
+            display:flex;
+            justify-content: center;
+
+            border: 1px solid rgba(0,0,0,0.2);
+            border-radius: 4px;
+
+            width: 100px;
+            padding: 5px;
+            margin: 0px 2px;
+
+            cursor: pointer;
+
+            &:hover{
+                background-color: #6AC1A9;
+                color:white;
+            }
+        }
+    }

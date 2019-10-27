@@ -3,14 +3,21 @@
 .search-container{
     display:flex;
     flex-direction: column;
-    width:100%;
+    width: 700px;
+    
         .results-list{
                 display:flex;
-                justify-content: center;
-                align-items: center;
                 flex-direction: column;
-                flex-wrap: wrap;
-       
+                justify-content: flex-start;
+                align-items: center;
+                flex-wrap: nowrap;
+                overflow: auto;
+                
+                
+                height: 550px;
+                margin: 20px 0px;
+                background-color: rgba(128, 128, 128, 0.2);
+                border-radius: 4px;
                 .results-empty{
                     color:white;
                 }

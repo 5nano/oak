@@ -2,7 +2,6 @@ import { IValidation } from "../Form/Validation";
 
 /* The available editors for the field */
 type Editor = "textbox" |
-              "checkbox"| 
               "multilinetextbox" | 
               "dropdown" | 
               "password";

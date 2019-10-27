@@ -1,6 +1,7 @@
 @import './components/Ensayos/styles.scss';
 @import './components/HomeSearcher/styles.scss';
 @import './components/AssayOptions/styles.scss';
+@import './components/Tabs/styles.scss';
 .home {
     display:flex;
     margin: 40px 0;
@@ -28,9 +29,4 @@
         margin-bottom: 30px
     }
 
-    .home-loading{
-        display:flex;
-        justify-content: center;
-        margin: 40px 0;
-    }
 }

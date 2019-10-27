@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { IMessageProps } from './IMessage'
 
-const Success:React.SFC<IMessageProps> = (props) => {
+const Info:React.SFC<IMessageProps> = (props) => {
     return (
-        <div className="message success">
+        <div className="message info">
             {props.message}
         </div>
     )
 }
 
-export default Success;
+export default Info;

@@ -4,7 +4,7 @@ import { IAgrochemical } from "./Agrochemical";
 export default interface ITreatment{
     idAssay?:Number,
     idTreatment?:Number,
-    mixture?:IMix,
+    mix?:IMix,
     agrochemical?:IAgrochemical,
     experimentsLength: Number,
     name:string,

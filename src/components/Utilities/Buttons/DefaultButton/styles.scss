@@ -16,4 +16,10 @@
                 border: 1px solid #6AC1A9;
                 background-color: white;
             }
+
+            &:disabled{
+                border: 1px solid #6AC1A9;
+                background-color: grey;
+                color:white;
+            }
 }
