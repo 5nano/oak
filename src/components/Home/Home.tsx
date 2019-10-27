@@ -6,14 +6,18 @@ import { buildUrl } from "../Utilities/QueryParamsURLBuilder";
 import BushService from '../../services/bush';
 import Spinner from "react-spinner-material";
 import HomeSearcher from "./components/HomeSearcher/HomeSearcher";
+import Loader from "../Utilities/Loader/Loader";
+import Tabs from "./components/Tabs/tabs";
 
+export type assayState = 'ALL' | 'ACTIVE' | 'FINISHED' | 'ARCHIVED';
+
+const assayStates: assayState[] = ['ALL','ACTIVE','FINISHED',"ARCHIVED"]
 export interface IHomesState {
     ensayos: Array<IEnsayo>,
     experimentos: Array<object>,
     showDataUploadMenu: boolean,
     loading:boolean,
 }
-
 
 export interface IHomesProps extends RouteComponentProps {
 
@@ -29,9 +33,13 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
             showDataUploadMenu: false,
             loading:true
         };
-        this.fetchEnsayos();
+        ;
         this.goToDashboard = this.goToDashboard.bind(this);
         this.showDataUploadMenu = this.showDataUploadMenu.bind(this);
+    }
+    
+    componentDidMount(){
+        this.fetchEnsayos('ALL')
     }
 
     private showDataUploadMenu(event: any) {
@@ -41,8 +49,9 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
         });
     }
     
-    private fetchEnsayos = async (): Promise<void> => {
-        BushService.get('/ensayos')
+    private fetchEnsayos = async (state:assayState): Promise<void> => {
+        this.setState({loading:true})
+        BushService.get(`/ensayos?state=${state}`)
             .then(ensayos => {
                 this.setState({
                     ...this.state,
@@ -85,25 +94,27 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
     }
 
 
+    private handleTab(state:assayState){
+        this.fetchEnsayos(state)
+    }
+
     render(){
         return(
             <div className="home">
-               
+             
+                <Tabs assayStates={assayStates}
+                      handleTab={this.handleTab.bind(this)}
+                      />
+        
                 <HomeSearcher/>
-                
+
                 {!this.state.loading?
                 <Ensayos ensayos={this.state.ensayos} 
-                         onSelect={this.goToDashboard.bind(this)}  
-                         onQrs={this.goToQrs.bind(this)}
-                         onRemove={this.removeAssay.bind(this)} 
-                         onTreatments={this.goToTreatments.bind(this)}/>
-                :
-                <div className="home-loading">
-                    <Spinner size={240} 
-                        spinnerColor={"#6AC1A9"} 
-                        spinnerWidth={3} 
-                        visible={true}/>
-                </div>
+                onSelect={this.goToDashboard.bind(this)}  
+                onQrs={this.goToQrs.bind(this)}
+                onRemove={this.removeAssay.bind(this)} 
+                onTreatments={this.goToTreatments.bind(this)}/>
+                :<Loader/>
                 }
             </div>
         )

@@ -60,7 +60,8 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
   retrieve():Promise<void> {
     this.setState({loading:true})
     return BushService.get(this.props.searchUrl)
-                      .then(data => {
+                      .then((data:Array<any>) => {
+                        data.sort
                         this.setState({data:data,loading:false})
                       })
   }

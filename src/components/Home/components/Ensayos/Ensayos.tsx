@@ -1,6 +1,7 @@
 import * as React from "react";
 import { IEnsayo } from '../../../../Interfaces/IEnsayo';
 import Ensayo from "../Ensayo/Ensayo";
+import Info from "../../../Utilities/Messages/Info";
 
 
 export interface IEnsayosState {
@@ -30,6 +31,8 @@ export class Ensayos extends React.Component<IEnsayosProps,IEnsayosState> {
         const { onSelect, onQrs , onRemove, onTreatments} = this.props;
     return(
         <div className="ensayos">
+            {this.props.ensayos.length === 0 && 
+            <Info message="No se registran ensayos en este estado"/>}
             {this.props.ensayos.map((ensayo: IEnsayo) => (
                <Ensayo ensayo={ensayo} 
                        onSelect={onSelect}
