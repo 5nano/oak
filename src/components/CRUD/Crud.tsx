@@ -5,6 +5,7 @@ import Button from "../Utilities/Buttons/DefaultButton/Button";
 import { ISearchItem } from "../../Interfaces/SearchItem";
 import Search from "../Search/Search";
 import { ItemType } from "../Search/components/Item";
+import Loader from "../Utilities/Loader/Loader";
 
 
 export interface ICrudViewProps{
@@ -18,7 +19,9 @@ export interface ICrudViewProps{
 }
 
 interface ICrudViewState{
-  formRequest:boolean
+  formRequest:boolean,
+  loading:boolean,
+  data: Array<any>
 }
 
 class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
@@ -27,13 +30,19 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
     super(props)
 
     this.state = {
-      formRequest: false
+      formRequest: false,
+      loading: true,
+      data:[]
     }
 
     this.submitForm = this.submitForm.bind(this)
     this.retrieve = this.retrieve.bind(this)
     this.remove = this.remove.bind(this)
     this.update = this.update.bind(this)
+  }
+
+  componentDidMount(){
+    this.retrieve()
   }
 
   setFormRequest (value:boolean) {
@@ -43,16 +52,16 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
   submitForm(values:IValues): Promise<boolean> {
     return BushService.post(this.props.createUrl, values)
       .then(() => {
-        this.setFormRequest(false)
-
+        this.retrieve().then(()=>this.setFormRequest(false))
         return true
       })
   }
   
-  retrieve():Promise<Array<any>> {
+  retrieve():Promise<void> {
+    this.setState({loading:true})
     return BushService.get(this.props.searchUrl)
                       .then(data => {
-                        return data
+                        this.setState({data:data,loading:false})
                       })
   }
 
@@ -75,9 +84,12 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
                 {title}
               </div>
 
+              {this.state.loading? <Loader/>
+              :
               <div className="layout-wrapper">
                   <div className="search-container-wrapper">
-                      <Search retrieve={this.retrieve} 
+                      <Search data={this.state.data} 
+                              retrieve={this.retrieve}
                               remove={this.remove}
                               update={this.update}
                               type={type}/>
@@ -87,6 +99,7 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
                   </div>
                   {this.state.formRequest && <Form submitForm={this.submitForm}/>}
               </div>
+              }
           </div>
     
       );
