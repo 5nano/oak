@@ -71,15 +71,18 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
     }
 
     const activeAssay = () => {
-
+        BushService.patch(`/ensayo/activar?idAssay=${ensayo.idAssay}`)
+                   .then(()=>console.log("activado"))
     }
 
     const finishAssay = () => {
-        
+         BushService.patch(`/ensayo/terminar?idAssay=${ensayo.idAssay}`)
+                   .then(()=>console.log("finalizado"))
     }
 
     const archiveAssay = () => {
-        
+         BushService.patch(`/ensayo/archivar?idAssay=${ensayo.idAssay}`)
+                   .then(()=>console.log("archivado"))
     }
 
 
