@@ -12,7 +12,6 @@ const HomeSearcher:React.SFC<IHomeSearcherProps> = (props) => {
     const {assays,setFilteredAssays} = props;
     const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
        const stringSearch:string = event.currentTarget.value.trim().toLowerCase(); 
-       console.log(stringSearch) 
        setStringSearch(stringSearch);
 
         const filteredAssays = assays.filter(function(assay){

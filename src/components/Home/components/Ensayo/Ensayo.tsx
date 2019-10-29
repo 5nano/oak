@@ -6,6 +6,7 @@ import AssayOptions from '../AssayOptions/AssayOptions';
 import BushService from '../../../../services/bush';
 import { ITag } from '../../../../Interfaces/Tags';
 import { RouteComponentProps } from 'react-router';
+import {ClickAwayListener, Fade} from '@material-ui/core'
 var randomColor = require('randomcolor');
 
 
@@ -36,8 +37,12 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
         setPlacement(newPlacement)
     }
 
+    const goToDashboard = () =>{
+        props.history.push(`/assay/${ensayo.idAssay}/dashboard`);
+    }
+
     const removeTag = (tag:ITag) => {
-        BushService.delete(`/tags/ensayo/eliminar?idTag=${tag.idTag}&idAssay=${ensayo.idAssay}`)
+        BushService.delete(`/tags/ensayo/eliminar?idTag=${tag.idTag}&idAssay=${ensayo.idAssay}`,{})
                     .then(()=>setTags(tags.filter(selectedTag => selectedTag.name != tag.name)))
     }
 
@@ -51,67 +56,29 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
             removeTag(tag):addTag(tag)
     }
 
-    const goToQrs = () => {
-        props.history.push(`/assay/${ensayo.idAssay}/qrs`);
-    }
-
-    const goToTreatments = () => {
-        props.history.push(`/assay/${ensayo.idAssay}/treatments`);
-    }
-
-    const  remove = () =>{
-        BushService.delete(`/ensayo/eliminar/idAssay=${ensayo.idAssay}`)
-    }
-
-    const goToDashboard = () =>{
-        props.history.push(`/assay/${ensayo.idAssay}/dashboard`);
-    }
-
-    const activeAssay = () => {
-        BushService.patch(`/ensayo/activar?idAssay=${ensayo.idAssay}`)
-                   .then(()=>console.log("activado"))
-    }
-
-    const finishAssay = () => {
-         BushService.patch(`/ensayo/terminar?idAssay=${ensayo.idAssay}`)
-                   .then(()=>console.log("finalizado"))
-    }
-
-    const archiveAssay = () => {
-         BushService.patch(`/ensayo/archivar?idAssay=${ensayo.idAssay}`)
-                   .then(()=>console.log("archivado"))
-    }
-
-
 
     return(
-        <div className="assay-wrapper">
+        <div key={ensayo.idAssay} className="assay-wrapper">
             <div className="assay">
                 <div className="assay-header">
                     <div className="name">
                         {ensayo.name}
                     </div>
-                    <div className="options">
-                        <a onClick={e=>handleOptions('right-start',e)}>
-                            <i className="icon icon-menu"/>
-                        </a>
+                    <div className="options" onClick={e=>handleOptions('right-start',e)} >
+                        <i className="icon icon-menu"/>
+                    </div>
                         <Popper open={options}
                                 anchorEl={anchorEl}
                                 placement={placement}
                                 transition
                             >
-                        <AssayOptions   idAssay={ensayo.idAssay}
-                                        onTreatments={goToTreatments}
-                                        onQrs={goToQrs}
-                                        onRemove={remove}
-                                        handleTag={handleTag}
-                                        selectedTags={tags}
-                                        activeAssay={activeAssay}
-                                        finishAssay={finishAssay}
-                                        archiveAssay={archiveAssay}
-                        />
+                            <AssayOptions  {...props} 
+                                            idAssay={ensayo.idAssay}
+                                            selectedTags={tags}
+                                            handleTag={handleTag}
+                                            setOptions={setOptions}
+                            />
                         </Popper>
-                    </div>
                 </div>
 
                 <div className="assay-tags">

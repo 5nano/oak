@@ -1,22 +1,43 @@
 .assay-options-container{
+    position:relative;
     display:flex;
     flex-direction: column;
     align-items: center;
-    width: 300px;
     
-    background-color: #DCDCDC;
+    
+    background-color:white;
+    border: 1px solid #6AC1A9;
+    border-radius: 4px;
 
     .assay-options{
         display:flex;
         flex-direction: column;
-        width: 250px;
+        align-items: flex-end;
+        width: 200px;
 
-        margin: 10px 0;
+        padding: 20px 10px;
 
-        .option-button{
-            background-color: grey;
+        .option{
+            font-size: 20px;
+            margin:5px 0;
+            cursor: pointer;
+            &:hover{
+                color:#6AC1A9;
+            }
+        }
+    }
 
-            margin: 5px 0;
+    .options-header{
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        width:250px;
+        padding: 10px 5px;
+
+        .options-title{
+            font-size: 18px;
+            color: #6AC1A9;
         }
     }
 
@@ -38,7 +59,7 @@
 
             .tags-title{
                 font-size: 18px;
-                color: white;
+                color: #6AC1A9;
             }
         }
 
