@@ -51,7 +51,7 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
     }
 
     const  remove = () =>{
-        BushService.delete(`/ensayo/eliminar/idAssay=${idAssay}`)
+        BushService.post(`/ensayo/eliminar/idAssay=${idAssay}`)
     }
     
     return(

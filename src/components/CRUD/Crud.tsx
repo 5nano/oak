@@ -67,7 +67,7 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
   }
 
    remove (object:ISearchItem):Promise<void> {
-      return BushService.delete(this.props.deleteUrl,object)
+      return BushService.post(this.props.deleteUrl,object)
                         .then(() => {this.retrieve()})  
     }
 

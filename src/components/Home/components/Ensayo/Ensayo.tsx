@@ -6,7 +6,6 @@ import AssayOptions from '../AssayOptions/AssayOptions';
 import BushService from '../../../../services/bush';
 import { ITag } from '../../../../Interfaces/Tags';
 import { RouteComponentProps } from 'react-router';
-import {ClickAwayListener, Fade} from '@material-ui/core'
 var randomColor = require('randomcolor');
 
 
@@ -42,7 +41,7 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
     }
 
     const removeTag = (tag:ITag) => {
-        BushService.delete(`/tags/ensayo/eliminar?idTag=${tag.idTag}&idAssay=${ensayo.idAssay}`,{})
+        BushService.post(`/tags/ensayo/eliminar?idTag=${tag.idTag}&idAssay=${ensayo.idAssay}`,{})
                     .then(()=>setTags(tags.filter(selectedTag => selectedTag.name != tag.name)))
     }
 
