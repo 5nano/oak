@@ -23,14 +23,11 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
     const [tags,setTags] = React.useState<Array<ITag>>([])
 
     React.useEffect(()=>{
-        BushService.get(`/ensayo/tags?idAssay=${ensayo.idAssay}`)
-                   .then((data:Array<ITag>) => {
-                       data.map(tag => {
-                           tag.color = randomColor();
-                           return {tag}
-                       })
-                       setTags(data)
-                   })
+        ensayo.tags.map(tag=>{
+            tag.color = randomColor();
+            return {tag}
+        })
+        setTags(ensayo.tags)
     },[])
 
     const handleOptions = (newPlacement,event) => {
