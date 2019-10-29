@@ -1,3 +1,4 @@
+import { ITag } from "./Tags";
 
 export type IEnsayo = {
     idAssay: number,
@@ -5,4 +6,10 @@ export type IEnsayo = {
     idUserCreator: number
     name: string,
     description: string,
+    experiments:Number,
+    idAgrochemicals: Array<Number>,
+    idMixtures: Array<Number>,
+    treatments:Number,
+    tags: Array<ITag>,
+    created:string
 }

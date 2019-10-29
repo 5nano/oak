@@ -11,7 +11,8 @@ export type assayState = 'ALL' | 'ACTIVE' | 'FINISHED' | 'ARCHIVED';
 
 const assayStates: assayState[] = ['ALL','ACTIVE','FINISHED',"ARCHIVED"]
 export interface IHomesState {
-    ensayos: Array<IEnsayo>,
+    assays: Array<IEnsayo>,
+    filteredAssays: Array<IEnsayo>,
     experimentos: Array<object>,
     showDataUploadMenu: boolean,
     loading:boolean,
@@ -26,7 +27,8 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
     constructor(props: IHomesProps){
         super(props);
         this.state ={
-            ensayos: [],
+            assays: [],
+            filteredAssays: [],
             experimentos: [],
             showDataUploadMenu: false,
             loading:true
@@ -48,11 +50,12 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
     private fetchEnsayos = async (state:assayState): Promise<void> => {
         this.setState({loading:true})
         BushService.get(`/ensayos?state=${state}`)
-            .then(ensayos => {
+            .then(assays => {
                 this.setState({
                     ...this.state,
                     loading:false,
-                    ensayos
+                    assays,
+                    filteredAssays:assays
                 });
                 
             })
@@ -77,6 +80,12 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
         this.fetchEnsayos(state)
     }
 
+    private setFilteredAssays(filteredAssays:Array<IEnsayo>){
+        this.setState({
+            ...this.state,
+            filteredAssays
+        })
+    }
     render(){
         return(
             <div className="home">
@@ -85,10 +94,11 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
                       handleTab={this.handleTab.bind(this)}
                       />
         
-                <HomeSearcher/>
+                <HomeSearcher assays={this.state.assays}
+                              setFilteredAssays={this.setFilteredAssays.bind(this)}/>
 
                 {!this.state.loading?
-                <Ensayos {...this.props} ensayos={this.state.ensayos} />
+                <Ensayos {...this.props} ensayos={this.state.filteredAssays} />
                 :<Loader/>
                 }
             </div>
