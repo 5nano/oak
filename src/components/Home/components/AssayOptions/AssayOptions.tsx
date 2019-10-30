@@ -5,6 +5,7 @@ import { ITag } from '../../../../Interfaces/Tags';
 import TagForm from '../../../Tags/TagForm';
 import Tags from '../../../Tags/Tags';
 import { RouteComponentProps } from 'react-router';
+import { HomeContext, IHomeContext } from '../../Home';
 
 
 interface IAssayOptionsProps extends RouteComponentProps{
@@ -55,56 +56,69 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
     }
     
     return(
-        <div className="assay-options-container">
+        <HomeContext.Consumer>
+            {(context:IHomeContext) => (
+                <div className="assay-options-container">
 
-            {!tagsRequest?
-                [<div className="options-header">
-                    <a onClick={()=>{setOptions(false)}}>
-                        <i className="icon-left-open"/>
-                    </a>
-                    <div className="options-title">
-                        Opciones
-                    </div>
-                    <a onClick={()=> {setOptions(false)}}>
-                        <i className="icon icon-cancel"/>
-                    </a>
-                </div>,
-                <div className="assay-options">
-                    <a className="option"
-                       onClick={()=>goToTreatments()}>
-                           Tratamientos
-                       </a>
-                       <a className="option"
-                          onClick={()=>goToQrs()}>
-                           Codigos QR
-                       </a>
-                       <a className="option"
-                          onClick={()=>setTagsRequest(!tagsRequest)}>
-                           Tags
-                       </a>
-                       <a className="option"
-                          onClick={()=>finishAssay()}>
-                           Finalizar
-                       </a>
-                       <a className="option"
-                          onClick={()=>archiveAssay()}>
-                           Archivar
-                       </a>
-                       <a className="option"
-                          onClick={()=>activeAssay()}>
-                           Activar
-                       </a>
-                       <a className="option"
-                          onClick={()=>remove()}>
-                           Eliminar 
-                       </a>
-                </div>]
-            :
-            <Tags isSelected={isSelected} 
-                  setTagsRequest={setTagsRequest}
-                  handleTag={handleTag}/>
-            }
-     </div>
+                    {!tagsRequest?
+                        [<div className="options-header">
+                            <a onClick={()=>{setOptions(false)}}>
+                                <i className="icon-left-open"/>
+                            </a>
+                            <div className="options-title">
+                                Opciones
+                            </div>
+                            <a onClick={()=> {setOptions(false)}}>
+                                <i className="icon icon-cancel"/>
+                            </a>
+                        </div>,
+                        <div className="assay-options">
+                            <a className="option"
+                            onClick={()=>goToTreatments()}>
+                                Tratamientos
+                            </a>
+                            <a className="option"
+                                onClick={()=>goToQrs()}>
+                                Codigos QR
+                            </a>
+                            <a className="option"
+                                onClick={()=>setTagsRequest(!tagsRequest)}>
+                                Tags
+                            </a>
+                            <a className="option"
+                                onClick={()=>finishAssay()}>
+                                Finalizar
+                            </a>
+                            <a className="option"
+                                onClick={()=>{
+                                    archiveAssay()
+                                    context.updateAssays()
+                                    }}>
+                                Archivar
+                            </a>
+                            <a className="option"
+                                onClick={()=>{
+                                    activeAssay()
+                                    context.updateAssays()
+                                    }}>
+                                Activar
+                            </a>
+                            <a className="option"
+                                onClick={()=>{
+                                    remove()
+                                    context.updateAssays
+                                    }}>
+                                Eliminar 
+                            </a>
+                        </div>]
+                    :
+                    <Tags isSelected={isSelected} 
+                        setTagsRequest={setTagsRequest}
+                        handleTag={handleTag}/>
+                    }
+            </div>
+                    )}
+     </HomeContext.Consumer>
     )
 }
 

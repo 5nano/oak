@@ -11,5 +11,6 @@ export type IEnsayo = {
     idMixtures: Array<Number>,
     treatments:Number,
     tags: Array<ITag>,
-    created:string
+    created:string,
+    state?:string
 }

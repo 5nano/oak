@@ -63,6 +63,7 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                     <div className="name">
                         {ensayo.name}
                     </div>
+                    
                     <div className="options" onClick={e=>handleOptions('right-start',e)} >
                         <i className="icon icon-menu"/>
                     </div>

@@ -1,6 +1,5 @@
 import * as React from "react";
 import UserForm from "../Users/UserForm";
-import { IValues } from "../Form/Form";
 import BushService from '../../services/bush';
 import Button from "../Utilities/Buttons/DefaultButton/Button";
 import { RouteComponentProps } from "react-router";

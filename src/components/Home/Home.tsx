@@ -6,11 +6,13 @@ import BushService from '../../services/bush';
 import HomeSearcher from "./components/HomeSearcher/HomeSearcher";
 import Loader from "../Utilities/Loader/Loader";
 import Tabs from "./components/Tabs/tabs";
+import { IAssay } from "../Assay/Assay";
 
 export type assayState = 'ALL' | 'ACTIVE' | 'FINISHED' | 'ARCHIVED';
 
 const assayStates: assayState[] = ['ALL','ACTIVE','FINISHED',"ARCHIVED"]
-export interface IHomesState {
+
+export interface IHomeState {
     assays: Array<IEnsayo>,
     filteredAssays: Array<IEnsayo>,
     experimentos: Array<object>,
@@ -19,11 +21,18 @@ export interface IHomesState {
     state: assayState
 }
 
-export interface IHomesProps extends RouteComponentProps {
+export interface IHomeContext extends IHomeState {
+    updateAssays:Function;
+  }
+export const HomeContext = React.createContext<IHomeContext | undefined> (
+undefined
+);
 
+
+export interface IHomesProps extends RouteComponentProps {
 }
 
-export class Homes extends React.Component<IHomesProps,IHomesState> {
+export class Homes extends React.Component<IHomesProps,IHomeState> {
 
     constructor(props: IHomesProps){
         super(props);
@@ -42,6 +51,8 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
         this.fetchEnsayos('ALL')
     }
 
+    
+
     private showDataUploadMenu(event: any) {
         event.preventDefault();
         this.setState({
@@ -52,7 +63,7 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
     private fetchEnsayos = async (state:assayState): Promise<void> => {
         this.setState({loading:true})
         BushService.get(`/ensayos?state=${state}`)
-            .then(assays => {
+            .then((assays:Array<IEnsayo>) => {
                 this.setState({
                     ...this.state,
                     loading:false,
@@ -62,7 +73,8 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
                 
             })
       }
-
+      
+      
   
       private showExperimentos = async (assayId: number): Promise<void> => {
         /**
@@ -93,7 +105,12 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
         })
     }
     render(){
+        const context: IHomeContext = {
+            ...this.state,
+            updateAssays:this.updateAssays.bind(this)
+          };
         return(
+            
             <div className="home">
              
                 <Tabs assayStates={assayStates}
@@ -104,7 +121,9 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
                               setFilteredAssays={this.setFilteredAssays.bind(this)}/>
 
                 {!this.state.loading?
-                <Ensayos {...this.props} ensayos={this.state.filteredAssays} />
+                    <HomeContext.Provider value={context}>
+                        <Ensayos {...this.props} ensayos={this.state.filteredAssays} />
+                    </HomeContext.Provider>
                 :<Loader/>
                 }
             </div>
