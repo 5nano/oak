@@ -60,10 +60,14 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
         <div key={ensayo.idAssay} className="assay-wrapper">
             <div className="assay">
                 <div className="assay-header">
-                    <div className="name">
-                        {ensayo.name}
+                    <div className="header-content">
+                        <div className="name">
+                            {ensayo.name}
+                        </div>
+                        <div className="state">
+                            ACTIVO
+                        </div>
                     </div>
-                    
                     <div className="options" onClick={e=>handleOptions('right-start',e)} >
                         <i className="icon icon-menu"/>
                     </div>
