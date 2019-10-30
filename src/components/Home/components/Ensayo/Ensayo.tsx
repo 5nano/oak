@@ -65,7 +65,21 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                             {ensayo.name}
                         </div>
                         <div className="state">
-                            ACTIVO
+                        { (() => { 
+                       switch (ensayo.name) {
+                        case 'ALL':
+                            return 'TODOS'
+                        case 'ACTIVE':
+                            return 'ACTIVOS'
+                        case 'FINISHED':
+                            return 'FINALIZADOS'
+                        case 'ARCHIVED':
+                            return 'ARCHIVADOS'
+                        default:
+                            return null;
+                                }
+                             }
+                            )()}
                         </div>
                     </div>
                     <div className="options" onClick={e=>handleOptions('right-start',e)} >

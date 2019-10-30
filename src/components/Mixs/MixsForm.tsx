@@ -28,7 +28,7 @@ const MixsForm: React.SFC<IComponentFormProps> = (props) => {
     <Form
       submitForm={submitForm}
       fields = {fields}
-      title = "Registrar"
+      title = "Ingresa tu nueva mezcla"
       render={() => (
         <React.Fragment>
           

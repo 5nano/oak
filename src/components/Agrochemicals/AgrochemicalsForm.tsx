@@ -3,8 +3,6 @@ import { Form, IFields} from "../Form/Form";
 import { Field } from "../Field/Field";
 import { IComponentFormProps } from "../Form/IFormComponentProps";
 import {requiredValidation, maxLengthValidation } from "../Form/Validation";
-import NewComponentButton from "../Utilities/Buttons/NewComponentButton";
-
 
 const AgrochemicalsForm: React.SFC<IComponentFormProps> = (props) => {
 
@@ -30,7 +28,7 @@ const AgrochemicalsForm: React.SFC<IComponentFormProps> = (props) => {
     <Form
       submitForm={submitForm}
       fields = {fields}
-      title = "Registrar"
+      title = "Ingresa un nuevo agroquimico"
       render={() => (
         <React.Fragment>
           

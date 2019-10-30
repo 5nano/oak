@@ -76,9 +76,14 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
                         .then(() => {this.retrieve()})
     }
 
+    cancelForm(formRequest:boolean){
+      this.setFormRequest(formRequest)
+    }
+
     render(){
      const {title,type,form:Form} = this.props
      
+     const singleTitle = title.substring(0,title.length - 1).toLowerCase()
       return (
           <div className="crud-container">
               <div className="crud-title">
@@ -88,17 +93,25 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
               {this.state.loading? <Loader/>
               :
               <div className="layout-wrapper">
-                  <div className="search-container-wrapper">
+                  <div className="search-crud-wrapper">
                       <Search data={this.state.data} 
                               retrieve={this.retrieve}
                               remove={this.remove}
                               update={this.update}
                               type={type}/>
-                      <Button title={`Nuevo ${title.substring(0,title.length - 1).toLowerCase()} `}
+                      <Button title={title==='Mezclas'?'Nueva '+ singleTitle:'Nuevo '+ singleTitle}
                               onClick={()=>this.setFormRequest(true)}
                               />
                   </div>
-                  {this.state.formRequest && <Form submitForm={this.submitForm}/>}
+                  {this.state.formRequest &&
+                    <div className="form-crud-wrapper">
+                      <div className="form-cancel" onClick={()=>this.setFormRequest(false)}>
+                          <i className="icon icon-left-open"/>
+                      </div>
+                        <Form submitForm={this.submitForm}
+                              cancel={this.cancelForm}/>
+                    </div>
+                       }
               </div>
               }
           </div>

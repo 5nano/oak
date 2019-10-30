@@ -132,6 +132,8 @@ private handleSubmit = async (
   this.setState({ errors });
   return !this.haveErrors(errors);
 }
+
+
  
   public render() {
     const context: IFormContext = {
@@ -144,21 +146,28 @@ private handleSubmit = async (
 
     return (
       <FormContext.Provider value={context}>
-        <div className="form-container">
-          <div className="form-result">
-            {!this.state.submitSuccess && this.state.serverError &&
-              <Error message={this.state.serverError}/>
-            }
+        <div className="form-container-wrapper">
+          
 
-            {this.state.submitSuccess &&
-              <Success message="Registro exitoso"/>
-            }
-
+          <div className="form-title">
+            {title}
           </div>
-          <form className="form" noValidate={true}>
-            {this.props.render()}
-          </form>
-          <Button title={title} onClick={this.handleSubmit}/>
+          <div className="form-container">
+            <div className="form-result">
+              {!this.state.submitSuccess && this.state.serverError &&
+                <Error message={this.state.serverError}/>
+              }
+
+              {this.state.submitSuccess &&
+                <Success message="Registro exitoso"/>
+              }
+
+            </div>
+            <form className="form" noValidate={true}>
+              {this.props.render()}
+            </form>
+            <Button title="Registrar" onClick={this.handleSubmit}/>
+          </div>
         </div>
       </FormContext.Provider>
     );

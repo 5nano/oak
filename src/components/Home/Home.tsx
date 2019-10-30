@@ -64,6 +64,8 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
         this.setState({loading:true})
         BushService.get(`/ensayos?state=${state}`)
             .then((assays:Array<IEnsayo>) => {
+                console.log(assays)
+                
                 this.setState({
                     ...this.state,
                     loading:false,

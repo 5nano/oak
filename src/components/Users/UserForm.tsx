@@ -89,9 +89,9 @@ const UserForm: React.SFC<IComponentFormProps> = (props) => {
 
     !loading?
         <Form
-        submitForm={submitForm.bind(this)}
+          submitForm={submitForm.bind(this)}
           fields = {fields}
-          title="Registrar"
+          title="Registrate!"
           render={() => (
             <React.Fragment>
               <Field {...fields.firstName}/>
