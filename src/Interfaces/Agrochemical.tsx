@@ -1,5 +1,5 @@
 export interface IAgrochemical{
-    id:Number,
+    idAgrochemical:Number,
     name:string,
     description:string,
 }

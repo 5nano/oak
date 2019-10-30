@@ -1,5 +1,5 @@
 export interface IMix{
-    id:Number,
+    idMixture:Number,
     name:string,
     description:string
 }

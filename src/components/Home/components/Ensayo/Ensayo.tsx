@@ -66,15 +66,15 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                         </div>
                         <div className="state">
                         { (() => { 
-                       switch (ensayo.name) {
+                       switch (ensayo.state) {
                         case 'ALL':
                             return 'TODOS'
                         case 'ACTIVE':
-                            return 'ACTIVOS'
+                            return 'ACTIVO'
                         case 'FINISHED':
-                            return 'FINALIZADOS'
+                            return 'FINALIZADO'
                         case 'ARCHIVED':
-                            return 'ARCHIVADOS'
+                            return 'ARCHIVADO'
                         default:
                             return null;
                                 }

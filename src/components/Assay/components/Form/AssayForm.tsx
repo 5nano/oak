@@ -53,7 +53,7 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
       Object.keys(data).forEach(key => {
         this.state.crops.push({name:data[key].name,
                   description:data[key].description,
-                  id:data[key].idCrop})
+                  idCrop:data[key].idCrop})
         })
       fields.crop.options=this.state.crops.map(crop => {return crop.name})
       this.setState({loading:false})
@@ -66,7 +66,7 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
       name:values.name,
       description:values.description,
       idUserCreator: 1,
-      idCrop:crop.id
+      idCrop:crop.idCrop
     }
     return this.props.submitAssayForm(assay)
   }

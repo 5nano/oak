@@ -4,8 +4,8 @@ import BushService from '../../services/bush';
 import Button from "../Utilities/Buttons/DefaultButton/Button";
 import { ISearchItem } from "../../Interfaces/SearchItem";
 import Search from "../Search/Search";
-import { ItemType } from "../Search/components/Item";
 import Loader from "../Utilities/Loader/Loader";
+import { ItemType } from "../Search/components/Item";
 
 
 export interface ICrudViewProps{
@@ -59,15 +59,28 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
   
   retrieve():Promise<void> {
     this.setState({loading:true})
+
     return BushService.get(this.props.searchUrl)
-                      .then((data:Array<any>) => {
-                        data.sort
+                      .then((data:Array<ISearchItem>) => {
                         this.setState({data:data,loading:false})
                       })
   }
 
    remove (object:ISearchItem):Promise<void> {
-      return BushService.post(this.props.deleteUrl,object)
+     let id:Number;
+     switch(this.props.type){
+       case 'agrochemical':
+            id=object.idAgrochemical
+         break;
+        case 'mix':
+            id=object.idMixture
+          break;
+        case 'crop':
+            id=object.idCrop
+          break;
+     }
+      let urlDelete = this.props.deleteUrl+id
+      return BushService.post(urlDelete)
                         .then(() => {this.retrieve()})  
     }
 

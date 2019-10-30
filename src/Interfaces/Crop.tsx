@@ -1,5 +1,5 @@
 export interface ICrop{
-    id:Number,
+    idCrop:Number,
     name:string,
     description:string
 }

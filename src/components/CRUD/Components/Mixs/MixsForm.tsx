@@ -1,9 +1,8 @@
 import * as React from "react";
-import { Form, IFields} from "../Form/Form";
-import { Field } from "../Field/Field";
-import { IComponentFormProps } from "../Form/IFormComponentProps";
-import { requiredValidation, maxLengthValidation } from "../Form/Validation";
-import NewComponentButton from "../Utilities/Buttons/NewComponentButton";
+import { Form, IFields} from "../../../Form/Form";
+import { Field } from "../../../Field/Field";
+import { IComponentFormProps } from "../../../Form/IFormComponentProps";
+import { requiredValidation, maxLengthValidation } from "../../../Form/Validation";
 
 
 const MixsForm: React.SFC<IComponentFormProps> = (props) => {
