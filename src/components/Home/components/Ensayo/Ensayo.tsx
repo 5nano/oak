@@ -147,7 +147,7 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
             
             <Button title="Dashboard"
                     className="action-button"
-                    onClick={()=>goToDashboard}
+                    onClick={()=>goToDashboard()}
                 /> 
 
         </div>

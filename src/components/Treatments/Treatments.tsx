@@ -28,10 +28,11 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
          setLoading(true)
          return BushService.get(`/ensayo/tratamientos?idAssay=${idAssay}`)
                    .then((data:Array<ITreatment>)=>{
+                       console.log(data)
                        setTreatments(data)
                        setLoading(false)
                        return true
-                    }) 
+                    })
     }
 
    
@@ -79,16 +80,19 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                         </div>
                         <Button title="Nuevo Tratamiento"
                                 disabled={newTreatment}
-                                onClick={()=> setNewTreatment(!newTreatment)}/>    
+                                onClick={()=> setNewTreatment(true)}/>    
                     </div>
                     {newTreatment && 
-                        <div className="form-wrapper">
-                            <div className="form-content">
+                        <div className="form-crud-wrapper">
+                            <div className="form-cancel" onClick={()=>setNewTreatment(false)}>
+                                <i className="icon icon-left-open"/>
+                             </div>
                                 <TreatmentForm submitTreatmentForm={submitTreatmentForm}/>
-                            </div>
+                           
                             
                         </div>
                     }
+
                 </div>
             }
 

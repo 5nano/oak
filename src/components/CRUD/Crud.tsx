@@ -101,10 +101,6 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
                         .then(() => {this.retrieve()})
     }
 
-    cancelForm(formRequest:boolean){
-      this.setFormRequest(formRequest)
-    }
-
     render(){
      const {title,type,form:Form} = this.props
      
@@ -133,6 +129,7 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
                               type={type}/>
                       <Button title={title==='Mezclas'?'Nueva '+ singleTitle:'Nuevo '+ singleTitle}
                               onClick={()=>this.setFormRequest(true)}
+                              disabled={this.state.formRequest}
                               />
                   </div>
                   {this.state.formRequest &&
@@ -140,8 +137,7 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
                       <div className="form-cancel" onClick={()=>this.setFormRequest(false)}>
                           <i className="icon icon-left-open"/>
                       </div>
-                        <Form submitForm={this.submitForm.bind(this)}
-                              cancel={this.cancelForm}/>
+                        <Form submitForm={this.submitForm.bind(this)}/>
                     </div>
                        }
               </div>
