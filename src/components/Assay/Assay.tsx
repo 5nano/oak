@@ -84,8 +84,10 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                 </div>
                 <div className="assay-form-wrapper">
                     {this.state.successAssay && 
-                      <Button title="Ingresar tratamientos" 
-                            onClick={this.goToTreatments.bind(this)}/>
+                      <div className="assay-to-treatments"
+                          onClick={()=>this.goToTreatments()}>
+                        Ingresa los tratamientos del ensayo
+                      </div>
                     }
                     <AssayForm submitAssayForm={this.submitAssayForm.bind(this)}/>
                 </div>

@@ -110,35 +110,6 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                     })}
                 </div>
 
-                <div className="assay-components">
-                    <div className="component">
-                        <div className="component-img">
-                            <img src='../../../../assets/images/agrochemical-icon.png'/>
-                        </div>
-                        <div className="component-name">
-                            Galant
-                        </div>
-                    </div>
-
-                    <div className="component">
-                        <div className="component-img">
-                            <img src='../../../../assets/images/crop-icon.png'/>
-                        </div>
-                        <div className="component-name">
-                            Soja
-                        </div>
-                    </div>
-
-                    <div className="component">
-                        <div className="component-img">
-                            <img src='../../../../assets/images/mix-icon.png'/>
-                        </div>
-                        <div className="component-name">
-                            A
-                        </div>
-                    </div>
-                </div>
-
                 <div className="assay-description">
                     <div className="title">Descripción</div>
                     <div className="content">{ensayo.description}</div>
