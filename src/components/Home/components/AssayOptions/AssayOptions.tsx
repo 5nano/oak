@@ -52,7 +52,7 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
     }
 
     const remove = () =>{
-        BushService.post(`/ensayos/eliminar?idAssay=${idAssay}`)
+        BushService.post(`/ensayos/eliminar?assayId=${idAssay}`)
     }
     
     return(
@@ -106,7 +106,7 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
                             <a className="option"
                                 onClick={()=>{
                                     remove()
-                                    context.updateAssays
+                                    context.updateAssays()
                                     }}>
                                 Eliminar 
                             </a>
