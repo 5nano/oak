@@ -50,7 +50,7 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
                    .then(()=>console.log("archivado"))
     }
 
-    const  remove = () =>{
+    const remove = () =>{
         BushService.post(`/ensayo/eliminar/idAssay=${idAssay}`)
     }
     

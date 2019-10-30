@@ -4,11 +4,12 @@ import { IValues } from "../Form/Form";
 import BushService from '../../services/bush';
 import Button from "../Utilities/Buttons/DefaultButton/Button";
 import { RouteComponentProps } from "react-router";
+import { User } from "../../Interfaces/User";
 
 class Signup extends React.Component<RouteComponentProps> {
 
-    submitForm = (values:IValues): Promise<boolean> => {
-      return BushService.post('/usuarios/insertar', values)
+    submitForm = (newUser:User): Promise<boolean> => {
+      return BushService.post('/usuarios/insertar', newUser)
                         .then(() => {return true})
     }
   

@@ -16,6 +16,7 @@ export interface IHomesState {
     experimentos: Array<object>,
     showDataUploadMenu: boolean,
     loading:boolean,
+    state: assayState
 }
 
 export interface IHomesProps extends RouteComponentProps {
@@ -31,7 +32,8 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
             filteredAssays: [],
             experimentos: [],
             showDataUploadMenu: false,
-            loading:true
+            loading:true,
+            state: 'ALL'
         };
         this.showDataUploadMenu = this.showDataUploadMenu.bind(this);
     }
@@ -78,6 +80,10 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
 
     private handleTab(state:assayState){
         this.fetchEnsayos(state)
+    }
+
+    private updateAssays(){
+        this.fetchEnsayos(this.state.state)
     }
 
     private setFilteredAssays(filteredAssays:Array<IEnsayo>){

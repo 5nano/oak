@@ -6,6 +6,7 @@ import { requiredValidation, isEmailValidation } from "../Form/Validation";
 import BushService from "../../services/bush";
 import { ICompany } from "../../Interfaces/ICompany";
 import Loader from "../Utilities/Loader/Loader";
+import { User } from "../../Interfaces/User";
 
 const UserForm: React.SFC<IComponentFormProps> = (props) => {
 
@@ -73,13 +74,13 @@ const UserForm: React.SFC<IComponentFormProps> = (props) => {
   const submitForm = (values:IValues) => {
     let companieId = companies.find(company => company.name === values.compania).companyId
     
-    let newUser = {
+    let newUser:User = {
       username: values.username,
       password: values.password,
       firstName: values.firstName,
       lastName: values.lastName,
       email: values.email,
-      compania: companieId
+      companyId: companieId
     }
     return props.submitForm(newUser)
   }
