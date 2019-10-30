@@ -1,14 +1,14 @@
 import * as React from 'react';
 import {BrowserRouter as Router,Route, Switch, Redirect} from 'react-router-dom';
-import Crops from '../Crops/Crops';
+import Crops from '../CRUD/Components/Crops/Crops';
 import Companies from '../Companies/Companies';
-import Agrochemicals from '../Agrochemicals/Agrochemicals';
+import Agrochemicals from '../CRUD/Components/Agrochemicals/Agrochemicals';
 import Signup from '../SignUp/Signup';
 import Users from '../Users/Users';
 import Assay from '../Assay/Assay';
 import Dashboards from '../Dashboards/Dashboards';
 import Homes from '../Home/Home';
-import Mixs from '../Mixs/Mixs';
+import Mixs from '../CRUD/Components/Mixs/Mixs';
 import Qrs from '../Qrs/Qrs';
 import Landing from '../Landing/Landing';
 import PrivateRoute from '../Utilities/ProtectedRoute/PrivateRoute';

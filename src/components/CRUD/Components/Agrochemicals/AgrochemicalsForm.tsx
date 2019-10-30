@@ -1,12 +1,10 @@
 import * as React from "react";
-import { Form, IFields} from "../Form/Form";
-import { Field } from "../Field/Field";
-import { IComponentFormProps } from "../Form/IFormComponentProps";
-import { requiredValidation, maxLengthValidation } from "../Form/Validation";
-import NewComponentButton from "../Utilities/Buttons/NewComponentButton";
+import { Form, IFields} from "../../../Form/Form";
+import { Field } from "../../../Field/Field";
+import { IComponentFormProps } from "../../../Form/IFormComponentProps";
+import {requiredValidation, maxLengthValidation } from "../../../Form/Validation";
 
-
-const MixsForm: React.SFC<IComponentFormProps> = (props) => {
+const AgrochemicalsForm: React.SFC<IComponentFormProps> = (props) => {
 
   //fieldName must match with fieldId
   const fields: IFields = {
@@ -19,16 +17,18 @@ const MixsForm: React.SFC<IComponentFormProps> = (props) => {
       id:"description",
       label: "Descripcion",
       editor: "multilinetextbox",
-      validations: [maxLengthValidation(200)] 
+      validations: [maxLengthValidation(200)]
     }
   };
   
   const {submitForm} = props;
+  
   return (
+
     <Form
       submitForm={submitForm}
       fields = {fields}
-      title = "Registrar"
+      title = "Ingresa un nuevo agroquimico"
       render={() => (
         <React.Fragment>
           
@@ -41,4 +41,4 @@ const MixsForm: React.SFC<IComponentFormProps> = (props) => {
   );
 };
 
-export default MixsForm;
+export default AgrochemicalsForm;

@@ -30,7 +30,7 @@ const Tabs:React.SFC<ITabsProps> = (props) => {
                         case 'ACTIVE':
                             return 'ACTIVOS'
                         case 'FINISHED':
-                            return 'TERMINADOS'
+                            return 'FINALIZADOS'
                         case 'ARCHIVED':
                             return 'ARCHIVADOS'
                         default:

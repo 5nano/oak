@@ -71,7 +71,7 @@
         justify-content: space-between;
         align-content: center;
         align-items: center;
-    
+
         .action{
             display:flex;
             justify-content: center;
@@ -81,6 +81,10 @@
             .icon{
                 font-size: 20px;
                 color: grey;
+
+                &:hover{
+                    color:red;
+                }
             }
         }
     }

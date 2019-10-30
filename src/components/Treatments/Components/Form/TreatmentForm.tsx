@@ -73,7 +73,7 @@ class TreatmentForm extends React.Component<ITreatmentFormProps,ITreatmentFormSt
           this.state.agrochemicals.push({
             name:data[key].name,
             description:data[key].description,
-            id:data[key].idAgrochemical
+            idAgrochemical:data[key].idAgrochemical
           })
       })
       fields.agrochemical.options=this.state.agrochemicals.map(agrochemical => {return agrochemical.name})
@@ -86,7 +86,7 @@ class TreatmentForm extends React.Component<ITreatmentFormProps,ITreatmentFormSt
         this.state.mixs.push({
           name:data[key].name,
           description:data[key].description,
-          id:data[key].idMixture
+          idMixture:data[key].idMixture
         })
     })
     fields.mix.options=this.state.mixs.map(mix => {return mix.name})

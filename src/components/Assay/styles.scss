@@ -5,6 +5,25 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    .assay-to-treatments{
+        display: flex;
+        font-size: 18px;
+        justify-content: center;
+
+        background-color: rgba(106, 193, 169,0.5);
+        width: 400px;
+        border: 1px solid #6AC1A9;
+        border-radius: 4px;
+
+        margin: 0 0 20px 0;
+        padding: 20px;
+        cursor: pointer;
+        &:hover{
+            background-color:white;
+            color:#6AC1A9;
+        }
+    }
 }
 
 .qr-wrapper{

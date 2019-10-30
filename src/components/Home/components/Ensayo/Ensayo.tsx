@@ -5,20 +5,17 @@ import Popper from '@material-ui/core/Popper';
 import AssayOptions from '../AssayOptions/AssayOptions';
 import BushService from '../../../../services/bush';
 import { ITag } from '../../../../Interfaces/Tags';
+import { RouteComponentProps } from 'react-router';
 var randomColor = require('randomcolor');
 
 
-export interface IEnsayoProps{
-    ensayo: IEnsayo
-    onSelect: Function
-    onQrs: Function
-    onRemove: Function
-    onTreatments:Function
+export interface IEnsayoProps extends RouteComponentProps{
+    ensayo: IEnsayo,
 }
 
 const Ensayo:React.SFC<IEnsayoProps> = (props) => {
 
-    const {ensayo,onSelect,onTreatments,onQrs,onRemove} = props;
+    const {ensayo} = props;
     const [anchorEl,setAnchorEl] = React.useState(null);
     const [placement,setPlacement] = React.useState();
     const [options,setOptions] = React.useState(false);
@@ -26,14 +23,11 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
     const [tags,setTags] = React.useState<Array<ITag>>([])
 
     React.useEffect(()=>{
-        BushService.get(`/ensayo/tags?idAssay=${ensayo.idAssay}`)
-                   .then((data:Array<ITag>) => {
-                       data.map(tag => {
-                           tag.color = randomColor();
-                           return {tag}
-                       })
-                       setTags(data)
-                   })
+        ensayo.tags.map(tag=>{
+            tag.color = randomColor();
+            return {tag}
+        })
+        setTags(ensayo.tags)
     },[])
 
     const handleOptions = (newPlacement,event) => {
@@ -42,8 +36,12 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
         setPlacement(newPlacement)
     }
 
+    const goToDashboard = () =>{
+        props.history.push(`/assay/${ensayo.idAssay}/dashboard`);
+    }
+
     const removeTag = (tag:ITag) => {
-        BushService.delete(`/tags/ensayo/eliminar?idTag=${tag.idTag}&idAssay=${ensayo.idAssay}`)
+        BushService.post(`/tags/ensayo/eliminar?idTag=${tag.idTag}&idAssay=${ensayo.idAssay}`,{})
                     .then(()=>setTags(tags.filter(selectedTag => selectedTag.name != tag.name)))
     }
 
@@ -57,31 +55,48 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
             removeTag(tag):addTag(tag)
     }
 
+
     return(
-        <div className="assay-wrapper">
+        <div key={ensayo.idAssay} className="assay-wrapper">
             <div className="assay">
                 <div className="assay-header">
-                    <div className="name">
-                        {ensayo.name}
+                    <div className="header-content">
+                        <div className="name">
+                            {ensayo.name}
+                        </div>
+                        <div className="state">
+                        { (() => { 
+                       switch (ensayo.state) {
+                        case 'ALL':
+                            return 'TODOS'
+                        case 'ACTIVE':
+                            return 'ACTIVO'
+                        case 'FINISHED':
+                            return 'FINALIZADO'
+                        case 'ARCHIVED':
+                            return 'ARCHIVADO'
+                        default:
+                            return null;
+                                }
+                             }
+                            )()}
+                        </div>
                     </div>
-                    <div className="options">
-                        <a onClick={e=>handleOptions('right-start',e)}>
-                            <i className="icon icon-menu"/>
-                        </a>
+                    <div className="options" onClick={e=>handleOptions('right-start',e)} >
+                        <i className="icon icon-menu"/>
+                    </div>
                         <Popper open={options}
                                 anchorEl={anchorEl}
                                 placement={placement}
                                 transition
                             >
-                        <AssayOptions   idAssay={ensayo.idAssay}
-                                        onTreatments={onTreatments}
-                                        onQrs={onQrs}
-                                        onRemove={onRemove}
-                                        handleTag={handleTag}
-                                        selectedTags={tags}
-                        />
+                            <AssayOptions  {...props} 
+                                            idAssay={ensayo.idAssay}
+                                            selectedTags={tags}
+                                            handleTag={handleTag}
+                                            setOptions={setOptions}
+                            />
                         </Popper>
-                    </div>
                 </div>
 
                 <div className="assay-tags">
@@ -95,35 +110,6 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                     })}
                 </div>
 
-                <div className="assay-components">
-                    <div className="component">
-                        <div className="component-img">
-                            <img src='../../../../assets/images/agrochemical-icon.png'/>
-                        </div>
-                        <div className="component-name">
-                            Galant
-                        </div>
-                    </div>
-
-                    <div className="component">
-                        <div className="component-img">
-                            <img src='../../../../assets/images/crop-icon.png'/>
-                        </div>
-                        <div className="component-name">
-                            Soja
-                        </div>
-                    </div>
-
-                    <div className="component">
-                        <div className="component-img">
-                            <img src='../../../../assets/images/mix-icon.png'/>
-                        </div>
-                        <div className="component-name">
-                            A
-                        </div>
-                    </div>
-                </div>
-
                 <div className="assay-description">
                     <div className="title">Descripción</div>
                     <div className="content">{ensayo.description}</div>
@@ -132,7 +118,7 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
             
             <Button title="Dashboard"
                     className="action-button"
-                    onClick={()=>onSelect(ensayo.idAssay)}
+                    onClick={()=>goToDashboard()}
                 /> 
 
         </div>

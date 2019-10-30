@@ -1,7 +1,7 @@
 import * as React from "react";
 import CropsForm from "./CropsForm";
 
-import CrudView from '../CRUD/Crud';
+import CrudView from '../../Crud';
 
 
 const Crops: React.SFC = () => {
@@ -10,7 +10,7 @@ const Crops: React.SFC = () => {
     <CrudView 
         title= 'Cultivos'
         searchUrl= '/cultivos'
-        deleteUrl= '/cultivos/eliminar'
+        deleteUrl= '/cultivos/eliminar?idCrop='
         createUrl= '/cultivos/insertar'
         updateUrl= '/cultivos/modificar'
         form= {CropsForm}

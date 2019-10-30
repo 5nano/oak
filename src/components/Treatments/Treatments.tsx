@@ -2,7 +2,6 @@ import * as React from 'react';
 import Treatment from './Components/TreatmentCard/Treatment';
 import ITreatment from '../../Interfaces/ITreatment';
 import TreatmentForm from './Components/Form/TreatmentForm';
-import { IValues } from '../Form/Form';
 import BushService from '../../services/bush';
 import Button from '../Utilities/Buttons/DefaultButton/Button';
 import Info from '../Utilities/Messages/Info';
@@ -29,10 +28,11 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
          setLoading(true)
          return BushService.get(`/ensayo/tratamientos?idAssay=${idAssay}`)
                    .then((data:Array<ITreatment>)=>{
+                       console.log(data)
                        setTreatments(data)
                        setLoading(false)
                        return true
-                    }) 
+                    })
     }
 
    
@@ -43,8 +43,8 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
           description:newTreatment.description,
           pressure: newTreatment.pressure,
           experimentsLength:newTreatment.experimentsLength,
-          idMixture: newTreatment.mix.id,
-          idAgrochemical: newTreatment.agrochemical.id
+          idMixture: newTreatment.mix.idMixture,
+          idAgrochemical: newTreatment.agrochemical.idAgrochemical
         }
     
          return BushService.post('/tratamientos/insertar', treatmentData)
@@ -80,16 +80,19 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                         </div>
                         <Button title="Nuevo Tratamiento"
                                 disabled={newTreatment}
-                                onClick={()=> setNewTreatment(!newTreatment)}/>    
+                                onClick={()=> setNewTreatment(true)}/>    
                     </div>
                     {newTreatment && 
-                        <div className="form-wrapper">
-                            <div className="form-content">
+                        <div className="form-crud-wrapper">
+                            <div className="form-cancel" onClick={()=>setNewTreatment(false)}>
+                                <i className="icon icon-left-open"/>
+                             </div>
                                 <TreatmentForm submitTreatmentForm={submitTreatmentForm}/>
-                            </div>
+                           
                             
                         </div>
                     }
+
                 </div>
             }
 

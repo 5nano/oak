@@ -29,11 +29,10 @@ class BushService {
 
   static put = (path, body) => BushService.doRequest(path, 'PUT', body);
 
-  static post = (path, body) => BushService.doRequest(path, 'POST', body);
+  static post = (path, body?) => BushService.doRequest(path, 'POST', body);
 
-  static patch = (path, body) => BushService.doRequest(path, 'PATCH', body);
+  static patch = (path, body?) => BushService.doRequest(path, 'PATCH', body);
 
-  static delete = (path,body?) => BushService.doRequest(path, 'DELETE',body);
 }
 
 export default BushService;

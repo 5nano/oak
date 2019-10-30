@@ -2,45 +2,56 @@ import * as React from "react";
 import Ensayos from './components/Ensayos/Ensayos';
 import { IEnsayo } from '../../Interfaces/IEnsayo';
 import { RouteComponentProps } from 'react-router-dom';
-import { buildUrl } from "../Utilities/QueryParamsURLBuilder";
 import BushService from '../../services/bush';
-import Spinner from "react-spinner-material";
 import HomeSearcher from "./components/HomeSearcher/HomeSearcher";
 import Loader from "../Utilities/Loader/Loader";
 import Tabs from "./components/Tabs/tabs";
+import { IAssay } from "../Assay/Assay";
 
 export type assayState = 'ALL' | 'ACTIVE' | 'FINISHED' | 'ARCHIVED';
 
 const assayStates: assayState[] = ['ALL','ACTIVE','FINISHED',"ARCHIVED"]
-export interface IHomesState {
-    ensayos: Array<IEnsayo>,
+
+export interface IHomeState {
+    assays: Array<IEnsayo>,
+    filteredAssays: Array<IEnsayo>,
     experimentos: Array<object>,
     showDataUploadMenu: boolean,
     loading:boolean,
+    state: assayState
 }
+
+export interface IHomeContext extends IHomeState {
+    updateAssays:Function;
+  }
+export const HomeContext = React.createContext<IHomeContext | undefined> (
+undefined
+);
+
 
 export interface IHomesProps extends RouteComponentProps {
-
 }
 
-export class Homes extends React.Component<IHomesProps,IHomesState> {
+export class Homes extends React.Component<IHomesProps,IHomeState> {
 
     constructor(props: IHomesProps){
         super(props);
         this.state ={
-            ensayos: [],
+            assays: [],
+            filteredAssays: [],
             experimentos: [],
             showDataUploadMenu: false,
-            loading:true
+            loading:true,
+            state: 'ALL'
         };
-        ;
-        this.goToDashboard = this.goToDashboard.bind(this);
         this.showDataUploadMenu = this.showDataUploadMenu.bind(this);
     }
     
     componentDidMount(){
         this.fetchEnsayos('ALL')
     }
+
+    
 
     private showDataUploadMenu(event: any) {
         event.preventDefault();
@@ -52,29 +63,22 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
     private fetchEnsayos = async (state:assayState): Promise<void> => {
         this.setState({loading:true})
         BushService.get(`/ensayos?state=${state}`)
-            .then(ensayos => {
+            .then((assays:Array<IEnsayo>) => {
+                console.log(assays)
+                
                 this.setState({
                     ...this.state,
                     loading:false,
-                    ensayos
+                    assays,
+                    filteredAssays:assays
                 });
                 
             })
       }
-
-    private goToDashboard(assayId: IEnsayo["idAssay"]){
-        this.props.history.push(`/assay/${assayId}/dashboard`);
-    }
-
-    private goToQrs(assayId: IEnsayo["idAssay"]){
-        this.props.history.push(`/assay/${assayId}/qrs`);
-    }
-
-    private goToTreatments(assayId: IEnsayo["idAssay"]){
-        this.props.history.push(`/assay/${assayId}/treatments`);
-    }
-
-    private showExperimentos = async (assayId: number): Promise<void> => {
+      
+      
+  
+      private showExperimentos = async (assayId: number): Promise<void> => {
         /**
          * Currently unused, we'll probably want to show some info like experiment count in the future
          */
@@ -87,33 +91,41 @@ export class Homes extends React.Component<IHomesProps,IHomesState> {
             });
     }
 
-    private removeAssay(assayId: IEnsayo['idAssay']){
-        BushService.delete(buildUrl('/ensayos/eliminar',{
-            assayId:assayId
-         }))
-    }
-
 
     private handleTab(state:assayState){
         this.fetchEnsayos(state)
     }
 
+    private updateAssays(){
+        this.fetchEnsayos(this.state.state)
+    }
+
+    private setFilteredAssays(filteredAssays:Array<IEnsayo>){
+        this.setState({
+            ...this.state,
+            filteredAssays
+        })
+    }
     render(){
+        const context: IHomeContext = {
+            ...this.state,
+            updateAssays:this.updateAssays.bind(this)
+          };
         return(
+            
             <div className="home">
              
                 <Tabs assayStates={assayStates}
                       handleTab={this.handleTab.bind(this)}
                       />
         
-                <HomeSearcher/>
+                <HomeSearcher assays={this.state.assays}
+                              setFilteredAssays={this.setFilteredAssays.bind(this)}/>
 
                 {!this.state.loading?
-                <Ensayos ensayos={this.state.ensayos} 
-                onSelect={this.goToDashboard.bind(this)}  
-                onQrs={this.goToQrs.bind(this)}
-                onRemove={this.removeAssay.bind(this)} 
-                onTreatments={this.goToTreatments.bind(this)}/>
+                    <HomeContext.Provider value={context}>
+                        <Ensayos {...this.props} ensayos={this.state.filteredAssays} />
+                    </HomeContext.Provider>
                 :<Loader/>
                 }
             </div>

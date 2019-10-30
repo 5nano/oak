@@ -4,8 +4,9 @@ import BushService from '../../services/bush';
 import Button from "../Utilities/Buttons/DefaultButton/Button";
 import { ISearchItem } from "../../Interfaces/SearchItem";
 import Search from "../Search/Search";
-import { ItemType } from "../Search/components/Item";
 import Loader from "../Utilities/Loader/Loader";
+import { ItemType } from "../Search/components/Item";
+import Error from "../Utilities/Messages/Error";
 
 
 export interface ICrudViewProps{
@@ -21,7 +22,8 @@ export interface ICrudViewProps{
 interface ICrudViewState{
   formRequest:boolean,
   loading:boolean,
-  data: Array<any>
+  data: Array<any>,
+  serverError:string
 }
 
 class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
@@ -32,7 +34,8 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
     this.state = {
       formRequest: false,
       loading: true,
-      data:[]
+      data:[],
+      serverError:''
     }
 
     this.submitForm = this.submitForm.bind(this)
@@ -50,6 +53,7 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
   }
 
   submitForm(values:IValues): Promise<boolean> {
+    this.setState({serverError:''})
     return BushService.post(this.props.createUrl, values)
       .then(() => {
         this.retrieve().then(()=>this.setFormRequest(false))
@@ -59,19 +63,40 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
   
   retrieve():Promise<void> {
     this.setState({loading:true})
+
     return BushService.get(this.props.searchUrl)
-                      .then((data:Array<any>) => {
-                        data.sort
+                      .then((data:Array<ISearchItem>) => {
                         this.setState({data:data,loading:false})
                       })
   }
 
    remove (object:ISearchItem):Promise<void> {
-      return BushService.delete(this.props.deleteUrl,object)
-                        .then(() => {this.retrieve()})  
+     this.setState({serverError:''})
+     let id:Number;
+     switch(this.props.type){
+       case 'agrochemical':
+            id=object.idAgrochemical
+         break;
+        case 'mix':
+            id=object.idMixture
+          break;
+        case 'crop':
+            id=object.idCrop
+          break;
+     }
+      let urlDelete = this.props.deleteUrl+id
+      return BushService.post(urlDelete)
+                        .then(() => {this.retrieve()}) 
+                        .catch(error => {
+                          error.json()
+                               .then(error => this.setState({serverError:error.message}))
+                        })
+
+                        
     }
 
     update(object:ISearchItem):Promise<void> {
+      this.setState({serverError:''})
       return BushService.patch(this.props.updateUrl,object)
                         .then(() => {this.retrieve()})
     }
@@ -79,26 +104,42 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
     render(){
      const {title,type,form:Form} = this.props
      
+     const singleTitle = title.substring(0,title.length - 1).toLowerCase()
       return (
           <div className="crud-container">
               <div className="crud-title">
                 {title}
               </div>
 
+              <div className="crud-error">
+                {this.state.serverError.length>0 &&
+                <Error message="Todavia se encuentran ensayos asociados "/>
+                }
+
+              </div>
+
               {this.state.loading? <Loader/>
               :
               <div className="layout-wrapper">
-                  <div className="search-container-wrapper">
+                  <div className="search-crud-wrapper">
                       <Search data={this.state.data} 
                               retrieve={this.retrieve}
                               remove={this.remove}
                               update={this.update}
                               type={type}/>
-                      <Button title={`Nuevo ${title.substring(0,title.length - 1).toLowerCase()} `}
+                      <Button title={title==='Mezclas'?'Nueva '+ singleTitle:'Nuevo '+ singleTitle}
                               onClick={()=>this.setFormRequest(true)}
+                              disabled={this.state.formRequest}
                               />
                   </div>
-                  {this.state.formRequest && <Form submitForm={this.submitForm}/>}
+                  {this.state.formRequest &&
+                    <div className="form-crud-wrapper">
+                      <div className="form-cancel" onClick={()=>this.setFormRequest(false)}>
+                          <i className="icon icon-left-open"/>
+                      </div>
+                        <Form submitForm={this.submitForm.bind(this)}/>
+                    </div>
+                       }
               </div>
               }
           </div>

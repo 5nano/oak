@@ -1,12 +1,10 @@
 import * as React from "react";
-import { Form, IFields} from "../Form/Form";
-import { Field } from "../Field/Field";
-import { IComponentFormProps } from "../Form/IFormComponentProps";
-import {requiredValidation, maxLengthValidation } from "../Form/Validation";
-import NewComponentButton from "../Utilities/Buttons/NewComponentButton";
+import { Form, IFields} from "../../../Form/Form";
+import { Field } from "../../../Field/Field";
+import { IComponentFormProps } from "../../../Form/IFormComponentProps";
+import { requiredValidation, maxLengthValidation } from "../../../Form/Validation";
 
-
-const AgrochemicalsForm: React.SFC<IComponentFormProps> = (props) => {
+const CropsForm: React.SFC<IComponentFormProps> = (props) => {
 
   //fieldName must match with fieldId
   const fields: IFields = {
@@ -24,13 +22,11 @@ const AgrochemicalsForm: React.SFC<IComponentFormProps> = (props) => {
   };
   
   const {submitForm} = props;
-  
   return (
-
     <Form
       submitForm={submitForm}
       fields = {fields}
-      title = "Registrar"
+      title = "Ingresa un nuevo cultivo"
       render={() => (
         <React.Fragment>
           
@@ -43,4 +39,4 @@ const AgrochemicalsForm: React.SFC<IComponentFormProps> = (props) => {
   );
 };
 
-export default AgrochemicalsForm;
+export default CropsForm;
