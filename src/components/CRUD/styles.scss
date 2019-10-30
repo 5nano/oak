@@ -20,6 +20,35 @@
 
     overflow: auto;
 
+     
+    .crud-title{
+        display:flex;
+        align-items: flex-start;
+
+        font-size: 32px;
+        color: #6AC1A9;
+
+        width:100%;
+        padding: 40px 0px;
+    
+           img{
+               flex-grow: 0;
+               flex-shrink: 0;
+               width: 5rem;
+               height: 5rem;
+           }
+           p{
+               color: white;
+           }
+   }
+
+    .crud-error{
+        display:flex;
+        justify-content: center;
+        width: 100%;
+
+    }
+
     .layout-wrapper{
         display:flex;
         width:100%;
@@ -75,25 +104,5 @@
              color:white;
          }
      }
-     
-     .crud-title{
-         display:flex;
-         align-items: flex-start;
-
-         font-size: 32px;
-         color: #6AC1A9;
-
-         width:100%;
-         padding: 40px 0px;
-     
-            img{
-                flex-grow: 0;
-                flex-shrink: 0;
-                width: 5rem;
-                height: 5rem;
-            }
-            p{
-                color: white;
-            }
-    }
+    
 }

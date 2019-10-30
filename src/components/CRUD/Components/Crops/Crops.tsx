@@ -10,7 +10,7 @@ const Crops: React.SFC = () => {
     <CrudView 
         title= 'Cultivos'
         searchUrl= '/cultivos'
-        deleteUrl= '/cultivos/eliminar?cropId='
+        deleteUrl= '/cultivos/eliminar?idCrop='
         createUrl= '/cultivos/insertar'
         updateUrl= '/cultivos/modificar'
         form= {CropsForm}

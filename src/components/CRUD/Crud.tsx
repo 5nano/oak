@@ -6,6 +6,7 @@ import { ISearchItem } from "../../Interfaces/SearchItem";
 import Search from "../Search/Search";
 import Loader from "../Utilities/Loader/Loader";
 import { ItemType } from "../Search/components/Item";
+import Error from "../Utilities/Messages/Error";
 
 
 export interface ICrudViewProps{
@@ -21,7 +22,8 @@ export interface ICrudViewProps{
 interface ICrudViewState{
   formRequest:boolean,
   loading:boolean,
-  data: Array<any>
+  data: Array<any>,
+  serverError:string
 }
 
 class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
@@ -32,7 +34,8 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
     this.state = {
       formRequest: false,
       loading: true,
-      data:[]
+      data:[],
+      serverError:''
     }
 
     this.submitForm = this.submitForm.bind(this)
@@ -50,6 +53,7 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
   }
 
   submitForm(values:IValues): Promise<boolean> {
+    this.setState({serverError:''})
     return BushService.post(this.props.createUrl, values)
       .then(() => {
         this.retrieve().then(()=>this.setFormRequest(false))
@@ -67,6 +71,7 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
   }
 
    remove (object:ISearchItem):Promise<void> {
+     this.setState({serverError:''})
      let id:Number;
      switch(this.props.type){
        case 'agrochemical':
@@ -81,10 +86,17 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
      }
       let urlDelete = this.props.deleteUrl+id
       return BushService.post(urlDelete)
-                        .then(() => {this.retrieve()})  
+                        .then(() => {this.retrieve()}) 
+                        .catch(error => {
+                          error.json()
+                               .then(error => this.setState({serverError:error.message}))
+                        })
+
+                        
     }
 
     update(object:ISearchItem):Promise<void> {
+      this.setState({serverError:''})
       return BushService.patch(this.props.updateUrl,object)
                         .then(() => {this.retrieve()})
     }
@@ -101,6 +113,13 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
           <div className="crud-container">
               <div className="crud-title">
                 {title}
+              </div>
+
+              <div className="crud-error">
+                {this.state.serverError.length>0 &&
+                <Error message="Todavia se encuentran ensayos asociados "/>
+                }
+
               </div>
 
               {this.state.loading? <Loader/>
@@ -121,7 +140,7 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
                       <div className="form-cancel" onClick={()=>this.setFormRequest(false)}>
                           <i className="icon icon-left-open"/>
                       </div>
-                        <Form submitForm={this.submitForm}
+                        <Form submitForm={this.submitForm.bind(this)}
                               cancel={this.cancelForm}/>
                     </div>
                        }
