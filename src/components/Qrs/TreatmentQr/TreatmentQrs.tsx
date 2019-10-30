@@ -13,13 +13,6 @@ const TreatmentQrs:React.SFC<ITreatmentQrsProps> = (props) => {
 
         
             <div className="treatment-qrs-container">
-              <div className="treatment-qrs-title">
-                  Códigos QR del tratamiento {treatment.name}
-              </div>
-              <button type='button'>
-                  Imprimir
-              </button>
-
               <div className="treatment-qrs">
                 {treatment.qrs
                            .map(value => {

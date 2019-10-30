@@ -19,8 +19,9 @@ const TreatmentSelector:React.SFC<TreatmentSelectorProps> = (props) => {
                     {  e.preventDefault();
                       onSelect(e.currentTarget.value)} 
                   }
+                  className="treatment-selector"
+                  
                 >
-                  <option value='' selected disabled hidden/>
                   {treatments &&
                     treatments.map(treatment => {return treatment.name})
                                .map(treatmentName => (
@@ -28,7 +29,7 @@ const TreatmentSelector:React.SFC<TreatmentSelectorProps> = (props) => {
                                     {treatmentName}
                                 </option>
                     ))}
-                </select>
+          </select>
     )
 }
 

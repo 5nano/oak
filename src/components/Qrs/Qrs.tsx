@@ -4,13 +4,12 @@ import { buildUrl } from '../Utilities/QueryParamsURLBuilder';
 import TreatmentSelector from '../Treatments/Components/Selector/TreatmentSelector';
 import TreatmentQrs from './TreatmentQr/TreatmentQrs';
 import BushService from '../../services/bush';
+import Info from '../Utilities/Messages/Info';
 
   interface IQrsState{
-      assayId: string,
       treatments: Array<ITreatment>,
       loading:boolean,
       actualTreatment:ITreatment,
-      qrsRequest: boolean
   }
   
   interface IQrsProps{
@@ -25,45 +24,36 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
         super(props)
 
         this.state = {
-            assayId:props.match.params.assayId,
             treatments:[],
             loading:true,
             actualTreatment:null,
-            qrsRequest:false,
         }
     }
 
     componentDidMount(){
-        var treatments: ITreatment[] = [];
+        this.setState({loading:true})
         
         BushService.get(buildUrl('/ensayo/tratamientos',{
             idAssay:this.props.match.params.assayId
-        }))
-          .then(data => {
-              console.log(data)
-                Object.keys(data).forEach(key => {
-                    let treatment:ITreatment={
-                        idAssay:data[key].idAssay,
-                        idTreatment:data[key].idTreatment,
-                        pressure:data[key].pressure,
-                        name:data[key].name,
-                        description:data[key].description,
-                        experimentsLength: data[key].experimentsLength
-                    }
-                    treatments.push(treatment)
+        })).then((data:Array<ITreatment>) => {
+                    this.setState({treatments:data,
+                                  actualTreatment:data[0],
+                                })
+                    return data[0]
                 })
-                this.setState({treatments:treatments,
-                              actualTreatment:treatments[0],
-                              loading:false})
-        })
+                .then(treatment => {
+                    this.setNewTreatment(treatment.name)
+                })
+            
     }
 
-    setNewTreatment = (treatmentName:string) => {
+    setNewTreatment = (treatmentName:string):Promise<void> => {
+        this.setState({loading:true})
         let treatment:ITreatment;
         treatment = this.state.treatments.find(treatment => treatment.name === treatmentName)
         treatment.qrs = [];
        
-        BushService.get(buildUrl('/tratamiento/QRs',{
+       return BushService.get(buildUrl('/tratamiento/QRs',{
             idTreatment:treatment.idTreatment
         }))
           .then(data => {
@@ -72,7 +62,7 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
             Object.keys(data.experimentsQR).forEach(key=>{
                 treatment.qrs.push(data.experimentsQR[key])
             })
-            this.setState({actualTreatment:treatment,qrsRequest:true})
+            this.setState({actualTreatment:treatment,loading:false})
         })
         
     }
@@ -81,14 +71,12 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
         return(
             <div className="qrs-wrapper">
                 <div className="qrs-title">
-                    Códigos QRs del ensayo
+                    Códigos QRs del ensayo {this.props.match.params.assayId}
                 </div>
-
-                
 
                 {!this.state.loading && this.state.treatments.length>0 &&
                 <div className="qrs-selector">
-                        <p>Eliga el tratamiento para ver sus QRs</p>
+                        <p>Elegi el tratamiento para ver sus QRs</p>
                         <TreatmentSelector treatments={this.state.treatments}
                                            onSelect={this.setNewTreatment.bind(this)}
                                            actualTreatment={this.state.actualTreatment}/>                   
@@ -96,18 +84,13 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
                 }
 
                 {!this.state.loading && this.state.treatments.length===0 &&
-                    <div>
-                        Este ensayo no presenta tratamientos
-                    </div>
+                   <Info message="Este ensayo no presenta tratamientos"/>
                 }
 
-                {this.state.qrsRequest && 
-                <TreatmentQrs treatment={this.state.actualTreatment}/>
+                {!this.state.loading && 
+                    <TreatmentQrs treatment={this.state.actualTreatment}/>
                 }
 
-
-                
-                
             </div>
         )
     }
