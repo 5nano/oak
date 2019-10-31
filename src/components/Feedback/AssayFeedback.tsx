@@ -46,7 +46,6 @@ const AssayFeedback:React.SFC<IAssayFeedbackProps> = (props) => {
                     <Rating 
                         name="assay-feedback"
                         size="large"
-                        precision={0.5}
                         value={rating}
                         onChange={(event,newValue) => setRating(newValue)}
                     />

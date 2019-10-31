@@ -68,8 +68,6 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
         this.setState({loading:true})
         BushService.get(`/ensayos?state=${state}`)
             .then((assays:Array<IEnsayo>) => {
-                console.log(assays)
-                
                 this.setState({
                     ...this.state,
                     loading:false,
@@ -110,7 +108,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
 
     private finishAssay(stars:Number,comments:string):Promise<void>{
         return BushService.patch(`/ensayo/terminar?idAssay=${this.state.assayToFinish}&&stars=${stars}&&comments=${comments}`)
-        .then(()=>console.log("finalizado"))
+        .then(()=>this.closeAssayFeedback())
     }
 
     private closeAssayFeedback():void{
