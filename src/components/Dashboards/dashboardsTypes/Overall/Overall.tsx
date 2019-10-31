@@ -8,6 +8,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import GreenFreq from '../GreenFrequency/GreenFrequency';
 import YellowFreq from '../YellowFrequency/YellowFrequency';
 import LeafArea from '../LeafArea/LeafArea';
+import AveragedTimeLine from '../AveragedTimeLine/AveragedTimeLine';
 
 export interface OverallComponentState {
   loading: boolean,
@@ -39,8 +40,9 @@ class OverallComponent extends React.Component<OverallComponentProps, OverallCom
     const leafAreaHasData = this.props.data[LeafArea.id] && this.props.data[LeafArea.id].box && Object.keys(this.props.data[LeafArea.id].box).length;
     const yellowFreqHasData = this.props.data[YellowFreq.id] && Object.keys(this.props.data[YellowFreq.id]).length;
     const greenFreqHasData = this.props.data[GreenFreq.id] && Object.keys(this.props.data[GreenFreq.id]).length;
+    const averagedTimeLineHasData = this.props.data[AveragedTimeLine.id] && Object.keys(this.props.data[AveragedTimeLine.id]).length;
 
-    if (!leafAreaHasData && !yellowFreqHasData && !greenFreqHasData) return this.props.onEmptyRender();
+    if (!leafAreaHasData && !yellowFreqHasData && !greenFreqHasData && !averagedTimeLineHasData) return this.props.onEmptyRender();
 
     return (
         <div className="Overall">
@@ -50,6 +52,7 @@ class OverallComponent extends React.Component<OverallComponentProps, OverallCom
             </div>
             <div className="right-panel">
                 <YellowFreq.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[YellowFreq.id]} graphPosition="right"/>
+                <AveragedTimeLine.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[AveragedTimeLine.id]} graphPosition="right"/>
             </div>
         </div>
     );
