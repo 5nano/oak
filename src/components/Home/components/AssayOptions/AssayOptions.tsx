@@ -6,6 +6,7 @@ import TagForm from '../../../Tags/TagForm';
 import Tags from '../../../Tags/Tags';
 import { RouteComponentProps } from 'react-router';
 import { HomeContext, IHomeContext } from '../../Home';
+import { createContext } from 'vm';
 
 
 interface IAssayOptionsProps extends RouteComponentProps{
@@ -40,12 +41,6 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
         return BushService.patch(`/ensayo/activar?idAssay=${idAssay}`)
                    .then(()=>console.log("activado"))
     }
-
-    const finishAssay = ():Promise<void> => {
-        return BushService.patch(`/ensayo/terminar?idAssay=${idAssay}`)
-                   .then(()=>console.log("finalizado"))
-    }
-
     const archiveAssay = ():Promise<void> => {
         return BushService.patch(`/ensayo/archivar?idAssay=${idAssay}`)
                    .then(()=>console.log("archivado"))
@@ -86,9 +81,7 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
                                 Tags
                             </a>
                             <a className="option"
-                                onClick={()=>finishAssay().then(()=>{
-                                    context.updateAssays()
-                                })}>
+                                onClick={()=>context.finishAssay(idAssay)}>
                                 Finalizar
                             </a>
                             <a className="option"

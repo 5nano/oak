@@ -24,7 +24,7 @@ const HomeSearcher:React.SFC<IHomeSearcherProps> = (props) => {
     }
 
     return(
-        <div className="assay-searcher">
+        <div id="home-searcher" className="assay-searcher">
             <input className="input-search"
                    type="text" 
                    value={stringSearch}

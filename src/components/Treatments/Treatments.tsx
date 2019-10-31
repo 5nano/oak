@@ -6,6 +6,7 @@ import BushService from '../../services/bush';
 import Button from '../Utilities/Buttons/DefaultButton/Button';
 import Info from '../Utilities/Messages/Info';
 import Loader from '../Utilities/Loader/Loader';
+import { IEnsayo } from '../../Interfaces/IEnsayo';
 
 export  interface ITreatmentsProps{
         match: {
@@ -17,11 +18,14 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
     const [newTreatment,setNewTreatment] = React.useState(false)
     const [treatments,setTreatments] = React.useState<Array<ITreatment>>([])
     const [loading,setLoading] = React.useState(true)
+    const [assay,setAssay] = React.useState<string>('')
     const idAssay = parseInt(props.match.params.assayId)
 
 
     React.useEffect(()=>{
-        fetchTreatments()
+        fetchAssay().then(()=>{
+            fetchTreatments()
+        })
     },[])
 
     const fetchTreatments = ():Promise<void> => {
@@ -32,6 +36,13 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                        setLoading(false)
                     })
     }
+
+    const fetchAssay = ():Promise<void> => {
+        return BushService.get(`/ensayo/?idAssay=${idAssay}`)
+                  .then((data:IEnsayo)=>{
+                      setAssay(data.name)
+                   })
+   }
 
    
     const submitTreatmentForm=(newTreatment:ITreatmentBackend):Promise<void>=>{
