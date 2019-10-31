@@ -8,9 +8,6 @@ const Treatment:React.SFC<ITreatmentProps> = (props) => {
 
     const {treatment} = props;
 
-    React.useEffect(()=>{
-        console.log(props.treatment)
-    })
     return(
         <div className="treatment-card">
 

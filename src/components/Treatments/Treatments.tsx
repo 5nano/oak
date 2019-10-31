@@ -55,7 +55,7 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
             <div className="crud-container">
 
                 <div className="crud-title">
-                 Ensayo {idAssay}/Tratamientos
+                 Ensayo {assay}/Tratamientos
                 </div>
 
                 {loading
