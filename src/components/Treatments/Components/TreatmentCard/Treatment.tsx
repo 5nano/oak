@@ -1,13 +1,16 @@
 import * as React from 'react'
-import ITreatment from '../../../../Interfaces/ITreatment';
+import {ITreatment} from '../../../../Interfaces/ITreatment';
 
 export  interface ITreatmentProps{
-    treatment:ITreatment,
+    treatment:ITreatment
 }
 const Treatment:React.SFC<ITreatmentProps> = (props) => {
 
     const {treatment} = props;
 
+    React.useEffect(()=>{
+        console.log(props.treatment)
+    })
     return(
         <div className="treatment-card">
 
@@ -27,7 +30,7 @@ const Treatment:React.SFC<ITreatmentProps> = (props) => {
                 </div>
 
                 <div className="content">
-                    {treatment.agrochemical}
+                    {treatment.agrochemical.name}
                 </div>
             </div>
 
@@ -37,7 +40,7 @@ const Treatment:React.SFC<ITreatmentProps> = (props) => {
                 </div>
 
                 <div className="content">
-                    {treatment.mix}
+                   {treatment.mixture.name}
                 </div>
             </div>
 

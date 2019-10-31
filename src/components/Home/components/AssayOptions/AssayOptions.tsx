@@ -36,23 +36,23 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
         props.history.push(`/assay/${idAssay}/treatments`);
     }
 
-    const activeAssay = () => {
-        BushService.patch(`/ensayo/activar?idAssay=${idAssay}`)
+    const activeAssay = ():Promise<void> => {
+        return BushService.patch(`/ensayo/activar?idAssay=${idAssay}`)
                    .then(()=>console.log("activado"))
     }
 
-    const finishAssay = () => {
-         BushService.patch(`/ensayo/terminar?idAssay=${idAssay}`)
+    const finishAssay = ():Promise<void> => {
+        return BushService.patch(`/ensayo/terminar?idAssay=${idAssay}`)
                    .then(()=>console.log("finalizado"))
     }
 
-    const archiveAssay = () => {
-         BushService.patch(`/ensayo/archivar?idAssay=${idAssay}`)
+    const archiveAssay = ():Promise<void> => {
+        return BushService.patch(`/ensayo/archivar?idAssay=${idAssay}`)
                    .then(()=>console.log("archivado"))
     }
 
-    const remove = () =>{
-        BushService.post(`/ensayos/eliminar?assayId=${idAssay}`)
+    const remove = ():Promise<void> =>{
+       return BushService.post(`/ensayos/eliminar?assayId=${idAssay}`)
     }
     
     return(
@@ -86,27 +86,32 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
                                 Tags
                             </a>
                             <a className="option"
-                                onClick={()=>finishAssay()}>
+                                onClick={()=>finishAssay().then(()=>{
+                                    context.updateAssays()
+                                })}>
                                 Finalizar
                             </a>
                             <a className="option"
                                 onClick={()=>{
-                                    archiveAssay()
-                                    context.updateAssays()
+                                    archiveAssay().then(()=>{
+                                        context.updateAssays()
+                                    })
                                     }}>
                                 Archivar
                             </a>
                             <a className="option"
                                 onClick={()=>{
-                                    activeAssay()
-                                    context.updateAssays()
+                                    activeAssay().then(()=>{
+                                        context.updateAssays()
+                                    })
                                     }}>
                                 Activar
                             </a>
                             <a className="option"
                                 onClick={()=>{
-                                    remove()
-                                    context.updateAssays()
+                                    remove().then(()=>{
+                                        context.updateAssays()
+                                    })
                                     }}>
                                 Eliminar 
                             </a>

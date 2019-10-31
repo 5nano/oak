@@ -1,5 +1,5 @@
 import * as React from 'react'
-import ITreatment from '../../Interfaces/ITreatment'
+import {ITreatment} from '../../Interfaces/ITreatment'
 import { buildUrl } from '../Utilities/QueryParamsURLBuilder';
 import TreatmentSelector from '../Treatments/Components/Selector/TreatmentSelector';
 import TreatmentQrs from './TreatmentQr/TreatmentQrs';

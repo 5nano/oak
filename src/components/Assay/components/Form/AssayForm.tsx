@@ -77,7 +77,7 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
           <Form
             submitForm={this.submitForm.bind(this)}
             fields = {fields}
-            title = "Registrar"
+            title = "Registra tu nuevo ensayo"
             render={() => (
               <React.Fragment>
                 

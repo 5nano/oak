@@ -1,14 +1,24 @@
 import { IMix } from "./Mix";
 import { IAgrochemical } from "./Agrochemical";
 
-export default interface ITreatment{
-    idAssay?:Number,
+export interface ITreatment{
+    idAssay:Number,
     idTreatment?:Number,
-    mix?:IMix,
-    agrochemical?:IAgrochemical,
+    mixture:IMix,
+    agrochemical:IAgrochemical,
     experimentsLength: Number,
     name:string,
     description:string,
     pressure: Number,
     qrs?:string[];
+}
+
+export  interface ITreatmentBackend{
+    idAssay:Number,
+    name:string,
+    description:string,
+    pressure: Number,
+    experimentsLength:Number,
+    idMixture: Number,
+    idAgrochemical: Number
 }

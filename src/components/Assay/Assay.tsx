@@ -80,7 +80,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
         return(
             <div className="crud-container">
                 <div className="crud-title">
-                  Nuevo ensayo
+                  Ensayo
                 </div>
                 <div className="assay-form-wrapper">
                     {this.state.successAssay && 
