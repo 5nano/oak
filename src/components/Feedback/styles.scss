@@ -1,0 +1,38 @@
+.feedback-container{
+    display:flex;
+    flex-direction: column;
+    
+    width: 600px;
+
+    .feedback-stars{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+
+        padding: 20px 40px;
+
+        .stars-title{
+            display: flex;
+            justify-content: center;
+            font-size:18px;
+            color: #6AC1A9;
+        }
+
+        .stars{
+
+        }
+    }
+
+    .feedback-comments{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+
+        padding:20px 40px; 
+
+        .multitext{
+            width: 500px;
+            height: 200px;
+        }
+    }
+}

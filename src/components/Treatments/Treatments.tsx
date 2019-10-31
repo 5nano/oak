@@ -1,11 +1,12 @@
 import * as React from 'react';
 import Treatment from './Components/TreatmentCard/Treatment';
-import ITreatment from '../../Interfaces/ITreatment';
+import  { ITreatmentBackend, ITreatment } from '../../Interfaces/ITreatment';
 import TreatmentForm from './Components/Form/TreatmentForm';
 import BushService from '../../services/bush';
 import Button from '../Utilities/Buttons/DefaultButton/Button';
 import Info from '../Utilities/Messages/Info';
 import Loader from '../Utilities/Loader/Loader';
+import { IEnsayo } from '../../Interfaces/IEnsayo';
 
 export  interface ITreatmentsProps{
         match: {
@@ -17,50 +18,44 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
     const [newTreatment,setNewTreatment] = React.useState(false)
     const [treatments,setTreatments] = React.useState<Array<ITreatment>>([])
     const [loading,setLoading] = React.useState(true)
-    const idAssay = props.match.params.assayId
+    const [assay,setAssay] = React.useState<string>('')
+    const idAssay = parseInt(props.match.params.assayId)
 
 
     React.useEffect(()=>{
-        fetchTreatments()
+        fetchAssay().then(()=>{
+            fetchTreatments()
+        })
     },[])
 
-    const fetchTreatments = ():Promise<boolean> => {
+    const fetchTreatments = ():Promise<void> => {
          setLoading(true)
          return BushService.get(`/ensayo/tratamientos?idAssay=${idAssay}`)
                    .then((data:Array<ITreatment>)=>{
-                       console.log(data)
                        setTreatments(data)
                        setLoading(false)
-                       return true
                     })
     }
 
+    const fetchAssay = ():Promise<void> => {
+        return BushService.get(`/ensayo/?idAssay=${idAssay}`)
+                  .then((data:IEnsayo)=>{
+                      setAssay(data.name)
+                   })
+   }
+
    
-    const submitTreatmentForm=(newTreatment:ITreatment):Promise<boolean>=>{
-        const treatmentData = {
-          idAssay:idAssay,
-          name:newTreatment.name,
-          description:newTreatment.description,
-          pressure: newTreatment.pressure,
-          experimentsLength:newTreatment.experimentsLength,
-          idMixture: newTreatment.mix.idMixture,
-          idAgrochemical: newTreatment.agrochemical.idAgrochemical
-        }
-    
-         return BushService.post('/tratamientos/insertar', treatmentData)
-            .then(data => {
-                Object.keys(data.experimentsQR).forEach(key=>{
-                    newTreatment.qrs.push(data.experimentsQR[key])
-                })
+    const submitTreatmentForm=(newTreatment:ITreatmentBackend):Promise<void>=>{
+         return BushService.post('/tratamientos/insertar', newTreatment)
+            .then(() => {
                 fetchTreatments()
-                return true;
             })
       }
         return(
             <div className="crud-container">
 
                 <div className="crud-title">
-                 Ensayo {idAssay}/Tratamientos
+                 Ensayo {assay}/Tratamientos
                 </div>
 
                 {loading
@@ -73,8 +68,8 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                             {treatments.length===0? 
                             <Info message="No existen tratamientos"/>
                             :
-                            treatments.map((treatment)=> (
-                                <Treatment treatment={treatment}/>
+                            treatments.map((treatment:ITreatment)=> (
+                                 <Treatment treatment={treatment}/>
                             ))
                         }
                         </div>
@@ -87,9 +82,8 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                             <div className="form-cancel" onClick={()=>setNewTreatment(false)}>
                                 <i className="icon icon-left-open"/>
                              </div>
-                                <TreatmentForm submitTreatmentForm={submitTreatmentForm}/>
-                           
-                            
+                                <TreatmentForm submitTreatmentForm={submitTreatmentForm}
+                                                idAssay={idAssay}/>
                         </div>
                     }
 

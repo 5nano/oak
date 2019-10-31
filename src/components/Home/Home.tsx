@@ -6,7 +6,8 @@ import BushService from '../../services/bush';
 import HomeSearcher from "./components/HomeSearcher/HomeSearcher";
 import Loader from "../Utilities/Loader/Loader";
 import Tabs from "./components/Tabs/tabs";
-import { IAssay } from "../Assay/Assay";
+import AssayFeedback from "../Feedback/AssayFeedback";
+
 
 export type assayState = 'ALL' | 'ACTIVE' | 'FINISHED' | 'ARCHIVED';
 
@@ -18,11 +19,13 @@ export interface IHomeState {
     experimentos: Array<object>,
     showDataUploadMenu: boolean,
     loading:boolean,
-    state: assayState
+    state: assayState,
+    assayToFinish:Number,
 }
 
 export interface IHomeContext extends IHomeState {
     updateAssays:Function;
+    finishAssay:Function
   }
 export const HomeContext = React.createContext<IHomeContext | undefined> (
 undefined
@@ -42,7 +45,8 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
             experimentos: [],
             showDataUploadMenu: false,
             loading:true,
-            state: 'ALL'
+            state: 'ALL',
+            assayToFinish: null
         };
         this.showDataUploadMenu = this.showDataUploadMenu.bind(this);
     }
@@ -64,8 +68,6 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
         this.setState({loading:true})
         BushService.get(`/ensayos?state=${state}`)
             .then((assays:Array<IEnsayo>) => {
-                console.log(assays)
-                
                 this.setState({
                     ...this.state,
                     loading:false,
@@ -100,6 +102,19 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
         this.fetchEnsayos(this.state.state)
     }
 
+    private requestFinishAssay(idAssay:Number):void {
+        this.setState({assayToFinish:idAssay})
+    }
+
+    private finishAssay(stars:Number,comments:string):Promise<void>{
+        return BushService.patch(`/ensayo/terminar?idAssay=${this.state.assayToFinish}&&stars=${stars}&&comments=${comments}`)
+        .then(()=>this.closeAssayFeedback())
+    }
+
+    private closeAssayFeedback():void{
+        this.setState({assayToFinish:null})
+    }
+
     private setFilteredAssays(filteredAssays:Array<IEnsayo>){
         this.setState({
             ...this.state,
@@ -109,7 +124,8 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
     render(){
         const context: IHomeContext = {
             ...this.state,
-            updateAssays:this.updateAssays.bind(this)
+            updateAssays:this.updateAssays.bind(this),
+            finishAssay:this.requestFinishAssay.bind(this)
           };
         return(
             
@@ -121,6 +137,14 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
         
                 <HomeSearcher assays={this.state.assays}
                               setFilteredAssays={this.setFilteredAssays.bind(this)}/>
+
+                {this.state.assayToFinish!=null &&
+                    <AssayFeedback idAssay={this.state.assayToFinish}
+                                   finishAssay={this.finishAssay.bind(this)}
+                                   closeFeedback={this.closeAssayFeedback.bind(this)}
+                                    />
+                                }
+                
 
                 {!this.state.loading?
                     <HomeContext.Provider value={context}>

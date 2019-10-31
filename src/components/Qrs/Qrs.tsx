@@ -1,10 +1,11 @@
 import * as React from 'react'
-import ITreatment from '../../Interfaces/ITreatment'
+import {ITreatment} from '../../Interfaces/ITreatment'
 import { buildUrl } from '../Utilities/QueryParamsURLBuilder';
 import TreatmentSelector from '../Treatments/Components/Selector/TreatmentSelector';
 import TreatmentQrs from './TreatmentQr/TreatmentQrs';
 import BushService from '../../services/bush';
 import Info from '../Utilities/Messages/Info';
+import Loader from '../Utilities/Loader/Loader';
 
   interface IQrsState{
       treatments: Array<ITreatment>,
@@ -73,6 +74,8 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
                 <div className="qrs-title">
                     Códigos QRs del ensayo {this.props.match.params.assayId}
                 </div>
+
+                {this.state.loading && <Loader/>}
 
                 {!this.state.loading && this.state.treatments.length>0 &&
                 <div className="qrs-selector">
