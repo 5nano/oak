@@ -108,8 +108,8 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
         this.setState({assayToFinish:idAssay})
     }
 
-    private finishAssay():Promise<void>{
-        return BushService.patch(`/ensayo/terminar?idAssay=${this.state.assayToFinish}`)
+    private finishAssay(stars:Number,comments:string):Promise<void>{
+        return BushService.patch(`/ensayo/terminar?idAssay=${this.state.assayToFinish}&&stars=${stars}&&comments=${comments}`)
         .then(()=>console.log("finalizado"))
     }
 

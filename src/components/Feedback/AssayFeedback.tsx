@@ -1,6 +1,8 @@
 import * as React from 'react'
 import Popover from '@material-ui/core/Popover';
 import Button from '../Utilities/Buttons/DefaultButton/Button';
+import Rating from '@material-ui/lab/Rating';
+import { setFlagsFromString } from 'v8';
 
 interface IAssayFeedbackProps{
     idAssay:Number,
@@ -12,6 +14,7 @@ const AssayFeedback:React.SFC<IAssayFeedbackProps> = (props) => {
     const [anchorEl,setAnchorEl] = React.useState(document.getElementById('home-searcher'))
     
     const [feedbackComment,setFeedbackComment] = React.useState<string>('')
+    const [rating,setRating] = React.useState<number>(null)
     const handleClose = () => {
         setAnchorEl(null)
         props.closeFeedback()
@@ -40,7 +43,13 @@ const AssayFeedback:React.SFC<IAssayFeedbackProps> = (props) => {
                     Califica tu ensayo
                 </div>
                 <div className="stars">
-
+                    <Rating 
+                        name="assay-feedback"
+                        size="large"
+                        precision={0.5}
+                        value={rating}
+                        onChange={(event,newValue) => setRating(newValue)}
+                    />
                 </div>
             </div>
             <div className="feedback-comments">
@@ -53,9 +62,10 @@ const AssayFeedback:React.SFC<IAssayFeedbackProps> = (props) => {
                       setFeedbackComment( e.currentTarget.value ) 
                   }
                   className="multitext"
+                  style={{resize:'none'}}
                 />
             </div>
-            <Button title="Finalizar ensayo" onClick={()=>props.finishAssay()}/>
+            <Button title="Finalizar ensayo" onClick={()=>props.finishAssay(rating,feedbackComment)}/>
             <Button title="Cancelar" onClick={()=> handleClose()}/>
         </div>
     </Popover>
