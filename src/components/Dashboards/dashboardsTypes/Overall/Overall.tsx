@@ -8,6 +8,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import GreenFreq from '../GreenFrequency/GreenFrequency';
 import YellowFreq from '../YellowFrequency/YellowFrequency';
 import LeafArea from '../LeafArea/LeafArea';
+import LinearTreatments from '../LinearTreatments/LinearTreatments';
 
 export interface OverallComponentState {
   loading: boolean,
@@ -50,6 +51,7 @@ class OverallComponent extends React.Component<OverallComponentProps, OverallCom
             </div>
             <div className="right-panel">
                 <YellowFreq.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[YellowFreq.id]} graphPosition="right"/>
+                <LinearTreatments.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[LinearTreatments.id]} graphPosition="right"/>
             </div>
         </div>
     );

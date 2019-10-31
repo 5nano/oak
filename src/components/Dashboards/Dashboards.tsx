@@ -4,10 +4,11 @@ import LeafArea from './dashboardsTypes/LeafArea/LeafArea';
 import Overall from './dashboardsTypes/Overall/Overall';
 import GreenFreq from './dashboardsTypes/GreenFrequency/GreenFrequency';
 import YellowFreq from './dashboardsTypes/YellowFrequency/YellowFrequency';
-
+import LinearTreatment from './dashboardsTypes/LinearTreatments/LinearTreatments';
 import { DashboardType } from './dashboardsTypes/InterfaceDashboardTypes';
 
 import DashboardSelector from './components/DashboardSelector/DashboardSelector';
+import linearTreatmentType from "./dashboardsTypes/LinearTreatments/LinearTreatments";
 
 interface IDashboardsState{
   assayId: string,
@@ -38,6 +39,7 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
       LeafArea,
       YellowFreq,
       GreenFreq,
+      LinearTreatment
     ];
 
     this.state = {
