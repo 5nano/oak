@@ -11,9 +11,13 @@ import DashboardSelector from './components/DashboardSelector/DashboardSelector'
 import linearTreatmentType from "./dashboardsTypes/LinearTreatments/LinearTreatments";
 import Info from "../Utilities/Messages/Info";
 import Loader from "../Utilities/Loader/Loader";
-
+import BushService from "../../services/bush";
+import { ITag } from "../../Interfaces/Tags";
+import { IEnsayo } from "../../Interfaces/IEnsayo";
+var randomColor = require('randomcolor');
 interface IDashboardsState{
-  assayId: string,
+  assay:IEnsayo,
+  tags: Array<ITag>
   currentDashboard: DashboardType,
   dashboardsData: { [key:string]: Array<number> },
   preloading: number
@@ -29,8 +33,6 @@ interface Dashboards extends React.Component<IDashboardProps, IDashboardsState> 
   dashboardTypes: Array<DashboardType>
 }
 
-/*Mock data*/ 
-const tags = ["Importante","Corto","Secuencial"];
 
 class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
 
@@ -46,14 +48,32 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
     ];
 
     this.state = {
-      assayId: props.match.params.assayId,
+      assay:null,
       currentDashboard: this.dashboardTypes[0],
       dashboardsData: this.dashboardTypes.reduce((acc:{ [key:string]: Array<number> }, dash) => {
         acc[dash.id] = []; return acc }, {}
       ),
-      preloading:0
+      preloading:0,
+      tags:[]
     };
     this.fetchDataFromdashboards();
+    this.fetchTags();
+    this.fetchAssay();
+  }
+
+  fetchTags() {
+    BushService.get(`/ensayo/tags?idAssay=${this.props.match.params.assayId}`)
+                .then((data:Array<ITag>)=> {
+                  data.map(tag => tag.color=randomColor())
+                  this.setState({tags:data})
+                })
+  }
+
+  fetchAssay(){
+    BushService.get(`/ensayo?idAssay=${this.props.match.params.assayId}`)
+                .then((data:IEnsayo) => {
+                  this.setState({assay:data})
+                })
   }
 
   fetchDataFromdashboards() {
@@ -106,12 +126,17 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
     return (
       <div className="Dashboard">
         <div className="dashboard-header">
-          <div className="dashboard-tags">
-            {tags.map(tag => {return <div className="tag">{tag}</div>})}
-          </div>
           <div className="dashboard-title">
             <h1>Dashboard</h1>
-            <h2>Ensayo {this.state.assayId}</h2>
+            <h2>{this.state.assay && this.state.assay.name}</h2>
+          </div>
+          <div className="dashboard-tags">
+            {this.state.tags.map(tag => {
+              return <div className="assay-tag" style={{backgroundColor:tag.color}}>
+                        {tag.name}
+                     </div>
+               })
+            }
           </div>
         </div>
         <div className="dashboard-container">
