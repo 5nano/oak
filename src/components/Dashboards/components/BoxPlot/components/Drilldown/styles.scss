@@ -83,6 +83,11 @@
     }
 
     .experiment {
+        display:flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+
         background-color: #84FAC5;
         padding: 6px;
         padding-left: 17px;
@@ -91,17 +96,33 @@
         font-size: 12px;
         font-weight: 400;
 
-        .experiment-image {
-            width: 150px;
-            height: 150px;
-            margin: 6px auto;
+        .experiment-title{
+
+        }
+
+        .experiment-content{
+            display:flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: flex-start;
+
             padding: 6px;
             border-top: 1px solid rgba(0,0,0,0.2);
-            
-            img {
-                height: 100%;
-                width: 100%;
+
+            .experiment-image {
+                width: 200px;
+                height: 300px;
+                margin: 6px auto;
+                img {
+                    height: 100%;
+                    width: 100%;
+                }
+            }
+
+            .experiment-info{
+
             }
         }
+
     }
 }
