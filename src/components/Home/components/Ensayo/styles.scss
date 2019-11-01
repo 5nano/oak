@@ -66,15 +66,7 @@
             align-items: center;
             flex-wrap: wrap;
 
-            .assay-tag{
-                height: 15px;
-                
-                margin: 5px 10px;
-                padding: 5px 5px;
-
-                border: 1px solid black;
-                border-radius: 32px;
-            }
+            
         }
 
         .assay-description{
@@ -142,4 +134,14 @@
                 }
             }
         }
+}
+
+.assay-tag{
+    height: 15px;
+    
+    margin: 5px 10px;
+    padding: 5px 5px;
+
+    border-radius: 8px;
+    color:white;
 }

@@ -6,6 +6,7 @@ import Plot from 'react-plotly.js';
 import { Layout } from "plotly.js";
 import BushService from '../../../../services/bush';
 import BoxPlot from '../../components/BoxPlot/BoxPlot';
+import Loader from "../../../Utilities/Loader/Loader";
 
 type AssayParamsType = {
     assayId: string,
@@ -50,6 +51,7 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
     }
 
     static fetchData(assayId: string) {
+      
       return Promise.all([
         // BushService.get(`/graficoComparativo/experimentos?assayId=${assayId}`).then(generateExperimentData),
         BushService.get(`/medians/area?assayId=${assayId}`)
@@ -66,7 +68,7 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
     
 
     render() { 
-      debugger;
+      //debugger;
         if (!(this.props.data && this.props.data.box &&  Object.keys(this.props.data.box).length)) return this.props.onEmptyRender();
         // const linearData: Plotly.Data[] = this.props.data.linear.map(experiment => ({
         //     x: experiment.dates,
@@ -110,21 +112,13 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
         return (
             <div className="PlotlyGraph" >
                 {
-                  true &&
                   <BoxPlot 
                     data={this.props.data.box} 
                     dataSuffix="mm^2" 
                     title={name} 
                     graphPosition={this.props.graphPosition} 
                   /> 
-                  // <Plot
-                  //     data={linearData}
-                  //     layout={layout}
-                  //     style={{position: 'relative', display: 'flex', width: "100%", height: "100%"}}
-                  // />
                 }
-
-                <div id='someDiv' />
             </div>
         )
     }
