@@ -73,18 +73,18 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
     render(){
         return (
             <div className="gallery-container">
-                <div className="assays-sidebar">
+                <div className="options-sidebar">
                     {this.state.assays.map(assay => (
-                        <div className="assay-sidebar" onClick={()=>this.showTreatments(assay.idAssay)}>
+                        <div className="option-sidebar" onClick={()=>this.showTreatments(assay.idAssay)}>
                             {assay.name}
                         </div>
                     ))}
                 </div>
                 
                 {this.state.showTreatments &&
-                <div className="treatments-sidebar">
+                <div className="options-sidebar">
                     {this.state.treatments.map(treatment => (
-                        <div className="treatment-sidebar" onClick={()=>this.showExperiments(treatment.idTreatment)}>
+                        <div className="option-sidebar" onClick={()=>this.showExperiments(treatment.idTreatment)}>
                             {treatment.name}
                         </div>
                     ))}
@@ -92,9 +92,9 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
                 }
 
                 {this.state.showExperiments &&
-                <div className="experiments-sidebar">
+                <div className="options-sidebar">
                     {this.state.experiments.map(experiment => (
-                        <div className="experiment-sidebar" onClick={()=>this.showExperimentImages(experiment.experimentId)}>
+                        <div className="option-sidebar" onClick={()=>this.showExperimentImages(experiment.experimentId)}>
                             {experiment.nombre}
                         </div>
                     ))}

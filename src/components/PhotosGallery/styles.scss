@@ -5,7 +5,7 @@
 
     padding: 80px;
 
-    .assays-sidebar{
+    .options-sidebar{
         display:flex;
         flex-direction: column;
         margin: 0 40px;
@@ -14,40 +14,11 @@
 
         overflow: auto;
 
-        .assay-sidebar{
+        .option-sidebar{
             padding:10px;
             margin:5px 0;
             border: 1px solid black;
             
-        }
-    }
-
-    .treatments-sidebar{
-        display:flex;
-        flex-direction:column;
-        justify-content: center;
-
-        margin: 0 40px;
-
-        .treatment-sidebar{
-            padding:10px;
-            margin:5px 0;
-            border: 1px solid black;
-        }
-    }
-
-    .experiments-sidebar{
-        display:flex;
-        flex-direction:column;
-        justify-content: center;
-
-        margin: 0 40px;
-
-
-        .experiment-sidebar{
-            padding:10px;
-            margin:5px 0;
-            border: 1px solid black;
         }
     }
 
@@ -65,8 +36,6 @@
         .experiment-image{
             height: 150px;
             width: 100px;
-
-            margin: 10px;
             img{
                 height: 100%;
                 width: 100%
