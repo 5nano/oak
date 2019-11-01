@@ -35,6 +35,10 @@ const Header = (props:RouteComponentProps) => {
                 </Link>
 
             <div className="header-controller">
+                <Button title="Galeria de fotos" 
+                        onClick={()=>props.history.push('/photos')}
+                        className="header-action"
+                        />
                 <Button title="Cargar datos" 
                         onClick={()=>toggleDataUploadMenu(!showDataUploadMenu)}
                         className="show-data-upload-button header-action"
