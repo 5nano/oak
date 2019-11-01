@@ -13,6 +13,12 @@ export interface ITreatmentQrsProps {
 
 const TreatmentQrs:React.SFC<ITreatmentQrsProps> = (props) => {
     const {treatment} = props;
+
+    const downloadPdf = () => {
+      getPdf().then((pdf) => {
+        pdf.save(`QRs: ${treatment.name}`);
+      })
+    }
     const sendQrsToEmail = () => {
 
       const payload = document.getElementById("treatments-qrs")
@@ -21,7 +27,6 @@ const TreatmentQrs:React.SFC<ITreatmentQrsProps> = (props) => {
           const imgData = canvas.toDataURL('image/png');
           const pdf = new jsPDF();
           pdf.addImage(imgData,'JPEG',0,0);
-          //pdf.save("download.pdf");
           let htmlToSend = {
             payload: pdf.output('datauristring')
           }
@@ -30,11 +35,20 @@ const TreatmentQrs:React.SFC<ITreatmentQrsProps> = (props) => {
           BushService.post(`/mailSender?treatmentName=${treatment.name}&&assayName=harcodeado`,htmlToSend)
 
         })
-      
+    }
+
+    const getPdf = ():Promise<any> => {
+      return html2canvas(document.getElementById("treatments-qrs"))
+              .then((canvas) => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF();
+                pdf.addImage(imgData,'JPEG',0,0);
+                return pdf
+              })
     }
     return(
             <div className="treatment-qrs-container">
-              <Button title="Imprimir" onClick={()=>window.print()}/>
+              <Button title="Descargar PDF" onClick={()=>downloadPdf()}/>
               <Button title="Enviar por correo electrónico" onClick={()=>sendQrsToEmail()}/>
 
              <div id="treatments-qrs" className="treatment-qrs">
