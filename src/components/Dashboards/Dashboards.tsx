@@ -9,11 +9,14 @@ import { DashboardType } from './dashboardsTypes/InterfaceDashboardTypes';
 
 import DashboardSelector from './components/DashboardSelector/DashboardSelector';
 import linearTreatmentType from "./dashboardsTypes/LinearTreatments/LinearTreatments";
+import Info from "../Utilities/Messages/Info";
+import Loader from "../Utilities/Loader/Loader";
 
 interface IDashboardsState{
   assayId: string,
   currentDashboard: DashboardType,
-  dashboardsData: { [key:string]: Array<number> }
+  dashboardsData: { [key:string]: Array<number> },
+  preloading: number
 }
 
 interface IDashboardProps {
@@ -48,6 +51,7 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
       dashboardsData: this.dashboardTypes.reduce((acc:{ [key:string]: Array<number> }, dash) => {
         acc[dash.id] = []; return acc }, {}
       ),
+      preloading:0
     };
     this.fetchDataFromdashboards();
   }
@@ -56,7 +60,13 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
     const componentsToFetch : Set<DashboardType> = new Set([this.state.currentDashboard, ...this.dashboardTypes]);
     componentsToFetch.forEach(({component, id: dashboardId}) => {
       component.fetchData(this.props.match.params.assayId)
-        .then(data => this.storeDataFromDashboard(data, dashboardId));
+                .then(data => this.storeDataFromDashboard(data, dashboardId))
+                .then(()=> this.setState(prevState => {
+                  let preloading=prevState.preloading
+                  preloading ++;
+                  return {preloading}
+                }))
+                
     });
   }
 
@@ -71,9 +81,7 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
 
   renderEmptyDashboard() {
     return (
-      <div className="no-data-yet">
-          Aún no contamos con datos para este ensayo, comienza a sacar fotos
-      </div>
+      <Info message="Aún no contamos con datos para este ensayo, comienza a sacar fotos"/>
     )
   }
 
@@ -86,9 +94,9 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
   renderDashboard(type : DashboardType) {
     const Dashboard = type.component;
 
+    if(this.state.preloading < this.dashboardTypes.length) return <Loader/>
     // Special case
     if (type.id === 'overall') return <Dashboard onEmptyRender={this.renderEmptyDashboard} data={this.state.dashboardsData} />
-    
     return <Dashboard onEmptyRender={this.renderEmptyDashboard} data={this.state.dashboardsData[type.id]} />;
   }
 

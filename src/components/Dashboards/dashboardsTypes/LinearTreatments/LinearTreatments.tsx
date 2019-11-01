@@ -45,7 +45,6 @@ class LinearTreatments extends React.Component<LinearTreatmentsProps> {
 
     render() { 
 
-      debugger;
         if (!(this.props.data && this.props.data.linear &&  Object.keys(this.props.data.linear).length)) return this.props.onEmptyRender();
          
         let averageTreatmentsData = this.props.data.linear[0]
@@ -64,15 +63,6 @@ class LinearTreatments extends React.Component<LinearTreatmentsProps> {
             name: key
           }
         })
-
-        console.log(linearData)
-
-         // const linearData: Plotly.Data[] = this.props.data.linear.map(experiment => ({
-        //     x: experiment.dates,
-        //     y: experiment.values,
-        //     name: experiment.name,
-        //     type: 'scatter'
-        //   }))
 
           const layout: Partial<Layout> = {
               showlegend: true,
@@ -108,22 +98,11 @@ class LinearTreatments extends React.Component<LinearTreatmentsProps> {
 
         return (
             <div className="PlotlyGraph" >
-                {
-                  true &&
-                  /*<BoxPlot 
-                    data={this.props.data.box} 
-                    dataSuffix="mm^2" 
-                    title={name} 
-                    graphPosition={this.props.graphPosition} 
-                  /> */
-                   <Plot
-                       data={linearData}
-                       layout={layout}
-                       style={{position: 'relative', display: 'flex', width: "100%", height: "100%"}}
-                   />
-                }
-
-                <div id='someDiv' />
+                <Plot
+                    data={linearData}
+                    layout={layout}
+                    style={{position: 'relative', display: 'flex', width: "100%", height: "100%"}}
+                />
             </div>
             
         )

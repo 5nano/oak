@@ -15,7 +15,7 @@ const HomeSearcher:React.SFC<IHomeSearcherProps> = (props) => {
        setStringSearch(stringSearch);
 
         const filteredAssays = assays.filter(function(assay){
-            console.log(assay.tags.length)
+           
             if(assay.tags.length===0) return false
             else return assay.tags.some(tag=>tag.name.toLowerCase().match(stringSearch))
         })
