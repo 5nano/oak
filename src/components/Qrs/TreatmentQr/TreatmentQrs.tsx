@@ -2,6 +2,8 @@ import * as React from 'react'
 import {ITreatment} from '../../../Interfaces/ITreatment'
 import Button from '../../Utilities/Buttons/DefaultButton/Button';
 import BushService from '../../../services/bush';
+var html2canvas = require('html2canvas')
+var jsPDF = require( 'jspdf');
 
 var QrCode = require('qrcode.react');
 
@@ -12,12 +14,23 @@ export interface ITreatmentQrsProps {
 const TreatmentQrs:React.SFC<ITreatmentQrsProps> = (props) => {
     const {treatment} = props;
     const sendQrsToEmail = () => {
-      const payload = {
-        payload: document.getElementById("treatments-qrs").innerHTML
-      }
-      console.log(payload)
-      console.log(treatment.qrs)
-     // BushService.post(`/mailSender?treatmentName=${treatment.name}&&assayName=harcodeado`,payload)
+
+      const payload = document.getElementById("treatments-qrs")
+      html2canvas(payload)
+        .then((canvas) => {
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPDF();
+          pdf.addImage(imgData,'JPEG',0,0);
+          //pdf.save("download.pdf");
+          let htmlToSend = {
+            payload: pdf.output('datauristring')
+          }
+
+          console.log(htmlToSend)
+          BushService.post(`/mailSender?treatmentName=${treatment.name}&&assayName=harcodeado`,htmlToSend)
+
+        })
+      
     }
     return(
             <div className="treatment-qrs-container">
