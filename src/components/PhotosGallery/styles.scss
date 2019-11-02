@@ -8,8 +8,9 @@
 
     .options-sidebar{
         display:flex;
-        flex-direction: column;
-        height: 600px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 200px;
        
 
         overflow: auto;
@@ -19,6 +20,10 @@
             margin:5px 0;
             border: 1px solid black;
             
+            cursor: pointer;
+            &.selected {
+                background-color: #6AC1A9;
+            }
         }
     }
 
