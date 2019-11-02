@@ -1,3 +1,4 @@
+@import './Components/styles.scss';
 .gallery-container{
     display:flex;
     flex-direction: row;
@@ -8,7 +9,6 @@
     .options-sidebar{
         display:flex;
         flex-direction: column;
-        margin: 0 40px;
         height: 600px;
        
 
@@ -23,24 +23,29 @@
     }
 
     .experiment-images-container{
-        display:flex;
-        justify-content: flex-start;
-        flex-direction: row;
-        flex-wrap: wrap;
-
-
         border: 1px solid black;
         min-width: 400px;
         overflow:auto;
 
-        .experiment-image{
-            height: 150px;
-            width: 100px;
-            img{
-                height: 100%;
-                width: 100%
+        .experiment-images{
+            display:flex;
+            justify-content: flex-start;
+            flex-direction: row;
+            flex-wrap: wrap;
+            list-style-type: none;
+
+            .experiment-image{
+                height: 150px;
+                width: 100px;
+                margin: 2.5px;
+                img{
+                    height: 100%;
+                    width: 100%;
+
+                }
             }
         }
+
     }
                     
 

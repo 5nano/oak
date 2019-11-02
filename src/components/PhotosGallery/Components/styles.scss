@@ -1,0 +1,23 @@
+.experiment-popover-container{
+    width: 800px;
+    height: 800px;
+
+    .experiment{
+        display:flex;
+        justify-content: space-around;
+        flex-direction: row;
+        .experiment-image{
+            padding:50px;
+            img{
+                height: 600px;
+                width: 450px ;
+            }
+        }
+
+        .experiment-content{
+            display:flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+    }
+}

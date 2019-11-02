@@ -2,7 +2,8 @@ import * as React from 'react'
 import { IEnsayo } from '../../Interfaces/IEnsayo'
 import { ITreatment } from '../../Interfaces/ITreatment'
 import { IExperimentImage, IBackendExperiment, IExperiment } from '../../Interfaces/Experimento'
-import BushService from '../../services/bush'
+import BushService from '../../services/bush';
+import ExperimentPopover from './Components/ExperimentPopover';
 interface IPhotosGalleryState {
     assays:Array<IEnsayo>,
     treatments:Array<ITreatment>
@@ -11,7 +12,8 @@ interface IPhotosGalleryState {
     loading:boolean,
     showTreatments:boolean,
     showExperiments:boolean,
-    showExperimentImages:boolean
+    showExperimentImages:boolean,
+    experimentImageFocus:IExperimentImage
 }
 interface IPhotosGalleryProps{
 
@@ -29,7 +31,8 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
             loading:true,
             showTreatments: false,
             showExperiments:false,
-            showExperimentImages:false
+            showExperimentImages:false,
+            experimentImageFocus:null
         }
     }
 
@@ -70,9 +73,17 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
                         this.setState({experimentImages:data,loading:false,showExperimentImages:true})
                     })
     }
+
+    showImage(experimentImage:IExperimentImage){
+        this.setState({experimentImageFocus:experimentImage})
+    }
+
+    closeImage(){
+        this.setState({experimentImageFocus:null})
+    }
     render(){
         return (
-            <div className="gallery-container">
+            <div id="gallery-container" className="gallery-container">
                 <div className="options-sidebar">
                     {this.state.assays.map(assay => (
                         <div className="option-sidebar" onClick={()=>this.showTreatments(assay.idAssay)}>
@@ -103,12 +114,21 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
 
                 {this.state.showExperimentImages &&
                 <div className="experiment-images-container">
+                    <div className="experiment-images">
                     {this.state.experimentImages.map(experimentImage => (
                         <div className="experiment-image">
-                            <img src={experimentImage.pathImage}/>
+                            <img src={experimentImage.pathImage}
+                                onClick={()=>this.showImage(experimentImage)}/>
                         </div>
                     ))}
+                    </div>
                 </div>
+                }
+
+                {this.state.experimentImageFocus &&
+                    <ExperimentPopover experiment={this.state.experimentImageFocus}
+                                        closeExperimentImage={this.closeImage.bind(this)}/>
+                
                 }
             </div>
 
