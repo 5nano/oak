@@ -17,6 +17,7 @@ const Ensayos:React.SFC<IEnsayosProps> = (props) => {
             {props.ensayos.map((ensayo: IEnsayo) => (
                <Ensayo {...props} ensayo={ensayo} />
             ))}
+
         </div>
     )
 }

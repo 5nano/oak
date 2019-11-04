@@ -25,7 +25,7 @@ class BushService {
      })
   }
 
-  static get = (path) => BushService.doRequest(path, 'GET');
+  static get = (path,body?) => BushService.doRequest(path, 'GET',body);
 
   static put = (path, body) => BushService.doRequest(path, 'PUT', body);
 

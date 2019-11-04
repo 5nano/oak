@@ -38,7 +38,7 @@ const freqComponentGenerator = (color, name) => class YellowFreqComponent extend
     if (!(this.props.data && Object.keys(this.props.data).length)) return this.props.onEmptyRender();
     return (
         <div className="PlotlyGraph YellowFreq">
-          <BoxPlot data={this.props.data} dataSuffix="mm^2" title={name} graphPosition={this.props.graphPosition} />
+          <BoxPlot data={this.props.data} dataSuffix="Hz" title={name} graphPosition={this.props.graphPosition} />
         </div>
     );
   }

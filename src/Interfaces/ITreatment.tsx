@@ -22,3 +22,15 @@ export  interface ITreatmentBackend{
     idMixture: Number,
     idAgrochemical: Number
 }
+
+export interface ITreatmentQrs{
+    agrochemical: IAgrochemical,
+    assay: string,
+    description: string,
+    experimentsLength: Number,
+    idTreatment:Number,
+    mixture:IMix,
+    name:string,
+    pressure: Number,
+    qrs:Array<string>
+}

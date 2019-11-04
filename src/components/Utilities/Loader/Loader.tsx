@@ -1,10 +1,11 @@
 import * as React from 'react'
-import Spinner from 'react-spinner-material'
 
 const Loader: React.SFC = () => {
     return (
         <div className="loading-container">
-            <img src='../../../assets/gifs/preloading.gif'/>
+            <img src='../../../assets/gifs/preloading.gif' 
+                    width={200}
+                    height={200}/>
         </div>
     )
 }
