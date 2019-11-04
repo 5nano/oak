@@ -41,7 +41,11 @@ const Tags:React.SFC<ITagsProps> = (props) => {
                     })
     }
 
-    const deleteTag = () => {
+    const deleteTag = (tag:ITag) => {
+        BushService.post(`/tags/eliminar?idTag=${tag.idTag}`)
+                    .then(()=>{
+                        fetchTags()
+                    })
     }
     return (
         <div className="tags-container">
@@ -79,7 +83,7 @@ const Tags:React.SFC<ITagsProps> = (props) => {
                                 <i className="icon icon-ok-circled2"/>}
                                 </div>
                             </div>
-                            <div className="tag-delete" onClick={()=>deleteTag()}>
+                            <div className="tag-delete" onClick={()=>deleteTag(tag)}>
                                 <i className="icon icon-trash"/>
                             </div>
                         </div>
