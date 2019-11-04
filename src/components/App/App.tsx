@@ -13,6 +13,7 @@ import Qrs from '../Qrs/Qrs';
 import Landing from '../Landing/Landing';
 import PrivateRoute from '../Utilities/ProtectedRoute/PrivateRoute';
 import Treatments from '../Treatments/Treatments';
+import PhotosGallery from '../PhotosGallery/PhotosGallery';
 
 export interface AppProps { title: string }
 
@@ -59,6 +60,8 @@ const App = (props: AppProps) => {
             <PrivateRoute path='/assay/:assayId/qrs' exact component={Qrs} isLoggedIn={loggedIn}/>
           
             <PrivateRoute path='/assay/:assayId/treatments' exact component={Treatments} isLoggedIn={loggedIn}/>
+
+            <PrivateRoute path='/photos' exact component={PhotosGallery} isLoggedIn={loggedIn}/>
 
           </Switch>
 
