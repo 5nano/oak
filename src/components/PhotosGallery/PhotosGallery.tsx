@@ -4,15 +4,17 @@ import { ITreatment } from '../../Interfaces/ITreatment'
 import { IExperimentImage, IBackendExperiment, IExperiment } from '../../Interfaces/Experimento'
 import BushService from '../../services/bush';
 import ExperimentPopover from './Components/ExperimentPopover';
+import classnames from 'classnames';
+
 interface IPhotosGalleryState {
     assays:Array<IEnsayo>,
     treatments:Array<ITreatment>
     experiments: Array<IExperiment>
     experimentImages:Array<IExperimentImage>
     loading:boolean,
-    showTreatments:boolean,
-    showExperiments:boolean,
-    showExperimentImages:boolean,
+    selectedAssayId:Number,
+    selectedTreatmentId:Number,
+    selectedExperimentId:Number,
     experimentImageFocus:IExperimentImage
 }
 interface IPhotosGalleryProps{
@@ -29,9 +31,9 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
             experiments:[],
             experimentImages:[],
             loading:true,
-            showTreatments: false,
-            showExperiments:false,
-            showExperimentImages:false,
+            selectedAssayId: null,
+            selectedTreatmentId:null,
+            selectedExperimentId:null,
             experimentImageFocus:null
         }
     }
@@ -49,19 +51,19 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
 
     showTreatments(idAssay:Number){
         this.setLoading(true)
-        this.setState({loading:true,showTreatments:false,showExperiments:false,showExperimentImages:false})
+        this.setState({loading:true,selectedAssayId:null,selectedTreatmentId:null,selectedExperimentId:null})
         BushService.get(`/ensayo/tratamientos?idAssay=${idAssay}`)
                     .then((data:Array<ITreatment>) => {
-                        this.setState({treatments:data,loading:false,showTreatments:true})
+                        this.setState({treatments:data,loading:false,selectedAssayId:idAssay})
                     })
     }
 
     showExperiments(idTreatment:Number){
         this.setLoading(true)
-        this.setState({loading:true,showExperimentImages:false,showExperiments:false})
+        this.setState({loading:true,selectedExperimentId:null,selectedTreatmentId:null})
         BushService.get(`/tratamiento/experimentos?treatmentId=${idTreatment}`)
                     .then((data:Array<IExperiment>) => {
-                        this.setState({experiments:data,loading:false,showExperiments:true})
+                        this.setState({experiments:data,loading:false,selectedTreatmentId:idTreatment})
                     })
         
     }
@@ -70,7 +72,7 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
         this.setLoading(true)
         BushService.get(`/experiment/points?experimentId=${idExperiment}`)
                     .then((data:Array<IExperimentImage>) => {
-                        this.setState({experimentImages:data,loading:false,showExperimentImages:true})
+                        this.setState({experimentImages:data,loading:false,selectedExperimentId:idExperiment})
                     })
     }
 
@@ -84,43 +86,68 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
     render(){
         return (
             <div id="gallery-container" className="gallery-container">
-                <div className="options-sidebar">
-                    {this.state.assays.map(assay => (
-                        <div className="option-sidebar" onClick={()=>this.showTreatments(assay.idAssay)}>
-                            {assay.name}
-                        </div>
-                    ))}
+                <div className="options-sidebar treatments">
+                    <div className="option-sidebar column-title">
+                        Ensayo
+                    </div>
+                        {this.state.assays.map(assay => {
+                            const assayClassName = classnames({ 'option-sidebar': true, selected: assay.idAssay === this.state.selectedAssayId})
+                            return (
+                                <div className={assayClassName} onClick={()=>this.showTreatments(assay.idAssay)}>
+                                    {assay.name}
+                                </div>
+                            )
+                        })}
                 </div>
                 
-                {this.state.showTreatments &&
-                <div className="options-sidebar">
-                    {this.state.treatments.map(treatment => (
-                        <div className="option-sidebar" onClick={()=>this.showExperiments(treatment.idTreatment)}>
-                            {treatment.name}
-                        </div>
-                    ))}
+                {this.state.selectedAssayId &&
+                <div className="options-sidebar experiments">
+                    <div className="option-sidebar column-title">
+                        Tratamiento
+                    </div>
+                    {this.state.treatments.map(treatment => {
+                        const treatmentClassName = classnames({ 'option-sidebar': true, selected: treatment.idTreatment === this.state.selectedTreatmentId})
+                        return (
+                            <div className={treatmentClassName} onClick={()=>this.showExperiments(treatment.idTreatment)}>
+                                {treatment.name}
+                            </div>
+                        )
+                    })}
                 </div>
                 }
 
-                {this.state.showExperiments &&
+                {this.state.selectedTreatmentId &&
                 <div className="options-sidebar">
-                    {this.state.experiments.map(experiment => (
-                        <div className="option-sidebar" onClick={()=>this.showExperimentImages(experiment.experimentId)}>
-                            {experiment.nombre}
-                        </div>
-                    ))}
+                    <div className="option-sidebar column-title">
+                        Experimento
+                    </div>
+                    {this.state.experiments.map(experiment => {
+                        const experimentClassName = classnames({ 'option-sidebar': true, selected: experiment.experimentId === this.state.selectedExperimentId})
+                        return (
+                            <div className={experimentClassName} onClick={()=>this.showExperimentImages(experiment.experimentId)}>
+                                {experiment.nombre}
+                            </div>
+                        )
+                    })}
                 </div>
                 }
 
-                {this.state.showExperimentImages &&
+                {this.state.selectedExperimentId &&
                 <div className="experiment-images-container">
                     <div className="experiment-images">
-                    {this.state.experimentImages.map(experimentImage => (
-                        <div className="experiment-image">
-                            <img src={experimentImage.pathImage}
-                                onClick={()=>this.showImage(experimentImage)}/>
-                        </div>
-                    ))}
+                    <div className="experiment-image column-title">
+                        Imagenes
+                    </div>
+                    <div className="space-div" />
+                    <div className="images-flex">
+                        {this.state.experimentImages.map(experimentImage => (
+                            <div className="experiment-image-container">
+                                <p className="timestamp">{experimentImage.timestamp}</p>
+                                <img src={experimentImage.pathImage}
+                                    onClick={()=>this.showImage(experimentImage)}/>
+                            </div>
+                        ))}
+                    </div>
                     </div>
                 </div>
                 }
