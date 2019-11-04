@@ -19,3 +19,11 @@ export interface IExperimentImage{
     height:Number,
     area:Number,
 }
+
+export interface IExperiment{
+    assayId:Number,
+    descripcion:string,
+    experimentId:Number,
+    nombre:string,
+    treatmentId:Number
+}
