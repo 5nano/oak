@@ -121,6 +121,10 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
             filteredAssays
         })
     }
+
+    private setLoading(value:boolean):void {
+        this.setState({loading:value})
+    }
     render(){
         const context: IHomeContext = {
             ...this.state,
@@ -135,8 +139,8 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
                       handleTab={this.handleTab.bind(this)}
                       />
         
-                <HomeSearcher assays={this.state.assays}
-                              setFilteredAssays={this.setFilteredAssays.bind(this)}/>
+                <HomeSearcher setFilteredAssays={this.setFilteredAssays.bind(this)}
+                                setLoading={this.setLoading.bind(this)}/>
 
                 {this.state.assayToFinish!=null &&
                     <AssayFeedback idAssay={this.state.assayToFinish}

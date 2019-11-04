@@ -2,34 +2,84 @@ import * as React from 'react'
 import { IEnsayo } from '../../../../Interfaces/IEnsayo'
 import BushService from '../../../../services/bush'
 import { ITag } from '../../../../Interfaces/Tags'
+import Autocomplete from '@celebryts/react-autocomplete-tags';
+import Button from '../../../Utilities/Buttons/DefaultButton/Button';
+import Search from '../../../Search/Search';
+
+interface AutocompleteTag{
+    label: string,
+    value: string
+}
 
 interface IHomeSearcherProps {
-    assays:Array<IEnsayo>,
-    setFilteredAssays:Function
+    setFilteredAssays: (assays:Array<IEnsayo>) => void;
+    setLoading: (value:boolean) => void;
 }
+
+
 const HomeSearcher:React.SFC<IHomeSearcherProps> = (props) => {
-    const [stringSearch,setStringSearch] = React.useState<string>('')
-    const {assays,setFilteredAssays} = props;
-    const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
-       const stringSearch:string = event.currentTarget.value.trim().toLowerCase(); 
-       setStringSearch(stringSearch);
+    const [tags,setTags] = React.useState<Array<AutocompleteTag>>([])
+    const [selectedTags,setSelectedTags] = React.useState<Array<AutocompleteTag>>([])
+    const [suggestions,setSuggestions] = React.useState<Array<AutocompleteTag>>([])
+    const [loading,setLoading] = React.useState<boolean>(true)
+    React.useEffect(()=> {
+        setLoading(true)
+        BushService.get('/tags')
+                    .then((data:Array<ITag>) => {
+                        let tags: Array<AutocompleteTag> = []
+                        data.forEach(tag => {
+                            let newTag:AutocompleteTag = {
+                                label:tag.name,
+                                value:tag.name
+                            }
+                            tags.push(newTag)
+                        })
+                        setTags(tags)
+                        setSuggestions(tags)
+                        setLoading(false)
+                    })
+    },[])
 
-        const filteredAssays = assays.filter(function(assay){
-           
-            if(assay.tags.length===0) return false
-            else return assay.tags.some(tag=>tag.name.toLowerCase().match(stringSearch))
-        })
+    const handleAddition = (tag:AutocompleteTag) => {
+        let newTags = [].concat(selectedTags,tag)
+        setSelectedTags(newTags)
+    }
 
-        setFilteredAssays(stringSearch.length > 0?filteredAssays:assays)
+    const handleDelete = (deletedTags:Array<string>,remainedTags:Array<string>)=>{
+        let deletedTagValue = deletedTags.pop();
+        let newTags = selectedTags.filter(tag => tag.value != deletedTagValue);
+        setSelectedTags(newTags)
+    }
+
+    const handleChange = (value:string) => {
+        let stringSearch = value.trim().toLowerCase();
+        let newSuggestions = tags.filter(tag => tag.value.trim().toLowerCase().match(stringSearch))
+        setSuggestions(newSuggestions)
+    }
+
+    const searchAssays = () => {
+        props.setLoading(true)
+        let tags = selectedTags.map(tag => {return tag.value})
+        
+        BushService.post('/tags/ensayos',tags)
+                    .then((data:Array<IEnsayo>) => {
+                        console.log(data)
+                        props.setFilteredAssays(data)
+                        props.setLoading(false)
+                    })
     }
 
     return(
-        <div id="home-searcher" className="assay-searcher">
-            <input className="input-search"
-                   type="text" 
-                   value={stringSearch}
-                   onChange={handleChange}
-                   placeholder="Buscar por tag..."/>
+        
+        <div className="assay-search">
+        <Autocomplete
+            suggestions={suggestions}
+            onAdd={handleAddition}
+            onDelete={handleDelete}
+            onChange={handleChange}
+            className="search-bar"
+            />
+        <Button title="Buscar" onClick={()=> searchAssays()}/>
         </div>
     )
 }
