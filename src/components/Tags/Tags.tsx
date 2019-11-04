@@ -10,10 +10,11 @@ var randomColor = require('randomcolor');
 interface ITagsProps{
     setTagsRequest:Function,
     isSelected: Function,
-    handleTag:Function
+    handleTag:Function,
+    updateAssays:Function
 }
 const Tags:React.SFC<ITagsProps> = (props) => {
-    const {setTagsRequest,isSelected,handleTag} = props
+    const {setTagsRequest,isSelected,handleTag,updateAssays} = props
     const [newTagRequest,setNewTagRequest] = React.useState(false)
     const [tags,setTags] = React.useState<Array<ITag>>([]);
     const [success,setSuccess] = React.useState<boolean>(false)
@@ -44,7 +45,7 @@ const Tags:React.SFC<ITagsProps> = (props) => {
     const deleteTag = (tag:ITag) => {
         BushService.post(`/tags/eliminar?idTag=${tag.idTag}`)
                     .then(()=>{
-                        fetchTags()
+                        updateAssays()
                     })
     }
     return (

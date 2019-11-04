@@ -119,7 +119,8 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
                     :
                     <Tags isSelected={isSelected} 
                         setTagsRequest={setTagsRequest}
-                        handleTag={handleTag}/>
+                        handleTag={handleTag}
+                        updateAssays={context.updateAssays}/>
                     }
             </div>
                     )}
