@@ -7,6 +7,8 @@ import HomeSearcher from "./components/HomeSearcher/HomeSearcher";
 import Loader from "../Utilities/Loader/Loader";
 import Tabs from "./components/Tabs/tabs";
 import AssayFeedback from "../Feedback/AssayFeedback";
+import { Snackbar } from "@material-ui/core";
+import MySnackbarContentWrapper, { Feedback } from "../Feedback/MySnackbarContentWrapper";
 
 
 export type assayState = 'ALL' | 'ACTIVE' | 'FINISHED' | 'ARCHIVED';
@@ -21,11 +23,13 @@ export interface IHomeState {
     loading:boolean,
     state: assayState,
     assayToFinish:Number,
+    feedback:Feedback
 }
 
 export interface IHomeContext extends IHomeState {
     updateAssays:Function;
-    finishAssay:Function
+    finishAssay:Function;
+    setFeedback:Function
   }
 export const HomeContext = React.createContext<IHomeContext | undefined> (
 undefined
@@ -46,7 +50,8 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
             showDataUploadMenu: false,
             loading:true,
             state: 'ALL',
-            assayToFinish: null
+            assayToFinish: null,
+            feedback:null
         };
         this.showDataUploadMenu = this.showDataUploadMenu.bind(this);
     }
@@ -78,22 +83,6 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
             })
       }
       
-      
-  
-      private showExperimentos = async (assayId: number): Promise<void> => {
-        /**
-         * Currently unused, we'll probably want to show some info like experiment count in the future
-         */
-        BushService.get(`/experimentosDe?assayId=${assayId}`)
-            .then((experimentos: any) => {
-                this.setState({
-                    ...this.state,
-                    experimentos,
-                })
-            });
-    }
-
-
     private handleTab(state:assayState){
         this.fetchEnsayos(state)
     }
@@ -108,11 +97,16 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
 
     private finishAssay(stars:Number,comments:string):Promise<void>{
         return BushService.patch(`/ensayo/terminar?idAssay=${this.state.assayToFinish}&&stars=${stars}&&comments=${comments}`)
-        .then(()=>this.closeAssayFeedback())
+        .then(()=>{
+            this.closeAssayFeedback()
+            this.setFeedback({variant:'success',message:'Ensayo finalizado exitosamente'})
+        })
     }
 
     private closeAssayFeedback():void{
         this.setState({assayToFinish:null})
+       
+
     }
 
     private setFilteredAssays(filteredAssays:Array<IEnsayo>){
@@ -125,15 +119,28 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
     private setLoading(value:boolean):void {
         this.setState({loading:value})
     }
+
+
+    private handleSnackbarClose(event?: React.SyntheticEvent,reason?:string) {
+        if (reason ==='clickaway') { 
+            return;
+        }
+        this.setState({feedback:null})
+    }
+
+    private setFeedback(feedback:Feedback){
+        this.setState({feedback:feedback})
+    }
     render(){
         const context: IHomeContext = {
             ...this.state,
             updateAssays:this.updateAssays.bind(this),
-            finishAssay:this.requestFinishAssay.bind(this)
+            finishAssay:this.requestFinishAssay.bind(this),
+            setFeedback:this.setFeedback.bind(this)
           };
         return(
             
-            <div className="home">
+            <div id="home" className="home">
              
                 <Tabs assayStates={assayStates}
                       handleTab={this.handleTab.bind(this)}
@@ -155,7 +162,22 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
                         <Ensayos {...this.props} ensayos={this.state.filteredAssays} />
                     </HomeContext.Provider>
                 :<Loader/>
+
                 }
+                <Snackbar 
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left'
+                }}
+                open={this.state.feedback!=null}
+                autoHideDuration={6000}
+                onClose={this.handleSnackbarClose.bind(this)}
+                >
+                    <MySnackbarContentWrapper
+                        onClose={this.handleSnackbarClose.bind(this)}
+                        variant={this.state.feedback? this.state.feedback.variant : 'success'}
+                        message={this.state.feedback? this.state.feedback.message:''}/>
+                </Snackbar>
             </div>
         )
     }

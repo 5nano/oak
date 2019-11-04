@@ -39,11 +39,11 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
 
     const activeAssay = ():Promise<void> => {
         return BushService.patch(`/ensayo/activar?idAssay=${idAssay}`)
-                   .then(()=>console.log("activado"))
+                   
     }
     const archiveAssay = ():Promise<void> => {
         return BushService.patch(`/ensayo/archivar?idAssay=${idAssay}`)
-                   .then(()=>console.log("archivado"))
+                  
     }
 
     const remove = ():Promise<void> =>{
@@ -87,6 +87,7 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
                             <a className="option"
                                 onClick={()=>{
                                     archiveAssay().then(()=>{
+                                        context.setFeedback({variant:'success',message:'Ensayo archivado exitosamente'})
                                         context.updateAssays()
                                     })
                                     }}>
@@ -95,6 +96,7 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
                             <a className="option"
                                 onClick={()=>{
                                     activeAssay().then(()=>{
+                                        context.setFeedback({variant:'success',message:'Ensayo activado exitosamente'})
                                         context.updateAssays()
                                     })
                                     }}>
@@ -103,7 +105,12 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
                             <a className="option"
                                 onClick={()=>{
                                     remove().then(()=>{
+                                        context.setFeedback({variant:'success',message:'Ensayo eliminado exitosamente'})
                                         context.updateAssays()
+                                    })
+                                    .catch(error => {
+                                        error.json().then(error =>context.setFeedback({variant:'error',message:error.message})
+                                        )
                                     })
                                     }}>
                                 Eliminar 
