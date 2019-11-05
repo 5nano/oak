@@ -55,7 +55,8 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
             <div className="crud-container">
 
                 <div className="crud-title">
-                 Ensayo {assay}/Tratamientos
+                 <h1>Tratamientos</h1>
+                 <h2>Ensayo {assay}</h2>
                 </div>
 
                 {loading
@@ -63,8 +64,8 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                     <Loader/>
                 :
                 <div className="layout-wrapper">
-                    <div className="search-container">
-                        <div className="results-list">
+                    <div className="treatments-container">
+                        <div className="treatments-wrapper">
                             {treatments.length===0? 
                             <Info message="No existen tratamientos"/>
                             :
@@ -73,10 +74,10 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                             ))
                         }
                         </div>
-                        <Button title="Nuevo Tratamiento"
-                                disabled={newTreatment}
-                                onClick={()=> setNewTreatment(true)}/>    
                     </div>
+                    <Button title="Nuevo Tratamiento"
+                            disabled={newTreatment}
+                            onClick={()=> setNewTreatment(true)}/>    
                     {newTreatment && 
                         <div className="form-crud-wrapper">
                             <div className="form-cancel" onClick={()=>setNewTreatment(false)}>

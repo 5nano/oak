@@ -108,7 +108,7 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
       return (
           <div className="crud-container">
               <div className="crud-title">
-                {title}
+                <h1>{title}</h1>
               </div>
 
               <div className="crud-error">
