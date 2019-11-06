@@ -2,9 +2,11 @@
 
 .treatments-container{
     width: 1200px;
-    height: 400px;
+    height: 500px;
     background-color: rgb(252, 252, 252);
     overflow: auto;
+
+    border-radius: 4px;
 
     .treatments-wrapper{
         display:flex;
