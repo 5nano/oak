@@ -18,6 +18,11 @@
             display:flex;
             justify-content: center;
             align-items: center;
+
+            cursor: pointer;
+            :hover{
+                transform: scale(1.1);
+            }
             
             img{
                 height: 50px;
@@ -60,22 +65,24 @@
             flex-direction: column;
             justify-content: flex-start;
 
-            width:450px;
+            width:550px;
             margin: 0px 40px;
 
 
             .info-heading{
                 display:flex;
                 color: white;
-                font-size: 48px;
+                font-size: 64px;
             }
             .info-content{
                 display:flex;
                 flex-direction: column;
                 justify-content: center;
                 
-                color:#6AC1A9;
-                font-size: 24px;
+                color:white;
+                font-size: 32px;
+
+
             }
         }
 

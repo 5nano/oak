@@ -11,7 +11,7 @@ export interface HeaderState {
  }
 
 const logout = () => {
-    BushService.post('/logout',{})
+    BushService.post('/logout')
                .then((response)=>{
                     document.cookie = `user=;Expires=Thu, 01 Jan 1970 00:00:01 GMT;`; // Logout
                     window.location.href = '/';

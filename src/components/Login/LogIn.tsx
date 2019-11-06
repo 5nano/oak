@@ -39,7 +39,6 @@ export class LogIn extends React.Component<ILogInProps,ILogInState> {
     private handleChange =  (
         event: React.ChangeEvent<HTMLInputElement>
     ): void => {
-        console.log(event.target.id);
         const newState = {[event.target.id]: event.target.value} as Pick <ILogInState,keyof ILogInState>;
         this.setState(newState);
     }
@@ -56,7 +55,9 @@ export class LogIn extends React.Component<ILogInProps,ILogInState> {
                     onChange={this.handleChange}
                     placeholder="Username"
                     />
-                    <p className="help">Don't have an account? <a>Register now</a></p>
+                    <p className="help" onClick={()=>this.props.history.push('/register')}>No tenes una cuenta?  
+                        <a>Registrate ahora</a>
+                    </p>
                 <input
                     id='password'
                     className="password input"
@@ -65,7 +66,9 @@ export class LogIn extends React.Component<ILogInProps,ILogInState> {
                     onChange={this.handleChange}
                     placeholder="Password"
                     />
-                <a className="help">Forgot password?</a>
+                <p className="help">  
+                    <a >Olvidate tu contraseña?</a>
+                </p>
                 <Button type="submit" title="Ingresar"/>
             </form>
         </div>
