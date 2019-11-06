@@ -63,3 +63,31 @@
             }
     }
 }
+
+.empty-treatment{
+    width: 220px;
+    height: 220px;
+    padding: 5px;
+    margin: 20px;
+
+    border-radius: 8px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0,0.3);
+
+    background-color: rgba(106, 193, 168, 0.1);
+
+    display: flex;
+    justify-content: center;
+    align-items:center;
+
+    img{
+        height: 150px;
+        width: 150px;
+
+        opacity: 0.3;
+    }
+
+    :hover{
+        transform:scale(1.2);
+    }
+}

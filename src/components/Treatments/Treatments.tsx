@@ -66,18 +66,18 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                 <div className="layout-wrapper">
                     <div className="treatments-container">
                         <div className="treatments-wrapper">
+                            <div className="empty-treatment" onClick={()=>setNewTreatment(true)}>
+                                <img src="../../../../assets/images/plus-icon.png"/>
+                            </div>
                             {treatments.length===0? 
                             <Info message="No existen tratamientos"/>
                             :
                             treatments.map((treatment:ITreatment)=> (
                                  <Treatment treatment={treatment}/>
                             ))
-                        }
+                            }
                         </div>
-                    </div>
-                    <Button title="Nuevo Tratamiento"
-                            disabled={newTreatment}
-                            onClick={()=> setNewTreatment(true)}/>    
+                    </div>   
                     {newTreatment && 
                         <div className="form-crud-wrapper">
                             <div className="form-cancel" onClick={()=>setNewTreatment(false)}>
