@@ -15,6 +15,7 @@ export interface IExperimentImage{
     experimentId:Number,
     pathImage:string,
     timestamp:string,
+    instant:string,
     width:Number,
     height:Number,
     area:Number,

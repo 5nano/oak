@@ -76,6 +76,7 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
     })
   }
   render(){
+    
       if (!(this.props.data && Object.keys(this.props.data).length)) return null;
 
       const treatmentValues = {};

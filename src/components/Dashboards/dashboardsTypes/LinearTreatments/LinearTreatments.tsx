@@ -35,6 +35,7 @@ class LinearTreatments extends React.Component<LinearTreatmentsProps> {
         BushService.get(`/graficoComparativo/ensayo/tratamientos/promediado?assayId=${assayId}`)
       ])
         .then((linear) => {
+          console.log(linear)
           return {
             linear,
             //box

@@ -35,3 +35,48 @@
         }
     }
 }
+
+.email-template{
+    height: 600px;
+    width: 600px;
+    background-color: #6AC1A9;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    .email-header{
+        width: 560px;
+        height: 155px;
+        background-size: contain;
+        background-image: url('../../../../assets/images/email-header.png');
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+
+        h2{
+            color:white;
+            padding: 0 50px;
+        }
+
+    }
+
+    .email-content{
+        padding:50px;
+        margin: 0px 20px 20px 20px;
+       
+        background-color: white;
+
+        h1{
+            color: #6AC1A9;
+            font-size: 150%;
+        }
+    }
+
+    .email-footer{
+         img{
+             width: 200px;
+         }
+    }
+}

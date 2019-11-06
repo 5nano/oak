@@ -68,6 +68,7 @@ class DrillDown extends React.Component<DrillDownProps, DrillDownState> {
                                 <h2>Altura:</h2> <p>{this.state.experimentImage.height} mm</p>
                                 <h2>Ancho:</h2> <p>{this.state.experimentImage.width}mm</p>
                                 <h2>Area foliar:</h2> <p>{this.state.experimentImage.area}mm²</p>
+                                <h2>Fecha y hora:</h2> <p>{this.state.experimentImage.instant}</p>
                               </div>
                             </div>
                       }
