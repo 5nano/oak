@@ -3,4 +3,5 @@ export type Experimento = {
     nombre: string,
     descripcion: string,
     image: string,
+    points?: Array<string>
   }

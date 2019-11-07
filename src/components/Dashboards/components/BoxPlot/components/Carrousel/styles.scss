@@ -1,0 +1,19 @@
+.test-content{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+
+    .content-row{
+        display:flex;
+        flex-direction: row;
+        align-items: center;
+
+        h4{
+            margin:2px;
+        }
+
+        p{
+            margin: 0;
+        }
+    }
+}

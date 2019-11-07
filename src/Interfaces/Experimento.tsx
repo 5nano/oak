@@ -9,7 +9,7 @@ export interface IFrontExperiment {
     values: Array<number>
 }
 
-export interface IExperimentImage{
+export interface ITest{
     assayId:Number,
     treatmentId:Number,
     experimentId:Number,

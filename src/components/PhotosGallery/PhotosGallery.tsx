@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { IEnsayo } from '../../Interfaces/IEnsayo'
 import { ITreatment } from '../../Interfaces/ITreatment'
-import { IExperimentImage, IBackendExperiment, IExperiment } from '../../Interfaces/Experimento'
+import { ITest, IBackendExperiment, IExperiment } from '../../Interfaces/Experimento'
 import BushService from '../../services/bush';
 import ExperimentPopover from './Components/ExperimentPopover';
 import classnames from 'classnames';
@@ -10,12 +10,12 @@ interface IPhotosGalleryState {
     assays:Array<IEnsayo>,
     treatments:Array<ITreatment>
     experiments: Array<IExperiment>
-    experimentImages:Array<IExperimentImage>
+    experimentImages:Array<ITest>
     loading:boolean,
     selectedAssayId:Number,
     selectedTreatmentId:Number,
     selectedExperimentId:Number,
-    experimentImageFocus:IExperimentImage
+    experimentImageFocus:ITest
 }
 interface IPhotosGalleryProps{
 
@@ -71,12 +71,12 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
     showExperimentImages(idExperiment:Number){
         this.setLoading(true)
         BushService.get(`/experiment/points?experimentId=${idExperiment}`)
-                    .then((data:Array<IExperimentImage>) => {
+                    .then((data:Array<ITest>) => {
                         this.setState({experimentImages:data,loading:false,selectedExperimentId:idExperiment})
                     })
     }
 
-    showImage(experimentImage:IExperimentImage){
+    showImage(experimentImage:ITest){
         this.setState({experimentImageFocus:experimentImage})
     }
 

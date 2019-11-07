@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { IExperimentImage } from '../../../Interfaces/Experimento';
+import { ITest} from '../../../Interfaces/Experimento';
 import { Popover } from '@material-ui/core';
 interface IExperimentPopoverProps{
-    experiment:IExperimentImage;
+    experiment:ITest;
     closeExperimentImage:Function
 }
 const ExperimentPopover:React.SFC<IExperimentPopoverProps> = (props) => {
