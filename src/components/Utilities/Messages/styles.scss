@@ -1,22 +1,29 @@
-.message {
+.message-container{
     display:flex;
     justify-content: center;
-    
+    align-items: center;
+    width: 100%;
+}
+
+.message {
     color:black;
     border-radius: 4px;
     font-size: 18px;
     padding:20px;
+    text-align: center;
 }
 
 .success{
     background-color: rgba(106, 193, 169,0.5);
-    
+    width: 100%;
 }
 
 .error{
     background-color: rgba(224, 77, 77,0.5);
+    width: 100%;
 }
 
 .info{ 
     background-color: rgba(250, 234, 15, 0.6);
+    width: 100%;
 }
