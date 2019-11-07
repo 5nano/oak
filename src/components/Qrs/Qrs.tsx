@@ -33,18 +33,15 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
 
     componentDidMount(){
         this.setState({loading:true})
-        
         BushService.get(buildUrl('/ensayo/tratamientos',{
             idAssay:this.props.match.params.assayId
         })).then((data:Array<ITreatment>) => {
+            console.log(data)
                     this.setState({treatments:data,
                                   actualTreatment:data[0],
-                                  loading:false
                                 })
-                    return data[0]
-                })
-                .then(treatment => {
-                    if(treatment!=null)this.setNewTreatment(treatment.name)
+                    if(data.length>0)this.setNewTreatment(data[0].name)  
+                    else this.setState({loading:false})
                 })
             
     }
@@ -85,11 +82,11 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
                 </div>
                 }
 
-                {!this.state.loading && this.state.treatments.length===0 &&
+                {!this.state.loading && this.state.treatments.length==0 &&
                    <Info message="Este ensayo no presenta tratamientos"/>
                 }
 
-                {!this.state.loading && this.state.treatments.length>0 &&
+                {!this.state.loading && this.state.actualTreatment!=null &&
                     <TreatmentQrs idAssay={this.props.match.params.assayId} treatment={this.state.actualTreatment}/>
                 }
 
