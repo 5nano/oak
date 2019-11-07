@@ -32,10 +32,11 @@ const freqComponentGenerator = (color, name) => class YellowFreqComponent extend
   
   static fetchData(assayId: string) {
     return BushService.get(`/frecuencias/${color}?assayId=${assayId}`)
-                      .then(data=>console.log(data))
+                      .then(data=>{return data})
   }
 
   render(){
+    console.log(this.props.data)
     return (
       (!(this.props.data && Object.keys(this.props.data).length))?
             this.props.onEmptyRender(name)

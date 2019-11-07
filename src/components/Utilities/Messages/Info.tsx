@@ -3,8 +3,10 @@ import { IMessageProps } from './IMessage'
 
 const Info:React.SFC<IMessageProps> = (props) => {
     return (
-        <div className="message info">
-            {props.message}
+        <div className="message-container">
+            <div className="message info">
+                {props.message}
+            </div>
         </div>
     )
 }

@@ -103,7 +103,7 @@ class LinearTreatments extends React.Component<LinearTreatmentsProps> {
             <Plot
                 data={linearData}
                 layout={layout}
-                style={{position: 'relative', display: 'flex', width: "100%", height: "100%"}}
+                style={{display: 'flex', width: "100%", height: "100%"}}
             />
           </div>
         )

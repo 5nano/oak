@@ -3,8 +3,10 @@ import { IMessageProps } from './IMessage'
 
 const Error:React.SFC<IMessageProps> = (props) => {
     return (
-        <div className="message error">
-            {props.message}
+        <div className="message-container">
+            <div className="message error">
+                {props.message}
+            </div>
         </div>
     )
 }
