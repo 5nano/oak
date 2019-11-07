@@ -4,7 +4,7 @@ import LeafArea from './dashboardsTypes/LeafArea/LeafArea';
 import Overall from './dashboardsTypes/Overall/Overall';
 import GreenFreq from './dashboardsTypes/GreenFrequency/GreenFrequency';
 import YellowFreq from './dashboardsTypes/YellowFrequency/YellowFrequency';
-import LinearTreatment from './dashboardsTypes/LinearTreatments/LinearTreatments';
+import LinearTreatment from './dashboardsTypes/LinearLeafAreaTreatments/LinearLeafAreaTreatments';
 import { DashboardType } from './dashboardsTypes/InterfaceDashboardTypes';
 
 import DashboardSelector from './components/DashboardSelector/DashboardSelector';
@@ -12,12 +12,14 @@ import Info from "../Utilities/Messages/Info";
 import BushService from "../../services/bush";
 import { ITag } from "../../Interfaces/Tags";
 import { IEnsayo } from "../../Interfaces/IEnsayo";
+import Loader from "../Utilities/Loader/Loader";
 var randomColor = require('randomcolor');
 interface IDashboardsState{
   assay:IEnsayo,
   tags: Array<ITag>
   currentDashboard: DashboardType,
   dashboardsData: { [key:string]: Array<number> },
+  dashboardsLoading: { [key:string]: boolean },
 }
 
 interface IDashboardProps {
@@ -50,6 +52,9 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
       dashboardsData: this.dashboardTypes.reduce((acc:{ [key:string]: Array<number> }, dash) => {
         acc[dash.id] = []; return acc }, {}
       ),
+      dashboardsLoading: this.dashboardTypes.reduce((acc:{ [key:string]:boolean} ,dash) => {
+        acc[dash.id] = true; return acc},{}
+        ),
       tags:[]
     };
     this.fetchDataFromdashboards();
@@ -76,7 +81,11 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
     const componentsToFetch : Set<DashboardType> = new Set([this.state.currentDashboard, ...this.dashboardTypes]);
     componentsToFetch.forEach(({component, id: dashboardId}) => {
       component.fetchData(this.props.match.params.assayId)
-                .then(data => this.storeDataFromDashboard(data, dashboardId))
+                .then(data => {
+                  this.storeDataFromDashboard(data, dashboardId)
+                  this.setLoading(dashboardId)
+                })
+               
     });
   }
 
@@ -89,7 +98,23 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
     })
   }
 
-  renderEmptyDashboard(title:string) {
+  setLoading(dashboardId:DashboardType["id"]){
+    console.log(dashboardId)
+    this.setState({
+      dashboardsLoading: {
+        ...this.state.dashboardsLoading,
+        [dashboardId]:false
+      }
+    })
+  }
+
+  renderEmptyDashboard(id : DashboardType["id"],title:string) {
+    
+    if(this.state.dashboardsLoading[id]) return (
+      <div style={{display:'flex',width:'100%',justifyContent:'center',alignItems:'center'}}>
+        <Loader/>
+      </div>
+      )
     return (
       <div className="empty-dashboard">
         <div className="empty-dashboard-title">
@@ -111,9 +136,11 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
 
   renderDashboard(type : DashboardType) {
     const Dashboard = type.component;
+
+    
     // Special case
-    if (type.id === 'overall') return <Dashboard onEmptyRender={this.renderEmptyDashboard} data={this.state.dashboardsData} />
-    return <Dashboard onEmptyRender={this.renderEmptyDashboard} data={this.state.dashboardsData[type.id]} />;
+    if (type.id === 'overall') return <Dashboard onEmptyRender={this.renderEmptyDashboard.bind(this)} data={this.state.dashboardsData} />
+    return <Dashboard onEmptyRender={this.renderEmptyDashboard.bind(this)} data={this.state.dashboardsData[type.id]} />;
   }
 
  

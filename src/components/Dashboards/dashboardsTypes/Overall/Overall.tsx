@@ -8,7 +8,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import GreenFreq from '../GreenFrequency/GreenFrequency';
 import YellowFreq from '../YellowFrequency/YellowFrequency';
 import LeafArea from '../LeafArea/LeafArea';
-import LinearTreatments from '../LinearTreatments/LinearTreatments';
+import LinearLeafAreaTreatments from '../LinearLeafAreaTreatments/LinearLeafAreaTreatments';
 import Loader from "../../../Utilities/Loader/Loader";
 
 export interface OverallComponentState {
@@ -38,17 +38,17 @@ class OverallComponent extends React.Component<OverallComponentProps, OverallCom
   }
 
   render(){
-    const leafAreaHasData = this.props.data[LeafArea.id] && this.props.data[LeafArea.id].box && Object.keys(this.props.data[LeafArea.id].box).length;
+    /*const leafAreaHasData = this.props.data[LeafArea.id] && this.props.data[LeafArea.id].box && Object.keys(this.props.data[LeafArea.id].box).length;
     const yellowFreqHasData = this.props.data[YellowFreq.id] && Object.keys(this.props.data[YellowFreq.id]).length;
     const greenFreqHasData = this.props.data[GreenFreq.id] && Object.keys(this.props.data[GreenFreq.id]).length;
+    const linearLeafAreaTreatmentsHasData = this.props.data[GreenFreq.id] && Object.keys(this.props.data[LinearLeafAreaTreatments.id]).length;
 
-    if (!leafAreaHasData && !yellowFreqHasData && !greenFreqHasData) 
+    if (!leafAreaHasData && !yellowFreqHasData && !greenFreqHasData && !linearLeafAreaTreatmentsHasData) 
       return (
       <div style={{width:'100%',display:'flex',alignItems:'center',justifyContent:'center'}}>
         <Loader/>
       </div>)
-      ;
-
+    */
     return (
         <div className="Overall">
             <div className="left-panel">
@@ -57,7 +57,7 @@ class OverallComponent extends React.Component<OverallComponentProps, OverallCom
             </div>
             <div className="right-panel">
                 <YellowFreq.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[YellowFreq.id]} graphPosition="right"/>
-                <LinearTreatments.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[LinearTreatments.id]} graphPosition="right"/>
+                <LinearLeafAreaTreatments.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[LinearLeafAreaTreatments.id]} graphPosition="right"/>
             </div>
         </div>
     );

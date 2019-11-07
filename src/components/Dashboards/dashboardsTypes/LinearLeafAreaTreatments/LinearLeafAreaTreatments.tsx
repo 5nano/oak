@@ -5,7 +5,6 @@ import { DashboardType } from '../InterfaceDashboardTypes';
 import Plot from 'react-plotly.js';
 import { Layout } from "plotly.js";
 import BushService from '../../../../services/bush';
-import BoxPlot from '../../components/BoxPlot/BoxPlot';
 
 type AssayParamsType = {
     assayId: string,
@@ -16,7 +15,7 @@ type AverageTreatment ={
   value: Array<number>
 }
   
-interface LinearTreatmentsProps extends RouteComponentProps<AssayParamsType> {
+interface LinearLeafAreaTreatmentsProps extends RouteComponentProps<AssayParamsType> {
     onEmptyRender: Function,
     data: {
       linear: Array<Array<AverageTreatment>>
@@ -27,7 +26,7 @@ interface LinearTreatmentsProps extends RouteComponentProps<AssayParamsType> {
 
 const name = "Área Foliar Linear Promediado";
 
-class LinearTreatments extends React.Component<LinearTreatmentsProps> {
+class LinearLeafAreaTreatments extends React.Component<LinearLeafAreaTreatmentsProps> {
    
 
     static fetchData(assayId: string) {
@@ -46,7 +45,7 @@ class LinearTreatments extends React.Component<LinearTreatmentsProps> {
     render() { 
 
         if (!(this.props.data && this.props.data.linear &&  Object.keys(this.props.data.linear).length)) 
-          return this.props.onEmptyRender(name);
+          return this.props.onEmptyRender('linear-leaf-area-treatments',name);
          
         let averageTreatmentsData = this.props.data.linear[0]
         //console.log(averageTreatmentsData)
@@ -110,10 +109,10 @@ class LinearTreatments extends React.Component<LinearTreatmentsProps> {
       }
 };
 
-const linearTreatmentType : DashboardType = {
-    id: 'linear-treatments',
+const LinearLeafAreaTreatmentsType : DashboardType = {
+    id: 'linear-leaf-area-treatments',
     name,
-    component: LinearTreatments,
+    component: LinearLeafAreaTreatments,
   };
   
-  export default linearTreatmentType;
+  export default LinearLeafAreaTreatmentsType;
