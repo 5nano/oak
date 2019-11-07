@@ -23,7 +23,7 @@ export interface YellowFreqComponentProps extends RouteComponentProps<AssayParam
 }
 
 
-const freqComponentGenerator = (color, name) => class YellowFreqComponent extends React.Component<YellowFreqComponentProps, YellowFreqComponentState> {
+const freqComponentGenerator = (color, name,id) => class YellowFreqComponent extends React.Component<YellowFreqComponentProps, YellowFreqComponentState> {
 
 
   constructor(props:YellowFreqComponentProps){
@@ -39,7 +39,7 @@ const freqComponentGenerator = (color, name) => class YellowFreqComponent extend
     console.log(this.props.data)
     return (
       (!(this.props.data && Object.keys(this.props.data).length))?
-            this.props.onEmptyRender(name)
+            this.props.onEmptyRender(id,name)
               :
             <BoxPlot data={this.props.data} dataSuffix="Hz" title={name} graphPosition={this.props.graphPosition} />
           
@@ -50,7 +50,7 @@ const freqComponentGenerator = (color, name) => class YellowFreqComponent extend
 const frequencyGenerator : ((freqColor: string, name: string) => DashboardType) = (freqColor, name) => ({
   id: `${freqColor}-frequency`,
   name,
-  component: freqComponentGenerator(freqColor, name),
+  component: freqComponentGenerator(freqColor, name,`${freqColor}-frequency`),
 });
 
 export default frequencyGenerator;

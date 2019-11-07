@@ -39,11 +39,12 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
         })).then((data:Array<ITreatment>) => {
                     this.setState({treatments:data,
                                   actualTreatment:data[0],
+                                  loading:false
                                 })
                     return data[0]
                 })
                 .then(treatment => {
-                    this.setNewTreatment(treatment.name)
+                    if(treatment!=null)this.setNewTreatment(treatment.name)
                 })
             
     }
@@ -88,7 +89,7 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
                    <Info message="Este ensayo no presenta tratamientos"/>
                 }
 
-                {!this.state.loading && 
+                {!this.state.loading && this.state.treatments.length>0 &&
                     <TreatmentQrs idAssay={this.props.match.params.assayId} treatment={this.state.actualTreatment}/>
                 }
 
