@@ -1,21 +1,22 @@
 import * as React from 'react'
 import { IEnsayo } from '../../Interfaces/IEnsayo'
 import { ITreatment } from '../../Interfaces/ITreatment'
-import { IExperimentImage, IBackendExperiment, IExperiment } from '../../Interfaces/Experimento'
+import { ITest, IBackendExperiment, IExperiment } from '../../Interfaces/Experimento'
 import BushService from '../../services/bush';
 import ExperimentPopover from './Components/ExperimentPopover';
 import classnames from 'classnames';
+const qs = require('qs');
 
 interface IPhotosGalleryState {
     assays:Array<IEnsayo>,
     treatments:Array<ITreatment>
     experiments: Array<IExperiment>
-    experimentImages:Array<IExperimentImage>
+    experimentImages:Array<ITest>
     loading:boolean,
     selectedAssayId:Number,
     selectedTreatmentId:Number,
     selectedExperimentId:Number,
-    experimentImageFocus:IExperimentImage
+    experimentImageFocus:ITest
 }
 interface IPhotosGalleryProps{
 
@@ -24,14 +25,16 @@ interface IPhotosGalleryProps{
 class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGalleryState> {
 
     constructor(props){
-        super(props)
+        super(props);
+        const initialQuery = qs.parse(props.location.search.slice(1));
+        const selectedAssayId = initialQuery['assay'] && Number(initialQuery['assay']);
         this.state={
             assays:[],
             treatments:[],
             experiments:[],
             experimentImages:[],
             loading:true,
-            selectedAssayId: null,
+            selectedAssayId,
             selectedTreatmentId:null,
             selectedExperimentId:null,
             experimentImageFocus:null
@@ -47,6 +50,8 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
                     .then((data:Array<IEnsayo>) => {
                         this.setState({assays:data,loading:false})
                     })
+
+        if (this.state.selectedAssayId) this.showTreatments(this.state.selectedAssayId);
     }
 
     showTreatments(idAssay:Number){
@@ -71,12 +76,12 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
     showExperimentImages(idExperiment:Number){
         this.setLoading(true)
         BushService.get(`/experiment/points?experimentId=${idExperiment}`)
-                    .then((data:Array<IExperimentImage>) => {
+                    .then((data:Array<ITest>) => {
                         this.setState({experimentImages:data,loading:false,selectedExperimentId:idExperiment})
                     })
     }
 
-    showImage(experimentImage:IExperimentImage){
+    showImage(experimentImage:ITest){
         this.setState({experimentImageFocus:experimentImage})
     }
 

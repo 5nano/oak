@@ -29,7 +29,7 @@ export interface IHomeState {
 export interface IHomeContext extends IHomeState {
     updateAssays:Function;
     finishAssay:Function;
-    setFeedback:Function
+    setFeedback:(feedback:Feedback) => void
   }
 export const HomeContext = React.createContext<IHomeContext | undefined> (
 undefined

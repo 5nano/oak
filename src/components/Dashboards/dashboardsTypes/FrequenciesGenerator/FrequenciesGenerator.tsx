@@ -32,6 +32,7 @@ const freqComponentGenerator = (color, name) => class YellowFreqComponent extend
   
   static fetchData(assayId: string) {
     return BushService.get(`/frecuencias/${color}?assayId=${assayId}`)
+                      .then(data=>console.log(data))
   }
 
   render(){

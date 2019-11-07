@@ -24,22 +24,16 @@
     .crud-title{
         display:flex;
         align-items: flex-start;
+        flex-direction: column;
 
-        font-size: 32px;
         color: #6AC1A9;
 
         width:100%;
         padding: 40px 0px;
-    
-           img{
-               flex-grow: 0;
-               flex-shrink: 0;
-               width: 5rem;
-               height: 5rem;
-           }
-           p{
-               color: white;
-           }
+
+        h1,h2{
+            margin:0;
+        }
    }
 
     .crud-error{

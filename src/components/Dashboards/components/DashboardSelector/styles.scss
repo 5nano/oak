@@ -4,14 +4,18 @@
         padding: 12px;
         border-radius: 1px;
         border-right: none;
-        background-color: #84FAC5;
+        background-color:  #6AC1A9;
+        color:white;
         cursor: pointer;
-        &.hover{
+        &:hover{
+            background-color: white;
+            color: #6AC1A9;
         }
 
         &.selected {
             margin-right: -1px; // Trick for right margin empty when selected
             background-color: white;
+            color: #6AC1A9;
         }
 
     }

@@ -52,6 +52,7 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
   fetchExperiments(treatmentId:number) {
     return BushService.get(`/tratamiento/experimentos?treatmentId=${treatmentId}`)
       .then((experimentos: Array<Experimento>) => {
+        console.log(experimentos)
         this.setState({ 
           treatmentsData: {
             ...this.state.treatmentsData,
@@ -76,11 +77,13 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
     })
   }
   render(){
+    
       if (!(this.props.data && Object.keys(this.props.data).length)) return null;
 
       const treatmentValues = {};
-
+      console.log(this.props.data)
       Object.keys(this.props.data).map(date => {
+        console.log(date)
         const dateData = this.props.data[date];
 
         Object.keys(dateData).map(treatmentId => {
@@ -143,7 +146,7 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
               <DrillDown 
                 treatmentId={this.state.selectedBox.treatmentId} 
                 date={this.state.selectedBox.date}
-                data={this.state.treatmentsData[this.state.selectedBox.treatmentId]}
+                experiments={this.state.treatmentsData[this.state.selectedBox.treatmentId]}
                 close={this.closeDrilldown.bind(this)}
                 pointerDirection={this.props.graphPosition}
               />

@@ -3,7 +3,6 @@ import Treatment from './Components/TreatmentCard/Treatment';
 import  { ITreatmentBackend, ITreatment } from '../../Interfaces/ITreatment';
 import TreatmentForm from './Components/Form/TreatmentForm';
 import BushService from '../../services/bush';
-import Button from '../Utilities/Buttons/DefaultButton/Button';
 import Info from '../Utilities/Messages/Info';
 import Loader from '../Utilities/Loader/Loader';
 import { IEnsayo } from '../../Interfaces/IEnsayo';
@@ -23,15 +22,14 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
 
 
     React.useEffect(()=>{
-        fetchAssay().then(()=>{
-            fetchTreatments()
-        })
+        fetchAssay()
     },[])
 
     const fetchTreatments = ():Promise<void> => {
          setLoading(true)
          return BushService.get(`/ensayo/tratamientos?idAssay=${idAssay}`)
                    .then((data:Array<ITreatment>)=>{
+                       console.log(data)
                        setTreatments(data)
                        setLoading(false)
                     })
@@ -40,7 +38,9 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
     const fetchAssay = ():Promise<void> => {
         return BushService.get(`/ensayo/?idAssay=${idAssay}`)
                   .then((data:IEnsayo)=>{
+                      console.log(data)
                       setAssay(data.name)
+                      fetchTreatments()
                    })
    }
 
@@ -54,29 +54,25 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
         return(
             <div className="crud-container">
 
-                <div className="crud-title">
-                 Ensayo {assay}/Tratamientos
+            {!loading?
+                [<div className="crud-title">
+                 <h1>Tratamientos</h1>
+                 <h2>Ensayo {assay}</h2>
                 </div>
-
-                {loading
-                ? 
-                    <Loader/>
-                :
+                ,
                 <div className="layout-wrapper">
-                    <div className="search-container">
-                        <div className="results-list">
-                            {treatments.length===0? 
-                            <Info message="No existen tratamientos"/>
-                            :
+                    <div className="treatments-container">
+                        <div className="treatments-wrapper">
+                            <div className="empty-treatment" onClick={()=>setNewTreatment(true)}>
+                                <img src="../../../../assets/images/plus-icon.png"/>
+                            </div>
+                            {treatments.length!=0 &&
                             treatments.map((treatment:ITreatment)=> (
                                  <Treatment treatment={treatment}/>
                             ))
-                        }
+                            }
                         </div>
-                        <Button title="Nuevo Tratamiento"
-                                disabled={newTreatment}
-                                onClick={()=> setNewTreatment(true)}/>    
-                    </div>
+                    </div>   
                     {newTreatment && 
                         <div className="form-crud-wrapper">
                             <div className="form-cancel" onClick={()=>setNewTreatment(false)}>
@@ -87,9 +83,10 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                         </div>
                     }
 
-                </div>
-            }
-
+                </div>]
+            :
+            <Loader/>
+                }
             </div>
         )
 }

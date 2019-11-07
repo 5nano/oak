@@ -9,12 +9,13 @@ export interface IFrontExperiment {
     values: Array<number>
 }
 
-export interface IExperimentImage{
+export interface ITest{
     assayId:Number,
     treatmentId:Number,
     experimentId:Number,
     pathImage:string,
     timestamp:string,
+    instant:string,
     width:Number,
     height:Number,
     area:Number,

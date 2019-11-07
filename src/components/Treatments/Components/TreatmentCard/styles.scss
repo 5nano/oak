@@ -1,34 +1,93 @@
-.treatment-card{
-    display:flex;
-    justify-content: space-between;
-    flex-direction: row;
-    align-content: stretch;
-
-    width:600px;
-    height: 100px;
-    padding: 5px 20px 5px 20px;
-    margin: 10px;
+.treatment-container{
+    width: 220px;
+    height: 220px;
+    padding: 5px;
+    margin: 20px;
 
     border-radius: 8px;
     border-style: solid;
     border-color: #6AC1A9;
-    background-color: #FCFCFC;
 
-    .treatment-attribute{
+    background-color: rgba(106, 193, 168, 0.1);
+
+    .treatment{
         display:flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
+        justify-content: space-between;
+        
+        height: inherit;
+    
         .title{
             font-size: 24px;
             color:#6AC1A9;
-    
-        }
-        .content{
-            font-size: 18px;
-            color:black;
+            margin-bottom: 5px;
+
+            
         }
 
+            .treatment-attribute{
+                display:flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                
+                margin-bottom: 10px;
+
+                img{
+                    width: 35px;
+                    height: 35px;
+                }
+        
+                .content{
+                    font-size: 18px;
+                    color:black;
+                }
+        
+            }
+         
+            .treatment-footer{
+                display:flex;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+
+                .footer{
+                    display:flex;
+                    flex-direction:column;
+                    align-items: center;
+                    p{
+    
+                    }
+                }
+
+            }
+    }
+}
+
+.empty-treatment{
+    width: 220px;
+    height: 220px;
+    padding: 5px;
+    margin: 20px;
+
+    border-radius: 8px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0,0.3);
+
+    background-color: rgba(106, 193, 168, 0.1);
+
+    display: flex;
+    justify-content: center;
+    align-items:center;
+
+    img{
+        height: 150px;
+        width: 150px;
+
+        opacity: 0.3;
+    }
+
+    :hover{
+        transform:scale(1.2);
     }
 }

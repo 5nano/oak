@@ -65,7 +65,6 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
     let assay:IAssay = {
       name:values.name,
       description:values.description,
-      idUserCreator: 1,
       idCrop:crop.idCrop
     }
     return this.props.submitAssayForm(assay)

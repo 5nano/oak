@@ -88,13 +88,21 @@
         justify-content: flex-start;
         align-items: center;
 
-        background-color: #84FAC5;
+        background-color:  #6AC1A9;
+        color:white;
         padding: 6px;
         padding-left: 17px;
         border-top: 1px solid black;
 
         font-size: 12px;
         font-weight: 400;
+
+        cursor: pointer;
+
+        &:hover{
+            background-color: white;
+            color: #6AC1A9;
+        }
 
         .experiment-title{
 

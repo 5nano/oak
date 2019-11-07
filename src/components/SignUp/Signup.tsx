@@ -37,12 +37,13 @@ class Signup extends React.Component<RouteComponentProps> {
                                 Automatización para ensayos de cultivos en laboratorios.
                             </div>
                             <div className="info-content">
-                                Bienvenido! Registrate para comenzar a monitorear tus ensayos en tiempo real.
+                                Configura tu cuenta y comenza a monitorear tus ensayos en tiempo real.
                             </div>
                         </div>
                         
-                        <UserForm submitForm={this.submitForm.bind(this)}/>
-                        
+                        <div className="user-form-container">
+                            <UserForm submitForm={this.submitForm.bind(this)}/>
+                        </div>
                     </div>
             </div>
         );

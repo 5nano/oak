@@ -86,12 +86,10 @@ const UserForm: React.SFC<IComponentFormProps> = (props) => {
   }
 
   return (
-
-    !loading?
         <Form
           submitForm={submitForm.bind(this)}
           fields = {fields}
-          title="Registrate!"
+          title="Registra tu cuenta"
           render={() => (
             <React.Fragment>
               <Field {...fields.firstName}/>
@@ -103,8 +101,6 @@ const UserForm: React.SFC<IComponentFormProps> = (props) => {
             </React.Fragment>
           )}
         />
-      :
-      <Loader/>
   );
 };
 

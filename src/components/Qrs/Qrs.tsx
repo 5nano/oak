@@ -58,8 +58,6 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
             idTreatment:treatment.idTreatment
         }))
           .then(data => {
-              console.log(data)
-        
             Object.keys(data.experimentsQR).forEach(key=>{
                 treatment.qrs.push(data.experimentsQR[key])
             })

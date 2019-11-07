@@ -37,18 +37,44 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
         props.history.push(`/assay/${idAssay}/treatments`);
     }
 
-    const activeAssay = ():Promise<void> => {
+    const goToImageGallery = () => {
+        props.history.push(`/photos?assay=${idAssay}`);
+    }
+
+    const activeAssay = (context:IHomeContext):Promise<void> => {
         return BushService.patch(`/ensayo/activar?idAssay=${idAssay}`)
+                            .then(()=>{
+                                context.setFeedback({variant:'success',message:'Ensayo activado exitosamente'})
+                                context.updateAssays()
+                            })
+                            .catch((error)=>{
+                                error.json().then(error=>context.setFeedback({variant:'error',message:error.message}))
+                            })
                    
     }
-    const archiveAssay = ():Promise<void> => {
+    const archiveAssay = (context:IHomeContext):Promise<void> => {
         return BushService.patch(`/ensayo/archivar?idAssay=${idAssay}`)
+                          .then(()=>{
+                              context.setFeedback({variant:'success',message:'Ensayo archivado exitosamente'})
+                              context.updateAssays()
+                          })
+                          .catch((error)=>{
+                              error.json().then(error=>context.setFeedback({variant:'error',message:error.message}))
+                          })
                   
     }
 
-    const remove = ():Promise<void> =>{
+    const removeAssay = (context:IHomeContext):Promise<void> =>{
        return BushService.post(`/ensayos/eliminar?assayId=${idAssay}`)
+                            .then(()=>{
+                                context.setFeedback({variant:'success',message:'Ensayo eliminado exitosamente'})
+                                context.updateAssays()
+                            })
+                            .catch((error)=>{
+                                error.json().then(error=>context.setFeedback({variant:'error',message:error.message}))
+                            })
     }
+
     
     return(
         <HomeContext.Consumer>
@@ -73,6 +99,10 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
                                 Tratamientos
                             </a>
                             <a className="option"
+                            onClick={()=>goToImageGallery()}>
+                                Ver imágenes
+                            </a>
+                            <a className="option"
                                 onClick={()=>goToQrs()}>
                                 Codigos QR
                             </a>
@@ -85,41 +115,23 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
                                 Finalizar
                             </a>
                             <a className="option"
-                                onClick={()=>{
-                                    archiveAssay().then(()=>{
-                                        context.setFeedback({variant:'success',message:'Ensayo archivado exitosamente'})
-                                        context.updateAssays()
-                                    })
-                                    }}>
+                                onClick={()=>{archiveAssay(context)}}>
                                 Archivar
                             </a>
                             <a className="option"
-                                onClick={()=>{
-                                    activeAssay().then(()=>{
-                                        context.setFeedback({variant:'success',message:'Ensayo activado exitosamente'})
-                                        context.updateAssays()
-                                    })
-                                    }}>
+                                onClick={()=>{activeAssay(context)}}>
                                 Activar
                             </a>
                             <a className="option"
-                                onClick={()=>{
-                                    remove().then(()=>{
-                                        context.setFeedback({variant:'success',message:'Ensayo eliminado exitosamente'})
-                                        context.updateAssays()
-                                    })
-                                    .catch(error => {
-                                        error.json().then(error =>context.setFeedback({variant:'error',message:error.message})
-                                        )
-                                    })
-                                    }}>
+                                onClick={()=>{removeAssay(context)}}>
                                 Eliminar 
                             </a>
                         </div>]
                     :
                     <Tags isSelected={isSelected} 
                         setTagsRequest={setTagsRequest}
-                        handleTag={handleTag}/>
+                        handleTag={handleTag}
+                        updateAssays={context.updateAssays}/>
                     }
             </div>
                     )}

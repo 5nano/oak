@@ -40,18 +40,18 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
         props.history.push(`/assay/${ensayo.idAssay}/dashboard`);
     }
 
-    const removeTag = (tag:ITag) => {
-        BushService.post(`/tags/ensayo/eliminar?idTag=${tag.idTag}&idAssay=${ensayo.idAssay}`,{})
+    const removeTag = (tag:ITag):Promise<void> => {
+       return BushService.post(`/tags/ensayo/eliminar?idTag=${tag.idTag}&idAssay=${ensayo.idAssay}`,{})
                     .then(()=>setTags(tags.filter(selectedTag => selectedTag.name != tag.name)))
     }
 
-    const addTag = (tag:ITag) => {
-        BushService.post(`/tags/ensayo/insertar?idTag=${tag.idTag}&idAssay=${ensayo.idAssay}`,{})
+    const addTag = (tag:ITag):Promise<void>=> {
+       return  BushService.post(`/tags/ensayo/insertar?idTag=${tag.idTag}&idAssay=${ensayo.idAssay}`,{})
                     .then(()=>setTags(tags.concat([tag])))
     }
 
-    const handleTag= (tag:ITag) => {
-        tags.some(selectedTag => selectedTag.name === tag.name)?
+    const handleTag= (tag:ITag):Promise<void> => {
+       return tags.some(selectedTag => selectedTag.name === tag.name)?
             removeTag(tag):addTag(tag)
     }
 

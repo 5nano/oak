@@ -1,31 +1,19 @@
 @import './Components/styles.scss';
 
-.treatments-title{
-    color:white;
-}
+.treatments-container{
+    width: 1200px;
+    height: 500px;
+    background-color: rgb(252, 252, 252);
+    overflow: auto;
 
-.treatments-wrapper{
-    display:flex;
-    align-items: flex-start;
-    align-content: space-around;
-
-    flex-flow: row wrap;
-
-    overflow-y:auto;
-
-    height: 160px;
-
-    border: 1px solid #6AC1A9;
     border-radius: 4px;
-    background-color: #E0E0E0;
-}
 
-.treatment-qr{
-    display:flex;
-    justify-content: flex-start;
-    
-    .qr{
-        display:flex
+    .treatments-wrapper{
+        display:flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+
     }
 }
 

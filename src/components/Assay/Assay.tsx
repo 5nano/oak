@@ -14,7 +14,7 @@ export interface IAssay{
   name:string,
   description:string,
   idCrop:Number,
-  idUserCreator:Number
+  idUserCreator?:Number
 }
 
 export interface IAssayState{
@@ -39,7 +39,6 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
               name:'',
               description:'',
               idCrop: null,
-              idUserCreator: null
             },
             successAssay: false,
             loading: {
@@ -62,7 +61,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
         })
     }
  submitAssayForm=(newAssay:IAssay):Promise<boolean> => {
-    
+    console.log(newAssay)
        return BushService.post('/ensayos/insertar', newAssay)
          .then(data => {
             let assayId = data["idAssay"]
@@ -80,7 +79,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
         return(
             <div className="crud-container">
                 <div className="crud-title">
-                  Ensayo
+                  <h1>Ensayo</h1>
                 </div>
                 <div className="assay-form-wrapper">
                     {this.state.successAssay && 

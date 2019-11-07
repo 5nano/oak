@@ -32,7 +32,7 @@ const TreatmentQrs:React.SFC<ITreatmentQrsProps> = (props) => {
     const sendQrsToEmail = () => {
       getPdf().then(pdf => {
           let htmlToSend = {
-            html: '<div>NANIVO<div>',
+            html: renderEmailTemplate(),
             base64pdf: pdf.output('datauristring').split(',')[1]
         }
     
@@ -43,6 +43,7 @@ const TreatmentQrs:React.SFC<ITreatmentQrsProps> = (props) => {
                   })
                   .catch(error => {
                     setError(true)
+                    setLoading(false)
                   })
 
       })
@@ -60,6 +61,27 @@ const TreatmentQrs:React.SFC<ITreatmentQrsProps> = (props) => {
                 return pdf
               })
     }
+
+
+    const renderEmailTemplate = () => {`
+      <div className="email-template">
+          <div className="email-header">
+            <h2>Hola!</h2>
+          </div>
+          <div className="email-content">
+            <h1>Codigos QR del tratamiento {treatment.name}</h1>
+            <p>
+              Aquí le adjuntamos los códigos QR que solicitó. Recuerde pegar
+              cada código QR en el recipiente correspondiente donde se sembró la planta 
+              que desea identificar. 
+            </p>
+            <hr/>
+            <div className="email-footer">
+            <img src="../../../../assets/images/nanivo-logo.png"/>
+            </div>
+          </div>
+        </div>`
+    }
     return(
         loading? <Loader/> 
         :
@@ -68,6 +90,8 @@ const TreatmentQrs:React.SFC<ITreatmentQrsProps> = (props) => {
           {error && <Error message="Hubo un problema al enviar tus códigos QRs, intente más tarde"/>}
           <Button title="Descargar PDF" onClick={()=>downloadPdf()}/>
           <Button title="Enviar por correo electrónico" onClick={()=>sendQrsToEmail()}/>
+
+
 
           <div id="treatments-qrs" className="treatment-qrs">
             {treatment.qrs

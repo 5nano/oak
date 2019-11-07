@@ -117,7 +117,7 @@ class TreatmentForm extends React.Component<ITreatmentFormProps,ITreatmentFormSt
         <Form
           submitForm={this.submitForm.bind(this)}
           fields={fields}
-          title = "Registrar"
+          title = "Ingresa un nuevo tratamiento"
           render={() => (
             <React.Fragment>
               <Field {...fields.name}/>
