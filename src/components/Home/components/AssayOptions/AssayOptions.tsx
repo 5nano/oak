@@ -37,6 +37,10 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
         props.history.push(`/assay/${idAssay}/treatments`);
     }
 
+    const goToImageGallery = () => {
+        props.history.push(`/photos?assay=${idAssay}`);
+    }
+
     const activeAssay = (context:IHomeContext):Promise<void> => {
         return BushService.patch(`/ensayo/activar?idAssay=${idAssay}`)
                             .then(()=>{
@@ -93,6 +97,10 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
                             <a className="option"
                             onClick={()=>goToTreatments()}>
                                 Tratamientos
+                            </a>
+                            <a className="option"
+                            onClick={()=>goToImageGallery()}>
+                                Ver imágenes
                             </a>
                             <a className="option"
                                 onClick={()=>goToQrs()}>

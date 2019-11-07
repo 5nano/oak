@@ -5,6 +5,7 @@ import { ITest, IBackendExperiment, IExperiment } from '../../Interfaces/Experim
 import BushService from '../../services/bush';
 import ExperimentPopover from './Components/ExperimentPopover';
 import classnames from 'classnames';
+const qs = require('qs');
 
 interface IPhotosGalleryState {
     assays:Array<IEnsayo>,
@@ -24,14 +25,16 @@ interface IPhotosGalleryProps{
 class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGalleryState> {
 
     constructor(props){
-        super(props)
+        super(props);
+        const initialQuery = qs.parse(props.location.search.slice(1));
+        const selectedAssayId = initialQuery['assay'] && Number(initialQuery['assay']);
         this.state={
             assays:[],
             treatments:[],
             experiments:[],
             experimentImages:[],
             loading:true,
-            selectedAssayId: null,
+            selectedAssayId,
             selectedTreatmentId:null,
             selectedExperimentId:null,
             experimentImageFocus:null
@@ -47,6 +50,8 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
                     .then((data:Array<IEnsayo>) => {
                         this.setState({assays:data,loading:false})
                     })
+
+        if (this.state.selectedAssayId) this.showTreatments(this.state.selectedAssayId);
     }
 
     showTreatments(idAssay:Number){
