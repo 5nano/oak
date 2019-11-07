@@ -81,9 +81,7 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
       if (!(this.props.data && Object.keys(this.props.data).length)) return null;
 
       const treatmentValues = {};
-      console.log(this.props.data)
       Object.keys(this.props.data).map(date => {
-        console.log(date)
         const dateData = this.props.data[date];
 
         Object.keys(dateData).map(treatmentId => {
@@ -109,7 +107,6 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
       }))
 
       const layout = {
-        title: this.props.title,
         xaxis: {
           tickprefix: '',
         },
@@ -152,7 +149,8 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
               />
             </Popper>
         }
-        <div id={`graph-${this.props.title.replace(/\s/g, '-')}`} className="PlotlyGraph BoxPlot">
+        <div id={`graph-${this.props.title.replace(/\s/g, '-')}`} className="plot-graph">
+          <h4>{this.props.title}</h4>
           <Plot
             data={data}
             layout={layout}

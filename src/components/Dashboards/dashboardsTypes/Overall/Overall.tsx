@@ -9,6 +9,7 @@ import GreenFreq from '../GreenFrequency/GreenFrequency';
 import YellowFreq from '../YellowFrequency/YellowFrequency';
 import LeafArea from '../LeafArea/LeafArea';
 import LinearTreatments from '../LinearTreatments/LinearTreatments';
+import Loader from "../../../Utilities/Loader/Loader";
 
 export interface OverallComponentState {
   loading: boolean,
@@ -41,7 +42,12 @@ class OverallComponent extends React.Component<OverallComponentProps, OverallCom
     const yellowFreqHasData = this.props.data[YellowFreq.id] && Object.keys(this.props.data[YellowFreq.id]).length;
     const greenFreqHasData = this.props.data[GreenFreq.id] && Object.keys(this.props.data[GreenFreq.id]).length;
 
-    if (!leafAreaHasData && !yellowFreqHasData && !greenFreqHasData) return this.props.onEmptyRender();
+    if (!leafAreaHasData && !yellowFreqHasData && !greenFreqHasData) 
+      return (
+      <div style={{width:'100%',display:'flex',alignItems:'center',justifyContent:'center'}}>
+        <Loader/>
+      </div>)
+      ;
 
     return (
         <div className="Overall">
