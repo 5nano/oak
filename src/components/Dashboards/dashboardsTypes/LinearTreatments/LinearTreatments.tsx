@@ -25,7 +25,7 @@ interface LinearTreatmentsProps extends RouteComponentProps<AssayParamsType> {
     graphPosition?: 'left' | 'right', 
 }
 
-const name = "Area Foliar Linear Promediado";
+const name = "Área Foliar Linear Promediado";
 
 class LinearTreatments extends React.Component<LinearTreatmentsProps> {
    
@@ -45,7 +45,8 @@ class LinearTreatments extends React.Component<LinearTreatmentsProps> {
 
     render() { 
 
-        if (!(this.props.data && this.props.data.linear &&  Object.keys(this.props.data.linear).length)) return this.props.onEmptyRender();
+        if (!(this.props.data && this.props.data.linear &&  Object.keys(this.props.data.linear).length)) 
+          return this.props.onEmptyRender(name);
          
         let averageTreatmentsData = this.props.data.linear[0]
         //console.log(averageTreatmentsData)
@@ -67,7 +68,7 @@ class LinearTreatments extends React.Component<LinearTreatmentsProps> {
           const layout: Partial<Layout> = {
               showlegend: true,
 
-            title: name,
+            
             xaxis: {
               type: 'date',
               autorange: true,
@@ -93,18 +94,18 @@ class LinearTreatments extends React.Component<LinearTreatmentsProps> {
                 ticksuffix: " mm2",
                 showticksuffix: "all"
             },
-            autosize: true,
+            autosize: true
           };
 
         return (
-            <div className="PlotlyGraph" >
-                <Plot
-                    data={linearData}
-                    layout={layout}
-                    style={{position: 'relative', display: 'flex', width: "100%", height: "100%"}}
-                />
-            </div>
-            
+          <div className="plot-graph">
+            <h4>{name}</h4>
+            <Plot
+                data={linearData}
+                layout={layout}
+                style={{position: 'relative', display: 'flex', width: "100%", height: "100%"}}
+            />
+          </div>
         )
       }
 };

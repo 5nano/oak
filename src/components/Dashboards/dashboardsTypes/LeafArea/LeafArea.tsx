@@ -70,7 +70,7 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
 
     render() { 
       //debugger;
-        if (!(this.props.data && this.props.data.box &&  Object.keys(this.props.data.box).length)) return this.props.onEmptyRender();
+        if (!(this.props.data && this.props.data.box &&  Object.keys(this.props.data.box).length)) return this.props.onEmptyRender(name);
         // const linearData: Plotly.Data[] = this.props.data.linear.map(experiment => ({
         //     x: experiment.dates,
         //     y: experiment.values,
@@ -111,16 +111,12 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
           };
 
         return (
-            <div className="PlotlyGraph" >
-                {
-                  <BoxPlot 
-                    data={this.props.data.box} 
-                    dataSuffix="mm^2" 
-                    title={name} 
-                    graphPosition={this.props.graphPosition} 
-                  /> 
-                }
-            </div>
+            <BoxPlot 
+              data={this.props.data.box} 
+              dataSuffix="mm^2" 
+              title={name} 
+              graphPosition={this.props.graphPosition} 
+            /> 
         )
     }
 };
