@@ -63,7 +63,6 @@ const HomeSearcher:React.SFC<IHomeSearcherProps> = (props) => {
         
         BushService.post('/tags/ensayos',tags)
                     .then((data:Array<IEnsayo>) => {
-                        console.log(data)
                         props.setFilteredAssays(data)
                         props.setLoading(false)
                     })
