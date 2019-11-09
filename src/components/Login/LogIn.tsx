@@ -2,11 +2,14 @@ import * as React from "react";
 import BushService from '../../services/bush';
 import Button from "../Utilities/Buttons/DefaultButton/Button";
 import { RouteComponentProps } from "react-router-dom";
+import { Snackbar } from "@material-ui/core";
+import MySnackbarContentWrapper from "../Feedback/MySnackbarContentWrapper";
 
 export interface ILogInState {
     username:string,
     password:string,
-    loading:boolean
+    loading:boolean,
+    feedback:boolean
 }
 
 export interface ILogInProps extends RouteComponentProps{
@@ -21,9 +24,11 @@ export class LogIn extends React.Component<ILogInProps,ILogInState> {
         this.state = {
             username: '',
             password: '',
-            loading: false
+            loading: false,
+            feedback: false
         }
     }
+
 
     private handleSubmit = async (
         e: React.FormEvent<HTMLFormElement>
@@ -41,7 +46,10 @@ export class LogIn extends React.Component<ILogInProps,ILogInState> {
             this.props.validateLogin();
             this.props.history.push('/home')
             this.setState({loading:false})
-        });
+        })
+        .catch(error => {
+            this.setState({feedback:true});
+        })
       }
 
     private handleChangeUsername =  (
@@ -56,6 +64,13 @@ export class LogIn extends React.Component<ILogInProps,ILogInState> {
         this.setState({password:event.target.value})
     }
 
+    handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        this.setState({feedback:false});
+      };
 
     render(){
     return(
@@ -90,6 +105,22 @@ export class LogIn extends React.Component<ILogInProps,ILogInState> {
                 </div>
                 <Button type="submit" title={this.state.loading? "Verificando...":"Ingresar"}/>
             </form>
+
+            <Snackbar
+                anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+                }}
+                open={this.state.feedback}
+                autoHideDuration={6000}
+                onClose={this.handleClose}
+            >
+                <MySnackbarContentWrapper
+                onClose={this.handleClose}
+                variant="error"
+                message="Usuario y/o contraseña incorrecta"
+                />
+            </Snackbar>
         </div>
     )
     }

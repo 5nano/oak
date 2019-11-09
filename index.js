@@ -43,7 +43,7 @@ app.use((req, res, next) => {
     res.set({
         'Cache-Control': 31536000
     });
-    res.send(template('Oak', manifest, cdnPath));
+    res.send(template('NANIVO', manifest, cdnPath));
 });
 
 
