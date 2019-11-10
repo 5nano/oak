@@ -22,6 +22,8 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { UserHeader } from '../../Interfaces/User';
 import { Menu, MenuItem } from '@material-ui/core';
 import BushService from '../../services/bush';
+import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
+import Collapse from '@material-ui/core/Collapse';
 
 const drawerWidth = 240;
 
@@ -68,6 +70,9 @@ const useStyles = makeStyles((theme: Theme) =>
       ...theme.mixins.toolbar,
       justifyContent: 'flex-end',
     },
+    nested: {
+      paddingLeft: theme.spacing(4),
+    },
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
@@ -99,8 +104,9 @@ const Layout:React.SFC<ILayoutProps> = (props) => {
     const {renderContent,user} = props;
 
    const [userMenuAnchorEl,setUserMenuAnchorEl] = React.useState(null)
-
-  const handleDrawerOpen = () => {
+   const [componentsList,setComponentsList] = React.useState(false)
+  
+   const handleDrawerOpen = () => {
     setOpen(true);
   };
 
@@ -123,6 +129,10 @@ const Layout:React.SFC<ILayoutProps> = (props) => {
 const openUserMenu= (event: React.MouseEvent<HTMLDivElement,MouseEvent>) => {
     setUserMenuAnchorEl(event.currentTarget);
   };
+
+const openComponentsList = () => {
+  setComponentsList(!componentsList)
+}
 
   return (
     <div className={classes.root}>
@@ -176,7 +186,7 @@ const openUserMenu= (event: React.MouseEvent<HTMLDivElement,MouseEvent>) => {
         }}
       >
         <div className={classes.drawerHeader}>
-            <div className="header-icon">
+            <div className="header-icon" onClick={()=>props.history.push('/home')}>
                 <img src='../../assets/images/nanivo-logo.png'/>
             </div>
           <IconButton onClick={handleDrawerClose}>
@@ -185,25 +195,32 @@ const openUserMenu= (event: React.MouseEvent<HTMLDivElement,MouseEvent>) => {
         </div>
         <Divider />
         <List>
-            <ListItem button key={'1'} onClick={()=>props.history.push('/agrochemicals')} >
-              <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary={'Agroquimicos'} />
-            </ListItem>
 
-            <ListItem button key={'2'} onClick={()=>props.history.push('/crops')} >
-            <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary={'Cultivos'} />
-            </ListItem>
+          <ListItem button className={classes.nested} onClick={openComponentsList}>
+                <ListItemIcon><FolderOutlinedIcon /></ListItemIcon>
+                <ListItemText primary="Componentes" />
+          </ListItem>
 
-            <ListItem button key={'3'} onClick={()=>props.history.push('/mixs')} >
-            <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary={'Mezclas'} />
-            </ListItem>
+          <Collapse in={componentsList} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem button key={'1'} onClick={()=>props.history.push('/agrochemicals')} >
+                <ListItemText primary={'Agroquimicos'} />
+              </ListItem>
 
-            <ListItem button key={'4'} onClick={()=>props.history.push('/assay')} >
-            <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary={'Ensayos'} />
-            </ListItem>
+              <ListItem button key={'2'} onClick={()=>props.history.push('/crops')} >
+                <ListItemText primary={'Cultivos'} />
+              </ListItem>
+
+              <ListItem button key={'3'} onClick={()=>props.history.push('/mixs')} >
+                <ListItemText primary={'Mezclas'} />
+              </ListItem>
+
+              <ListItem button key={'4'} onClick={()=>props.history.push('/assay')} >
+                <ListItemText primary={'Ensayos'} />
+              </ListItem>
+            </List>
+          </Collapse>
+
         </List>
         <Divider />
       </Drawer>

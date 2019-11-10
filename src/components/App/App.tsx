@@ -25,10 +25,10 @@ const App = (props: AppProps) => {
     const validateLogin = () => {
         if (document.cookie.includes('user') && !loggedIn)
             {
+                setLogin({logged: true});
                 BushService.get('/usuario')
                             .then((data:UserHeader)=>{
                                 setUser(data)
-                                setLogin({logged: true});
                             })
             }
     };

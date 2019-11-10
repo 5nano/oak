@@ -2,15 +2,21 @@ import * as React from "react";
 import { Route, Redirect } from "react-router-dom";
 import Header from "../../App/components/Header";
 import Layout from "../../Layout/Layout";
+import Loader from "../Loader/Loader";
 
 const PrivateRoute = ({component:Component,isLoggedIn,user,...rest}) => (
     <Route {...rest} render={(props) => (
         isLoggedIn? 
-        <Layout {...props} user={user} renderContent={()=>(
-                <div className="content">
-                    <Component {...props} />
+            user===null? 
+                <div className="empty-content">
+                    <Loader/>
                 </div>
-        )}/>
+            :
+            <Layout {...props} user={user} renderContent={()=>(
+                    <div className="content">
+                        <Component {...props} />
+                    </div>
+            )}/>
         : 
         <Redirect to={{
             pathname:"/",
