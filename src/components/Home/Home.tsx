@@ -117,7 +117,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
 
         let htmlToSend = {
             subject: `El ensayo ${assay.name} creado el ${createdDate} ha finalizado con ${stars} estrellas `,
-            html:"<html><img src=https://ibb.co/92QcCXD/></html>",
+            html:"<html><img src='https://i.ibb.co/mtfbMsj/end-assay.jpg'/></html>",
         }
     
         BushService.post("/mailSender",htmlToSend)

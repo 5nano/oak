@@ -32,11 +32,12 @@ const TreatmentQrs:React.SFC<ITreatmentQrsProps> = (props) => {
     const sendQrsToEmail = () => {
       getPdf().then(pdf => {
           let htmlToSend = {
-            html:"<html><img src='https://ibb.co/j6HDdSX'/></html>",
+            subject: `Códigos QR del tratamiento ${treatment.name}`,
+            html:"<html><img src='https://i.ibb.co/4mJpcHr/qrs.jpg'></img></html>",
             base64pdf: pdf.output('datauristring').split(',')[1]
         }
     
-        BushService.post(`/mailSender?treatmentName=${treatment.name}&&assayId=${props.idAssay}`,htmlToSend)
+        BushService.post("/mailSender",htmlToSend)
                   .then(()=> {
                     setLoading(false)
                     setSuccess(true)
