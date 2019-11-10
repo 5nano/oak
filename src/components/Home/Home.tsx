@@ -74,7 +74,6 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
         this.setState({loading:true})
         BushService.get(`/ensayos?state=${state}`)
             .then((assays:Array<IEnsayo>) => {
-                console.log(assays)
                 this.setState({
                     ...this.state,
                     loading:false,
@@ -170,7 +169,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
                       />
         
                 <HomeSearcher setFilteredAssays={this.setFilteredAssays.bind(this)}
-                                setLoading={this.setLoading.bind(this)}/>
+                            setLoading={this.setLoading.bind(this)}/>
 
                 {this.state.assayToFinish!=null &&
                     <AssayFeedback idAssay={this.state.assayToFinish}
@@ -185,7 +184,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
                          <div className="ensayos">
                             {this.state.assays.length === 0 && 
                             <Info message="No se registran ensayos en este estado"/>}
-                            {this.state.assays.map((ensayo: IEnsayo) => (
+                            {this.state.filteredAssays.map((ensayo: IEnsayo) => (
                                 <Ensayo {...this.props} ensayo={ensayo} />
                             ))}
                          </div>
