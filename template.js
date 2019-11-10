@@ -5,7 +5,7 @@ module.exports = (title, manifest, cdnPath) => {
     <!DOCTYPE html>
     <html>
     <head>
-        <link rel="icon" type="image/png" href="https://ibb.co/71nyZy6">
+        <link rel="shortcut icon" href="/assets/ico/favicon.ico">
         <title>${title}</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
