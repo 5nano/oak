@@ -57,6 +57,7 @@ module.exports = {
 				},
 			  ]),
 			  new ManifestPlugin(),
+			  
 			],
 
 	module: {
@@ -94,7 +95,7 @@ module.exports = {
 				exclude: [/node_modules/]
 			},
 			{
-				test: /\.(png|svg|jpg|gif)$/,
+				test: /\.(png|svg|jpg|gif|ico)$/,
 				use: [
 					{
 						loader: 'file-loader',
