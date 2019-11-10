@@ -74,7 +74,6 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
         this.setState({loading:true})
         BushService.get(`/ensayos?state=${state}`)
             .then((assays:Array<IEnsayo>) => {
-                console.log(assays)
                 this.setState({
                     ...this.state,
                     loading:false,
@@ -98,22 +97,29 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
     }
 
     private finishAssay(stars:Number,comments:string):Promise<void>{
+        let assayId = this.state.assayToFinish;
         return BushService.patch(`/ensayo/terminar?idAssay=${this.state.assayToFinish}&&stars=${stars}&&comments=${comments}`)
         .then(()=>{
             this.closeAssayFeedback()
-            this.setFeedback({variant:'success',message:'Ensayo finalizado exitosamente'})
-
-
+            this.sendAssayFinishedEmail(assayId,stars)
+            this.setFeedback({variant:'success',message:'Ensayo finalizado exitosamente. Revisa tu casilla de correo electrónico'})
+            this.updateAssays()
+        })
+        .catch(error => {
+            this.setFeedback({variant:'error',message:'El ensayo ya se encuentra finalizado'})
         })
     }
+    private sendAssayFinishedEmail = (assayId: Number,stars:Number) => {
+        
+        let assay = this.state.assays.find(assay => assay.idAssay === assayId)
+        let createdDate = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(Date.parse(assay.created))
 
-    private sendAssayFinishedEmail = () => {
         let htmlToSend = {
-            subject: `El ensayo ${this.state.assayToFinish} ha finalizado`,
-            html:"<html><img src='https://ibb.co/92QcCXD'/></html>",
+            subject: `El ensayo ${assay.name} creado el ${createdDate} ha finalizado con ${stars} estrellas `,
+            html:"<html><img src='https://i.ibb.co/mtfbMsj/end-assay.jpg'/></html>",
         }
     
-        BushService.post(`/mailSender?treatmentName=harcodeado&&assayId=${3}`,htmlToSend)
+        BushService.post("/mailSender",htmlToSend)
                   .then(()=> {
                     console.log("Email enviado")
                   })
@@ -163,7 +169,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
                       />
         
                 <HomeSearcher setFilteredAssays={this.setFilteredAssays.bind(this)}
-                                setLoading={this.setLoading.bind(this)}/>
+                            setLoading={this.setLoading.bind(this)}/>
 
                 {this.state.assayToFinish!=null &&
                     <AssayFeedback idAssay={this.state.assayToFinish}
@@ -178,7 +184,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
                          <div className="ensayos">
                             {this.state.assays.length === 0 && 
                             <Info message="No se registran ensayos en este estado"/>}
-                            {this.state.assays.map((ensayo: IEnsayo) => (
+                            {this.state.filteredAssays.map((ensayo: IEnsayo) => (
                                 <Ensayo {...this.props} ensayo={ensayo} />
                             ))}
                          </div>

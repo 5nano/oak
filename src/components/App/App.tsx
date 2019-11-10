@@ -14,16 +14,26 @@ import Landing from '../Landing/Landing';
 import PrivateRoute from '../Utilities/ProtectedRoute/PrivateRoute';
 import Treatments from '../Treatments/Treatments';
 import PhotosGallery from '../PhotosGallery/PhotosGallery';
+import BushService from '../../services/bush';
+import { UserHeader } from '../../Interfaces/User';
 
 export interface AppProps { title: string }
 
 const App = (props: AppProps) => {
     const [{logged: loggedIn}, setLogin] = React.useState({logged: false});
+    const [user,setUser] = React.useState<UserHeader>(null)
     const validateLogin = () => {
         if (document.cookie.includes('user') && !loggedIn)
-            setLogin({logged: true});
+            {
+                setLogin({logged: true});
+                BushService.get('/usuario')
+                            .then((data:UserHeader)=>{
+                                setUser(data)
+                            })
+            }
     };
     validateLogin();
+   
 
     return (
 
@@ -41,27 +51,27 @@ const App = (props: AppProps) => {
                    render={(props)=>loggedIn? <Redirect to="/home"/> : <Signup {...props}/>}
             />
 
-            <PrivateRoute path='/home' exact component={Homes} isLoggedIn={loggedIn}/>
+            <PrivateRoute path='/home' exact component={Homes} isLoggedIn={loggedIn} user={user}/>
         
-            <PrivateRoute path='/crops' exact component={Crops} isLoggedIn={loggedIn}/>
+            <PrivateRoute path='/crops' exact component={Crops} isLoggedIn={loggedIn} user={user}/>
 
-            <PrivateRoute path='/agrochemicals' exact component={Agrochemicals} isLoggedIn={loggedIn}/>
+            <PrivateRoute path='/agrochemicals' exact component={Agrochemicals} isLoggedIn={loggedIn} user={user}/>
 
-            <PrivateRoute path='/mixs' exact component={Mixs} isLoggedIn={loggedIn}/>
+            <PrivateRoute path='/mixs' exact component={Mixs} isLoggedIn={loggedIn} user={user}/>
 
-            <PrivateRoute path='/companies' exact component={Companies} isLoggedIn={loggedIn}/>
+            <PrivateRoute path='/companies' exact component={Companies} isLoggedIn={loggedIn} user={user}/>
 
-            <PrivateRoute path='/users' exact component={Users} isLoggedIn={loggedIn}/>
+            <PrivateRoute path='/users' exact component={Users} isLoggedIn={loggedIn} user={user}/>
 
-            <PrivateRoute path='/assay' exact component={Assay} isLoggedIn={loggedIn}/>
+            <PrivateRoute path='/assay' exact component={Assay} isLoggedIn={loggedIn} user={user}/>
 
-            <PrivateRoute path='/assay/:assayId/dashboard' exact component={Dashboards} isLoggedIn={loggedIn}/>
+            <PrivateRoute path='/assay/:assayId/dashboard' exact component={Dashboards} isLoggedIn={loggedIn} user={user}/>
 
-            <PrivateRoute path='/assay/:assayId/qrs' exact component={Qrs} isLoggedIn={loggedIn}/>
+            <PrivateRoute path='/assay/:assayId/qrs' exact component={Qrs} isLoggedIn={loggedIn} user={user}/>
           
-            <PrivateRoute path='/assay/:assayId/treatments' exact component={Treatments} isLoggedIn={loggedIn}/>
+            <PrivateRoute path='/assay/:assayId/treatments' exact component={Treatments} isLoggedIn={loggedIn} user={user}/>
 
-            <PrivateRoute path='/photos' exact component={PhotosGallery} isLoggedIn={loggedIn}/>
+            <PrivateRoute path='/photos' exact component={PhotosGallery} isLoggedIn={loggedIn} user={user}/>
 
           </Switch>
 

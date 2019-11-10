@@ -4,24 +4,50 @@ import BushService from '../../services/bush';
 import Button from "../Utilities/Buttons/DefaultButton/Button";
 import { RouteComponentProps } from "react-router";
 import { User } from "../../Interfaces/User";
+import MySnackbarContentWrapper, { Feedback } from "../Feedback/MySnackbarContentWrapper";
+import { Snackbar } from "@material-ui/core";
 
-class Signup extends React.Component<RouteComponentProps> {
+interface SignUpState{
+    feedback:Feedback
+}
 
-    submitForm = (newUser:User): Promise<boolean> => {
-      return BushService.post('/usuarios/insertar', newUser)
-                        .then(() => {return true})
+class Signup extends React.Component<RouteComponentProps,SignUpState> {
+
+    constructor(props){
+        super(props);
+
+        this.state = {
+            feedback:null
+        }
     }
 
-    sendSignUpEmail = () => {
-        let htmlToSend = {
-            subject: '¡NANIVO te da la bienvenida!',
-            html:"<html><img src='https://ibb.co/fGySqYp'/></html>",
+    
+    submitForm = (newUser:User): Promise<boolean> => {
+      return BushService.post('/usuarios/insertar', newUser)
+                        .then(() => {
+                            this.sendSignUpEmail(newUser)
+                            return true
+                        })
+    }
+
+    sendSignUpEmail = (user:User) => {
+        let payloadEmail = {
+            subject: "¡NANIVO te da la bienvenida!",
+            html:"<html><img src='https://i.ibb.co/j6YxFcN/new-user.jpg'/></html>",
         }
     
-        BushService.post(`/mailSender?treatmentName=harcodeado&&assayId=${3}`,htmlToSend)
+        BushService.post(`/mailSender/unregisteredUser?mail=${user.email}`,payloadEmail)
                   .then(()=> {
-                    console.log("Email enviado")
+                    this.setState({feedback:{variant:'success',message:'Revisa tu casilla de correo electrónico'}})
+
                   })
+    }
+
+    private handleSnackbarClose(event?: React.SyntheticEvent,reason?:string) {
+        if (reason ==='clickaway') { 
+            return;
+        }
+        this.setState({feedback:null})
     }
   
     render(){
@@ -56,11 +82,22 @@ class Signup extends React.Component<RouteComponentProps> {
                         <div className="user-form-container">
                             <UserForm submitForm={this.submitForm.bind(this)}/>
                         </div>
-
-                        <button onClick={()=>this.sendSignUpEmail()}>
-                            mail
-                            </button>
                     </div>
+
+                    <Snackbar 
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left'
+                        }}
+                        open={this.state.feedback!=null}
+                        autoHideDuration={6000}
+                        onClose={this.handleSnackbarClose.bind(this)}
+                        >
+                            <MySnackbarContentWrapper
+                                onClose={this.handleSnackbarClose.bind(this)}
+                                variant={this.state.feedback? this.state.feedback.variant : 'success'}
+                                message={this.state.feedback? this.state.feedback.message:''}/>
+                </Snackbar>
             </div>
         );
     }
