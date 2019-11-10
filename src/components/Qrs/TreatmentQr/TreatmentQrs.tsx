@@ -3,8 +3,8 @@ import {ITreatment} from '../../../Interfaces/ITreatment'
 import Button from '../../Utilities/Buttons/DefaultButton/Button';
 import BushService from '../../../services/bush';
 import Loader from '../../Utilities/Loader/Loader';
-import Success from '../../Utilities/Messages/Success';
-import Error from '../../Utilities/Messages/Error';
+import MySnackbarContentWrapper, { Feedback } from '../../Feedback/MySnackbarContentWrapper';
+import { Snackbar } from '@material-ui/core';
 var html2canvas = require('html2canvas')
 var jsPDF = require( 'jspdf');
 
@@ -19,12 +19,11 @@ const TreatmentQrs:React.SFC<ITreatmentQrsProps> = (props) => {
     const {treatment} = props;
 
     const [loading,setLoading] = React.useState(false)
-    const [success,setSuccess] = React.useState(false)
-    const [error,setError] = React.useState(false)
+    const [feedback,setFeedback] = React.useState<Feedback>(null)
 
     const downloadPdf = () => {
       getPdf().then((pdf) => {
-        pdf.save(`QRs: ${treatment.name}`);
+        pdf.save(`QRs - ${treatment.name}`);
         setLoading(false)
       })
     }
@@ -40,19 +39,17 @@ const TreatmentQrs:React.SFC<ITreatmentQrsProps> = (props) => {
         BushService.post("/mailSender",htmlToSend)
                   .then(()=> {
                     setLoading(false)
-                    setSuccess(true)
+                    setFeedback({variant:'success',message:'Los códigos QR fueron enviados a tu correo electrónico'})
                   })
                   .catch(error => {
-                    setError(true)
                     setLoading(false)
+                    setFeedback({variant:'error',message:'Hubo un problema al enviar tus códigos QRs, intente más tarde'})
                   })
 
       })
     }
 
     const getPdf = ():Promise<any> => {
-      setSuccess(false)
-      setError(false)
       setLoading(true)
       return html2canvas(document.getElementById("treatments-qrs"))
               .then((canvas) => {
@@ -63,37 +60,20 @@ const TreatmentQrs:React.SFC<ITreatmentQrsProps> = (props) => {
               })
     }
 
+    const handleSnackbarClose = (event?: React.SyntheticEvent,reason?:string) => {
+      if (reason ==='clickaway') { 
+          return;
+      }
+      setFeedback(null)
+  }
 
-    const renderEmailTemplate = () => {`
-      <div className="email-template">
-          <div className="email-header">
-            <h2>Hola!</h2>
-          </div>
-          <div className="email-content">
-            <h1>Codigos QR del tratamiento {treatment.name}</h1>
-            <p>
-              Aquí le adjuntamos los códigos QR que solicitó. Recuerde pegar
-              cada código QR en el recipiente correspondiente donde se sembró la planta 
-              que desea identificar. 
-            </p>
-            <hr/>
-            <div className="email-footer">
-            <img src="../../../../assets/images/nanivo-logo.png"/>
-            </div>
-          </div>
-        </div>`
-    }
+
     return(
         loading? <Loader/> 
         :
         <div className="treatment-qrs-container">
-          {success && <Success message="Los codigos QRs fueron enviados a tu correo electrónico"/>}
-          {error && <Error message="Hubo un problema al enviar tus códigos QRs, intente más tarde"/>}
           <Button title="Descargar PDF" onClick={()=>downloadPdf()}/>
           <Button title="Enviar por correo electrónico" onClick={()=>sendQrsToEmail()}/>
-
-
-
           <div id="treatments-qrs" className="treatment-qrs">
             {treatment.qrs
                         .map(value => {
@@ -113,6 +93,21 @@ const TreatmentQrs:React.SFC<ITreatmentQrsProps> = (props) => {
                                     }
             )}
           </div>
+          
+          <Snackbar 
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left'
+                }}
+                open={feedback!=null}
+                autoHideDuration={6000}
+                onClose={handleSnackbarClose.bind(this)}
+                >
+                    <MySnackbarContentWrapper
+                        onClose={handleSnackbarClose.bind(this)}
+                        variant={feedback? feedback.variant : 'success'}
+                        message={feedback? feedback.message:''}/>
+                </Snackbar>
 
         </div>
     )
