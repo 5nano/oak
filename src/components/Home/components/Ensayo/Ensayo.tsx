@@ -111,9 +111,12 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                     <div className="content">{ensayo.description}</div>
                 </div>
                 <div className="assay-description">
+                    <div className="title">Autor</div>
+                    <div className="content">{ensayo.user}</div>
+                </div>
+                <div className="assay-description">
                     <div className="title">Fecha de creación</div>
-                    <div className="content">{new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(Date.parse(ensayo.created))
-}</div>
+                    <div className="content">{new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(Date.parse(ensayo.created))}</div>
                 </div>
             </div>
             
