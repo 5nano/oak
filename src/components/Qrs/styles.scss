@@ -7,9 +7,19 @@
 
     padding: 80px 20px;
 
-    .qrs-title{
-        font-size:32px;
+    .qrs-header{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
         color: #6AC1A9;
+        .qrs-title{
+            font-size:32px;
+        }
+
+        .qrs-content{
+            font-size: 22px;
+        }
     }
 
     .qrs-selector{
