@@ -23,10 +23,6 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
     const [tags,setTags] = React.useState<Array<ITag>>([])
 
     React.useEffect(()=>{
-        ensayo.tags.map(tag=>{
-            tag.color = randomColor();
-            return {tag}
-        })
         setTags(ensayo.tags)
     },[])
 

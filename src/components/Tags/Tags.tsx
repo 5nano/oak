@@ -26,7 +26,8 @@ const Tags:React.SFC<ITagsProps> = (props) => {
         BushService.get('/tags')
                    .then((data:Array<ITag>) => {
                        data.map(tag=>{
-                           tag.color=randomColor();
+                           if(tag.color === null) tag.color = randomColor()
+                           
                            return tag
                        })
                        setTags(data)
@@ -34,6 +35,7 @@ const Tags:React.SFC<ITagsProps> = (props) => {
     }
 
      const handleNewTag = (tag:ITag) => {
+         console.log(tag)
         setSuccess(false)
         BushService.post('/tags/insertar',tag)
                    .then(()=>{

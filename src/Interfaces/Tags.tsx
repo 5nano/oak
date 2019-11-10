@@ -1,6 +1,6 @@
 export interface ITag{
-    idTag:number,
+    idTag?:number,
     name:string,
     description:string
-    color?:any
+    color:string
 }

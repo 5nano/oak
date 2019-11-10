@@ -1,5 +1,4 @@
 import * as React from "react";
-import Ensayos from './components/Ensayos/Ensayos';
 import { IEnsayo } from '../../Interfaces/IEnsayo';
 import { RouteComponentProps } from 'react-router-dom';
 import BushService from '../../services/bush';
@@ -9,6 +8,8 @@ import Tabs from "./components/Tabs/tabs";
 import AssayFeedback from "../Feedback/AssayFeedback";
 import { Snackbar } from "@material-ui/core";
 import MySnackbarContentWrapper, { Feedback } from "../Feedback/MySnackbarContentWrapper";
+import Info from "../Utilities/Messages/Info";
+import Ensayo from "./components/Ensayo/Ensayo";
 
 
 export type assayState = 'ALL' | 'ACTIVE' | 'FINISHED' | 'ARCHIVED';
@@ -73,6 +74,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
         this.setState({loading:true})
         BushService.get(`/ensayos?state=${state}`)
             .then((assays:Array<IEnsayo>) => {
+                console.log(assays)
                 this.setState({
                     ...this.state,
                     loading:false,
@@ -173,7 +175,13 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
 
                 {!this.state.loading?
                     <HomeContext.Provider value={context}>
-                        <Ensayos {...this.props} ensayos={this.state.filteredAssays} />
+                         <div className="ensayos">
+                            {this.state.assays.length === 0 && 
+                            <Info message="No se registran ensayos en este estado"/>}
+                            {this.state.assays.map((ensayo: IEnsayo) => (
+                                <Ensayo {...this.props} ensayo={ensayo} />
+                            ))}
+                         </div>
                     </HomeContext.Provider>
                 :<Loader/>
 

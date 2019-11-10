@@ -108,7 +108,7 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
                             </a>
                             <a className="option"
                                 onClick={()=>setTagsRequest(!tagsRequest)}>
-                                Tags
+                                Etiquetas
                             </a>
                             <a className="option"
                                 onClick={()=>context.finishAssay(idAssay)}>

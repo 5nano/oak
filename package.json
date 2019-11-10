@@ -90,6 +90,7 @@
     "react": "^16.9.0",
     "react-addons-css-transition-group": "^15.6.2",
     "react-calendar": "^2.19.2",
+    "react-color": "^2.17.3",
     "react-dom": "^16.9.0",
     "react-lightbox-component": "^1.2.1",
     "react-plotly.js": "^2.3.0",
