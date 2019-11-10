@@ -100,7 +100,21 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
         .then(()=>{
             this.closeAssayFeedback()
             this.setFeedback({variant:'success',message:'Ensayo finalizado exitosamente'})
+
+
         })
+    }
+
+    private sendAssayFinishedEmail = () => {
+        let htmlToSend = {
+            subject: `El ensayo ${this.state.assayToFinish} ha finalizado`,
+            html:"<html><img src='https://ibb.co/92QcCXD'/></html>",
+        }
+    
+        BushService.post(`/mailSender?treatmentName=harcodeado&&assayId=${3}`,htmlToSend)
+                  .then(()=> {
+                    console.log("Email enviado")
+                  })
     }
 
     private closeAssayFeedback():void{

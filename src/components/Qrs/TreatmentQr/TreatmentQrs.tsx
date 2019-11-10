@@ -32,7 +32,7 @@ const TreatmentQrs:React.SFC<ITreatmentQrsProps> = (props) => {
     const sendQrsToEmail = () => {
       getPdf().then(pdf => {
           let htmlToSend = {
-            html:"<html><img src='https://i.ibb.co/rpwPFjw/qrs-email-template.png'/></html>",
+            html:"<html><img src='https://ibb.co/j6HDdSX'/></html>",
             base64pdf: pdf.output('datauristring').split(',')[1]
         }
     
