@@ -112,7 +112,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
     private sendAssayFinishedEmail = (assayId: Number,stars:Number) => {
         
         let assay = this.state.assays.find(assay => assay.idAssay === assayId)
-        let createdDate = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(Date.parse(assay.created))
+        let createdDate = new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(Date.parse(assay.created))
 
         let htmlToSend = {
             subject: `El ensayo ${assay.name} creado el ${createdDate} ha finalizado con ${stars} estrellas `,

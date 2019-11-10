@@ -31,7 +31,7 @@ const TestCarrousel:React.SFC<ITestCarrouselProps> = (props) => {
             {tests.map(test => (
                 <Slide 
                     media={ <img src={test.pathImage}/>}
-                    title={new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(Date.parse(test.instant))}
+                    title={new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(Date.parse(test.instant))}
                     subtitle={
                     <div className="test-content">
                         <div className="content-row">
