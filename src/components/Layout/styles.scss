@@ -1,0 +1,28 @@
+.header-icon{
+    width: 180px;
+
+    img{
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.header-user{
+    display:flex;
+    align-items: center;
+    .user-content{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+
+        margin-left: 10px;
+    }
+
+    cursor: pointer;
+    &:hover{
+        color: #6AC1A9;
+        background-color: white;
+
+        border-radius: 4px;
+    }
+}

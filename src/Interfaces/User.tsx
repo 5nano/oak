@@ -6,3 +6,8 @@ export interface User{
     email: string,
     companyId: Number
 }
+
+export interface UserHeader{
+    company:string,
+    userName:string
+}
