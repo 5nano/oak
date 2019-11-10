@@ -3,7 +3,7 @@ import { ITag } from "./Tags";
 export type IEnsayo = {
     idAssay: number,
     idCrop: number,
-    idUserCreator: number
+    user: string
     name: string,
     description: string,
     experiments:Number,
