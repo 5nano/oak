@@ -98,22 +98,29 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
     }
 
     private finishAssay(stars:Number,comments:string):Promise<void>{
+        let assayId = this.state.assayToFinish;
         return BushService.patch(`/ensayo/terminar?idAssay=${this.state.assayToFinish}&&stars=${stars}&&comments=${comments}`)
         .then(()=>{
             this.closeAssayFeedback()
-            this.setFeedback({variant:'success',message:'Ensayo finalizado exitosamente'})
-
-
+            this.sendAssayFinishedEmail(assayId,stars)
+            this.setFeedback({variant:'success',message:'Ensayo finalizado exitosamente. Revisa tu casilla de correo electrónico'})
+            this.updateAssays()
+        })
+        .catch(error => {
+            this.setFeedback({variant:'error',message:'El ensayo ya se encuentra finalizado'})
         })
     }
+    private sendAssayFinishedEmail = (assayId: Number,stars:Number) => {
+        
+        let assay = this.state.assays.find(assay => assay.idAssay === assayId)
+        let createdDate = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(Date.parse(assay.created))
 
-    private sendAssayFinishedEmail = () => {
         let htmlToSend = {
-            subject: `El ensayo ${this.state.assayToFinish} ha finalizado`,
-            html:"<html><img src='https://ibb.co/92QcCXD'/></html>",
+            subject: `El ensayo ${assay.name} creado el ${createdDate} ha finalizado con ${stars} estrellas `,
+            html:"<html><img src=https://ibb.co/92QcCXD/></html>",
         }
     
-        BushService.post(`/mailSender?treatmentName=harcodeado&&assayId=${3}`,htmlToSend)
+        BushService.post("/mailSender",htmlToSend)
                   .then(()=> {
                     console.log("Email enviado")
                   })

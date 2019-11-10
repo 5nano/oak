@@ -9,16 +9,19 @@ class Signup extends React.Component<RouteComponentProps> {
 
     submitForm = (newUser:User): Promise<boolean> => {
       return BushService.post('/usuarios/insertar', newUser)
-                        .then(() => {return true})
+                        .then(() => {
+                            this.sendSignUpEmail(newUser)
+                            return true
+                        })
     }
 
-    sendSignUpEmail = () => {
-        let htmlToSend = {
-            subject: '¡NANIVO te da la bienvenida!',
+    sendSignUpEmail = (user?:User) => {
+        let payloadEmail = {
+            subject: "¡NANIVO te da la bienvenida!",
             html:"<html><img src='https://ibb.co/fGySqYp'/></html>",
         }
     
-        BushService.post(`/mailSender?treatmentName=harcodeado&&assayId=${3}`,htmlToSend)
+        BushService.post("/mailSender/unregisteredUser?mail=mdasilvaevora@gmail.com",payloadEmail)
                   .then(()=> {
                     console.log("Email enviado")
                   })
@@ -59,7 +62,7 @@ class Signup extends React.Component<RouteComponentProps> {
 
                         <button onClick={()=>this.sendSignUpEmail()}>
                             mail
-                            </button>
+                        </button>
                     </div>
             </div>
         );
