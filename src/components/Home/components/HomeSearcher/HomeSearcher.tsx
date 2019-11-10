@@ -77,6 +77,7 @@ const HomeSearcher:React.SFC<IHomeSearcherProps> = (props) => {
             onDelete={handleDelete}
             onChange={handleChange}
             className="search-bar"
+            placeholder="Busca por tags..."
             />
         <Button title="Buscar" onClick={()=> searchAssays()}/>
         </div>

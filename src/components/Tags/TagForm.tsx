@@ -18,7 +18,7 @@ class TagForm extends React.Component<ITagFormProps,ITagFormState> {
             tag: {
                 name:'',
                 description:'',
-                color:''
+                color:'#000000'
             },
             error: ''
         }
@@ -31,7 +31,6 @@ class TagForm extends React.Component<ITagFormProps,ITagFormState> {
     }
 
     handleColorChange = (color:any) => {
-        console.log(color)
         this.setState({
             tag: {...this.state.tag,color:color.hex}
         })
@@ -39,8 +38,6 @@ class TagForm extends React.Component<ITagFormProps,ITagFormState> {
 
     handleNewTag = () => {
         this.setState({error:''})
-        if(this.state.tag.color ==='')this.setState({tag:{...this.state.tag,color:'000000'}})
-        
         if(this.state.tag.name === '') this.setState({error:'Ingresa un nombre'})
         else this.props.handleNewTag(this.state.tag)
     }

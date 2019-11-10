@@ -5,6 +5,7 @@ import Button from '../Utilities/Buttons/DefaultButton/Button';
 import TagForm from './TagForm';
 import Success from '../Utilities/Messages/Success';
 import { width } from '@material-ui/system';
+import Error from '../Utilities/Messages/Error';
 var randomColor = require('randomcolor');
 
 interface ITagsProps{
@@ -18,6 +19,8 @@ const Tags:React.SFC<ITagsProps> = (props) => {
     const [newTagRequest,setNewTagRequest] = React.useState(false)
     const [tags,setTags] = React.useState<Array<ITag>>([]);
     const [success,setSuccess] = React.useState<boolean>(false)
+    const [error,setError] = React.useState<string>('')
+
     React.useEffect(()=>{
        fetchTags()
     },[])
@@ -25,24 +28,26 @@ const Tags:React.SFC<ITagsProps> = (props) => {
     const fetchTags=()=>{
         BushService.get('/tags')
                    .then((data:Array<ITag>) => {
-                       data.map(tag=>{
-                           if(tag.color === null) tag.color = randomColor()
-                           
-                           return tag
-                       })
+                       console.log(data)
                        setTags(data)
                     })
     }
 
      const handleNewTag = (tag:ITag) => {
-         console.log(tag)
+        setError('')
         setSuccess(false)
         BushService.post('/tags/insertar',tag)
                    .then(()=>{
                        fetchTags()
                        setSuccess(true)
                     })
-    }
+                    .catch(error => {
+                        error.json().then(error=>{
+                            setError('Nombre ya existente')
+                        })
+                    })
+                }
+                
 
     const deleteTag = (tag:ITag) => {
         BushService.post(`/tags/eliminar?idTag=${tag.idTag}`)
@@ -69,8 +74,8 @@ const Tags:React.SFC<ITagsProps> = (props) => {
                         <i className="icon icon-cancel"/>
                     </a>
                 </div>
-                {success && <Success message="Tag creado"/>
-                            }
+                {success && <Success message="Tag creado"/>}
+                {error.length>0 && <Error message={error}/>}
                 {!newTagRequest?
                     [tags.map(tag => (
                         <div className="tag">
