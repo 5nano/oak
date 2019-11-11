@@ -72,20 +72,6 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
             showDataUploadMenu: !this.state.showDataUploadMenu,
         });
     }
-    
-    private fetchEnsayos = async (state:assayState): Promise<void> => {
-        this.setState({loading:true})
-        return BushService.get(`/ensayos?state=${state}`)
-            .then((assays:Array<IEnsayo>) => {
-                this.setState({
-                    ...this.state,
-                    loading:false,
-                    assays,
-                    filteredAssays:assays
-                });
-                
-            })
-      }
       
     private handleTab(state:assayState){
         
@@ -152,7 +138,6 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
 
     private searchAssays(selectedTags:Array<AutocompleteTag>,state?:assayState):Promise<void>{
         let actualState = state? state : this.state.state
-        console.log(selectedTags,state)
         this.setLoading(true)
         return this.searchAssaysByTags(selectedTags)
                     .then((suggestedAssays)=>{
