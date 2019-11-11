@@ -72,7 +72,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
     
     private fetchEnsayos = async (state:assayState): Promise<void> => {
         this.setState({loading:true})
-        BushService.get(`/ensayos?state=${state}`)
+        return BushService.get(`/ensayos?state=${state}`)
             .then((assays:Array<IEnsayo>) => {
                 this.setState({
                     ...this.state,
@@ -85,7 +85,11 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
       }
       
     private handleTab(state:assayState){
+        
         this.fetchEnsayos(state)
+            .then(()=>{
+                this.setState({state:state})
+            })
     }
 
     private updateAssays(){
@@ -131,7 +135,11 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
 
     }
 
-    private setFilteredAssays(filteredAssays:Array<IEnsayo>){
+    private setFilteredAssays(suggestedAssays:Array<IEnsayo>){
+        let filteredAssays:Array<IEnsayo> = []
+        if(this.state.state === 'ALL') filteredAssays = suggestedAssays
+        else filteredAssays = suggestedAssays.filter(assay => assay.state === this.state.state)
+        
         this.setState({
             ...this.state,
             filteredAssays
