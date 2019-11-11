@@ -53,40 +53,43 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
       }
         return(
             <div className="crud-container">
-
-            {!loading?
-                [<div className="crud-title">
-                 <h1>Tratamientos</h1>
-                 <h2>Ensayo {assay}</h2>
-                </div>
-                ,
-                <div className="layout-wrapper">
-                    <div className="treatments-container">
-                        <div className="treatments-wrapper">
-                            <div className="empty-treatment" onClick={()=>setNewTreatment(true)}>
-                                <img src="../../../../assets/images/plus-icon.png"/>
-                            </div>
-                            {treatments.length!=0 &&
-                            treatments.map((treatment:ITreatment)=> (
-                                 <Treatment treatment={treatment}/>
-                            ))
+                <div className="crud-wrapper">
+               
+                    {!loading?
+                        [<div className="crud-title">
+                        <h1>Tratamientos</h1>
+                        <h2>Ensayo {assay}</h2>
+                        </div>
+                        ,
+                        <div className="layout-wrapper">
+                            <div className="treatments-container">
+                                <div className="treatments-wrapper">
+                                    <div className="empty-treatment" onClick={()=>setNewTreatment(true)}>
+                                        <img src="../../../../assets/images/plus-icon.png"/>
+                                    </div>
+                                    {treatments.length!=0 &&
+                                    treatments.map((treatment:ITreatment)=> (
+                                        <Treatment treatment={treatment}/>
+                                    ))
+                                    }
+                                </div>
+                            </div>   
+                            {newTreatment && 
+                                <div className="form-crud-wrapper">
+                                    <div className="form-cancel" onClick={()=>setNewTreatment(false)}>
+                                        <i className="icon icon-left-open"/>
+                                    </div>
+                                        <TreatmentForm submitTreatmentForm={submitTreatmentForm}
+                                                        idAssay={idAssay}/>
+                                </div>
                             }
-                        </div>
-                    </div>   
-                    {newTreatment && 
-                        <div className="form-crud-wrapper">
-                            <div className="form-cancel" onClick={()=>setNewTreatment(false)}>
-                                <i className="icon icon-left-open"/>
-                             </div>
-                                <TreatmentForm submitTreatmentForm={submitTreatmentForm}
-                                                idAssay={idAssay}/>
-                        </div>
-                    }
 
-                </div>]
-            :
-            <Loader/>
-                }
+                        </div>]
+                    :
+                    <Loader/>
+                    }
+                     
+                </div>
             </div>
         )
 }
