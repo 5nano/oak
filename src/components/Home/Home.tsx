@@ -20,7 +20,7 @@ const assayStates: assayState[] = ['ALL','ACTIVE','FINISHED',"ARCHIVED"]
 export interface IHomeState {
     assays: Array<IEnsayo>,
     filteredAssays: Array<IEnsayo>,
-    suggestedTags:Array<AutocompleteTag>,
+    selectedTags:Array<AutocompleteTag>,
     experimentos: Array<object>,
     showDataUploadMenu: boolean,
     loading:boolean,
@@ -49,7 +49,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
         this.state ={
             assays: [],
             filteredAssays: [],
-            suggestedTags: [],
+            selectedTags: [],
             experimentos: [],
             showDataUploadMenu: false,
             loading:true,
@@ -61,7 +61,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
     }
     
     componentDidMount(){
-        this.fetchEnsayos('ALL')
+        this.searchAssays([],'ALL')
     }
 
     
@@ -72,31 +72,17 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
             showDataUploadMenu: !this.state.showDataUploadMenu,
         });
     }
-    
-    private fetchEnsayos = async (state:assayState): Promise<void> => {
-        this.setState({loading:true})
-        return BushService.get(`/ensayos?state=${state}`)
-            .then((assays:Array<IEnsayo>) => {
-                this.setState({
-                    ...this.state,
-                    loading:false,
-                    assays,
-                    filteredAssays:assays
-                });
-                
-            })
-      }
       
     private handleTab(state:assayState){
         
-        this.searchAssays(this.state.suggestedTags,state)
+        this.searchAssays(this.state.selectedTags,state)
             .then(()=>{
                 this.setState({state:state})
             })
     }
 
     private updateAssays(){
-        this.fetchEnsayos(this.state.state)
+        this.searchAssays(this.state.selectedTags)
     }
 
     private requestFinishAssay(idAssay:Number):void {
@@ -137,8 +123,8 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
     }
 
     
-    private setSuggestedTags(suggestedTags:Array<AutocompleteTag>){
-        this.setState({suggestedTags:suggestedTags})
+    private setSelectedTags(selectedTags:Array<AutocompleteTag>){
+        this.setState({selectedTags:selectedTags})
     }
 
     private searchAssaysByTags(selectedTags:Array<AutocompleteTag>,):Promise<Array<IEnsayo>>{
@@ -152,7 +138,6 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
 
     private searchAssays(selectedTags:Array<AutocompleteTag>,state?:assayState):Promise<void>{
         let actualState = state? state : this.state.state
-
         this.setLoading(true)
         return this.searchAssaysByTags(selectedTags)
                     .then((suggestedAssays)=>{
@@ -198,8 +183,8 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
                       />
         
                 <HomeSearcher search={this.searchAssays.bind(this)}
-                            setSuggestions = {this.setSuggestedTags.bind(this)}
-                            suggestions={this.state.suggestedTags}/>
+                            setSelectedTags = {this.setSelectedTags.bind(this)}
+                            selectedTags={this.state.selectedTags}/>
 
                 {this.state.assayToFinish!=null &&
                     <AssayFeedback idAssay={this.state.assayToFinish}

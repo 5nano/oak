@@ -13,17 +13,17 @@ export interface AutocompleteTag{
 
 interface IHomeSearcherProps {
     search: Function;
-    setSuggestions : Function;
-    suggestions: Array<AutocompleteTag>
+    setSelectedTags : Function;
+    selectedTags: Array<AutocompleteTag>
 }
 
 
 const HomeSearcher:React.SFC<IHomeSearcherProps> = (props) => {
     const [tags,setTags] = React.useState<Array<AutocompleteTag>>([])
-    const [selectedTags,setSelectedTags] = React.useState<Array<AutocompleteTag>>([])
+    const [suggestions,setSuggestions] = React.useState<Array<AutocompleteTag>>([])
     const [loading,setLoading] = React.useState<boolean>(true)
     
-    const {search,setSuggestions,suggestions} = props;
+    const {search,setSelectedTags,selectedTags} = props;
 
     React.useEffect(()=> {
         setLoading(true)

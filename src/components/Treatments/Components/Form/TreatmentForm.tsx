@@ -22,7 +22,7 @@ interface ITreatmentFormState{
 var fields: IFields = {
   name: {
     id: "name",
-    label: "Etiqueta",
+    label: "Nombre",
     validations: [requiredValidation]
   },
   description: {
@@ -33,12 +33,12 @@ var fields: IFields = {
   },
   pressure: {
     id: "pressure",
-    label: "Presión",
+    label: "Presión [bar]",
     validations: [requiredValidation,isNumberValidation]
   },
   experimentsLength: {
       id:"experimentsLength",
-      label: "Cantidad de pruebas",
+      label: "Plantas [cantidad]",
       validations: [requiredValidation,isNumberValidation]
     },
   agrochemical: {
