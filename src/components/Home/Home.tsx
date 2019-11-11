@@ -20,7 +20,7 @@ const assayStates: assayState[] = ['ALL','ACTIVE','FINISHED',"ARCHIVED"]
 export interface IHomeState {
     assays: Array<IEnsayo>,
     filteredAssays: Array<IEnsayo>,
-    suggestedTags:Array<AutocompleteTag>,
+    selectedTags:Array<AutocompleteTag>,
     experimentos: Array<object>,
     showDataUploadMenu: boolean,
     loading:boolean,
@@ -49,7 +49,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
         this.state ={
             assays: [],
             filteredAssays: [],
-            suggestedTags: [],
+            selectedTags: [],
             experimentos: [],
             showDataUploadMenu: false,
             loading:true,
@@ -89,7 +89,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
       
     private handleTab(state:assayState){
         
-        this.searchAssays(this.state.suggestedTags,state)
+        this.searchAssays(this.state.selectedTags,state)
             .then(()=>{
                 this.setState({state:state})
             })
@@ -137,8 +137,8 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
     }
 
     
-    private setSuggestedTags(suggestedTags:Array<AutocompleteTag>){
-        this.setState({suggestedTags:suggestedTags})
+    private setSelectedTags(selectedTags:Array<AutocompleteTag>){
+        this.setState({selectedTags:selectedTags})
     }
 
     private searchAssaysByTags(selectedTags:Array<AutocompleteTag>,):Promise<Array<IEnsayo>>{
@@ -152,7 +152,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
 
     private searchAssays(selectedTags:Array<AutocompleteTag>,state?:assayState):Promise<void>{
         let actualState = state? state : this.state.state
-
+        console.log(selectedTags,state)
         this.setLoading(true)
         return this.searchAssaysByTags(selectedTags)
                     .then((suggestedAssays)=>{
@@ -198,8 +198,8 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
                       />
         
                 <HomeSearcher search={this.searchAssays.bind(this)}
-                            setSuggestions = {this.setSuggestedTags.bind(this)}
-                            suggestions={this.state.suggestedTags}/>
+                            setSelectedTags = {this.setSelectedTags.bind(this)}
+                            selectedTags={this.state.selectedTags}/>
 
                 {this.state.assayToFinish!=null &&
                     <AssayFeedback idAssay={this.state.assayToFinish}

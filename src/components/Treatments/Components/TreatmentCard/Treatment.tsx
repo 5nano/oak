@@ -32,12 +32,12 @@ const Treatment:React.SFC<ITreatmentProps> = (props) => {
                 <div className="treatment-footer">
                     <div className="footer">
                         <i className="icon icon-gauge"/>
-                        <p>{treatment.pressure}</p>
+                        <p>{treatment.pressure} [bar]</p>
                     </div>
 
                     <div className="footer">
                         <i className="icon icon-plant-icon"/>
-                        <p>{treatment.experimentsLength}</p>
+                        <p>{treatment.experimentsLength} [u]</p>
                         
                     </div>
                 </div>
