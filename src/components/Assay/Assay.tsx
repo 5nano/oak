@@ -4,6 +4,7 @@ import { IValues } from '../Form/Form';
 import { RouteComponentProps } from 'react-router-dom';
 import BushService from '../../services/bush';
 import Button from '../Utilities/Buttons/DefaultButton/Button';
+import Loader from '../Utilities/Loader/Loader';
 
 export interface IAssayProps extends RouteComponentProps{
 
@@ -20,11 +21,7 @@ export interface IAssay{
 export interface IAssayState{
     assay:IAssay
     successAssay: boolean,
-    loading:{
-      agrochemicals:boolean,
-      mixs:boolean,
-      crops:boolean
-    }
+    loading:boolean
   }
 
 
@@ -41,25 +38,16 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
               idCrop: null,
             },
             successAssay: false,
-            loading: {
-              agrochemicals:true,
-              mixs:true,
-              crops:true,
-            }
+            loading: true
           }
         
          this.submitAssayForm=this.submitAssayForm.bind(this)
     }
 
-    setLoading(){
-        this.setState(prevState => {
-            let loading = {...prevState.loading}
-            loading.crops = true
-            loading.agrochemicals = true
-            loading.mixs = true
-            return {loading}
-        })
-    }
+  setLoading(value:boolean){
+      this.setState({loading:value})
+  }
+
  submitAssayForm=(newAssay:IAssay):Promise<boolean> => {
     console.log(newAssay)
        return BushService.post('/ensayos/insertar', newAssay)
@@ -78,6 +66,8 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
     render(){
         return(
             <div className="crud-container">
+              <div className="crud-wrapper">
+                
                 <div className="crud-title">
                   <h1>Ensayo</h1>
                 </div>
@@ -88,8 +78,11 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                         Ingresa los tratamientos del ensayo
                       </div>
                     }
-                    <AssayForm submitAssayForm={this.submitAssayForm.bind(this)}/>
+                    <AssayForm submitAssayForm={this.submitAssayForm.bind(this)}
+                                />
                 </div>
+
+              </div>
             </div>
         )
     }

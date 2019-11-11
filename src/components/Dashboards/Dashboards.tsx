@@ -65,7 +65,6 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
   fetchTags() {
     BushService.get(`/ensayo/tags?idAssay=${this.props.match.params.assayId}`)
                 .then((data:Array<ITag>)=> {
-                  data.map(tag => tag.color=randomColor())
                   this.setState({tags:data})
                 })
   }

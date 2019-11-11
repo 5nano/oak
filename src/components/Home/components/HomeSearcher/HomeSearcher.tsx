@@ -6,22 +6,25 @@ import Autocomplete from '@celebryts/react-autocomplete-tags';
 import Button from '../../../Utilities/Buttons/DefaultButton/Button';
 import Search from '../../../Search/Search';
 
-interface AutocompleteTag{
+export interface AutocompleteTag{
     label: string,
     value: string
 }
 
 interface IHomeSearcherProps {
-    setFilteredAssays: (assays:Array<IEnsayo>) => void;
-    setLoading: (value:boolean) => void;
+    search: Function;
+    setSuggestions : Function;
+    suggestions: Array<AutocompleteTag>
 }
 
 
 const HomeSearcher:React.SFC<IHomeSearcherProps> = (props) => {
     const [tags,setTags] = React.useState<Array<AutocompleteTag>>([])
     const [selectedTags,setSelectedTags] = React.useState<Array<AutocompleteTag>>([])
-    const [suggestions,setSuggestions] = React.useState<Array<AutocompleteTag>>([])
     const [loading,setLoading] = React.useState<boolean>(true)
+    
+    const {search,setSuggestions,suggestions} = props;
+
     React.useEffect(()=> {
         setLoading(true)
         BushService.get('/tags')
@@ -57,17 +60,6 @@ const HomeSearcher:React.SFC<IHomeSearcherProps> = (props) => {
         setSuggestions(newSuggestions)
     }
 
-    const searchAssays = () => {
-        props.setLoading(true)
-        let tags = selectedTags.map(tag => {return tag.value})
-        
-        BushService.post('/tags/ensayos',tags)
-                    .then((data:Array<IEnsayo>) => {
-                        props.setFilteredAssays(data)
-                        props.setLoading(false)
-                    })
-    }
-
     return(
         
         <div className="assay-search">
@@ -77,9 +69,11 @@ const HomeSearcher:React.SFC<IHomeSearcherProps> = (props) => {
             onDelete={handleDelete}
             onChange={handleChange}
             className="search-bar"
+            allowCreateTag={false}
+            saveOnBlur={false}
             placeholder="Busca por tags..."
             />
-        <Button title="Buscar" onClick={()=> searchAssays()}/>
+        <Button title="Buscar" onClick={()=> search(selectedTags)}/>
         </div>
     )
 }

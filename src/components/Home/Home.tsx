@@ -10,7 +10,8 @@ import { Snackbar } from "@material-ui/core";
 import MySnackbarContentWrapper, { Feedback } from "../Feedback/MySnackbarContentWrapper";
 import Info from "../Utilities/Messages/Info";
 import Ensayo from "./components/Ensayo/Ensayo";
-
+import { ITag } from "../../Interfaces/Tags";
+import {AutocompleteTag} from './components/HomeSearcher/HomeSearcher';
 
 export type assayState = 'ALL' | 'ACTIVE' | 'FINISHED' | 'ARCHIVED';
 
@@ -19,6 +20,7 @@ const assayStates: assayState[] = ['ALL','ACTIVE','FINISHED',"ARCHIVED"]
 export interface IHomeState {
     assays: Array<IEnsayo>,
     filteredAssays: Array<IEnsayo>,
+    suggestedTags:Array<AutocompleteTag>,
     experimentos: Array<object>,
     showDataUploadMenu: boolean,
     loading:boolean,
@@ -47,6 +49,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
         this.state ={
             assays: [],
             filteredAssays: [],
+            suggestedTags: [],
             experimentos: [],
             showDataUploadMenu: false,
             loading:true,
@@ -72,7 +75,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
     
     private fetchEnsayos = async (state:assayState): Promise<void> => {
         this.setState({loading:true})
-        BushService.get(`/ensayos?state=${state}`)
+        return BushService.get(`/ensayos?state=${state}`)
             .then((assays:Array<IEnsayo>) => {
                 this.setState({
                     ...this.state,
@@ -85,7 +88,11 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
       }
       
     private handleTab(state:assayState){
-        this.fetchEnsayos(state)
+        
+        this.searchAssays(this.state.suggestedTags,state)
+            .then(()=>{
+                this.setState({state:state})
+            })
     }
 
     private updateAssays(){
@@ -127,15 +134,37 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
 
     private closeAssayFeedback():void{
         this.setState({assayToFinish:null})
-       
-
     }
 
-    private setFilteredAssays(filteredAssays:Array<IEnsayo>){
-        this.setState({
-            ...this.state,
-            filteredAssays
-        })
+    
+    private setSuggestedTags(suggestedTags:Array<AutocompleteTag>){
+        this.setState({suggestedTags:suggestedTags})
+    }
+
+    private searchAssaysByTags(selectedTags:Array<AutocompleteTag>,):Promise<Array<IEnsayo>>{
+        let tags = selectedTags.map(tag => {return tag.value})
+        
+        return BushService.post('/tags/ensayos',tags)
+                    .then((data:Array<IEnsayo>) => {
+                        return data
+                    })
+    }
+
+    private searchAssays(selectedTags:Array<AutocompleteTag>,state?:assayState):Promise<void>{
+        let actualState = state? state : this.state.state
+
+        this.setLoading(true)
+        return this.searchAssaysByTags(selectedTags)
+                    .then((suggestedAssays)=>{
+                        let filteredAssays:Array<IEnsayo> = []
+                        if(actualState === 'ALL') filteredAssays = suggestedAssays
+                        else filteredAssays = suggestedAssays.filter(assay => assay.state === actualState)
+                        this.setState({
+                            ...this.state,
+                            filteredAssays,
+                            loading:false
+                        })
+                    })
     }
 
     private setLoading(value:boolean):void {
@@ -168,8 +197,9 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
                       handleTab={this.handleTab.bind(this)}
                       />
         
-                <HomeSearcher setFilteredAssays={this.setFilteredAssays.bind(this)}
-                            setLoading={this.setLoading.bind(this)}/>
+                <HomeSearcher search={this.searchAssays.bind(this)}
+                            setSuggestions = {this.setSuggestedTags.bind(this)}
+                            suggestions={this.state.suggestedTags}/>
 
                 {this.state.assayToFinish!=null &&
                     <AssayFeedback idAssay={this.state.assayToFinish}
@@ -182,8 +212,15 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
                 {!this.state.loading?
                     <HomeContext.Provider value={context}>
                          <div className="ensayos">
-                            {this.state.assays.length === 0 && 
-                            <Info message="No se registran ensayos en este estado"/>}
+                            {this.state.filteredAssays.length === 0 && 
+                            <div className="empty-assays">
+                                <div className="empty-assays-image">
+                                  <img src="../../../assets/images/tumbleweed.png"/>
+                                </div>
+                                <div className="empty-assays-description">
+                                    Ooops... Todavía no tienes ensayos que coincidan con tu búsqueda.
+                                </div>
+                            </div>}
                             {this.state.filteredAssays.map((ensayo: IEnsayo) => (
                                 <Ensayo {...this.props} ensayo={ensayo} />
                             ))}
