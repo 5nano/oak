@@ -60,7 +60,7 @@ const HomeSearcher:React.SFC<IHomeSearcherProps> = (props) => {
     const searchAssays = () => {
         props.setLoading(true)
         let tags = selectedTags.map(tag => {return tag.value})
-        
+        console.log(tags)
         BushService.post('/tags/ensayos',tags)
                     .then((data:Array<IEnsayo>) => {
                         props.setFilteredAssays(data)
@@ -77,6 +77,8 @@ const HomeSearcher:React.SFC<IHomeSearcherProps> = (props) => {
             onDelete={handleDelete}
             onChange={handleChange}
             className="search-bar"
+            allowCreateTag={false}
+            saveOnBlur={false}
             placeholder="Busca por tags..."
             />
         <Button title="Buscar" onClick={()=> searchAssays()}/>
