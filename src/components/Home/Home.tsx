@@ -61,7 +61,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
     }
     
     componentDidMount(){
-        this.fetchEnsayos('ALL')
+        this.searchAssays([],'ALL')
     }
 
     
@@ -96,7 +96,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
     }
 
     private updateAssays(){
-        this.fetchEnsayos(this.state.state)
+        this.searchAssays(this.state.selectedTags)
     }
 
     private requestFinishAssay(idAssay:Number):void {
