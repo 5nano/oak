@@ -212,8 +212,15 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
                 {!this.state.loading?
                     <HomeContext.Provider value={context}>
                          <div className="ensayos">
-                            {this.state.assays.length === 0 && 
-                            <Info message="No se registran ensayos en este estado"/>}
+                            {this.state.filteredAssays.length === 0 && 
+                            <div className="empty-assays">
+                                <div className="empty-assays-image">
+                                  <img src="../../../assets/images/tumbleweed.png"/>
+                                </div>
+                                <div className="empty-assays-description">
+                                    Ooops... Todavía no tienes ensayos que coincidan con tu búsqueda.
+                                </div>
+                            </div>}
                             {this.state.filteredAssays.map((ensayo: IEnsayo) => (
                                 <Ensayo {...this.props} ensayo={ensayo} />
                             ))}
