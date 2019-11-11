@@ -7,6 +7,7 @@ import Search from "../Search/Search";
 import Loader from "../Utilities/Loader/Loader";
 import { ItemType } from "../Search/components/Item";
 import Error from "../Utilities/Messages/Error";
+import { display } from "@material-ui/system";
 
 
 export interface ICrudViewProps{
@@ -106,7 +107,14 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
      
      const singleTitle = title.substring(0,title.length - 1).toLowerCase()
       return (
+            this.state.loading? 
+              <div style={{display:'flex',justifyContent:'center'}}>
+                <Loader/>
+              </div>
+            :
           <div className="crud-container">
+            <div className="crud-wrapper">
+             
               <div className="crud-title">
                 <h1>{title}</h1>
               </div>
@@ -118,8 +126,6 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
 
               </div>
 
-              {this.state.loading? <Loader/>
-              :
               <div className="layout-wrapper">
                   <div className="search-crud-wrapper">
                       <Search data={this.state.data} 
@@ -141,7 +147,9 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
                     </div>
                        }
               </div>
-              }
+              
+               
+            </div>
           </div>
     
       );

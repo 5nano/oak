@@ -5,6 +5,7 @@ import { requiredValidation, maxLengthValidation, isEmailValidation } from "../.
 import BushService from "../../../../services/bush";
 import { ICrop } from "../../../../Interfaces/Crop";
 import { IAssay } from "../../Assay";
+import Loader from "../../../Utilities/Loader/Loader";
 
 interface IAssayFormProps {
   submitAssayForm: (values:IValues) => Promise<boolean>;
@@ -48,6 +49,9 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
       error: ''
     }
 
+  }
+  
+  componentDidMount(){
     BushService.get('/cultivos')
     .then(data=> {
       Object.keys(data).forEach(key => {
@@ -58,6 +62,7 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
       fields.crop.options=this.state.crops.map(crop => {return crop.name})
       this.setState({loading:false})
     })
+    
   }
 
   submitForm(values:IValues):Promise<boolean>{
@@ -72,7 +77,11 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
 
   render(){
     return (
-      !this.state.loading &&
+      this.state.loading? 
+          <div style={{display:'flex',justifyContent:'center'}}>
+            <Loader/>
+          </div>
+        :
           <Form
             submitForm={this.submitForm.bind(this)}
             fields = {fields}

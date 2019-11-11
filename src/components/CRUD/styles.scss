@@ -8,95 +8,99 @@
 }
 
 .crud-container{
-    display:flex;
+
     height: 100%;
-    justify-content: flex-start;
-    align-items: center;
-    align-content: center;
-    flex-direction: column;
     background-color:rgba(106, 193, 169,0.1);
-
-    padding: 0px 80px;
-
+    border-radius: 8px;
     overflow: auto;
-
-     
-    .crud-title{
-        display:flex;
-        align-items: flex-start;
-        flex-direction: column;
-
-        color: #6AC1A9;
-
-        width:100%;
-        padding: 40px 0px;
-
-        h1,h2{
-            margin:0;
-        }
-   }
-
-    .crud-error{
-        display:flex;
-        justify-content: center;
-        width: 100%;
-
-    }
-
-    .layout-wrapper{
-        display:flex;
-        width:100%;
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: space-evenly;
-        flex-wrap:wrap;
-
-        .form-request{
+        
+    .crud-wrapper{
             display:flex;
-            width: 646px;;
-        }
-
-        .form-return{
-            display:flex;
-            width: 200px;
-        }
-
-        .search-crud-wrapper{
-            display:flex;
+            justify-content: flex-start;
+            align-items: center;
+            align-content: center;
             flex-direction: column;
+            padding: 40px 80px;
             
-        }
-
-        .form-crud-wrapper{
-            display:flex;
-
-            margin: 10px 0;
-            .form-cancel{
+             
+            .crud-title{
                 display:flex;
-                height: 20px;
-                align-items: center;
-
-                border: 1px solid #6AC1A9;
-                border-radius: 4px;
-                &:hover{
-                    color:red;
-                    background-color: white;
-                    border: 1px solid red;
+                align-items: flex-start;
+                flex-direction: column;
+        
+                color: #6AC1A9;
+        
+                width:100%;
+        
+                h1,h2{
+                    margin:0;
+                }
+           }
+        
+            .crud-error{
+                display:flex;
+                justify-content: center;
+                width: 100%;
+        
+            }
+        
+            .layout-wrapper{
+        
+                display:flex;
+                width:100%;
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: space-evenly;
+                flex-wrap:wrap;
+        
+                .form-request{
+                    display:flex;
+                    width: 646px;;
+                }
+        
+                .form-return{
+                    display:flex;
+                    width: 200px;
+                }
+        
+                .search-crud-wrapper{
+                    display:flex;
+                    flex-direction: column;
+                    
+                }
+        
+                .form-crud-wrapper{
+                    display:flex;
+        
+                    margin: 10px 0;
+                    .form-cancel{
+                        display:flex;
+                        height: 20px;
+                        align-items: center;
+        
+                        border: 1px solid #6AC1A9;
+                        border-radius: 4px;
+                        &:hover{
+                            color:red;
+                            background-color: white;
+                            border: 1px solid red;
+                        }
+                    }
                 }
             }
-        }
+        
+             .register-container{
+                 display:flex;
+                 flex-direction: column;
+                 justify-content: flex-start;
+                 align-items: center;
+                 margin: 50px 0px;
+        
+                 .title{
+                     color:white;
+                 }
+             }
+            
+        
     }
-
-     .register-container{
-         display:flex;
-         flex-direction: column;
-         justify-content: flex-start;
-         align-items: center;
-         margin: 50px 0px;
-
-         .title{
-             color:white;
-         }
-     }
-    
 }

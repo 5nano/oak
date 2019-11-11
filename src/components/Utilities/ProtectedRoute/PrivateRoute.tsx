@@ -13,9 +13,9 @@ const PrivateRoute = ({component:Component,isLoggedIn,user,...rest}) => (
                 </div>
             :
             <Layout {...props} user={user} renderContent={()=>(
-                    <div className="content">
+                   
                         <Component {...props} />
-                    </div>
+                   
             )}/>
         : 
         <Redirect to={{
