@@ -42,10 +42,12 @@ class Histogram extends React.Component<IHistogramProps,IHistogramState> {
         };
         var data = [trace];
         var layout = {
+            title:'Histograma de imágenes capturadas',
+            font:{size:12},
             width: 600,
             height: 400,
             }
-        Plotly.newPlot("histogram-container", data,layout)
+        Plotly.newPlot("histogram-container", data,layout,{responsive:true})
     }
 
     render(){

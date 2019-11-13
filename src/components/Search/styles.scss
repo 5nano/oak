@@ -19,7 +19,7 @@
             border: 1px solid #E0E0E0;
             border-radius: 4px;
     
-            cursor: text;
+            
             font-size: 10px;
 
             .search-bar-wrapper{
@@ -31,8 +31,10 @@
                     img{
                         height: 100%;
                     }
+                    cursor: pointer;
                 }
                 input{
+                    cursor: text;
                     width:100%;
                     outline: none;
                     border:none;

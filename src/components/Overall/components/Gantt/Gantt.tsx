@@ -2,6 +2,7 @@ import * as React from 'react';
 import BushService from '../../../../services/bush';
 import { assayState } from '../../../Home/Home';
 import Chart from 'react-google-charts'
+import Loader from '../../../Utilities/Loader/Loader';
 
 interface GanttAssay{
     finishDate:string,
@@ -77,21 +78,21 @@ class Gantt extends React.Component<IGanttProps,IGanttState> {
         
         return (
             !this.state.loading && 
-            <div className="gantt-chart">
-                    <Chart 
-                        height={400}
-                        width={800}
-                        chartType='Gantt'
-                        loader={<div>Loading Chart</div>}
-                        data={[columns,...rows]}
-                        options={{
-                            gantt: {
-                            trackHeight: 30,
-                            },
-                        }}
-                        legendToggle
-                        rootProps={{'data-testid':'1'}}/>
-            </div>
+                <div className="gantt-chart">
+                        <Chart 
+                            height={400}
+                            width={800}
+                            chartType='Gantt'
+                            loader={<Loader/>}
+                            data={[columns,...rows]}
+                            options={{
+                                gantt: {
+                                trackHeight: 30,
+                                },
+                            }}
+                            legendToggle
+                            rootProps={{'data-testid':'1'}}/>
+                </div>
         )
     }
 }

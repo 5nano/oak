@@ -76,14 +76,13 @@ class SankeyDiagram extends React.Component<ISankeyDiagramProps,ISankeyDiagramSt
 
 
         var layout = {
+        title:"Diagrama sankey de relación Agroquímicos/Mezclas",
+        font: {size:12},
         width: 600,
         height: 400,
-        font: {
-            size: 10
-        }
         }
 
-        Plotly.plot('sankey-container', [data], layout)
+        Plotly.plot('sankey-container', [data], layout,{responsive:true})
         });
     }
 

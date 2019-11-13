@@ -17,6 +17,10 @@ import PhotosGallery from '../PhotosGallery/PhotosGallery';
 import BushService from '../../services/bush';
 import { UserHeader } from '../../Interfaces/User';
 import Overall from '../Overall/Overall';
+import Gantt from '../Overall/components/Gantt/Gantt';
+import Histogram from '../Overall/components/Histogram/Histogram';
+import SunburstChart from '../Overall/components/SunburstChart/SunburstChart';
+import SankeyDiagram from '../Overall/components/SankeyDiagram/SankeyDiagram';
 
 export interface AppProps { title: string }
 
@@ -75,6 +79,14 @@ const App = (props: AppProps) => {
             <PrivateRoute path='/photos' exact component={PhotosGallery} isLoggedIn={loggedIn} user={user}/>
 
             <PrivateRoute path='/overall' exact component={Overall} isLoggedIn={loggedIn} user={user}/>
+
+            <PrivateRoute path='/gantt' exact component={Gantt} isLoggedIn={loggedIn} user={user}/>
+
+            <PrivateRoute path='/histogram' exact component={Histogram} isLoggedIn={loggedIn} user={user}/>
+
+            <PrivateRoute path='/sunburst' exact component={SunburstChart} isLoggedIn={loggedIn} user={user}/>
+
+            <PrivateRoute path='/sankey' exact component={SankeyDiagram} isLoggedIn={loggedIn} user={user}/>
 
           </Switch>
 

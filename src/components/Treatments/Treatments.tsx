@@ -61,7 +61,7 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
       }
 
     const deleteTreatment = (treatmentId: number):Promise<void> => {
-        return BushService.post(`/tratamientos/eliminar`,{idTreatment:treatmentId})
+        return BushService.post(`/tratamientos/eliminar?idTreatment=${treatmentId}`)
                           .then(()=>{
                             fetchTreatments()
                             setFeedback({variant:'success',message:'El tratamiento fue eliminado correctamente!'})

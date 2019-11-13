@@ -95,7 +95,15 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
                 }
 
                 {!this.state.loading && this.state.treatments.length==0 &&
-                   <Info message="Este ensayo no presenta tratamientos"/>
+                   <div className="info-content">
+                       <div className="info-content-image">
+                            <img src="../../../assets/images/tumbleweed.png"/>
+                        </div>
+
+                        <div className="info-content-description">
+                            Ooops.... Este ensayo no presenta tratamientos
+                        </div>
+                    </div>
                 }
 
                 {!this.state.loading && this.state.actualTreatment!=null &&

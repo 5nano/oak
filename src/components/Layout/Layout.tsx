@@ -104,7 +104,7 @@ const Layout:React.SFC<ILayoutProps> = (props) => {
 
    const [userMenuAnchorEl,setUserMenuAnchorEl] = React.useState(null)
    const [componentsList,setComponentsList] = React.useState(false)
-  
+   const [componentsOverall,setComponentsOverall] = React.useState(false)
    const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -131,6 +131,10 @@ const openUserMenu= (event: React.MouseEvent<HTMLDivElement,MouseEvent>) => {
 
 const openComponentsList = () => {
   setComponentsList(!componentsList)
+}
+
+const openComponentsOverall = () => {
+  setComponentsOverall(!componentsOverall)
 }
 
   return (
@@ -195,10 +199,37 @@ const openComponentsList = () => {
         <Divider />
         <List>
 
-          <ListItem button className={classes.nested} onClick={()=>props.history.push('/overall')}>
+          <ListItem button className={classes.nested} onClick={()=>openComponentsOverall()}>
                 <ListItemIcon><DashboardOutlinedIcon/></ListItemIcon>
-                <ListItemText primary="Overall" />
+                <ListItemText primary="Gestión" />
           </ListItem>
+
+          <Collapse in={componentsOverall} timeout="auto" unmountOnExit>
+              
+            
+            <List component="div" disablePadding>
+              <ListItem button key={'1'} onClick={()=>props.history.push('/overall')} >
+                <ListItemText primary={'Overall'} />
+              </ListItem>
+              
+              <ListItem button key={'1'} onClick={()=>props.history.push('/gantt')} >
+                <ListItemText primary={'Gantt'} />
+              </ListItem>
+
+              <ListItem button key={'2'} onClick={()=>props.history.push('/histogram')} >
+                <ListItemText primary={'Histograma'} />
+              </ListItem>
+
+              <ListItem button key={'3'} onClick={()=>props.history.push('/sankey')} >
+                <ListItemText primary={'Sankey'} />
+              </ListItem>
+
+              <ListItem button key={'4'} onClick={()=>props.history.push('/sunburst')} >
+                <ListItemText primary={'Sunburst'} />
+              </ListItem>
+            </List>
+            <Divider />
+          </Collapse>
 
           <ListItem button className={classes.nested} onClick={openComponentsList}>
                 <ListItemIcon><FolderOutlinedIcon /></ListItemIcon>
