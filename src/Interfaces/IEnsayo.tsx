@@ -12,5 +12,6 @@ export type IEnsayo = {
     treatments:Number,
     tags: Array<ITag>,
     created:string,
+    estimatedFinished:string,
     state?:string
 }
