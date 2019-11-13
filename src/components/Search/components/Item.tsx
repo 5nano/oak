@@ -10,18 +10,24 @@ export type ItemType = "agrochemical" |
 
 export interface IItemProps{
     item:ISearchItem
-    onChange:Function,
     updateItem:Function
     type:ItemType
 }
 
 const Item:React.SFC<IItemProps> = (props) => {
-    
-    const {item,onChange,updateItem} = props;
-    const name = item.name
-    const description = item.description? item.description:'Sin descripción'
-    
+
+    const [name,setName] = React.useState<string>(props.item.name)
+    const [description,setDescription] = React.useState<string>(props.item.description)   
     const [isUpdate,setUpdate] = React.useState(false)
+
+    const updateItem = () => {
+        let newItem:ISearchItem = {
+            ...props.item,
+            name:name,
+            description:description
+        }
+        props.updateItem(newItem)
+    }
     
     return(
         <div className="item">
@@ -42,13 +48,19 @@ const Item:React.SFC<IItemProps> = (props) => {
                 <div className="item-name" onClick={()=>setUpdate(true)}>
                     {isUpdate? 
                         <input type="text"
+                               className="item-input"
                                value={name}
-                               onChange={(e) => {
-                                   onChange(e.currentTarget.value,'name')
+                               style={{width:((name.length)+1)*8 + 'px'}}
+                               onKeyPress={(e) => {
+                                   if(e.key==='Enter') {
+                                    updateItem()
+                                    setUpdate(false) 
+                                   }
                                }}
+                               onChange={(e) => {setName(e.currentTarget.value) }}
                                onBlur={()=>{
-                                   updateItem()
                                    setUpdate(false)
+                                   setName(props.item.name)
                                 }}
                                />
                              :
@@ -59,13 +71,19 @@ const Item:React.SFC<IItemProps> = (props) => {
 
             <div className="item-content" onClick={()=>setUpdate(true)}>
             {isUpdate? <input type="text" 
+                              className="item-input"
                               value={description}
-                              onChange={(e) => {
-                                onChange(e.currentTarget.value,'description')
+                              style={{width:((description.length)+1)*8 + 'px'}}
+                              onKeyPress={(e) => { console.log(e.key)
+                                if(e.key==='Enter'){
+                                   updateItem()
+                                   setUpdate(false)
+                                }
                             }}
+                              onChange={(e) => {setDescription(e.currentTarget.value)}}
                             onBlur={()=>{
-                                updateItem()
                                 setUpdate(false)
+                                setDescription(props.item.description)
                              }}
                               />
                              :

@@ -6,7 +6,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -15,8 +14,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import { RouteComponentProps } from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { UserHeader } from '../../Interfaces/User';
@@ -24,14 +21,13 @@ import { Menu, MenuItem } from '@material-ui/core';
 import BushService from '../../services/bush';
 import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
 import Collapse from '@material-ui/core/Collapse';
-
+import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: 'flex',
-      height:'100%'
+      height:'100%',
     },
     toolbar:{
         justifyContent:'space-between'
@@ -80,14 +76,17 @@ const useStyles = makeStyles((theme: Theme) =>
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
-      marginLeft: -drawerWidth,
+      height:'100%',
+      backgroundColor:'rgba(106, 193, 169,0.1)'
     },
     contentShift: {
       transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
-      marginLeft: 0,
+      marginLeft: drawerWidth,
+      height:'100%',
+      backgroundColor:'rgba(106, 193, 169,0.1)'
     },
   }),
 );
@@ -105,7 +104,7 @@ const Layout:React.SFC<ILayoutProps> = (props) => {
 
    const [userMenuAnchorEl,setUserMenuAnchorEl] = React.useState(null)
    const [componentsList,setComponentsList] = React.useState(false)
-  
+   const [componentsOverall,setComponentsOverall] = React.useState(false)
    const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -132,6 +131,10 @@ const openUserMenu= (event: React.MouseEvent<HTMLDivElement,MouseEvent>) => {
 
 const openComponentsList = () => {
   setComponentsList(!componentsList)
+}
+
+const openComponentsOverall = () => {
+  setComponentsOverall(!componentsOverall)
 }
 
   return (
@@ -195,6 +198,38 @@ const openComponentsList = () => {
         </div>
         <Divider />
         <List>
+
+          <ListItem button className={classes.nested} onClick={()=>openComponentsOverall()}>
+                <ListItemIcon><DashboardOutlinedIcon/></ListItemIcon>
+                <ListItemText primary="Gestión" />
+          </ListItem>
+
+          <Collapse in={componentsOverall} timeout="auto" unmountOnExit>
+              
+            
+            <List component="div" disablePadding>
+              <ListItem button key={'1'} onClick={()=>props.history.push('/overall')} >
+                <ListItemText primary={'Overall'} />
+              </ListItem>
+              
+              <ListItem button key={'1'} onClick={()=>props.history.push('/gantt')} >
+                <ListItemText primary={'Gantt'} />
+              </ListItem>
+
+              <ListItem button key={'2'} onClick={()=>props.history.push('/histogram')} >
+                <ListItemText primary={'Histograma'} />
+              </ListItem>
+
+              <ListItem button key={'3'} onClick={()=>props.history.push('/sankey')} >
+                <ListItemText primary={'Sankey'} />
+              </ListItem>
+
+              <ListItem button key={'4'} onClick={()=>props.history.push('/sunburst')} >
+                <ListItemText primary={'Sunburst'} />
+              </ListItem>
+            </List>
+            <Divider />
+          </Collapse>
 
           <ListItem button className={classes.nested} onClick={openComponentsList}>
                 <ListItemIcon><FolderOutlinedIcon /></ListItemIcon>

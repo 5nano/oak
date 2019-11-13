@@ -5,6 +5,8 @@ import { RouteComponentProps } from 'react-router-dom';
 import BushService from '../../services/bush';
 import Button from '../Utilities/Buttons/DefaultButton/Button';
 import Loader from '../Utilities/Loader/Loader';
+import { Snackbar } from '@material-ui/core';
+import MySnackbarContentWrapper, { Feedback } from '../Feedback/MySnackbarContentWrapper';
 
 export interface IAssayProps extends RouteComponentProps{
 
@@ -15,12 +17,13 @@ export interface IAssay{
   name:string,
   description:string,
   idCrop:Number,
+  estimatedFinished: string,
   idUserCreator?:Number
 }
 
 export interface IAssayState{
     assay:IAssay
-    successAssay: boolean,
+    feedback:Feedback,
     loading:boolean
   }
 
@@ -36,8 +39,9 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
               name:'',
               description:'',
               idCrop: null,
+              estimatedFinished:''
             },
-            successAssay: false,
+            feedback:null,
             loading: true
           }
         
@@ -54,8 +58,12 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
          .then(data => {
             let assayId = data["idAssay"]
             newAssay.id = assayId
-            this.setState({assay:newAssay,successAssay:true})
+            this.setState({assay:newAssay,feedback:{variant:'success',message:'El ensayo fue creado exitosamente!'}})
             return true;
+        })
+        .catch(error=>{
+          error.json().then(error=>this.setState({feedback:{variant:'error',message:error.message}}))
+          return false
         })
      }
 
@@ -63,6 +71,12 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
         this.props.history.push(`/assay/${this.state.assay.id}/treatments`)
      }
 
+     private handleSnackbarClose(event?: React.SyntheticEvent,reason?:string) {
+      if (reason ==='clickaway') { 
+          return;
+      }
+      this.setState({feedback:null})
+  }
     render(){
         return(
             <div className="crud-container">
@@ -71,18 +85,42 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                 <div className="crud-title">
                   <h1>Ensayo</h1>
                 </div>
+
+                {this.state.feedback!=null && this.state.feedback.variant === 'success'?
+                [<div className="info-content">
+                  <div className="info-content-image">
+                    <img src="../../../assets/images/success-plant.png"/>
+                  </div>
+                  <div className="info-content-description">
+                    ¡Bien! Creaste un nuevo ensayo. Ahora ingresa sus tratamientos.
+                  </div>
+                  
+                </div>,
+                <div style={{marginTop:'20px'}}>
+                <Button title="Ingresar tratamientos"
+                        onClick={()=>this.goToTreatments()} />
+                </div>]
+                :
                 <div className="assay-form-wrapper">
-                    {this.state.successAssay && 
-                      <div className="assay-to-treatments"
-                          onClick={()=>this.goToTreatments()}>
-                        Ingresa los tratamientos del ensayo
-                      </div>
-                    }
-                    <AssayForm submitAssayForm={this.submitAssayForm.bind(this)}
-                                />
+                   <AssayForm submitAssayForm={this.submitAssayForm.bind(this)}/>
                 </div>
+                }
 
               </div>
+
+              <Snackbar 
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left'
+                }}
+                open={this.state.feedback!=null}
+                onClose={this.handleSnackbarClose.bind(this)}
+                >
+                    <MySnackbarContentWrapper
+                        onClose={this.handleSnackbarClose.bind(this)}
+                        variant={this.state.feedback? this.state.feedback.variant : 'success'}
+                        message={this.state.feedback? this.state.feedback.message:''}/>
+                </Snackbar>
             </div>
         )
     }

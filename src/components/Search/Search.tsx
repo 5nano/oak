@@ -11,59 +11,47 @@ export interface ISearchProps{
    type: ItemType
 }
 
-export interface IValues {
-    [key: string]: any;
-}
-
 export interface ISearchState {
-    values: IValues;
+    filteredData:Array<ISearchItem>
     error: string;
     searchSuccess?: boolean;
 }
-
-export interface ISearchContext extends ISearchState {
-    setValues: (values: IValues) => void
-    data: Array<any>
-    remove: (object:any) => Promise<void>
-    update: (object:any) => Promise<void>
-  }
-
-export const SearchContext = React.createContext<ISearchContext | undefined> (
-    undefined
-  );
 
 export class Search extends React.Component<ISearchProps,ISearchState> {
     constructor(props:ISearchProps){
         super(props);
 
-        const error:string = '';
-        const values: IValues = {};
         this.state = {
-            error,
-            values
+            filteredData:props.data,
+            error:''
         };
     }
 
-    private setValues = (values: IValues) => {
-        this.setState({values: {...this.state.values, ...values}});
-      ;}
+    componentDidMount(){
+        this.setState({
+            filteredData:this.props.data
+        })
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+          filteredData: nextProps.data
+        });
+      }
+
+    
 
     public render (){
-        const {data,remove,update,type} = this.props
+        const {remove,update,type} = this.props
 
-        const context: ISearchContext = {
-            ...this.state,
-            setValues:this.setValues,
-            data: data,
-            remove:remove,
-            update:update,
-        };
         return(
-            <SearchContext.Provider value={context}>
-                <div className="search-container">
-                    <Results type={type}/>
+                <div id="search-container" className="search-container">
+                    
+                    <Results data={this.state.filteredData}
+                            remove={remove}
+                            update={update}
+                            type={type}/>
                 </div>
-            </SearchContext.Provider>
         )
     }
 }

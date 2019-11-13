@@ -10,7 +10,6 @@
 .crud-container{
 
     height: 100%;
-    background-color:rgba(106, 193, 169,0.1);
     border-radius: 8px;
     overflow: auto;
         
@@ -37,12 +36,6 @@
                 }
            }
         
-            .crud-error{
-                display:flex;
-                justify-content: center;
-                width: 100%;
-        
-            }
         
             .layout-wrapper{
         
@@ -73,8 +66,7 @@
         
                 .form-crud-wrapper{
                     display:flex;
-        
-                    margin: 10px 0;
+                    
                     .form-cancel{
                         display:flex;
                         height: 20px;

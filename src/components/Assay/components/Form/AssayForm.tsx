@@ -36,6 +36,12 @@ var fields:IFields = {
       options: [],
       validations: [requiredValidation]
     },
+  endDate: {
+      id:'endDate',
+      label: "Fecha de finalización",
+      editor: "calendar",
+      validations: [requiredValidation],
+  }
 }
 
 class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
@@ -70,10 +76,13 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
     let assay:IAssay = {
       name:values.name,
       description:values.description,
-      idCrop:crop.idCrop
+      idCrop:crop.idCrop,
+      estimatedFinished: values.endDate
     }
     return this.props.submitAssayForm(assay)
   }
+
+  
 
   render(){
     return (
@@ -92,6 +101,7 @@ class AssayForm extends React.Component<IAssayFormProps,IAssayFormState> {
                 <Field {...fields.name}/>
                 <Field {...fields.description}/>
                 <Field {...fields.crop}/>
+                <Field {...fields.endDate}/>
             
               </React.Fragment>
               )}

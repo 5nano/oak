@@ -31,8 +31,6 @@ export interface IErrors {
 export interface IFormState {
     values: IValues;
     errors: IErrors;
-    submitSuccess?: boolean;
-    serverError?:string
 }
 
 export interface IFormContext extends IFormState {
@@ -63,8 +61,6 @@ export class Form extends React.Component<IFormProps, IFormState> {
         this.state = {
             errors,
             values,
-            submitSuccess:false,
-            serverError: null
         };
     }
 
@@ -85,16 +81,15 @@ private haveErrors(errors: IErrors) {
 
 private handleSubmit = async (
     e: React.MouseEvent
-  ): Promise<void> => {
+  ): Promise<any> => {
     e.preventDefault();
     if (this.validateForm()) {
       this.props.submitForm(this.state.values)
       .then(()=>{
-        this.setState({submitSuccess:true})
+        return true;
       })
       .catch(error => {
-        error.json()
-             .then(error => this.setState({serverError:error.message,submitSuccess:false}))
+        return error.json()
       })
       }
     };
@@ -153,16 +148,6 @@ private handleSubmit = async (
             {title}
           </div>
           <div className="form-container">
-            <div className="form-result">
-              {!this.state.submitSuccess && this.state.serverError &&
-                <Error message={this.state.serverError}/>
-              }
-
-              {this.state.submitSuccess &&
-                <Success message="Registro exitoso"/>
-              }
-
-            </div>
             <form className="form" noValidate={true}>
               {this.props.render()}
             </form>

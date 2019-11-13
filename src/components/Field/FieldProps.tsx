@@ -4,7 +4,8 @@ import { IValidation } from "../Form/Validation";
 type Editor = "textbox" |
               "multilinetextbox" | 
               "dropdown" | 
-              "password";
+              "password" |
+              "calendar";
 
 
 export interface IFieldProps {

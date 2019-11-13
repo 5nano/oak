@@ -3,31 +3,71 @@
 .search-container{
     display:flex;
     flex-direction: column;
+    align-items: center;
     width: 700px;
+
+    margin-bottom: 20px;
+
+    .results-container{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+
+        .search-bar-container{
+            width: 400px;
+            height: 50px;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
     
-        .results-list{
+            
+            font-size: 10px;
+
+            .search-bar-wrapper{
                 display:flex;
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: center;
-                flex-wrap: nowrap;
-                overflow: auto;
-                
-                
-                height: 550px;
-                margin: 20px 0px;
-                background-color: rgba(128, 128, 128, 0.2);
-                border-radius: 4px;
-                .results-empty{
-                    color:white;
+
+                .search-logo{
+                    height: 50px;
+                    padding:5px;
+                    img{
+                        height: 100%;
+                    }
+                    cursor: pointer;
                 }
+                input{
+                    cursor: text;
+                    width:100%;
+                    outline: none;
+                    border:none;
+                    padding: 5px;
+                    border-radius: 4px;
+                }
+            }
+    
         }
 
-        .search-loading{
-            display:flex;
-            justify-content: center;
-            margin: 30px 0;
+        .results-wrapper{
+            height: 550px;
+            border-radius: 4px;
+            overflow: auto;
+            .results-list{
+                    display:flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                    flex-wrap: nowrap;
+                      
+                    padding: 20px;
+            }
         }
+    
+            .search-loading{
+                display:flex;
+                justify-content: center;
+                margin: 30px 0;
+            }
+    }
+
+
 }
 
 

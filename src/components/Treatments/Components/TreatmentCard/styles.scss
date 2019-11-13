@@ -17,9 +17,22 @@
         
         height: inherit;
     
-        .title{
-            font-size: 24px;
-            color:#6AC1A9;
+        .treatment-header{
+            display:flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .title{
+                font-size: 24px;
+                color:#6AC1A9;
+            }
+
+            .delete{
+                cursor: pointer;
+                &:hover{
+                    color:red
+                }
+            }
         }
 
             .treatment-attribute{
