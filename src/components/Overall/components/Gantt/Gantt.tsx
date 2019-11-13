@@ -59,7 +59,6 @@ class Gantt extends React.Component<IGanttProps,IGanttState> {
 
         if(!this.state.loading){
             this.state.gantt.forEach(assay => {
-                console.log(assay)
             let row = [
                 assay.name,
                 assay.name,
