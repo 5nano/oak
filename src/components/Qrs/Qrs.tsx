@@ -99,7 +99,7 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
                 }
 
                 {!this.state.loading && this.state.actualTreatment!=null &&
-                    <TreatmentQrs idAssay={this.props.match.params.assayId} treatment={this.state.actualTreatment}/>
+                    <TreatmentQrs assay={this.state.assay} treatment={this.state.actualTreatment}/>
                 }
 
             </div>
