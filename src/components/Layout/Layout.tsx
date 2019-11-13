@@ -76,6 +76,7 @@ const useStyles = makeStyles((theme: Theme) =>
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
+      height:'100%',
       backgroundColor:'rgba(106, 193, 169,0.1)'
     },
     contentShift: {

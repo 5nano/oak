@@ -26,9 +26,10 @@ class Overall extends React.Component<IOverallProps,IOverallState> {
             <div className="overall-container">
                 <div className="overall-wrapper">
                     <Gantt/>
-                    <Histogram/>
+                    
                     <SankeyDiagram/>
-                    <SunburstChart/>
+
+                    <Histogram/>
                 </div>
             </div>
         )

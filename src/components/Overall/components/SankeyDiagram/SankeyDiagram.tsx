@@ -76,9 +76,8 @@ class SankeyDiagram extends React.Component<ISankeyDiagramProps,ISankeyDiagramSt
 
 
         var layout = {
-        title: "Grafico Sankey",
-        width: '100%',
-        height: 800,
+        width: 600,
+        height: 400,
         font: {
             size: 10
         }
@@ -92,7 +91,7 @@ class SankeyDiagram extends React.Component<ISankeyDiagramProps,ISankeyDiagramSt
 
         if(!this.state.loading) this.renderGraph()
         return (
-            <div id="sankey-container"/>
+            <div id="sankey-container" className="sankey-chart"/>
         )
     }
 }

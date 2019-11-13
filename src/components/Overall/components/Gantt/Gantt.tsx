@@ -77,21 +77,21 @@ class Gantt extends React.Component<IGanttProps,IGanttState> {
         
         return (
             !this.state.loading && 
-                
-                <Chart 
-                    width={'100%'}
-                    height={'400px'}
-                    chartType='Gantt'
-                    loader={<div>Loading Chart</div>}
-                    data={[columns,...rows]}
-                    options={{
-                        height: 400,
-                        gantt: {
-                          trackHeight: 30,
-                        },
-                      }}
-                    legendToggle
-                    rootProps={{'data-testid':'1'}}/>
+            <div className="gantt-chart">
+                    <Chart 
+                        height={400}
+                        width={800}
+                        chartType='Gantt'
+                        loader={<div>Loading Chart</div>}
+                        data={[columns,...rows]}
+                        options={{
+                            gantt: {
+                            trackHeight: 30,
+                            },
+                        }}
+                        legendToggle
+                        rootProps={{'data-testid':'1'}}/>
+            </div>
         )
     }
 }
