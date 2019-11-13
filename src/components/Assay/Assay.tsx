@@ -85,9 +85,26 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                 <div className="crud-title">
                   <h1>Ensayo</h1>
                 </div>
+
+                {this.state.feedback!=null && this.state.feedback.variant === 'success'?
+                [<div className="info-content">
+                  <div className="info-content-image">
+                    <img src="../../../assets/images/success-plant.png"/>
+                  </div>
+                  <div className="info-content-description">
+                    ¡Bien! Creaste un nuevo ensayo. Ahora ingresa sus tratamientos.
+                  </div>
+                  
+                </div>,
+                <div style={{marginTop:'20px'}}>
+                <Button title="Ingresar tratamientos"
+                        onClick={()=>this.goToTreatments()} />
+                </div>]
+                :
                 <div className="assay-form-wrapper">
                    <AssayForm submitAssayForm={this.submitAssayForm.bind(this)}/>
                 </div>
+                }
 
               </div>
 
@@ -97,7 +114,6 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                     horizontal: 'left'
                 }}
                 open={this.state.feedback!=null}
-                autoHideDuration={6000}
                 onClose={this.handleSnackbarClose.bind(this)}
                 >
                     <MySnackbarContentWrapper

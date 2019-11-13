@@ -198,11 +198,11 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
                     <HomeContext.Provider value={context}>
                          <div className="ensayos">
                             {this.state.filteredAssays.length === 0 && 
-                            <div className="empty-assays">
-                                <div className="empty-assays-image">
+                            <div className="info-content">
+                                <div className="info-content-image">
                                   <img src="../../../assets/images/tumbleweed.png"/>
                                 </div>
-                                <div className="empty-assays-description">
+                                <div className="info-content-description">
                                     Ooops... Todavía no tenes ensayos que coincidan con tu búsqueda.
                                 </div>
                             </div>}
