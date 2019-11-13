@@ -60,7 +60,7 @@ export class Search extends React.Component<ISearchProps,ISearchState> {
         };
         return(
             <SearchContext.Provider value={context}>
-                <div className="search-container">
+                <div id="search-container" className="search-container">
                     <Results type={type}/>
                 </div>
             </SearchContext.Provider>

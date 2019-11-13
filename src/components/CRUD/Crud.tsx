@@ -7,8 +7,9 @@ import Search from "../Search/Search";
 import Loader from "../Utilities/Loader/Loader";
 import { ItemType } from "../Search/components/Item";
 import Error from "../Utilities/Messages/Error";
-import { display } from "@material-ui/system";
-
+import { Fade, Popper, Snackbar } from "@material-ui/core";
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import MySnackbarContentWrapper, { Feedback } from "../Feedback/MySnackbarContentWrapper";
 
 export interface ICrudViewProps{
     title:string,
@@ -21,10 +22,10 @@ export interface ICrudViewProps{
 }
 
 interface ICrudViewState{
-  formRequest:boolean,
   loading:boolean,
   data: Array<any>,
-  serverError:string
+  feedback:Feedback,
+  formAnchor: HTMLElement
 }
 
 class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
@@ -33,10 +34,10 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
     super(props)
 
     this.state = {
-      formRequest: false,
       loading: true,
       data:[],
-      serverError:''
+      feedback:null,
+      formAnchor:null
     }
 
     this.submitForm = this.submitForm.bind(this)
@@ -49,16 +50,33 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
     this.retrieve()
   }
 
-  setFormRequest (value:boolean) {
-    this.setState({formRequest:value})  
+  handleForm() {
+    if(Boolean(this.state.formAnchor)) this.closeForm()
+    else this.openForm()
   }
 
+  openForm () {
+   var anchor = document.getElementById('search-container')
+   this.setState({formAnchor:anchor})
+  }
+
+  closeForm(){
+    this.setState({formAnchor:null})
+  }
+
+
+
   submitForm(values:IValues): Promise<boolean> {
-    this.setState({serverError:''})
+    this.setState({feedback:null})
     return BushService.post(this.props.createUrl, values)
       .then(() => {
-        this.retrieve().then(()=>this.setFormRequest(false))
-        return true
+        this.setState({feedback:{variant:'success',message:'El registro fue exitoso!'}});
+        this.retrieve().then(()=>this.closeForm())
+        return true;
+      })
+      .catch(error => {
+        error.json().then(error => this.setState({feedback:{variant:'error',message:error.message}}))
+        return false
       })
   }
   
@@ -72,7 +90,7 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
   }
 
    remove (object:ISearchItem):Promise<void> {
-     this.setState({serverError:''})
+     this.setState({feedback:null})
      let id:Number;
      switch(this.props.type){
        case 'agrochemical':
@@ -90,22 +108,36 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
                         .then(() => {this.retrieve()}) 
                         .catch(error => {
                           error.json()
-                               .then(error => this.setState({serverError:error.message}))
+                               .then(error => this.setState({feedback:{variant:'error',message:error.message}}))
                         })
 
                         
     }
 
     update(object:ISearchItem):Promise<void> {
-      this.setState({serverError:''})
+      this.setState({feedback:null})
       return BushService.patch(this.props.updateUrl,object)
-                        .then(() => {this.retrieve()})
+                        .then(() => {
+                          this.retrieve()
+                        })
+    }
+
+    private handleSnackbarClose(event?: React.SyntheticEvent,reason?:string) {
+      if (reason ==='clickaway') { 
+          return;
+      }
+      this.setState({feedback:null})
+    }
+
+    getSingleTitle(title:string){
+      return  title.substring(0,title.length - 1).toLowerCase()
     }
 
     render(){
-     const {title,type,form:Form} = this.props
-     
-     const singleTitle = title.substring(0,title.length - 1).toLowerCase()
+      const {title,type,form:Form} = this.props
+      
+      const singleTitle = this.getSingleTitle(title)
+      const addButton = title==='Mezclas'?'Nueva '+ singleTitle:'Nuevo '+ singleTitle
       return (
             this.state.loading? 
               <div style={{display:'flex',justifyContent:'center'}}>
@@ -113,18 +145,12 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
               </div>
             :
           <div className="crud-container">
-            <div className="crud-wrapper">
+            <div id="crud-wrapper" className="crud-wrapper">
              
-              <div className="crud-title">
+              <div id='crud-title' className="crud-title">
                 <h1>{title}</h1>
               </div>
 
-              <div className="crud-error">
-                {this.state.serverError.length>0 &&
-                <Error message="Todavia se encuentran ensayos asociados "/>
-                }
-
-              </div>
 
               <div className="layout-wrapper">
                   <div className="search-crud-wrapper">
@@ -133,23 +159,42 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
                               remove={this.remove}
                               update={this.update}
                               type={type}/>
-                      <Button title={title==='Mezclas'?'Nueva '+ singleTitle:'Nuevo '+ singleTitle}
-                              onClick={()=>this.setFormRequest(true)}
-                              disabled={this.state.formRequest}
+                      <Button title={Boolean(this.state.formAnchor)? 'Cancelar' : addButton}
+                              onClick={()=>this.handleForm()}
                               />
                   </div>
-                  {this.state.formRequest &&
-                    <div className="form-crud-wrapper">
-                      <div className="form-cancel" onClick={()=>this.setFormRequest(false)}>
-                          <i className="icon icon-left-open"/>
-                      </div>
-                        <Form submitForm={this.submitForm.bind(this)}/>
-                    </div>
-                       }
+                  <Popper id='form' 
+                          style={{marginLeft:'60px',backgroundColor:'white'}}
+                          open={Boolean(this.state.formAnchor)}
+                          anchorEl={this.state.formAnchor} 
+                          placement={'right'}
+                          transition>
+                            {({TransitionProps}) => (
+                              <Fade {...TransitionProps}>
+                                    <Form submitForm={this.submitForm.bind(this)}/>
+                              </Fade>
+                            )}
+                    </Popper>
+                    
               </div>
               
                
             </div>
+
+            <Snackbar 
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left'
+                }}
+                open={this.state.feedback!=null}
+                autoHideDuration={6000}
+                onClose={this.handleSnackbarClose.bind(this)}
+                >
+                    <MySnackbarContentWrapper
+                        onClose={this.handleSnackbarClose.bind(this)}
+                        variant={this.state.feedback? this.state.feedback.variant : 'success'}
+                        message={this.state.feedback? this.state.feedback.message:''}/>
+                </Snackbar>
           </div>
     
       );

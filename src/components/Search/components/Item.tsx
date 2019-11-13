@@ -16,6 +16,11 @@ export interface IItemProps{
 }
 
 const Item:React.SFC<IItemProps> = (props) => {
+
+    const [info,setInfo] = React.useState ({
+        name:props.item.name,
+        description:props.item.description
+    })
     
     const {item,onChange,updateItem} = props;
     const name = item.name
@@ -43,12 +48,18 @@ const Item:React.SFC<IItemProps> = (props) => {
                     {isUpdate? 
                         <input type="text"
                                value={name}
+                               onKeyPress={(e) => {
+                                   if(e.key==='Enter') {
+                                    updateItem()
+                                    setUpdate(false) 
+                                   }
+                               }}
                                onChange={(e) => {
                                    onChange(e.currentTarget.value,'name')
                                }}
                                onBlur={()=>{
-                                   updateItem()
                                    setUpdate(false)
+                                   onChange(info.name,'name')
                                 }}
                                />
                              :
@@ -60,12 +71,18 @@ const Item:React.SFC<IItemProps> = (props) => {
             <div className="item-content" onClick={()=>setUpdate(true)}>
             {isUpdate? <input type="text" 
                               value={description}
+                              onKeyPress={(e) => { console.log(e.key)
+                                if(e.key==='Enter'){
+                                updateItem()
+                                   setUpdate(false)
+                                }
+                            }}
                               onChange={(e) => {
                                 onChange(e.currentTarget.value,'description')
                             }}
                             onBlur={()=>{
-                                updateItem()
                                 setUpdate(false)
+                                onChange(info.description,'description')
                              }}
                               />
                              :
