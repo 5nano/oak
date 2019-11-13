@@ -72,9 +72,14 @@ class Results extends React.Component <IResultsProps,IResultsState> {
 
         return(
             <div className="results-container">
-                <div className="search-bar">
-                        <input type="text" placeholder="Buscar..." 
-                                onChange={(e) => this.handleCriteria(e.currentTarget.value)}/>
+                <div className="search-bar-container">
+                    <div className="search-bar-wrapper">
+                            <input type="text" placeholder="Buscar..." 
+                                    onChange={(e) => this.handleCriteria(e.currentTarget.value)}/>
+                            <div className="search-logo">
+                                <img src='../../../assets/images/search-icon.png'/>
+                            </div>
+                    </div>
                 </div>
 
                 {this.state.filteredItems.length===0?
