@@ -47,7 +47,9 @@ const Item:React.SFC<IItemProps> = (props) => {
                 <div className="item-name" onClick={()=>setUpdate(true)}>
                     {isUpdate? 
                         <input type="text"
+                               className="item-input"
                                value={name}
+                               style={{width:((name.length)+1)*8 + 'px'}}
                                onKeyPress={(e) => {
                                    if(e.key==='Enter') {
                                     updateItem()
@@ -70,7 +72,9 @@ const Item:React.SFC<IItemProps> = (props) => {
 
             <div className="item-content" onClick={()=>setUpdate(true)}>
             {isUpdate? <input type="text" 
+                              className="item-input"
                               value={description}
+                              style={{width:((description.length)+1)*8 + 'px'}}
                               onKeyPress={(e) => { console.log(e.key)
                                 if(e.key==='Enter'){
                                 updateItem()

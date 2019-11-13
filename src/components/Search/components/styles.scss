@@ -35,6 +35,8 @@
             }
 
             .item-name{
+                display:flex;
+                align-items: flex-start;
                 font-size: 24px;
                 color:#6AC1A9;
                 margin: 0px 10px;
@@ -90,4 +92,9 @@
     }
 }
      
+.item-input{
+    &:focus{
+        outline: #6AC1A9;
+    }
+}
 

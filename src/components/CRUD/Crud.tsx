@@ -105,7 +105,10 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
      }
       let urlDelete = this.props.deleteUrl+id
       return BushService.post(urlDelete)
-                        .then(() => {this.retrieve()}) 
+                        .then(() => {
+                          this.retrieve()
+                        
+                        }) 
                         .catch(error => {
                           error.json()
                                .then(error => this.setState({feedback:{variant:'error',message:error.message}}))
