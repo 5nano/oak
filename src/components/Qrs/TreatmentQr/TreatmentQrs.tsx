@@ -85,9 +85,9 @@ const TreatmentQrs:React.SFC<ITreatmentQrsProps> = (props) => {
                             return (
                             <div className="qr-card">
                                 <div className="qr-title">
-                                    <p>Ensayo: {props.assay.name}</p>
-                                    <p>Tratamiento: {props.treatment.name}</p>
-                                    <p>Experimento: {value.split('-')[1]}</p>
+                                    <p>E-{props.assay.name}</p>
+                                    <p>T-{props.treatment.name}</p>
+                                    <p>P-{value.split('-')[1]}</p>
                                 </div>
                                 <QrCode id={value}
                                         value={value}
