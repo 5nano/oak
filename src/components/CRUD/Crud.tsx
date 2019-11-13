@@ -2,7 +2,6 @@ import * as React from "react";
 import { IValues } from "../Form/Form";
 import BushService from '../../services/bush';
 import Button from "../Utilities/Buttons/DefaultButton/Button";
-import { ISearchItem } from "../../Interfaces/SearchItem";
 import Search from "../Search/Search";
 import Loader from "../Utilities/Loader/Loader";
 import { ItemType } from "../Search/components/Item";
@@ -10,6 +9,7 @@ import Error from "../Utilities/Messages/Error";
 import { Fade, Popper, Snackbar } from "@material-ui/core";
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import MySnackbarContentWrapper, { Feedback } from "../Feedback/MySnackbarContentWrapper";
+import { ISearchItem } from "../../Interfaces/SearchItem";
 
 export interface ICrudViewProps{
     title:string,
@@ -23,9 +23,9 @@ export interface ICrudViewProps{
 
 interface ICrudViewState{
   loading:boolean,
-  data: Array<any>,
+  data: Array<ISearchItem>,
   feedback:Feedback,
-  formAnchor: HTMLElement
+  formAnchor: HTMLElement,
 }
 
 class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
@@ -37,7 +37,7 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
       loading: true,
       data:[],
       feedback:null,
-      formAnchor:null
+      formAnchor:null,
     }
 
     this.submitForm = this.submitForm.bind(this)
@@ -136,6 +136,7 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
       return  title.substring(0,title.length - 1).toLowerCase()
     }
 
+
     render(){
       const {title,type,form:Form} = this.props
       
@@ -153,8 +154,7 @@ class CrudView extends React.Component<ICrudViewProps,ICrudViewState> {
               <div id='crud-title' className="crud-title">
                 <h1>{title}</h1>
               </div>
-
-
+              
               <div className="layout-wrapper">
                   <div className="search-crud-wrapper">
                       <Search data={this.state.data} 

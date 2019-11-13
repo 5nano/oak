@@ -10,7 +10,6 @@ export type ItemType = "agrochemical" |
 
 export interface IItemProps{
     item:ISearchItem
-    onChange:Function,
     updateItem:Function
     type:ItemType
 }
@@ -21,12 +20,19 @@ const Item:React.SFC<IItemProps> = (props) => {
         name:props.item.name,
         description:props.item.description
     })
-    
-    const {item,onChange,updateItem} = props;
-    const name = item.name
-    const description = item.description? item.description:'Sin descripción'
-    
+
+    const [name,setName] = React.useState<string>(props.item.name)
+    const [description,setDescription] = React.useState<string>(props.item.description)   
     const [isUpdate,setUpdate] = React.useState(false)
+
+    const updateItem = () => {
+        let newItem:ISearchItem = {
+            ...props.item,
+            name:name,
+            description:description
+        }
+        props.updateItem(newItem)
+    }
     
     return(
         <div className="item">
@@ -56,12 +62,10 @@ const Item:React.SFC<IItemProps> = (props) => {
                                     setUpdate(false) 
                                    }
                                }}
-                               onChange={(e) => {
-                                   onChange(e.currentTarget.value,'name')
-                               }}
+                               onChange={(e) => {setName(e.currentTarget.value) }}
                                onBlur={()=>{
                                    setUpdate(false)
-                                   onChange(info.name,'name')
+                                   setName(info.name)
                                 }}
                                />
                              :
@@ -77,16 +81,14 @@ const Item:React.SFC<IItemProps> = (props) => {
                               style={{width:((description.length)+1)*8 + 'px'}}
                               onKeyPress={(e) => { console.log(e.key)
                                 if(e.key==='Enter'){
-                                updateItem()
+                                   updateItem()
                                    setUpdate(false)
                                 }
                             }}
-                              onChange={(e) => {
-                                onChange(e.currentTarget.value,'description')
-                            }}
+                              onChange={(e) => {setDescription(e.currentTarget.value)}}
                             onBlur={()=>{
                                 setUpdate(false)
-                                onChange(info.description,'description')
+                                setDescription(info.description)
                              }}
                               />
                              :

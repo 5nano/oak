@@ -12,9 +12,10 @@ export const Results:React.SFC<IResultsTableProps> = (props) => {
     return(
         <SearchContext.Consumer>
             {(context:ISearchContext) => (
-                <div className="results-list">
-                        {context.data.map(item => {
-                            return <ResultItem item={item}
+                <ul className="results-list">
+                        {context.data.map((item,i) => {
+                            return <ResultItem key={i}
+                                               item={item}
                                                remove={context.remove}
                                                update={context.update}
                                                type={type}
@@ -23,7 +24,7 @@ export const Results:React.SFC<IResultsTableProps> = (props) => {
 
                         {context.data.length === 0 && 
                             <div className="results-empty">No existen elementos</div>}
-                </div>
+                </ul>
                 )}
         </SearchContext.Consumer>
     )
