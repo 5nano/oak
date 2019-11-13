@@ -2,18 +2,25 @@ import * as React from 'react'
 import {ITreatment} from '../../../../Interfaces/ITreatment';
 export  interface ITreatmentProps{
     treatment:ITreatment
+    onDelete:(idTreament:Number) => Promise<void>
 }
 const Treatment:React.SFC<ITreatmentProps> = (props) => {
 
-    const {treatment} = props;
+    const {treatment,onDelete} = props;
 
     return(
         <div className="treatment-container">
             <div className="treatment">
-                <div className="title">
-                    {treatment.name}
+                <div className="treatment-header">
+                    <div className="title">
+                        {treatment.name}
+                    </div>
+                    <div className="delete">
+                        <a onClick={()=>onDelete(treatment.idTreatment)}>
+                            <i className="icon icon-trash"/> 
+                        </a>
+                    </div>
                 </div>
-
 
                 <div className="treatment-attribute">
                     <img src='../../../../assets/images/agrochemical-icon.png'/>

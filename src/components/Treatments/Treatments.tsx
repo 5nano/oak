@@ -3,9 +3,10 @@ import Treatment from './Components/TreatmentCard/Treatment';
 import  { ITreatmentBackend, ITreatment } from '../../Interfaces/ITreatment';
 import TreatmentForm from './Components/Form/TreatmentForm';
 import BushService from '../../services/bush';
-import Info from '../Utilities/Messages/Info';
 import Loader from '../Utilities/Loader/Loader';
 import { IEnsayo } from '../../Interfaces/IEnsayo';
+import MySnackbarContentWrapper, { Feedback } from '../Feedback/MySnackbarContentWrapper';
+import { Snackbar } from '@material-ui/core';
 
 export  interface ITreatmentsProps{
         match: {
@@ -15,6 +16,7 @@ export  interface ITreatmentsProps{
 const Treatments: React.SFC<ITreatmentsProps> = (props) => {
 
     const [newTreatment,setNewTreatment] = React.useState(false)
+    const [feedback,setFeedback] = React.useState<Feedback>(null)
     const [treatments,setTreatments] = React.useState<Array<ITreatment>>([])
     const [loading,setLoading] = React.useState(true)
     const [assay,setAssay] = React.useState<string>('')
@@ -49,8 +51,34 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
          return BushService.post('/tratamientos/insertar', newTreatment)
             .then(() => {
                 fetchTreatments()
+                setFeedback({variant:'success',message:'El tratamiento fue creado exitosamente!'})
+            })
+            .catch(error=>{
+                error.json().then(error=>{
+                  setFeedback({variant:'error',message:error.message})
+                })
             })
       }
+
+    const deleteTreatment = (treatmentId: number):Promise<void> => {
+        return BushService.post(`/tratamientos/eliminar`,{idTreatment:treatmentId})
+                          .then(()=>{
+                            fetchTreatments()
+                            setFeedback({variant:'success',message:'El tratamiento fue eliminado correctamente!'})
+                          })
+                          .catch(error=>{
+                              error.json().then(error=>{
+                                setFeedback({variant:'error',message:error.message})
+                              })
+                          })
+    }
+
+   const handleSnackbarClose = (event?: React.SyntheticEvent,reason?:string) => {
+        if (reason ==='clickaway') { 
+            return;
+        }
+        setFeedback(null)
+    }
         return(
             <div className="crud-container">
                 <div className="crud-wrapper">
@@ -69,7 +97,8 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                                     </div>
                                     {treatments.length!=0 &&
                                     treatments.map((treatment:ITreatment)=> (
-                                        <Treatment treatment={treatment}/>
+                                        <Treatment treatment={treatment}
+                                                    onDelete={deleteTreatment}/>
                                     ))
                                     }
                                 </div>
@@ -90,6 +119,19 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                     }
                      
                 </div>
+                <Snackbar 
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left'
+                }}
+                open={feedback!=null}
+                onClose={handleSnackbarClose.bind(this)}
+                >
+                    <MySnackbarContentWrapper
+                        onClose={handleSnackbarClose.bind(this)}
+                        variant={feedback? feedback.variant : 'success'}
+                        message={feedback? feedback.message:''}/>
+                </Snackbar>
             </div>
         )
 }
