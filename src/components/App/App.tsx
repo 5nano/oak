@@ -16,6 +16,7 @@ import Treatments from '../Treatments/Treatments';
 import PhotosGallery from '../PhotosGallery/PhotosGallery';
 import BushService from '../../services/bush';
 import { UserHeader } from '../../Interfaces/User';
+import Overall from '../Overall/Overall';
 
 export interface AppProps { title: string }
 
@@ -72,6 +73,8 @@ const App = (props: AppProps) => {
             <PrivateRoute path='/assay/:assayId/treatments' exact component={Treatments} isLoggedIn={loggedIn} user={user}/>
 
             <PrivateRoute path='/photos' exact component={PhotosGallery} isLoggedIn={loggedIn} user={user}/>
+
+            <PrivateRoute path='/overall' exact component={Overall} isLoggedIn={loggedIn} user={user}/>
 
           </Switch>
 

@@ -6,7 +6,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -15,8 +14,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import { RouteComponentProps } from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { UserHeader } from '../../Interfaces/User';
@@ -24,7 +21,7 @@ import { Menu, MenuItem } from '@material-ui/core';
 import BushService from '../../services/bush';
 import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
 import Collapse from '@material-ui/core/Collapse';
-
+import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -194,6 +191,11 @@ const openComponentsList = () => {
         </div>
         <Divider />
         <List>
+
+          <ListItem button className={classes.nested} onClick={()=>props.history.push('/overall')}>
+                <ListItemIcon><DashboardOutlinedIcon/></ListItemIcon>
+                <ListItemText primary="Overall" />
+          </ListItem>
 
           <ListItem button className={classes.nested} onClick={openComponentsList}>
                 <ListItemIcon><FolderOutlinedIcon /></ListItemIcon>
