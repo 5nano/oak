@@ -58,12 +58,14 @@
             height: 40px;
             font-size: 14px;
             color: black;
+            min-width: 400px;
 
             input{
                 font-size: inherit;
                 font-family: inherit;
                 color:inherit;
                 border: none;
+                min-width: 400px;
             }
         }
 
