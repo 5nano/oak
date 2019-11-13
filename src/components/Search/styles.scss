@@ -8,49 +8,55 @@
 
     margin-bottom: 20px;
 
-
-    .search-bar{
-        width: 590px;
-        border: 1px solid #E0E0E0;
-        border-radius: 4px;
-        height: 40px;
-
-        cursor: text;
-        font-size: 10px;
-
-        input{
-            width:100%;
-            height: 100%;
-            outline: none;
-            border:none;
-            padding: 0.5em;
+    .results-container{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        .search-bar{
+            width: 590px;
+            border: 1px solid #E0E0E0;
             border-radius: 4px;
-        }
-    }
+            height: 40px;
     
-        .results-list{
-                display:flex;
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: center;
-                flex-wrap: nowrap;
-                overflow: auto;
-                  
-                height: 550px;
-                background-color: rgba(128, 128, 128, 0.1);
+            cursor: text;
+            font-size: 10px;
+    
+            margin-bottom: 20px;
+    
+            input{
+                width:100%;
+                height: 100%;
+                outline: none;
+                border:none;
+                padding: 0.5em;
                 border-radius: 4px;
-
-                padding: 30px;
-                .results-empty{
-                    color:white;
-                }
+            }
         }
 
-        .search-loading{
-            display:flex;
-            justify-content: center;
-            margin: 30px 0;
+        .results-wrapper{
+            height: 550px;
+            background-color: rgba(128, 128, 128, 0.1);
+            border-radius: 4px;
+            overflow: auto;
+            .results-list{
+                    display:flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                    flex-wrap: nowrap;
+                      
+                    padding: 30px;
+            }
         }
+    
+            .search-loading{
+                display:flex;
+                justify-content: center;
+                margin: 30px 0;
+            }
+    }
+
+
 }
 
 

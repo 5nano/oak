@@ -203,7 +203,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
                                   <img src="../../../assets/images/tumbleweed.png"/>
                                 </div>
                                 <div className="empty-assays-description">
-                                    Ooops... Todavía no tienes ensayos que coincidan con tu búsqueda.
+                                    Ooops... Todavía no tenes ensayos que coincidan con tu búsqueda.
                                 </div>
                             </div>}
                             {this.state.filteredAssays.map((ensayo: IEnsayo) => (

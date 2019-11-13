@@ -16,11 +16,6 @@ export interface IItemProps{
 
 const Item:React.SFC<IItemProps> = (props) => {
 
-    const [info,setInfo] = React.useState ({
-        name:props.item.name,
-        description:props.item.description
-    })
-
     const [name,setName] = React.useState<string>(props.item.name)
     const [description,setDescription] = React.useState<string>(props.item.description)   
     const [isUpdate,setUpdate] = React.useState(false)
@@ -65,7 +60,7 @@ const Item:React.SFC<IItemProps> = (props) => {
                                onChange={(e) => {setName(e.currentTarget.value) }}
                                onBlur={()=>{
                                    setUpdate(false)
-                                   setName(info.name)
+                                   setName(props.item.name)
                                 }}
                                />
                              :
@@ -88,7 +83,7 @@ const Item:React.SFC<IItemProps> = (props) => {
                               onChange={(e) => {setDescription(e.currentTarget.value)}}
                             onBlur={()=>{
                                 setUpdate(false)
-                                setDescription(info.description)
+                                setDescription(props.item.description)
                              }}
                               />
                              :

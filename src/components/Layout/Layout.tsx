@@ -27,7 +27,7 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      height:'100%'
+      height:'100%',
     },
     toolbar:{
         justifyContent:'space-between'
@@ -76,6 +76,7 @@ const useStyles = makeStyles((theme: Theme) =>
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
+      backgroundColor:'rgba(106, 193, 169,0.1)'
     },
     contentShift: {
       transition: theme.transitions.create('margin', {
@@ -84,6 +85,7 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
       marginLeft: drawerWidth,
       height:'100%',
+      backgroundColor:'rgba(106, 193, 169,0.1)'
     },
   }),
 );
