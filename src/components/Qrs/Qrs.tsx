@@ -96,7 +96,7 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
 
                 {!this.state.loading && this.state.treatments.length==0 &&
                    <div className="info-content">
-                       <div className="info-content-image">
+                       <div className="empty-content-image">
                             <img src="../../../assets/images/tumbleweed.png"/>
                         </div>
 
