@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Form, IFields, IValues } from "../../../Form/Form";
 import { Field } from "../../../Field/Field";
-import { requiredValidation, maxLengthValidation, isEmailValidation } from "../../../Form/Validation";
+import { requiredValidation, maxLengthValidation} from "../../../Form/Validation";
 import BushService from "../../../../services/bush";
 import { ICrop } from "../../../../Interfaces/Crop";
 import { IAssay } from "../../Assay";
@@ -38,7 +38,7 @@ var fields:IFields = {
     },
   endDate: {
       id:'endDate',
-      label: "Fecha de finalización",
+      label: "Fecha estimada de finalización",
       editor: "calendar",
       validations: [requiredValidation],
   }

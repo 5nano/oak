@@ -280,11 +280,11 @@ const openComponentsOverall = () => {
               </ListItem>
 
               <ListItem button key={'4'} onClick={()=>props.history.push('/sankey')} >
-                <ListItemText primary={'Sankey'} />
+                <ListItemText primary={'Flujos de ensayos'} />
               </ListItem>
 
               <ListItem button key={'5'} onClick={()=>props.history.push('/sunburst')} >
-                <ListItemText primary={'Sunburst'} />
+                <ListItemText primary={'Sunburst '} />
               </ListItem>
             </List>
             <Divider />

@@ -76,7 +76,6 @@ class Sankey extends React.Component<ISankeyDiagramProps,ISankeyDiagramState> {
 
 
         var layout = {
-        title:"Diagrama sankey de relación Agroquímicos/Mezclas",
         font: {size:12},
         width: 600,
         height: 400,

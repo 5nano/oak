@@ -50,8 +50,9 @@ class Histogram extends React.Component<IHistogramProps,IHistogramState> {
         
         var data = traces;
         var layout:Partial<Plotly.Layout> = {
-            title:'Histograma de imágenes capturadas por ensayo',
-            barmode: 'stack'
+            barmode: 'stack',
+            width: 600,
+            height: 400,
             }
         
         Plotly.newPlot("histogram-container", data,layout)
