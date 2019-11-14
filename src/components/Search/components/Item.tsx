@@ -74,7 +74,7 @@ const Item:React.SFC<IItemProps> = (props) => {
                               className="item-input"
                               value={description}
                               style={{width:((description.length)+1)*8 + 'px'}}
-                              onKeyPress={(e) => { console.log(e.key)
+                              onKeyPress={(e) => {
                                 if(e.key==='Enter'){
                                    updateItem()
                                    setUpdate(false)

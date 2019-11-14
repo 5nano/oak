@@ -2,7 +2,12 @@ import * as React from "react";
 import { IErrors, IFormContext, FormContext} from "../Form/Form";
 import { IFieldProps } from './FieldProps';
 import Select from './Select';
+import DateFnsUtils from '@date-io/date-fns';
 
+import {
+  KeyboardDatePicker, MuiPickersUtilsProvider,
+} from '@material-ui/pickers';
+import DatePicker from "./DatePicker";
 export const Field: React.SFC<IFieldProps> = ({
   id,
   label,
@@ -76,6 +81,10 @@ export const Field: React.SFC<IFieldProps> = ({
                         value={value}
                         options={options}
                         getEditorStyle={getEditorStyle} />
+              )}
+
+              {editor!.toLowerCase() === "calendar" && (
+                <DatePicker id={id} context={context}/>
               )}
 
               {getError(context.errors) && (

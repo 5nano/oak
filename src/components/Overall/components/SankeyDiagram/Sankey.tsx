@@ -1,7 +1,7 @@
 import * as React from 'react';
 import BushService from '../../../../services/bush';
 import Plot from 'react-plotly.js';
-import Plotly = require('plotly.js');
+import Plotly = require('plotly.js/lib/index-basic');
 
 interface SankeyDiagram{
     label: Array<string>
@@ -19,7 +19,7 @@ interface ISankeyDiagramState{
     loading:boolean
 }
 
-class SankeyDiagram extends React.Component<ISankeyDiagramProps,ISankeyDiagramState> {
+class Sankey extends React.Component<ISankeyDiagramProps,ISankeyDiagramState> {
 
     constructor(props){
         super(props)
@@ -32,7 +32,6 @@ class SankeyDiagram extends React.Component<ISankeyDiagramProps,ISankeyDiagramSt
     componentDidMount(){
         BushService.get('/metricas/ensayos/sankey')
                     .then(data=> {
-                        console.log(data)
                         this.setState({sankeyDiagram:data,loading:false})
                     })
     }
@@ -46,45 +45,42 @@ class SankeyDiagram extends React.Component<ISankeyDiagramProps,ISankeyDiagramSt
 
         Plotly.d3.json('https://raw.githubusercontent.com/plotly/plotly.js/master/test/image/mocks/sankey_energy.json', function(fig){
 
-        const data = {
-        type: "sankey",
-        domain: {
-            x: [0,1],
-            y: [0,1]
-        },
-        orientation: "h",
-        valueformat: ".0f",
-        valuesuffix: "TWh",
-        node: {
-            pad: 15,
-            thickness: 15,
-            line: {
-            color: "black",
-            width: 0.5
+        const data:Partial<Plotly.PlotData> = {
+            type: "sankey",
+            domain: {
+                x: [0,1],
+                y: [0,1]
             },
-        label: label,
-        color: fig.data[0].node.color
-            },
+            orientation: "h",
+            valueformat: ".0f",
+            valuesuffix: "TWh",
+            node: {
+                pad: 15,
+                thickness: 15,
+                line: {
+                color: "black",
+                width: 0.5
+                },
+            label: label,
+            color: fig.data[0].node.color
+                },
 
-        link: {
-            source: source,
-            target: target,
-            value: value,
-            label: label
-        }
+            link: {
+                source: source,
+                target: target,
+                value: value,
+                label: label
+            }
         }
 
 
         var layout = {
-        title: "Grafico Sankey",
-        width: '100%',
-        height: 800,
-        font: {
-            size: 10
-        }
+        font: {size:12},
+        width: 600,
+        height: 400,
         }
 
-        Plotly.plot('sankey-container', [data], layout)
+        Plotly.plot('sankey-container', [data], layout,{responsive:true})
         });
     }
 
@@ -92,9 +88,9 @@ class SankeyDiagram extends React.Component<ISankeyDiagramProps,ISankeyDiagramSt
 
         if(!this.state.loading) this.renderGraph()
         return (
-            <div id="sankey-container"/>
+            <div id="sankey-container" className="sankey-chart"/>
         )
     }
 }
 
-export default SankeyDiagram;
+export default Sankey;

@@ -5,18 +5,21 @@ interface IButtonProps {
     onClick?:(e:React.MouseEvent)=>void,
     type?:any,
     className?:string,
-    disabled?:boolean
+    disabled?:boolean,
+    icon?: any
 }
 
 const Button: React.SFC<IButtonProps> = (props) => {
-    const {type,title,onClick,className,disabled} = props;
+    const {type,title,onClick,className,disabled,icon:Icon} = props;
     return(
-        <button type={type} 
-                className={`button ${className}`}
-                onClick={onClick}
-                disabled={disabled}>
-            {title}
-        </button>
+        <div className={`button ${className}`}>
+            {Icon!=null && <Icon/>}
+            <button type={type} 
+                    onClick={onClick}
+                    disabled={disabled}>
+                {title}
+            </button>
+        </div>
     )
 }
 

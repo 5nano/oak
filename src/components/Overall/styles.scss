@@ -1,3 +1,5 @@
+@import './components/styles.scss';
+
 .overall-container{
 
 
@@ -5,7 +7,34 @@
         display:flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-start;
+       
         padding: 40px 80px;
+
+        .gant-wrapper{
+            display:flex;
+        }
+
+        .charts-row{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+    }
+}
+
+.chart-container{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin-top:40px;
+
+    .chart-title{
+        color: #6AC1A9;
+        h1,h2{
+            margin:0
+        }
     }
 }

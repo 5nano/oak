@@ -13,13 +13,13 @@ import BushService from "../../services/bush";
 import { ITag } from "../../Interfaces/Tags";
 import { IEnsayo } from "../../Interfaces/IEnsayo";
 import Loader from "../Utilities/Loader/Loader";
-var randomColor = require('randomcolor');
 interface IDashboardsState{
   assay:IEnsayo,
   tags: Array<ITag>
   currentDashboard: DashboardType,
   dashboardsData: { [key:string]: Array<number> },
   dashboardsLoading: { [key:string]: boolean },
+  treatments: { [key:string]: string}
 }
 
 interface IDashboardProps {
@@ -55,11 +55,13 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
       dashboardsLoading: this.dashboardTypes.reduce((acc:{ [key:string]:boolean} ,dash) => {
         acc[dash.id] = true; return acc},{}
         ),
-      tags:[]
+      tags:[],
+      treatments: {}
     };
     this.fetchDataFromdashboards();
     this.fetchTags();
     this.fetchAssay();
+    this.fetchTreatments();
   }
 
   fetchTags() {
@@ -74,6 +76,11 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
                 .then((data:IEnsayo) => {
                   this.setState({assay:data})
                 })
+  }
+
+  fetchTreatments(){
+    BushService.get(`/ensayo/nombresTratamientos?idAssay=${this.props.match.params.assayId}`)
+                .then(data => this.setState({treatments:data}))
   }
 
   fetchDataFromdashboards() {
@@ -98,7 +105,6 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
   }
 
   setLoading(dashboardId:DashboardType["id"]){
-    console.log(dashboardId)
     this.setState({
       dashboardsLoading: {
         ...this.state.dashboardsLoading,

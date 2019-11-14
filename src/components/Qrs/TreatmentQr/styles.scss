@@ -5,11 +5,13 @@
     align-content: center;
     flex-direction: column;
 
-    border: 1px solid #6AC1A9;
-    border-radius: 4px;
 
-    width: 80%;
-    margin: 40px 0;
+    .qr-actions{
+        display:flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 130px;
+    }
 
     .treatment-qrs-title{
         display:flex
@@ -20,7 +22,13 @@
         flex-flow: row wrap;
         justify-content: flex-start;
 
-        padding: 20px;
+        border: 1px solid #6AC1A9;
+        border-radius: 4px;
+
+        padding: 5px;
+        margin-top: 10px;
+
+        max-width: 820px;
 
         .qr-card{
             display:flex;
@@ -31,6 +39,12 @@
 
             .qr-title{
                 display:flex;
+                flex-direction: column;
+                align-items: center;
+
+                p{
+                    margin:0;
+                }
             }
         }
     }

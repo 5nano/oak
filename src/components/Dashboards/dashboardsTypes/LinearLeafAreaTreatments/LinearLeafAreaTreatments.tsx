@@ -24,7 +24,7 @@ interface LinearLeafAreaTreatmentsProps extends RouteComponentProps<AssayParamsT
     graphPosition?: 'left' | 'right', 
 }
 
-const name = "Área Foliar Linear Promediado";
+const name = "Área Foliar Linear Promediada";
 
 class LinearLeafAreaTreatments extends React.Component<LinearLeafAreaTreatmentsProps> {
    
@@ -34,7 +34,6 @@ class LinearLeafAreaTreatments extends React.Component<LinearLeafAreaTreatmentsP
         BushService.get(`/graficoComparativo/ensayo/tratamientos/promediado?assayId=${assayId}`)
       ])
         .then((linear) => {
-          console.log(linear)
           return {
             linear,
             //box
@@ -48,11 +47,8 @@ class LinearLeafAreaTreatments extends React.Component<LinearLeafAreaTreatmentsP
           return this.props.onEmptyRender('linear-leaf-area-treatments',name);
          
         let averageTreatmentsData = this.props.data.linear[0]
-        //console.log(averageTreatmentsData)
         const linearData: Plotly.Data[] = Object.keys(averageTreatmentsData).map(key => {
-          //console.log(key)
           let treatmentData = averageTreatmentsData[key]
-          //console.log(treatmentData)
 
           let dates = treatmentData.map(data => {return data.date})
           let values = treatmentData.map(data => {return data.value})
@@ -90,7 +86,7 @@ class LinearLeafAreaTreatments extends React.Component<LinearLeafAreaTreatmentsP
             },
             yaxis: {
                 tickformat: '.3s', // Hasta 3 dígitos
-                ticksuffix: " mm2",
+                ticksuffix: " px²",
                 showticksuffix: "all"
             },
             autosize: true

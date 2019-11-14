@@ -95,11 +95,18 @@ class Qrs extends React.Component<IQrsProps,IQrsState> {
                 }
 
                 {!this.state.loading && this.state.treatments.length==0 &&
-                   <Info message="Este ensayo no presenta tratamientos"/>
+                   <div className="info-content">
+                       <div className="empty-content-image"/>
+
+                        <div className="info-content-description">
+                            <h4>No hemos encontrado resultados.</h4>
+                            <p>Dirigite al tablero del ensayo y comenza a configurar sus tratamientos.</p>
+                        </div>
+                    </div>
                 }
 
                 {!this.state.loading && this.state.actualTreatment!=null &&
-                    <TreatmentQrs idAssay={this.props.match.params.assayId} treatment={this.state.actualTreatment}/>
+                    <TreatmentQrs assay={this.state.assay} treatment={this.state.actualTreatment}/>
                 }
 
             </div>

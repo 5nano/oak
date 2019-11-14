@@ -5,7 +5,7 @@ const Agrochemicals: React.SFC = () => {
   
   return (
     <CrudView 
-        title="Agroquimicos"
+        title="Agroquímicos"
         searchUrl= '/agroquimicos'
         deleteUrl= '/agroquimicos/eliminar?agrochemicalId='
         createUrl= '/agroquimicos/insertar'

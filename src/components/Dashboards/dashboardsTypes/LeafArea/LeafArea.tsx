@@ -63,7 +63,7 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
       ])
         .then(([ /* linear, */ box, treatments ]) => {
           // I'll just remap this so then we can access this data as this.props.data.linear and this.props.data.box
-          console.log(box)
+          
           return {
             // linear,
             box,
@@ -120,7 +120,7 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
             },
             yaxis: {
                 tickformat: '.3s', // Hasta 3 dígitos
-                ticksuffix: " mm2",
+                ticksuffix: "px²",
                 showticksuffix: "all"
             },
             autosize: true,
@@ -129,7 +129,7 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
           return (
             <MultiPlot 
               data={{...this.props.data, linear: {...this.props.data.linear, values: this.state.experimentsData}}} 
-              dataSuffix="mm^2" 
+              dataSuffix="px²" 
               title={name} 
               graphPosition={this.props.graphPosition}
               onLinearChange={this.fetchExperimentsLinearData}

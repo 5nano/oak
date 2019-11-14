@@ -35,13 +35,13 @@ const TestCarrousel:React.SFC<ITestCarrouselProps> = (props) => {
                     subtitle={
                     <div className="test-content">
                         <div className="content-row">
-                            <h4>Altura:</h4><p>{test.height} mm</p>
+                            <h4>Altura:</h4><p>{test.height} px</p>
                         </div>
                         <div className="content-row">
-                            <h4>Ancho:</h4><p>{test.width} mm</p>
+                            <h4>Ancho:</h4><p>{test.width} px</p>
                         </div>
                         <div className="content-row">
-                            <h4>Area Foliar:</h4><p>{test.area} mm2</p>
+                            <h4>Area Foliar:</h4><p>{test.area} px²</p>
                         </div>
                     </div>
                     }

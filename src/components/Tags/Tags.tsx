@@ -28,7 +28,6 @@ const Tags:React.SFC<ITagsProps> = (props) => {
     const fetchTags=()=>{
         BushService.get('/tags')
                    .then((data:Array<ITag>) => {
-                       console.log(data)
                        setTags(data)
                     })
     }

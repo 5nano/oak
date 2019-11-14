@@ -90,22 +90,24 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
     }
 
     private finishAssay(stars:Number,comments:string):Promise<void>{
+        console.log(stars,comments)
         let assayId = this.state.assayToFinish;
-        return BushService.patch(`/ensayo/terminar?idAssay=${this.state.assayToFinish}&&stars=${stars}&&comments=${comments}`)
-        .then(()=>{
-            this.closeAssayFeedback()
-            this.sendAssayFinishedEmail(assayId,stars)
-            this.setFeedback({variant:'success',message:'Ensayo finalizado exitosamente. Revisa tu casilla de correo electrónico'})
-            this.updateAssays()
-        })
-        .catch(error => {
-            this.setFeedback({variant:'error',message:'El ensayo ya se encuentra finalizado'})
-        })
+        return BushService.patch(`/ensayo/terminar?idAssay=${this.state.assayToFinish}&stars=${stars}&comments=${comments}`)
+                            .then(()=>{
+                                this.closeAssayFeedback()
+                                this.sendAssayFinishedEmail(assayId,stars)
+                                this.setFeedback({variant:'success',message:'Ensayo finalizado exitosamente. Revisa tu casilla de correo electrónico'})
+                                this.updateAssays()
+                            })
+                            .catch(error => {
+                                console.log(error)
+                                this.closeAssayFeedback()
+                                error.json().then((error)=>this.setFeedback({variant:'error',message:error.message}))
+                            })
     }
     private sendAssayFinishedEmail = (assayId: Number,stars:Number) => {
         
-        let assay = this.state.assays.find(assay => assay.idAssay === assayId)
-        let createdDate = new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(Date.parse(assay.created))
+        let assay = this.state.filteredAssays.find(assay => assay.idAssay === assayId)
 
         let htmlToSend = {
             subject: `El ensayo ${assay.name} ha finalizado con ${stars} estrellas `,
@@ -113,9 +115,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
         }
     
         BushService.post("/mailSender",htmlToSend)
-                  .then(()=> {
-                    console.log("Email enviado")
-                  })
+                  .then(()=> {console.log("mail enviado")})
     }
 
     private closeAssayFeedback():void{
@@ -198,16 +198,15 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
                     <HomeContext.Provider value={context}>
                          <div className="ensayos">
                             {this.state.filteredAssays.length === 0 && 
-                            <div className="empty-assays">
-                                <div className="empty-assays-image">
-                                  <img src="../../../assets/images/tumbleweed.png"/>
-                                </div>
-                                <div className="empty-assays-description">
-                                    Ooops... Todavía no tenes ensayos que coincidan con tu búsqueda.
+                            <div className="info-content">
+                                <div className="empty-content-image"/>
+                                <div className="info-content-description">
+                                    <h4>No hemos encontrado resultados.</h4>
+                                    <p>Ooops... Todavía no tenes ensayos que coincidan con tu búsqueda.</p>
                                 </div>
                             </div>}
-                            {this.state.filteredAssays.map((ensayo: IEnsayo) => (
-                                <Ensayo {...this.props} ensayo={ensayo} />
+                            {this.state.filteredAssays.map((ensayo: IEnsayo,i) => (
+                                <Ensayo key={i} {...this.props} ensayo={ensayo} />
                             ))}
                          </div>
                     </HomeContext.Provider>
@@ -219,7 +218,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
                     vertical: 'bottom',
                     horizontal: 'left'
                 }}
-                open={this.state.feedback!=null}
+                open={Boolean(this.state.feedback)}
                 autoHideDuration={6000}
                 onClose={this.handleSnackbarClose.bind(this)}
                 >
