@@ -1,7 +1,6 @@
 import * as React from 'react';
 import BushService from '../../../../services/bush';
-import Plotly = require('plotly.js');
-import Plot from 'react-plotly.js';
+import Plotly = require('plotly.js/lib/index-basic');
 
 interface SunburstChart{
     labels:Array<string>
@@ -37,49 +36,29 @@ class SunburstChart extends React.Component<ISunburstChartProps,ISunburstChartSt
                     })
     }
 
-   /* renderGraph(){
-        var data = [
+    renderGraph(){
+        var data:Partial<Plotly.PlotData> = 
             {
-              "type": "sunburst",
-              "labels": ["Eve", "Cain", "Seth", "Enos", "Noam", "Abel", "Awan", "Enoch", "Azura"],
-              "parents": ["", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve" ],
-              "values":  [65, 14, 12, 10, 2, 6, 6, 4, 4],
-              "leaf": {"opacity": 0.4},
-              "marker": {"line": {"width": 2}},
-              "branchvalues": 'total'
-            }];
-            
-            var layout = {
-              "margin": {"l": 0, "r": 0, "b": 0, "t": 0},
+                type: "sunburst",
+                labels: this.state.sunburstChart.labels,
+                parents: this.state.sunburstChart.parents,
+                values:  this.state.sunburstChart.values,
+                leaf: {"opacity": 0.4},
+                marker: {"line": {"width": 2}},
+                branchvalues: this.state.sunburstChart.branchValues
             };
             
+            var layout = {
+                "margin": {"l": 0, "r": 0, "b": 0, "t": 0},
+            };
             
-            Plotly.newPlot('sunburst-chart', data, layout, {showSendToCloud: true})
-            
-    }*/
+            Plotly.newPlot('sunburst-chart', [data], layout)
+
+    }
 
     render(){
         
-        if(!this.state.loading){
-            var data = [
-                {
-                  "type": "sunburst",
-                  "labels": this.state.sunburstChart.labels,
-                  "parents": this.state.sunburstChart.parents,
-                  "values":  this.state.sunburstChart.values,
-                  "leaf": {"opacity": 0.4},
-                  "marker": {"line": {"width": 2}},
-                  "branchvalues": this.state.sunburstChart.branchValues
-                }];
-                
-                var layout = {
-                  "margin": {"l": 0, "r": 0, "b": 0, "t": 0},
-                };
-                
-                
-                Plotly.newPlot('sunburst-chart', data, layout, {showSendToCloud: true})
-        
-        }
+        if(!this.state.loading) this.renderGraph()
 
         return (
             <div id="sunburst-chart"/>
