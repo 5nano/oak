@@ -103,7 +103,7 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
             },
             yaxis: {
                 tickformat: '.3s', // Hasta 3 dígitos
-                ticksuffix: " mm2",
+                ticksuffix: "px²",
                 showticksuffix: "all"
             },
             autosize: true,
@@ -112,7 +112,7 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
         return (
             <BoxPlot 
               data={this.props.data.box} 
-              dataSuffix="mm^2" 
+              dataSuffix="px²" 
               title={name} 
               graphPosition={this.props.graphPosition} 
             /> 

@@ -18,7 +18,7 @@ interface ISunburstChartState{
     loading:boolean
 }
 
-class SunburstChart extends React.Component<ISunburstChartProps,ISunburstChartState> {
+class Sunburst extends React.Component<ISunburstChartProps,ISunburstChartState> {
 
     constructor(props){
         super(props)
@@ -67,4 +67,4 @@ class SunburstChart extends React.Component<ISunburstChartProps,ISunburstChartSt
     }
 }
 
-export default SunburstChart;
+export default Sunburst;

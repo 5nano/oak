@@ -74,18 +74,16 @@ class Gantt extends React.Component<IGanttProps,IGanttState> {
         })
     }
 
-       
-        
         return (
             !this.state.loading && 
                 <div className="gantt-chart">
-                        <Chart 
-                            height={400}
+                        <Chart
                             width={800}
                             chartType='Gantt'
                             loader={<Loader/>}
                             data={[columns,...rows]}
                             options={{
+                                title:"Planificación de ensayos",
                                 gantt: {
                                 trackHeight: 30,
                                 },

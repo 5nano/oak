@@ -24,7 +24,7 @@ interface LinearLeafAreaTreatmentsProps extends RouteComponentProps<AssayParamsT
     graphPosition?: 'left' | 'right', 
 }
 
-const name = "Área Foliar Linear Promediado";
+const name = "Área Foliar Linear Promediada";
 
 class LinearLeafAreaTreatments extends React.Component<LinearLeafAreaTreatmentsProps> {
    
@@ -90,7 +90,7 @@ class LinearLeafAreaTreatments extends React.Component<LinearLeafAreaTreatmentsP
             },
             yaxis: {
                 tickformat: '.3s', // Hasta 3 dígitos
-                ticksuffix: " mm2",
+                ticksuffix: " px²",
                 showticksuffix: "all"
             },
             autosize: true

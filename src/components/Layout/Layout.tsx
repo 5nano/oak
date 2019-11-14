@@ -280,11 +280,11 @@ const openComponentsOverall = () => {
               </ListItem>
 
               <ListItem button key={'4'} onClick={()=>props.history.push('/sankey')} >
-                <ListItemText primary={'Sankey'} />
+                <ListItemText primary={'Flujos de ensayos'} />
               </ListItem>
 
               <ListItem button key={'5'} onClick={()=>props.history.push('/sunburst')} >
-                <ListItemText primary={'Sunburst'} />
+                <ListItemText primary={'Sunburst '} />
               </ListItem>
             </List>
             <Divider />
@@ -298,7 +298,7 @@ const openComponentsOverall = () => {
           <Collapse in={componentsList} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem button key={'10'} onClick={()=>props.history.push('/agrochemicals')} >
-                <ListItemText primary={'Agroquimicos'} />
+                <ListItemText primary={'Agroquímicos'} />
               </ListItem>
 
               <ListItem button key={'11'} onClick={()=>props.history.push('/crops')} >

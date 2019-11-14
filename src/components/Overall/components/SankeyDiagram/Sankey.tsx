@@ -19,7 +19,7 @@ interface ISankeyDiagramState{
     loading:boolean
 }
 
-class SankeyDiagram extends React.Component<ISankeyDiagramProps,ISankeyDiagramState> {
+class Sankey extends React.Component<ISankeyDiagramProps,ISankeyDiagramState> {
 
     constructor(props){
         super(props)
@@ -76,7 +76,6 @@ class SankeyDiagram extends React.Component<ISankeyDiagramProps,ISankeyDiagramSt
 
 
         var layout = {
-        title:"Diagrama sankey de relación Agroquímicos/Mezclas",
         font: {size:12},
         width: 600,
         height: 400,
@@ -95,4 +94,4 @@ class SankeyDiagram extends React.Component<ISankeyDiagramProps,ISankeyDiagramSt
     }
 }
 
-export default SankeyDiagram;
+export default Sankey;

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Histogram from './components/Histogram/Histogram';
-import SankeyDiagram from './components/SankeyDiagram/SankeyDiagram';
-import SunburstChart from './components/SunburstChart/SunburstChart';
 import Gantt from './components/Gantt/Gantt';
+import Sankey from './components/SankeyDiagram/Sankey';
+import Sunburst from './components/SunburstChart/Sunburst';
 
 interface IOverallState{
 
@@ -25,11 +25,18 @@ class Overall extends React.Component<IOverallProps,IOverallState> {
         return (
             <div className="overall-container">
                 <div className="overall-wrapper">
-                    <Gantt/>
-                    
-                    <SankeyDiagram/>
+                    <div className="gant-wrapper">
+                        <Gantt/>
+                    </div>
 
-                    <Histogram/>
+                    <div className="charts-row">
+                        <Sankey/>
+
+                        <Histogram/>
+
+                        <Sunburst/>
+                    </div>
+                    
                 </div>
             </div>
         )
