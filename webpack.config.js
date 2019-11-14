@@ -118,6 +118,10 @@ module.exports = {
 				// include: [path.resolve(__dirname, 'src')],
 				exclude: [/node_modules/]
 			},
+			{
+				test: /\.js$/,
+				loader: 'ify-loader'
+			},
 			{ enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
 		]
 	},

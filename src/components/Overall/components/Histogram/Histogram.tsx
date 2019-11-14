@@ -1,6 +1,6 @@
 import * as React from 'react';
 import BushService from '../../../../services/bush';
-import Plotly = require('plotly.js');
+import Plotly = require('plotly.js/lib/index-basic');
 
 interface IHistogram{
     count: Array<Number>,
@@ -36,7 +36,8 @@ class Histogram extends React.Component<IHistogramProps,IHistogramState> {
 
     renderGraph(){
 
-        var trace = {
+    
+        var trace:Partial<Plotly.PlotData> = {
             x: this.state.histogram.dates,
             type: 'histogram',
         };

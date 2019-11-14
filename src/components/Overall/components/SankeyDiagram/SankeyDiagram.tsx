@@ -1,7 +1,7 @@
 import * as React from 'react';
 import BushService from '../../../../services/bush';
 import Plot from 'react-plotly.js';
-import Plotly = require('plotly.js');
+import Plotly = require('plotly.js/lib/index-basic');
 
 interface SankeyDiagram{
     label: Array<string>
@@ -46,32 +46,32 @@ class SankeyDiagram extends React.Component<ISankeyDiagramProps,ISankeyDiagramSt
 
         Plotly.d3.json('https://raw.githubusercontent.com/plotly/plotly.js/master/test/image/mocks/sankey_energy.json', function(fig){
 
-        const data = {
-        type: "sankey",
-        domain: {
-            x: [0,1],
-            y: [0,1]
-        },
-        orientation: "h",
-        valueformat: ".0f",
-        valuesuffix: "TWh",
-        node: {
-            pad: 15,
-            thickness: 15,
-            line: {
-            color: "black",
-            width: 0.5
+        const data:Partial<Plotly.PlotData> = {
+            type: "sankey",
+            domain: {
+                x: [0,1],
+                y: [0,1]
             },
-        label: label,
-        color: fig.data[0].node.color
-            },
+            orientation: "h",
+            valueformat: ".0f",
+            valuesuffix: "TWh",
+            node: {
+                pad: 15,
+                thickness: 15,
+                line: {
+                color: "black",
+                width: 0.5
+                },
+            label: label,
+            color: fig.data[0].node.color
+                },
 
-        link: {
-            source: source,
-            target: target,
-            value: value,
-            label: label
-        }
+            link: {
+                source: source,
+                target: target,
+                value: value,
+                label: label
+            }
         }
 
 
