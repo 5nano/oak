@@ -21,3 +21,15 @@
     width:300px;
     margin: 20px 0px;
 }
+
+.empty-treatment{
+    display:flex;
+    flex-direction: column;
+    color: black;
+
+    p{
+        color: #c2c3c7;
+        margin: 10px 20px;
+        text-align: center;
+    }
+}

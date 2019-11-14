@@ -1,6 +1,6 @@
 import * as React from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme,fade, Theme, createStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -17,11 +17,15 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { RouteComponentProps } from 'react-router-dom';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { UserHeader } from '../../Interfaces/User';
-import { Menu, MenuItem } from '@material-ui/core';
+import { Menu, MenuItem, InputBase } from '@material-ui/core';
 import BushService from '../../services/bush';
 import FolderOutlinedIcon from '@material-ui/icons/FolderOutlined';
 import Collapse from '@material-ui/core/Collapse';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
+import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
+import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
+import SearchIcon from '@material-ui/icons/Search';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -59,7 +63,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     drawerPaper: {
       width: drawerWidth,
-      borderRadius: '32px',
     },
     drawerHeader: {
       display: 'flex',
@@ -88,6 +91,44 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: drawerWidth,
       height:'100%',
       backgroundColor:'rgba(106, 193, 169,0.1)'
+    },
+    search: {
+      position: 'relative',
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: fade(theme.palette.common.white, 0.15),
+      '&:hover': {
+        backgroundColor: fade(theme.palette.common.white, 0.25),
+      },
+      marginLeft: 0,
+      marginRight: '20px',
+      width: '100%',
+      [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(1),
+        width: 'auto',
+      },
+    },
+    searchIcon: {
+      width: theme.spacing(7),
+      height: '100%',
+      position: 'absolute',
+      pointerEvents: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    inputRoot: {
+      color: 'inherit',
+    },
+    inputInput: {
+      padding: theme.spacing(1, 1, 1, 7),
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('sm')]: {
+        width: 120,
+        '&:focus': {
+          width: 200,
+        },
+      },
     },
   }),
 );
@@ -158,15 +199,32 @@ const openComponentsOverall = () => {
             <MenuIcon />
           </IconButton>
             <div/>
-            <div className="header-user" onClick={(e) => openUserMenu(e)}>
-                <AccountCircleIcon fontSize='large'/>
-                <div className="user-content">
-                    <div className="companie">
-                        {user.company}
-                    </div>
-                    <div className="username">
-                        {user.userName}
-                    </div>
+            <div className="header-user">
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <SearchIcon />
+                  </div>
+                  <InputBase
+                    placeholder="Buscar…"
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                    inputProps={{ 'aria-label': 'search' }}
+                  />
+                </div>
+                <SettingsOutlinedIcon fontSize="small"/>
+                <NotificationsNoneIcon fontSize='small'/>
+                <div className="header-user-container" onClick={(e) => openUserMenu(e)}>
+                  <AccountCircleIcon fontSize='large'/>
+                  <div className="user-content">
+                      <div className="companie">
+                          {user.company}
+                      </div>
+                      <div className="username">
+                          {user.userName}
+                      </div>
+                  </div>
                 </div>
             </div>
             <Menu
