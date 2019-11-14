@@ -19,7 +19,7 @@ interface ISankeyDiagramState{
     loading:boolean
 }
 
-class SankeyDiagram extends React.Component<ISankeyDiagramProps,ISankeyDiagramState> {
+class Sankey extends React.Component<ISankeyDiagramProps,ISankeyDiagramState> {
 
     constructor(props){
         super(props)
@@ -95,4 +95,4 @@ class SankeyDiagram extends React.Component<ISankeyDiagramProps,ISankeyDiagramSt
     }
 }
 
-export default SankeyDiagram;
+export default Sankey;

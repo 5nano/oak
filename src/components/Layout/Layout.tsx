@@ -298,7 +298,7 @@ const openComponentsOverall = () => {
           <Collapse in={componentsList} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem button key={'10'} onClick={()=>props.history.push('/agrochemicals')} >
-                <ListItemText primary={'Agroquimicos'} />
+                <ListItemText primary={'Agroquímicos'} />
               </ListItem>
 
               <ListItem button key={'11'} onClick={()=>props.history.push('/crops')} >

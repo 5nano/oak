@@ -19,8 +19,8 @@ import { UserHeader } from '../../Interfaces/User';
 import Overall from '../Overall/Overall';
 import Gantt from '../Overall/components/Gantt/Gantt';
 import Histogram from '../Overall/components/Histogram/Histogram';
-import SunburstChart from '../Overall/components/SunburstChart/SunburstChart';
-import SankeyDiagram from '../Overall/components/SankeyDiagram/SankeyDiagram';
+import SunburstChart from '../Overall/components/SunburstChart/Sunburst';
+import SankeyDiagram from '../Overall/components/SankeyDiagram/Sankey';
 
 export interface AppProps { title: string }
 

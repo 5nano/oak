@@ -40,11 +40,11 @@ const ExperimentPopover:React.SFC<IExperimentPopoverProps> = (props) => {
                 <h1>Fecha de imagen: </h1>
                 <h2>{experiment.timestamp}</h2>
                 <h1>Altura: </h1>
-                <h2>{experiment.height} mm</h2>
+                <h2>{experiment.height} px</h2>
                 <h1>Ancho: </h1>
-                <h2>{experiment.width} mm</h2>
+                <h2>{experiment.width} px</h2>
                 <h1>Area: </h1>
-                <h2>{experiment.area} mm²</h2>
+                <h2>{experiment.area} px²</h2>
             </div>
           </div>
       </div>
