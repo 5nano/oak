@@ -31,7 +31,7 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
          setLoading(true)
          return BushService.get(`/ensayo/tratamientos?idAssay=${idAssay}`)
                    .then((data:Array<ITreatment>)=>{
-                       console.log(data)
+                      
                        setTreatments(data)
                        setLoading(false)
                     })
@@ -40,7 +40,7 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
     const fetchAssay = ():Promise<void> => {
         return BushService.get(`/ensayo/?idAssay=${idAssay}`)
                   .then((data:IEnsayo)=>{
-                      console.log(data)
+                      
                       setAssay(data.name)
                       fetchTreatments()
                    })
@@ -48,7 +48,8 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
 
    
     const submitTreatmentForm=(newTreatment:ITreatmentBackend):Promise<void>=>{
-         return BushService.post('/tratamientos/insertar', newTreatment)
+       
+        return BushService.post('/tratamientos/insertar', newTreatment)
             .then(() => {
                 fetchTreatments()
                 setFeedback({variant:'success',message:'El tratamiento fue creado exitosamente!'})
@@ -96,8 +97,8 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                                         <img src="../../../../assets/images/plus-icon.png"/>
                                     </div>
                                     {treatments.length!=0 &&
-                                    treatments.map((treatment:ITreatment)=> (
-                                        <Treatment treatment={treatment}
+                                    treatments.map((treatment:ITreatment,i)=> (
+                                        <Treatment key={i} treatment={treatment}
                                                     onDelete={deleteTreatment}/>
                                     ))
                                     }

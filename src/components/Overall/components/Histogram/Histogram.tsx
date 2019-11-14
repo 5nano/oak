@@ -1,10 +1,10 @@
 import * as React from 'react';
 import BushService from '../../../../services/bush';
-import Plotly = require('plotly.js/lib/index-basic');
+import Plotly = require('plotly.js');
 
-interface IHistogram{
-    count: Array<Number>,
-    dates: Array<string>
+
+interface IDates{
+    [key: string]: string[]
 }
 
 interface IHistogramProps{
@@ -12,7 +12,7 @@ interface IHistogramProps{
 }
 
 interface IHistogramState{
-    histogram:IHistogram,
+    dates: IDates
     loading:boolean
 }
 
@@ -21,7 +21,7 @@ class Histogram extends React.Component<IHistogramProps,IHistogramState> {
     constructor(props){
         super(props)
         this.state = {
-            histogram:null,
+            dates:null,
             loading:true
         }
     }
@@ -30,25 +30,31 @@ class Histogram extends React.Component<IHistogramProps,IHistogramState> {
         BushService.get('/metricas/histograma/pruebas')
                     .then(data=> {
                         console.log(data)
-                        this.setState({histogram:data,loading:false})
+                        this.setState({dates:data.dates,loading:false})
                     })
     }
 
     renderGraph(){
-
-    
-        var trace:Partial<Plotly.PlotData> = {
-            x: this.state.histogram.dates,
-            type: 'histogram',
-        };
-        var data = [trace];
-        var layout = {
-            title:'Histograma de imágenes capturadas',
-            font:{size:12},
-            width: 600,
-            height: 400,
+        let traces:Array<Partial<Plotly.PlotData>> = [];
+        Object.keys(this.state.dates).forEach(key => {
+            let trace:Partial<Plotly.PlotData> = {
+                name: key,
+                x: this.state.dates[key],
+                type: "histogram",
+                marker: {
+                    opacity:0.6
+                }
             }
-        Plotly.newPlot("histogram-container", data,layout,{responsive:true})
+            traces.push(trace)
+        })
+        
+        var data = traces;
+        var layout:Partial<Plotly.Layout> = {
+            title:'Histograma de imágenes capturadas por ensayo',
+            barmode: 'stack'
+            }
+        
+        Plotly.newPlot("histogram-container", data,layout)
     }
 
     render(){

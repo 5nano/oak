@@ -119,7 +119,7 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                     <div className="content">{new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(Date.parse(ensayo.created))}</div>
                 </div>
                 <div className="assay-description">
-                    <div className="title">Fecha de finalización</div>
+                    <div className="title">Fecha estimada de finalización</div>
                     <div className="content">{new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(Date.parse(ensayo.estimatedFinished))}</div>
                 </div>
             </div>

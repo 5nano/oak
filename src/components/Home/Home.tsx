@@ -114,7 +114,6 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
     
         BushService.post("/mailSender",htmlToSend)
                   .then(()=> {
-                    console.log("Email enviado")
                   })
     }
 

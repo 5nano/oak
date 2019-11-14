@@ -25,14 +25,14 @@ const Treatment:React.SFC<ITreatmentProps> = (props) => {
                 <div className="treatment-attribute">
                     <img src='../../../../assets/images/agrochemical-icon.png'/>
                     <div className="content">
-                        {treatment.agrochemical.name}
+                        {treatment.agrochemical? treatment.agrochemical.name : 'Sin aplicación'}
                     </div>
                 </div>
 
                 <div className="treatment-attribute">
                     <img src='../../../../assets/images/mix-icon.png'/>
                     <div className="content">
-                    {treatment.mixture.name}
+                    {treatment.mixture? treatment.mixture.name : 'Sin aplicación'}
                     </div>
                 </div>
 
