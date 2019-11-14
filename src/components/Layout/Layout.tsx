@@ -212,19 +212,19 @@ const openComponentsOverall = () => {
                 <ListItemText primary={'Overall'} />
               </ListItem>
               
-              <ListItem button key={'1'} onClick={()=>props.history.push('/gantt')} >
+              <ListItem button key={'2'} onClick={()=>props.history.push('/gantt')} >
                 <ListItemText primary={'Gantt'} />
               </ListItem>
 
-              <ListItem button key={'2'} onClick={()=>props.history.push('/histogram')} >
+              <ListItem button key={'3'} onClick={()=>props.history.push('/histogram')} >
                 <ListItemText primary={'Histograma'} />
               </ListItem>
 
-              <ListItem button key={'3'} onClick={()=>props.history.push('/sankey')} >
+              <ListItem button key={'4'} onClick={()=>props.history.push('/sankey')} >
                 <ListItemText primary={'Sankey'} />
               </ListItem>
 
-              <ListItem button key={'4'} onClick={()=>props.history.push('/sunburst')} >
+              <ListItem button key={'5'} onClick={()=>props.history.push('/sunburst')} >
                 <ListItemText primary={'Sunburst'} />
               </ListItem>
             </List>
@@ -238,19 +238,19 @@ const openComponentsOverall = () => {
 
           <Collapse in={componentsList} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem button key={'1'} onClick={()=>props.history.push('/agrochemicals')} >
+              <ListItem button key={'10'} onClick={()=>props.history.push('/agrochemicals')} >
                 <ListItemText primary={'Agroquimicos'} />
               </ListItem>
 
-              <ListItem button key={'2'} onClick={()=>props.history.push('/crops')} >
+              <ListItem button key={'11'} onClick={()=>props.history.push('/crops')} >
                 <ListItemText primary={'Cultivos'} />
               </ListItem>
 
-              <ListItem button key={'3'} onClick={()=>props.history.push('/mixs')} >
+              <ListItem button key={'12'} onClick={()=>props.history.push('/mixs')} >
                 <ListItemText primary={'Mezclas'} />
               </ListItem>
 
-              <ListItem button key={'4'} onClick={()=>props.history.push('/assay')} >
+              <ListItem button key={'13'} onClick={()=>props.history.push('/assay')} >
                 <ListItemText primary={'Ensayos'} />
               </ListItem>
             </List>

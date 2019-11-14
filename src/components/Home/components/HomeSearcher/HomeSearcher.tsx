@@ -71,7 +71,7 @@ const HomeSearcher:React.SFC<IHomeSearcherProps> = (props) => {
             className="search-bar"
             allowCreateTag={false}
             saveOnBlur={false}
-            placeholder="Busca por tags..."
+            placeholder="Buscar por tags..."
             />
         <Button title="Buscar" onClick={()=> search(selectedTags)}/>
         </div>

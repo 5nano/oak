@@ -48,7 +48,8 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
 
    
     const submitTreatmentForm=(newTreatment:ITreatmentBackend):Promise<void>=>{
-         return BushService.post('/tratamientos/insertar', newTreatment)
+        console.log(newTreatment) 
+        return BushService.post('/tratamientos/insertar', newTreatment)
             .then(() => {
                 fetchTreatments()
                 setFeedback({variant:'success',message:'El tratamiento fue creado exitosamente!'})
@@ -96,8 +97,8 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                                         <img src="../../../../assets/images/plus-icon.png"/>
                                     </div>
                                     {treatments.length!=0 &&
-                                    treatments.map((treatment:ITreatment)=> (
-                                        <Treatment treatment={treatment}
+                                    treatments.map((treatment:ITreatment,i)=> (
+                                        <Treatment key={i} treatment={treatment}
                                                     onDelete={deleteTreatment}/>
                                     ))
                                     }

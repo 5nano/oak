@@ -78,6 +78,7 @@ class TreatmentForm extends React.Component<ITreatmentFormProps,ITreatmentFormSt
           })
       })
       fields.agrochemical.options=this.state.agrochemicals.map(agrochemical => {return agrochemical.name})
+      fields.agrochemical.options.push('Sin aplicación')
       this.setState({loadingAgrochemicals:false})
     })
   
@@ -91,13 +92,17 @@ class TreatmentForm extends React.Component<ITreatmentFormProps,ITreatmentFormSt
         })
     })
     fields.mix.options=this.state.mixs.map(mix => {return mix.name})
+    fields.mix.options.push('Sin aplicación')
     this.setState({loadingMixs:false})
     })
   }
 
   submitForm(values:IValues){
-    let agrochemical = this.state.agrochemicals.find(agrochemical=> agrochemical.name === values.agrochemical)
-    let mix = this.state.mixs.find(mix=> mix.name === values.mix)
+
+    let idAgrochemical;
+    let idMixture;
+    if(values.agrochemical != 'Sin aplicación') idAgrochemical = this.state.agrochemicals.find(agrochemical=> agrochemical.name === values.agrochemical).idAgrochemical
+    if(values.mix != 'Sin aplicación') idMixture = this.state.mixs.find(mix=> mix.name === values.mix).idMixture
    
     const newTreatment:ITreatmentBackend = {
       idAssay:this.props.idAssay,
@@ -105,8 +110,8 @@ class TreatmentForm extends React.Component<ITreatmentFormProps,ITreatmentFormSt
       description:values.description,
       pressure: values.pressure,
       experimentsLength:values.experimentsLength,
-      idMixture: mix.idMixture,
-      idAgrochemical: agrochemical.idAgrochemical,
+      idMixture: idMixture,
+      idAgrochemical: idAgrochemical,
     }
 
     return this.props.submitTreatmentForm(newTreatment)
