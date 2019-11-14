@@ -36,7 +36,6 @@ const freqComponentGenerator = (color, name,id) => class YellowFreqComponent ext
   }
 
   render(){
-    console.log(this.props.data)
     return (
       (!(this.props.data && Object.keys(this.props.data).length))?
             this.props.onEmptyRender(id,name)

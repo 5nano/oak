@@ -34,7 +34,6 @@ class LinearLeafAreaTreatments extends React.Component<LinearLeafAreaTreatmentsP
         BushService.get(`/graficoComparativo/ensayo/tratamientos/promediado?assayId=${assayId}`)
       ])
         .then((linear) => {
-          console.log(linear)
           return {
             linear,
             //box
@@ -48,11 +47,8 @@ class LinearLeafAreaTreatments extends React.Component<LinearLeafAreaTreatmentsP
           return this.props.onEmptyRender('linear-leaf-area-treatments',name);
          
         let averageTreatmentsData = this.props.data.linear[0]
-        //console.log(averageTreatmentsData)
         const linearData: Plotly.Data[] = Object.keys(averageTreatmentsData).map(key => {
-          //console.log(key)
           let treatmentData = averageTreatmentsData[key]
-          //console.log(treatmentData)
 
           let dates = treatmentData.map(data => {return data.date})
           let values = treatmentData.map(data => {return data.value})

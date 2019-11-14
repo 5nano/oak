@@ -29,7 +29,6 @@ class Histogram extends React.Component<IHistogramProps,IHistogramState> {
     componentDidMount(){
         BushService.get('/metricas/histograma/pruebas')
                     .then(data=> {
-                        console.log(data)
                         this.setState({dates:data.dates,loading:false})
                     })
     }
