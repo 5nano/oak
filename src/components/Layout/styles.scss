@@ -14,19 +14,24 @@
     align-items: center;
 
     padding:10px;
-    .user-content{
+
+    .header-user-container{
         display:flex;
-        flex-direction: column;
-        align-items: center;
-
-        margin-left: 10px;
-    }
-
-    cursor: pointer;
-    &:hover{
-        color: #6AC1A9;
-        background-color: white;
-
-        border-radius: 4px;
+        margin-left: 20px;
+        .user-content{
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+    
+            margin-left: 10px;
+        }
+    
+        cursor: pointer;
+        &:hover{
+            color: #6AC1A9;
+            background-color: white;
+    
+            border-radius: 4px;
+        }
     }
 }

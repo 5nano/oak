@@ -95,6 +95,8 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                                 <div className="treatments-wrapper">
                                     <div className="empty-treatment" onClick={()=>setNewTreatment(true)}>
                                         <img src="../../../../assets/images/plus-icon.png"/>
+                                        Agregar tratamiento
+                                        <p>Crea un tratamiento y configura su aplicación</p>
                                     </div>
                                     {treatments.length!=0 &&
                                     treatments.map((treatment:ITreatment,i)=> (

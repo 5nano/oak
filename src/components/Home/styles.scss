@@ -48,19 +48,36 @@
     margin-top: 40px;
     
     .info-content-description{
-        color: #c2c3c7;
-        font-size: 24px;
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         text-align: center;
+
+        h4{
+            color:black;
+            margin:0;
+            font-size: 32px;
+        }
+
+        p{
+            color: #c2c3c7;
+            margin:0;
+            width: 400px;
+            font-size: 18px;
+        }
     }
     
     .info-content-image{
-        width: 200px;
-        height: 200px;
+    }
 
-        img{
-            height: 100%;
-            width: 100%;
-        }
+    .empty-content-image{
+        width: 300px;
+        height: 250px;
+        background-image: url(../../assets/images/tumbleweed.png);
+        background-size: cover;
+        border-radius: 128px;
+        margin-bottom: 30px;
     }
 
 }

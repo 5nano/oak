@@ -198,11 +198,10 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
                          <div className="ensayos">
                             {this.state.filteredAssays.length === 0 && 
                             <div className="info-content">
-                                <div className="info-content-image">
-                                  <img src="../../../assets/images/tumbleweed.png"/>
-                                </div>
+                                <div className="empty-content-image"/>
                                 <div className="info-content-description">
-                                    Ooops... Todavía no tenes ensayos que coincidan con tu búsqueda.
+                                    <h4>No hemos encontrado resultados.</h4>
+                                    <p>Ooops... Todavía no tenes ensayos que coincidan con tu búsqueda.</p>
                                 </div>
                             </div>}
                             {this.state.filteredAssays.map((ensayo: IEnsayo) => (
