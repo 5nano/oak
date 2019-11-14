@@ -32,7 +32,6 @@ class Sankey extends React.Component<ISankeyDiagramProps,ISankeyDiagramState> {
     componentDidMount(){
         BushService.get('/metricas/ensayos/sankey')
                     .then(data=> {
-                        console.log(data)
                         this.setState({sankeyDiagram:data,loading:false})
                     })
     }

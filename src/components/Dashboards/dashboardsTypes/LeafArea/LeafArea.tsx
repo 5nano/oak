@@ -58,7 +58,7 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
       ])
         .then(([ /* linear, */ box ]) => {
           // I'll just remap this so then we can access this data as this.props.data.linear and this.props.data.box
-          console.log(box)
+          
           return {
             // linear,
             box

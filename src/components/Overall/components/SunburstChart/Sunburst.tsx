@@ -31,7 +31,6 @@ class Sunburst extends React.Component<ISunburstChartProps,ISunburstChartState> 
     componentDidMount(){
         BushService.get('/metricas/mezclasAgroquimicos')
                     .then(data=> {
-                        console.log(data)
                         this.setState({sunburstChart:data,loading:false})
                     })
     }

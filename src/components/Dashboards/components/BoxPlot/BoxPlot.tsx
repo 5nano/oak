@@ -52,7 +52,6 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
   fetchExperiments(treatmentId:number) {
     return BushService.get(`/tratamiento/experimentos?treatmentId=${treatmentId}`)
       .then((experimentos: Array<Experimento>) => {
-        console.log(experimentos)
         this.setState({ 
           treatmentsData: {
             ...this.state.treatmentsData,
