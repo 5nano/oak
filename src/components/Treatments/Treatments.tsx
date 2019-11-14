@@ -31,7 +31,7 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
          setLoading(true)
          return BushService.get(`/ensayo/tratamientos?idAssay=${idAssay}`)
                    .then((data:Array<ITreatment>)=>{
-                       console.log(data)
+                      
                        setTreatments(data)
                        setLoading(false)
                     })
@@ -40,7 +40,7 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
     const fetchAssay = ():Promise<void> => {
         return BushService.get(`/ensayo/?idAssay=${idAssay}`)
                   .then((data:IEnsayo)=>{
-                      console.log(data)
+                      
                       setAssay(data.name)
                       fetchTreatments()
                    })
@@ -48,7 +48,7 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
 
    
     const submitTreatmentForm=(newTreatment:ITreatmentBackend):Promise<void>=>{
-        console.log(newTreatment) 
+       
         return BushService.post('/tratamientos/insertar', newTreatment)
             .then(() => {
                 fetchTreatments()

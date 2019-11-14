@@ -59,6 +59,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     drawerPaper: {
       width: drawerWidth,
+      borderRadius: '32px',
     },
     drawerHeader: {
       display: 'flex',

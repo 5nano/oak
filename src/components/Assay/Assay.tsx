@@ -53,7 +53,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
   }
 
  submitAssayForm=(newAssay:IAssay):Promise<boolean> => {
-    console.log(newAssay)
+   
        return BushService.post('/ensayos/insertar', newAssay)
          .then(data => {
             let assayId = data["idAssay"]
