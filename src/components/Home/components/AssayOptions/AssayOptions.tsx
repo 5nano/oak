@@ -1,13 +1,16 @@
 import * as React from 'react'
-import Button from '../../../Utilities/Buttons/DefaultButton/Button'
-import BushService from '../../../../services/bush';
 import { ITag } from '../../../../Interfaces/Tags';
-import TagForm from '../../../Tags/TagForm';
 import Tags from '../../../Tags/Tags';
 import { RouteComponentProps } from 'react-router';
 import { HomeContext, IHomeContext } from '../../Home';
-import { createContext } from 'vm';
-
+import Typography from '@material-ui/core/Typography';
+import { Paper, MenuList, ListItemIcon, MenuItem, IconButton } from '@material-ui/core';
+import PhotoIcon from '@material-ui/icons/Photo';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import CropFreeIcon from '@material-ui/icons/CropFree';
+import ViewModuleIcon from '@material-ui/icons/ViewModule';
+import CloseIcon from '@material-ui/icons/Close';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 interface IAssayOptionsProps extends RouteComponentProps{
     idAssay: Number
@@ -47,45 +50,65 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
     return(
         <HomeContext.Consumer>
             {(context:IHomeContext) => (
-                <div className="assay-options-container">
+                <Paper className="assay-options-container">
 
                     {!tagsRequest?
                         [<div className="options-header">
-                            <a onClick={()=>{setOptions(false)}}>
-                                <i className="icon-left-open"/>
-                            </a>
-                            <div className="options-title">
+                            <IconButton onClick={()=>{setOptions(false)}}>
+                                <ArrowBackIosIcon/>
+                            </IconButton>
+                            <Typography variant="body1" className="options-title">
                                 Opciones
-                            </div>
-                            <a onClick={()=> {setOptions(false)}}>
-                                <i className="icon icon-cancel"/>
-                            </a>
+                            </Typography >
+                            <IconButton onClick={()=> {setOptions(false)}}>
+                                <CloseIcon/>
+                            </IconButton>
                         </div>,
-                        <div className="assay-options">
-                            <a className="option"
-                            onClick={()=>goToTreatments()}>
-                                Tratamientos
-                            </a>
-                            <a className="option"
-                            onClick={()=>goToImageGallery()}>
-                                Ver imágenes
-                            </a>
-                            <a className="option"
-                                onClick={()=>goToQrs()}>
-                                Codigos QR
-                            </a>
-                            <a className="option"
-                                onClick={()=>setTagsRequest(!tagsRequest)}>
-                                Etiquetas
-                            </a>
-                        </div>]
+                        <MenuList className="assay-options">
+                            
+                            <MenuItem onClick={()=>goToImageGallery()}>
+                                <ListItemIcon>
+                                    <PhotoIcon/>
+                                </ListItemIcon>
+                                <Typography variant="body1" className="option">
+                                    Ver imágenes
+                                </Typography>
+                            </MenuItem>
+
+                            <MenuItem  onClick={()=>goToTreatments()}>
+                                <ListItemIcon>
+                                    <ViewModuleIcon/>
+                                </ListItemIcon>
+                                <Typography variant="body1" className="option">
+                                    Tratamientos
+                                </Typography >
+                            </MenuItem>
+
+                            <MenuItem onClick={()=>goToQrs()}>
+                                <ListItemIcon>
+                                    <CropFreeIcon/>
+                                </ListItemIcon>
+                                <Typography variant="body1" className="option">
+                                    Códigos QR
+                                </Typography>
+                            </MenuItem>
+
+                            <MenuItem  onClick={()=>setTagsRequest(!tagsRequest)}>
+                                <ListItemIcon>
+                                    <LocalOfferIcon/>
+                                </ListItemIcon>
+                                <Typography variant="body1" className="option">
+                                    Etiquetas
+                                </Typography>
+                            </MenuItem>
+                        </MenuList>]
                     :
                     <Tags isSelected={isSelected} 
                         setTagsRequest={setTagsRequest}
                         handleTag={handleTag}
                         updateAssays={context.updateAssays}/>
                     }
-            </div>
+            </Paper>
                     )}
      </HomeContext.Consumer>
     )

@@ -1,13 +1,15 @@
 import * as React from 'react'
 import BushService from '../../services/bush'
-import { ITag } from '../../Interfaces/Tags'
-import Button from '../Utilities/Buttons/DefaultButton/Button';
+import { ITag } from '../../Interfaces/Tags';
 import TagForm from './TagForm';
 import Success from '../Utilities/Messages/Success';
-import { width } from '@material-ui/system';
 import Error from '../Utilities/Messages/Error';
-var randomColor = require('randomcolor');
 
+import CloseIcon from '@material-ui/icons/Close';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import { IconButton, Button } from '@material-ui/core';
 interface ITagsProps{
     setTagsRequest:Function,
     isSelected: Function,
@@ -57,21 +59,22 @@ const Tags:React.SFC<ITagsProps> = (props) => {
     return (
         <div className="tags-container">
                 <div className="tags-header">
-                    <a onClick={()=> {
+                    <IconButton onClick={()=> {
+                        if(newTagRequest){
                         setNewTagRequest(false)
-                        setSuccess(false)
+                        setSuccess(false)}
                         }}>
-                        {newTagRequest && <i className="icon-left-open"/>}
-                    </a>
+                        <ArrowBackIosIcon/>
+                    </IconButton>
                     <div className="tags-title">
                         {newTagRequest? 'Nueva Etiqueta' : 'Etiquetas'}
                     </div>
-                    <a onClick={() => {
+                    <IconButton onClick={() => {
                         setTagsRequest(false)
                         setSuccess(false)
                         }}>
-                        <i className="icon icon-cancel"/>
-                    </a>
+                        <CloseIcon/>
+                    </IconButton>
                 </div>
                 {success && <Success message="Tag creado"/>}
                 {error.length>0 && <Error message={error}/>}
@@ -87,19 +90,21 @@ const Tags:React.SFC<ITagsProps> = (props) => {
 
                                 <div className="tag-check">
                                 {isSelected(tag) && 
-                                <i className="icon icon-ok-circled2"/>}
+                                    <CheckCircleOutlineIcon/>}
                                 </div>
                             </div>
                             <div className="tag-delete" onClick={()=>deleteTag(tag)}>
-                                <i className="icon icon-trash"/>
+                                <DeleteIcon/>
                             </div>
                         </div>
                             
                         )
                     ),
-                    <Button title="Crear etiqueta"
-                            className="tag-create"
-                            onClick={()=>setNewTagRequest(true)}/>]
+                    <Button size="large" 
+                            color="default"
+                            onClick={()=>setNewTagRequest(true)}>
+                        Nueva etiqueta
+                    </Button>]
                     :
                     <TagForm setNewTagRequest={setNewTagRequest}
                                 handleNewTag={handleNewTag}/>
