@@ -41,39 +41,7 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
         props.history.push(`/photos?assay=${idAssay}`);
     }
 
-    const activeAssay = (context:IHomeContext):Promise<void> => {
-        return BushService.patch(`/ensayo/activar?idAssay=${idAssay}`)
-                            .then(()=>{
-                                context.setFeedback({variant:'success',message:'Ensayo activado exitosamente'})
-                                context.updateAssays()
-                            })
-                            .catch((error)=>{
-                                error.json().then(error=>context.setFeedback({variant:'error',message:error.message}))
-                            })
-                   
-    }
-    const archiveAssay = (context:IHomeContext):Promise<void> => {
-        return BushService.patch(`/ensayo/archivar?idAssay=${idAssay}`)
-                          .then(()=>{
-                              context.setFeedback({variant:'success',message:'Ensayo archivado exitosamente'})
-                              context.updateAssays()
-                          })
-                          .catch((error)=>{
-                              error.json().then(error=>context.setFeedback({variant:'error',message:error.message}))
-                          })
-                  
-    }
-
-    const removeAssay = (context:IHomeContext):Promise<void> =>{
-       return BushService.post(`/ensayos/eliminar?assayId=${idAssay}`)
-                            .then(()=>{
-                                context.setFeedback({variant:'success',message:'Ensayo eliminado exitosamente'})
-                                context.updateAssays()
-                            })
-                            .catch((error)=>{
-                                error.json().then(error=>context.setFeedback({variant:'error',message:error.message}))
-                            })
-    }
+    
 
     
     return(
@@ -109,22 +77,6 @@ const AssayOptions:React.SFC<IAssayOptionsProps> = (props) => {
                             <a className="option"
                                 onClick={()=>setTagsRequest(!tagsRequest)}>
                                 Etiquetas
-                            </a>
-                            <a className="option"
-                                onClick={()=>context.finishAssay(idAssay)}>
-                                Finalizar
-                            </a>
-                            <a className="option"
-                                onClick={()=>{archiveAssay(context)}}>
-                                Archivar
-                            </a>
-                            <a className="option"
-                                onClick={()=>{activeAssay(context)}}>
-                                Activar
-                            </a>
-                            <a className="option"
-                                onClick={()=>{removeAssay(context)}}>
-                                Eliminar 
                             </a>
                         </div>]
                     :

@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { IEnsayo } from '../../../../Interfaces/IEnsayo'
-import Button from '../../../Utilities/Buttons/DefaultButton/Button';
 import Popper from '@material-ui/core/Popper';
 import AssayOptions from '../AssayOptions/AssayOptions';
 import BushService from '../../../../services/bush';
@@ -15,8 +14,16 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Button from '@material-ui/core/Button';
+
+
+import RestoreIcon from '@material-ui/icons/Restore';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
+import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
+import { HomeContext, IHomeContext } from '../../Home';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     card: {
@@ -42,8 +49,18 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     avatar: {
       backgroundColor: 'rgba(106, 193, 169,0.1)',
-      color: 'rgb(106, 193, 169)'
+      color: 'rgb(106, 193, 169)',
     },
+    button: {
+        backgroundColor: 'rgb(106, 193, 169)',
+        color: 'white',
+        fontSize: '14px',
+        "&:hover" : {
+            backgroundColor: 'white',
+            color: 'rgb(106, 193, 169)',
+            border: '1px solid rgb(106, 193, 169)'
+        }
+    }
   }),
 );
 
@@ -106,72 +123,126 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                     }
     }
 
+    const activeAssay = (context:IHomeContext):Promise<void> => {
+        return BushService.patch(`/ensayo/activar?idAssay=${ensayo.idAssay}`)
+                            .then(()=>{
+                                context.setFeedback({variant:'success',message:'Ensayo activado exitosamente'})
+                                context.updateAssays()
+                            })
+                            .catch((error)=>{
+                                error.json().then(error=>context.setFeedback({variant:'error',message:error.message}))
+                            })
+                   
+    }
+    const archiveAssay = (context:IHomeContext):Promise<void> => {
+        return BushService.patch(`/ensayo/archivar?idAssay=${ensayo.idAssay}`)
+                          .then(()=>{
+                              context.setFeedback({variant:'success',message:'Ensayo archivado exitosamente'})
+                              context.updateAssays()
+                          })
+                          .catch((error)=>{
+                              error.json().then(error=>context.setFeedback({variant:'error',message:error.message}))
+                          })
+                  
+    }
+
+    const removeAssay = (context:IHomeContext):Promise<void> =>{
+       return BushService.post(`/ensayos/eliminar?assayId=${ensayo.idAssay}`)
+                            .then(()=>{
+                                context.setFeedback({variant:'success',message:'Ensayo eliminado exitosamente'})
+                                context.updateAssays()
+                            })
+                            .catch((error)=>{
+                                error.json().then(error=>context.setFeedback({variant:'error',message:error.message}))
+                            })
+    }
+
     const startDate = new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: 'short',day: '2-digit'}).format(Date.parse(ensayo.created))
     const endDate = new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: 'short',day: '2-digit'}).format(Date.parse(ensayo.estimatedFinished))
     return(
+        <HomeContext.Consumer>
+            {(context:IHomeContext) => (
+            <Card className={classes.card}>
+                <CardHeader
+                    avatar={
+                    <Avatar aria-label="recipe" className={classes.avatar}>
+                        {ensayo.user.charAt(0).toUpperCase()}
+                    </Avatar>
+                    }
+                    action={
+                    <IconButton aria-label="settings" onClick={e=>handleOptions('right-start',e)} >
+                        <MoreVertIcon />
+                    </IconButton>
+                    }
+                    title={ensayo.name}
+                    subheader={startDate + " al " + endDate}
+                />
+                <div className="assay-state-tags">
+                    <div className="assay-state">
+                        {getTranslate(ensayo.state)}
+                    </div>
 
-        <Card className={classes.card}>
-            <CardHeader
-                avatar={
-                <Avatar aria-label="recipe" className={classes.avatar}>
-                    {ensayo.user.charAt(0).toUpperCase()}
-                </Avatar>
-                }
-                action={
-                <IconButton aria-label="settings" onClick={e=>handleOptions('right-start',e)} >
-                    <MoreVertIcon />
-                </IconButton>
-                }
-                title={ensayo.name}
-                subheader={startDate + " al " + endDate}
-            />
-            <div className="assay-state-tags">
-                <div className="assay-state">
-                    {getTranslate(ensayo.state)}
+                    <div className="assay-tags">
+                        {tags.map(tag => {
+                            return (
+                                <div className="assay-tag"
+                                    style={{backgroundColor:tag.color}}>
+                                    {tag.name}
+                                </div>
+                            )
+                        })}
+                    </div>
                 </div>
-
-                <div className="assay-tags">
-                    {tags.map(tag => {
-                        return (
-                            <div className="assay-tag"
-                                style={{backgroundColor:tag.color}}>
-                                {tag.name}
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
-            <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    {ensayo.description}
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    Cantidad de tratamientos: {ensayo.treatments}
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    Cultivo de ensayo: {ensayo.crop.name}
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Button title="Dashboard"
-                        className="action-button"
-                        onClick={()=>goToDashboard()}
-                    /> 
-            </CardActions>
-            <Popper open={options}
-                    anchorEl={anchorEl}
-                    placement={placement}
-                    transition
-                    >
-                    <AssayOptions  {...props} 
-                                    idAssay={ensayo.idAssay}
-                                    selectedTags={tags}
-                                    handleTag={handleTag}
-                                    setOptions={setOptions}
-                    />
-            </Popper>
-        </Card>
-
+                <CardContent>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {ensayo.description}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        Cantidad de tratamientos: {ensayo.treatments}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        Cultivo de ensayo: {ensayo.crop.name}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <IconButton disabled={ensayo.state === 'FINISHED'} aria-label="finish"
+                                onClick={()=>context.finishAssay(ensayo.idAssay)}>
+                        <CheckCircleOutlineOutlinedIcon/>
+                    </IconButton>
+                    <IconButton disabled={ensayo.state === 'ARCHIVED'} aria-label="archive"
+                                onClick={()=>archiveAssay(context)}>
+                        <ArchiveOutlinedIcon/>
+                    </IconButton>
+                    <IconButton disabled={ensayo.state === 'ACTIVE'} aria-label="active"
+                                onClick={()=>activeAssay(context)}>
+                        <RestoreIcon />
+                    </IconButton>
+                    <IconButton  aria-label="delete"
+                                onClick={()=>removeAssay(context)}
+                                >
+                        <DeleteOutlinedIcon />
+                    </IconButton>
+                    <Button size="large" 
+                            color="primary"
+                            className={classes.button}>
+                        Dashboard
+                    </Button>
+                </CardActions>
+                <Popper open={options}
+                        anchorEl={anchorEl}
+                        placement={placement}
+                        transition
+                        >
+                        <AssayOptions  {...props} 
+                                        idAssay={ensayo.idAssay}
+                                        selectedTags={tags}
+                                        handleTag={handleTag}
+                                        setOptions={setOptions}
+                        />
+                </Popper>
+            </Card>
+            )}
+        </HomeContext.Consumer>
 /*
         <div key={ensayo.idAssay} className="assay-wrapper">
             <div className="assay">
