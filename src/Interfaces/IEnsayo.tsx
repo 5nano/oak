@@ -1,8 +1,10 @@
 import { ITag } from "./Tags";
+import { ICrop } from "./Crop";
 
 export type IEnsayo = {
     idAssay: number,
     idCrop: number,
+    crop: ICrop,
     user: string
     name: string,
     description: string,

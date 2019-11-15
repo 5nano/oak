@@ -33,20 +33,7 @@
                     word-break: break-all;
                 }
     
-                .state{
-                    display:flex;
-                    justify-content: center;
-                    width: 150px;
-                   
-                    font-size: 14px;
-                    background-color:white;
-                    color: #6AC1A9;
-                    border: 1px solid #6AC1A9;
-                    border-radius: 4px;
-
-                    padding: 5px;
-                    margin: 5px 0;
-                }
+               
             }
 
             .options{
@@ -56,15 +43,6 @@
         }
             
 
-        .assay-tags{
-            display:flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: center;
-            flex-wrap: wrap;
-
-            
-        }
 
         .assay-description{
             display:flex;
@@ -140,4 +118,32 @@
 
     border-radius: 8px;
     color:white;
+}
+
+.assay-state-tags{
+    padding:16px;
+        .assay-tags{
+            display:flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+
+            
+        }
+
+        .assay-state{
+            display:flex;
+            justify-content: center;
+            width: 150px;
+        
+            font-size: 14px;
+            background-color:white;
+            color: #6AC1A9;
+            border: 1px solid #6AC1A9;
+            border-radius: 4px;
+
+            padding: 5px;
+            margin: 5px 0;
+        }
 }
