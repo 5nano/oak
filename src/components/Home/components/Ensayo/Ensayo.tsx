@@ -224,7 +224,8 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                     </IconButton>
                     <Button size="large" 
                             color="primary"
-                            className={classes.button}>
+                            className={classes.button}
+                            onClick={()=> goToDashboard()}>
                         Dashboard
                     </Button>
                 </CardActions>

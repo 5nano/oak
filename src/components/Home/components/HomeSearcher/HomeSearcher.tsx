@@ -62,7 +62,7 @@ const HomeSearcher:React.SFC<IHomeSearcherProps> = (props) => {
 
     return(
         
-        <div className="assay-search">
+        <div className="search-bar-container">
             <Autocomplete
                 suggestions={suggestions}
                 onAdd={handleAddition}
