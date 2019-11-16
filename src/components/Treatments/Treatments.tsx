@@ -86,8 +86,8 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                
                     {!loading?
                         [<div className="crud-title">
-                        <h1>Tratamientos</h1>
-                        <h2>Ensayo {assay}</h2>
+                            <h1>Tratamientos</h1>
+                            <h2>Ensayo {assay}</h2>
                         </div>
                         ,
                         <div className="layout-wrapper">

@@ -141,6 +141,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
         this.setLoading(true)
         return this.searchAssaysByTags(selectedTags)
                     .then((suggestedAssays)=>{
+                        console.log(suggestedAssays)
                         let filteredAssays:Array<IEnsayo> = []
                         if(actualState === 'ALL') filteredAssays = suggestedAssays
                         else filteredAssays = suggestedAssays.filter(assay => assay.state === actualState)

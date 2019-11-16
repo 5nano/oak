@@ -1,7 +1,7 @@
-import * as React from 'react'
-import Button from '../Utilities/Buttons/DefaultButton/Button'
+import * as React from 'react';
 import { ITag } from '../../Interfaces/Tags';
 import {BlockPicker} from 'react-color';
+import { Button } from '@material-ui/core';
 
 interface ITagFormProps{
     setNewTagRequest: Function
@@ -64,9 +64,11 @@ class TagForm extends React.Component<ITagFormProps,ITagFormState> {
                         onChangeComplete={this.handleColorChange}/>   
                      </div>
                 </div>
-                <Button title="Crear"
-                        className='tag-form-button'
-                        onClick={()=>this.handleNewTag()}/>
+                <Button size="large" 
+                            color="default"
+                            onClick={()=>this.handleNewTag()}>
+                        Crear etiqueta
+                </Button>
             </div>
         )
     }
