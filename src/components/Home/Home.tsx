@@ -178,14 +178,14 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
         return(
             
             <div id="home" className="home">
-             
+
+                <HomeSearcher search={this.searchAssays.bind(this)}
+                            setSelectedTags = {this.setSelectedTags.bind(this)}
+                            selectedTags={this.state.selectedTags}/>
                 <Tabs assayStates={assayStates}
                       handleTab={this.handleTab.bind(this)}
                       />
         
-                <HomeSearcher search={this.searchAssays.bind(this)}
-                            setSelectedTags = {this.setSelectedTags.bind(this)}
-                            selectedTags={this.state.selectedTags}/>
 
                 {this.state.assayToFinish!=null &&
                     <AssayFeedback idAssay={this.state.assayToFinish}

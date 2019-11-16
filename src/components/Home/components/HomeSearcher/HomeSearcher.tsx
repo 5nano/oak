@@ -1,10 +1,10 @@
-import * as React from 'react'
-import { IEnsayo } from '../../../../Interfaces/IEnsayo'
+import * as React from 'react';
 import BushService from '../../../../services/bush'
 import { ITag } from '../../../../Interfaces/Tags'
 import Autocomplete from '@celebryts/react-autocomplete-tags';
 import Button from '../../../Utilities/Buttons/DefaultButton/Button';
-import Search from '../../../Search/Search';
+import SearchIcon from '@material-ui/icons/Search';
+import { IconButton } from '@material-ui/core';
 
 export interface AutocompleteTag{
     label: string,
@@ -62,18 +62,20 @@ const HomeSearcher:React.SFC<IHomeSearcherProps> = (props) => {
 
     return(
         
-        <div className="assay-search">
-        <Autocomplete
-            suggestions={suggestions}
-            onAdd={handleAddition}
-            onDelete={handleDelete}
-            onChange={handleChange}
-            className="search-bar"
-            allowCreateTag={false}
-            saveOnBlur={false}
-            placeholder="Buscar por tags..."
-            />
-        <Button title="Buscar" onClick={()=> search(selectedTags)}/>
+        <div className="search-bar-container">
+            <Autocomplete
+                suggestions={suggestions}
+                onAdd={handleAddition}
+                onDelete={handleDelete}
+                onChange={handleChange}
+                className="search-bar"
+                allowCreateTag={false}
+                saveOnBlur={false}
+                placeholder="Buscar por tags..."
+                />
+            <IconButton>
+                <SearchIcon/>
+            </IconButton>
         </div>
     )
 }
