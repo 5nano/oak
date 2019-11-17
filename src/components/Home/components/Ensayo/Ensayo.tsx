@@ -17,13 +17,16 @@ import Typography from '@material-ui/core/Typography';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
 
-
+import RateReviewIcon from '@material-ui/icons/RateReview';
 import RestoreIcon from '@material-ui/icons/Restore';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
 import { HomeContext, IHomeContext } from '../../Home';
 import Rating from '@material-ui/lab/Rating';
+
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -78,6 +81,11 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
     const [placement,setPlacement] = React.useState();
     const [options,setOptions] = React.useState(false);
 
+    const [update,setUpdate] = React.useState(false)
+    const [updateValue,setUpdateValue] = React.useState('')
+    const [reviewAnchor,setReviewAnchor] = React.useState(null)
+    const [reviewPlacement,setReviewPlacement] = React.useState();
+
     const [tags,setTags] = React.useState<Array<ITag>>([])
 
     React.useEffect(()=>{
@@ -88,6 +96,25 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
         setAnchorEl(event.currentTarget);
         setOptions(prev => placement !== newPlacement || !prev)
         setPlacement(newPlacement)
+    }
+
+    const openReview = (newPlacement:string,e:React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+        setReviewAnchor(reviewAnchor===null? e.currentTarget:null)
+        setReviewPlacement(newPlacement)
+    }
+
+    const handleUpdate = (field:string) => {
+        console.log(updateValue)
+        console.log(field)
+        let updatedAssay = ensayo
+        updatedAssay[field] = updateValue
+        setUpdate(false)
+        BushService.patch('/ensayos/modificar',updatedAssay)
+    }
+
+    const handleUpdateRequest = (initialValue:any) => {
+        setUpdateValue(initialValue)
+        setUpdate(true)
     }
 
     const goToDashboard = () =>{
@@ -158,8 +185,11 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                             })
     }
 
-    const startDate = new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: 'short',day: '2-digit'}).format(Date.parse(ensayo.created))
-    const endDate = new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: 'short',day: '2-digit'}).format(Date.parse(ensayo.estimatedFinished))
+    const finishedDate = ensayo.state === 'FINISHED'? ensayo.finishedDate : ensayo.estimatedFinished
+    const startDate = new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: 'short',day: '2-digit'})
+                    .format(Date.parse(ensayo.created))
+    const endDate = new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: 'short',day: '2-digit'})
+                    .format(Date.parse(finishedDate))
     return(
         <HomeContext.Consumer>
             {(context:IHomeContext) => (
@@ -171,14 +201,40 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                     </Avatar>
                     }
                     action={
-                    <IconButton aria-label="settings" onClick={e=>handleOptions('right-start',e)} >
+                    <IconButton aria-label="settings" 
+                                onClick={e=>handleOptions('right-start',e)} >
                         <MoreVertIcon />
                     </IconButton>
                     }
-                    title={ensayo.name}
-                    subheader={startDate + " al " + endDate}
+                    title={
+                        <div onKeyDown={(e)=>e.key==='Enter'?handleUpdate('name'):{}}
+                             onBlur={(e) => setUpdateValue(ensayo.name)}
+                             onClick={()=>handleUpdateRequest(ensayo.name)}>
+                                {update? 
+                                    <input type='text'
+                                           value={updateValue}
+                                           className="update-value"
+                                           defaultValue={ensayo.name}
+                                           onChange={(e) => setUpdateValue(e.currentTarget.value)}
+                                           />
+                                    :
+                                    ensayo.name
+                                }
+                        </div>
+                    }
+                    subheader={
+                                <div className="assay-subtitle">
+                                    {startDate + " al " + endDate}
+                                    {ensayo.state === 'FINISHED' && 
+                                        <div>
+                                        <Rating name="read-only" value={ensayo.stars} readOnly />
+                                        <RateReviewIcon style={{marginLeft:'10px',cursor:'pointer'}} 
+                                                        fontSize="small"
+                                                        onClick={(e)=>openReview('right-start',e)}/>
+                                        </div>
+                                    }
+                                </div>}
                 />
-                {ensayo.state === 'FINISHED' && <Rating name="read-only" value={ensayo.stars} readOnly />}
                 <div className="assay-state-tags">
                     <div className="assay-state">
                         {getTranslate(ensayo.state)}
@@ -243,83 +299,18 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                                         setOptions={setOptions}
                         />
                 </Popper>
+                <Popper open={Boolean(reviewAnchor)}
+                        anchorEl={reviewAnchor}
+                        placement={reviewPlacement}
+                        transition
+                        >
+                        <div className="assay-review">
+                            {ensayo.comments}
+                        </div>
+                </Popper>
             </Card>
             )}
         </HomeContext.Consumer>
-/*
-        <div key={ensayo.idAssay} className="assay-wrapper">
-            <div className="assay">
-                <div className="assay-header">
-                    <div className="header-content">
-                        <div className="name">
-                            {ensayo.name}
-                        </div>
-                        <div className="state">
-                            {getTranslate(ensayo.state)}
-                        </div>
-                    </div>
-                    <div className="options" onClick={e=>handleOptions('right-start',e)} >
-                        <i className="icon icon-menu"/>
-                    </div>
-                        <Popper open={options}
-                                anchorEl={anchorEl}
-                                placement={placement}
-                                transition
-                            >
-                            <AssayOptions  {...props} 
-                                            idAssay={ensayo.idAssay}
-                                            selectedTags={tags}
-                                            handleTag={handleTag}
-                                            setOptions={setOptions}
-                            />
-                        </Popper>
-                </div>
-
-                <div className="assay-tags">
-                    {tags.map(tag => {
-                        return (
-                            <div className="assay-tag"
-                                 style={{backgroundColor:tag.color}}>
-                                {tag.name}
-                            </div>
-                        )
-                    })}
-                </div>
-
-                <div className="assay-description">
-                    <div className="title">Descripción</div>
-                    <div className="content">{ensayo.description}</div>
-                </div>
-                <div className="assay-description">
-                    <div className="title">Autor</div>
-                    <div className="content">{ensayo.user}</div>
-                </div>
-                <div className="assay-description">
-                    <div className="title">Cultivo de ensayo</div>
-                    <div className="content">{ensayo.crop.name}</div>
-                </div>
-                <div className="assay-description">
-                    <div className="title">Cantidad de tratamientos</div>
-                    <div className="content">{ensayo.treatments}</div>
-                </div>
-                <div className="assay-description">
-                    <div className="title">Fecha de creación</div>
-                    <div className="content">{new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(Date.parse(ensayo.created))}</div>
-                </div>
-                <div className="assay-description">
-                    <div className="title">Fecha estimada de finalización</div>
-                    <div className="content">{new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(Date.parse(ensayo.estimatedFinished))}</div>
-                </div>
-            </div>
-            
-            <Button title="Dashboard"
-                    className="action-button"
-                    onClick={()=>goToDashboard()}
-                /> 
-            
-
-        </div>
-        */
     )
 }
 

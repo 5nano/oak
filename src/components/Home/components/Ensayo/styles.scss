@@ -12,6 +12,20 @@
     color:white;
 }
 
+.assay-subtitle{
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.assay-review{
+    background-color: rgba(106, 193, 169,0.1);
+    border-radius: 8px;
+    width: 250px;
+    padding: 10px 20px;
+}
+
 .assay-state-tags{
     padding:16px;
         .assay-tags{
@@ -38,4 +52,9 @@
             padding: 5px;
             margin: 5px 0;
         }
+}
+
+.update-value{
+    border:none;
+    outline: none;
 }
