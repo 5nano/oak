@@ -20,7 +20,7 @@ type Treatment = {
 
 const MultiPlot = (props) => {
 
-    const [ currentPlot, setPlot ] = React.useState(BOX);
+    const [ currentPlot, setPlot ] = React.useState(LINEAR);
     const treatments = props.data[LINEAR] && props.data[LINEAR].treatments;
     const [linearTreatmentShown, updateLinearTreatmentShown] = React.useState(null);
     const [loading, setLoading] = React.useState(false);
@@ -41,17 +41,26 @@ const MultiPlot = (props) => {
     
     const PlotToRender = plots[currentPlot];
 
-    const data = currentPlot === LINEAR ? props.data[LINEAR].values[linearTreatmentShown] : 
+    const data = currentPlot === LINEAR ? 
+        (props.data[LINEAR].values[linearTreatmentShown] || (!loading && props.data[LINEAR].firstTreatmentData)) : 
         props.data[BOX];
 
+    const experimentHasNoData = !(data && Object.values(data).filter((arr: Array<any>) => arr.length).length) && !loading;
+
+    if (!data) return props.onEmptyRender();
+    
     return (
         <div className="MultiPlot">
             <div className="select-plot-type">
-                <p className="description">Tipo de gráfica</p>
-                <select onChange={changePlot}>
-                    <option value={BOX}>Box Plot</option>
-                    <option value={LINEAR}>Linear Plot</option>
-                </select>
+                {
+                    props.showPlotOptions && [
+                        <p className="description">Tipo de gráfica</p>,
+                        <select onChange={changePlot}>
+                            <option value={BOX}>Box Plot</option>
+                            <option value={LINEAR}>Linear Plot</option>
+                        </select>
+                    ]
+                }
                 {
                     currentPlot === LINEAR && treatments && [
                         <p className="description">Tratamiento</p>,
@@ -72,7 +81,13 @@ const MultiPlot = (props) => {
                         <Loader/>
                     </div>
             }
-            <PlotToRender {...props} data={data} />
+
+            {
+                experimentHasNoData ? 
+                props.onEmptyRender(null, null, "El tratamiento seleccionado no contiene experimentos con imágenes")
+                :
+                <PlotToRender {...props} data={data} />
+            }
         </div>
     )
 }

@@ -10,6 +10,7 @@ import YellowFreq from '../YellowFrequency/YellowFrequency';
 import LeafArea from '../LeafArea/LeafArea';
 import LinearLeafAreaTreatments from '../LinearLeafAreaTreatments/LinearLeafAreaTreatments';
 import Loader from "../../../Utilities/Loader/Loader";
+import LeafAreaPerExperiments from '../LeafAreaPerExperiments/LeafAreaPerExperiments';
 
 export interface OverallComponentState {
   loading: boolean,
@@ -54,6 +55,7 @@ class OverallComponent extends React.Component<OverallComponentProps, OverallCom
             <div className="left-panel">
                 <LeafArea.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[LeafArea.id]} graphPosition="left"/>
                 <GreenFreq.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[GreenFreq.id]} graphPosition="left"/>
+                <LeafAreaPerExperiments.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[LeafAreaPerExperiments.id]} graphPosition="left"/>
             </div>
             <div className="right-panel">
                 <YellowFreq.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[YellowFreq.id]} graphPosition="right"/>
