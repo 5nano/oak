@@ -1,7 +1,8 @@
 import * as React from 'react';
 import Item, { ItemType } from './components/Item';
 import { ISearchItem } from '../../Interfaces/SearchItem';
-import { throws } from 'assert';
+import { IconButton } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
 
 export interface IResultsProps {
    type:ItemType;
@@ -73,22 +74,21 @@ class Results extends React.Component <IResultsProps,IResultsState> {
         return(
             <div className="results-container">
                 <div className="search-bar-container">
-                    <div className="search-bar-wrapper">
-                            <input type="text" placeholder="Buscar..." 
+                    <div className="search-bar">
+                            <input className="search-input" type="text" placeholder="Buscar..." 
                                     onChange={(e) => this.handleCriteria(e.currentTarget.value)}/>
-                            <div className="search-logo">
-                                <img src='../../../assets/images/search-icon.png'/>
-                            </div>
                     </div>
+                    <IconButton>
+                        <SearchIcon/>
+                    </IconButton>
                 </div>
 
                 {this.state.filteredItems.length===0?
                 <div className="info-content">
-                    <div className="info-content-image">
-                     <img src="../../../assets/images/tumbleweed.png"/>
-                    </div>
+                    <div className="empty-content-image"/>
                     <div className="info-content-description">
-                        Ooops... Todavía no tenes items que coincidan con tu búsqueda.
+                        <h4>No hemos encontrado resultados.</h4>
+                        <p>Ooops... Todavía no tenés items que coincidan con tu búsqueda.</p>
                     </div>
                 </div>
                 :

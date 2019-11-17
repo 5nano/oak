@@ -86,8 +86,8 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                
                     {!loading?
                         [<div className="crud-title">
-                        <h1>Tratamientos</h1>
-                        <h2>Ensayo {assay}</h2>
+                            <h1>Tratamientos</h1>
+                            <h2>Ensayo {assay}</h2>
                         </div>
                         ,
                         <div className="layout-wrapper">
@@ -95,7 +95,7 @@ const Treatments: React.SFC<ITreatmentsProps> = (props) => {
                                 <div className="treatments-wrapper">
                                     <div className="empty-treatment" onClick={()=>setNewTreatment(true)}>
                                         <img src="../../../../assets/images/plus-icon.png"/>
-                                        Agregar tratamiento
+                                        <h4>Agregar tratamiento</h4>
                                         <p>Crea un tratamiento y configura su aplicación</p>
                                     </div>
                                     {treatments.length!=0 &&

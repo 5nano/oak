@@ -141,6 +141,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
         this.setLoading(true)
         return this.searchAssaysByTags(selectedTags)
                     .then((suggestedAssays)=>{
+                        console.log(suggestedAssays)
                         let filteredAssays:Array<IEnsayo> = []
                         if(actualState === 'ALL') filteredAssays = suggestedAssays
                         else filteredAssays = suggestedAssays.filter(assay => assay.state === actualState)
@@ -177,14 +178,14 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
         return(
             
             <div id="home" className="home">
-             
+
+                <HomeSearcher search={this.searchAssays.bind(this)}
+                            setSelectedTags = {this.setSelectedTags.bind(this)}
+                            selectedTags={this.state.selectedTags}/>
                 <Tabs assayStates={assayStates}
                       handleTab={this.handleTab.bind(this)}
                       />
         
-                <HomeSearcher search={this.searchAssays.bind(this)}
-                            setSelectedTags = {this.setSelectedTags.bind(this)}
-                            selectedTags={this.state.selectedTags}/>
 
                 {this.state.assayToFinish!=null &&
                     <AssayFeedback idAssay={this.state.assayToFinish}

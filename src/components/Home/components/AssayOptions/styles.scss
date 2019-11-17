@@ -6,19 +6,18 @@
     
     
     background-color:white;
-    border: 1px solid #6AC1A9;
     border-radius: 4px;
+    border: 1px solid rgba(106, 193, 169,0.5);
 
     .assay-options{
         display:flex;
         flex-direction: column;
-        align-items: flex-end;
+        align-items: flex-start;
         width: 250px;
 
         padding: 20px 10px;
 
         .option{
-            font-size: 20px;
             margin:5px 0;
             cursor: pointer;
             &:hover{
@@ -31,12 +30,12 @@
         display:flex;
         flex-direction: row;
         justify-content: space-between;
+        align-items: center;
 
         width:250px;
         padding: 10px 5px;
 
         .options-title{
-            font-size: 18px;
             color: #6AC1A9;
         }
     }

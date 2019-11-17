@@ -12,7 +12,7 @@ interface IButtonProps {
 const Button: React.SFC<IButtonProps> = (props) => {
     const {type,title,onClick,className,disabled,icon:Icon} = props;
     return(
-        <div className={`button ${className}`}>
+        <div className={`${className} button`}>
             {Icon!=null && <Icon/>}
             <button type={type} 
                     onClick={onClick}

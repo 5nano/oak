@@ -1,61 +1,33 @@
-.assay-wrapper{
+
+.action-button{
+    margin: 5px 0;
+}    
+
+.assay-tag{
+    
+    margin: 2px;
+    padding: 5px;
+
+    border-radius: 8px;
+    color:white;
+}
+
+.assay-subtitle{
     display:flex;
     flex-direction: column;
-    justify-content: space-between;
-    width: 360px;
-    padding: 6px;
-    margin: 16px;
+    align-items: flex-start;
+    justify-content: center;
+}
 
-    border: 2px solid #6AC1A9;
-    border-radius: 4px;
+.assay-review{
+    background-color: rgba(106, 193, 169,0.1);
+    border-radius: 8px;
+    width: 250px;
+    padding: 10px 20px;
+}
 
-    background-color: white;
- 
-    .assay{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-
-
-        .assay-header{
-            display:flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-
-            .header-content{
-                display:flex;
-                flex-direction: column;
-                .name{
-                    display:flex;
-                    font-size: 32px;
-                    color: black;
-                    word-break: break-all;
-                }
-    
-                .state{
-                    display:flex;
-                    justify-content: center;
-                    width: 150px;
-                   
-                    font-size: 14px;
-                    background-color:white;
-                    color: #6AC1A9;
-                    border: 1px solid #6AC1A9;
-                    border-radius: 4px;
-
-                    padding: 5px;
-                    margin: 5px 0;
-                }
-            }
-
-            .options{
-                display:flex;
-                align-items: center;
-            }
-        }
-            
-
+.assay-state-tags{
+    padding:16px;
         .assay-tags{
             display:flex;
             flex-direction: row;
@@ -66,78 +38,23 @@
             
         }
 
-        .assay-description{
+        .assay-state{
             display:flex;
-            flex-direction: column;
-            align-items: flex-start;
-
-            margin: 10px 0;
-
-            .title{
-                font-size: 20px;
-            }
-
-            .content{
-                font-size: 14px;
-            }
-        }
-
-        .assay-components{
-            display:flex;
-            flex-direction: row;
-            justify-content: space-around;
-            border-top: 1px solid #6AC1A9; 
-            border-bottom: 1px solid #6AC1A9;
-            padding: 16px;
-
-            .component{
-                display:flex;
-                flex-direction: column;
-                align-items: center;
-
-                .component-img{
-                        display: flex;
-                        width: 30px;
-                        margin: 0px 5px;
-
-                        img{
-                            width:100%;
-                            height: 100%;
-                        }
-            
-                    }
-                .component-name{
-                    color:black;
-                    }
-                }
+            justify-content: center;
+            width: 150px;
         
-            }
-        }
+            font-size: 14px;
+            background-color:white;
+            color: #6AC1A9;
+            border: 1px solid #6AC1A9;
+            border-radius: 4px;
 
-        .assay-actions{
-            display:flex;
-            flex-direction: row;
-            justify-content: space-around;
-
-            width: 100%;
-
-            .buttons{
-                display:flex;
-                flex-direction: column;
-                width: 100%;   
-
-                .action-button{
-                    margin: 5px 0;
-                }
-            }
+            padding: 5px;
+            margin: 5px 0;
         }
 }
 
-.assay-tag{
-    
-    margin: 2px;
-    padding: 5px;
-
-    border-radius: 8px;
-    color:white;
+.update-value{
+    border:none;
+    outline: none;
 }

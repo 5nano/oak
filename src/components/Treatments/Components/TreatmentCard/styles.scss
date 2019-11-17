@@ -73,6 +73,8 @@
 }
 
 .empty-treatment{
+    display:flex;
+    flex-direction: column;
     width: 260px;
     height: 260px;
     padding: 5px;
@@ -91,11 +93,20 @@
     img{
         height: 150px;
         width: 150px;
-
         opacity: 0.3;
+
+        &:hover{
+            transform:scale(1.2);
+        }
     }
 
-    :hover{
-        transform:scale(1.2);
+    h4{
+        margin: 0;
+    }
+
+    p{
+        color: #c2c3c7;
+        margin: 10px 20px;
+        text-align: center;
     }
 }

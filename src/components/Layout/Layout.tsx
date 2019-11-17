@@ -63,6 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     drawerPaper: {
       width: drawerWidth,
+      backgroundColor:'rgba(106, 193, 169,0.1)'
     },
     drawerHeader: {
       display: 'flex',
@@ -81,7 +82,6 @@ const useStyles = makeStyles((theme: Theme) =>
         duration: theme.transitions.duration.leavingScreen,
       }),
       height:'100%',
-      backgroundColor:'rgba(106, 193, 169,0.1)'
     },
     contentShift: {
       transition: theme.transitions.create('margin', {
@@ -90,7 +90,6 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
       marginLeft: drawerWidth,
       height:'100%',
-      backgroundColor:'rgba(106, 193, 169,0.1)'
     },
     search: {
       position: 'relative',

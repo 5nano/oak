@@ -92,7 +92,8 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
                     <img src="../../../assets/images/success-plant.png"/>
                   </div>
                   <div className="info-content-description">
-                    ¡Bien! Creaste un nuevo ensayo. Ahora ingresa sus tratamientos.
+                     <h4>¡Bien! Creaste un nuevo ensayo</h4>
+                     <p>Ahora solo tenés que ingresar sus tratamientos.</p>
                   </div>
                   
                 </div>,
