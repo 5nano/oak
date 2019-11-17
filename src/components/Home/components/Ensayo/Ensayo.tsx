@@ -208,15 +208,18 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                     }
                     title={
                         <div onKeyDown={(e)=>e.key==='Enter'?handleUpdate('name'):{}}
-                             onBlur={(e) => setUpdateValue(ensayo.name)}
                              onClick={()=>handleUpdateRequest(ensayo.name)}>
                                 {update? 
+                                    <ClickAwayListener onClickAway={()=>{
+                                        setUpdateValue(ensayo.name)
+                                        setUpdate(false)
+                                    }}>
                                     <input type='text'
                                            value={updateValue}
                                            className="update-value"
-                                           defaultValue={ensayo.name}
                                            onChange={(e) => setUpdateValue(e.currentTarget.value)}
                                            />
+                                    </ClickAwayListener>
                                     :
                                     ensayo.name
                                 }
