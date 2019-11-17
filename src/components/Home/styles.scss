@@ -71,6 +71,11 @@
     
     .info-content-image{
         width: 300px;
+
+        img{
+            height: 100%;
+            width: 100%;
+        }
     }
 
     .empty-content-image{

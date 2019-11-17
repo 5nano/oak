@@ -73,7 +73,7 @@ const HomeSearcher:React.SFC<IHomeSearcherProps> = (props) => {
                 saveOnBlur={false}
                 placeholder="Buscar por tags..."
                 />
-            <IconButton>
+            <IconButton onClick={()=>search(selectedTags)}>
                 <SearchIcon/>
             </IconButton>
         </div>

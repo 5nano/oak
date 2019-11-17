@@ -23,6 +23,7 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined';
 import { HomeContext, IHomeContext } from '../../Home';
+import Rating from '@material-ui/lab/Rating';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -177,6 +178,7 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                     title={ensayo.name}
                     subheader={startDate + " al " + endDate}
                 />
+                {ensayo.state === 'FINISHED' && <Rating name="read-only" value={ensayo.stars} readOnly />}
                 <div className="assay-state-tags">
                     <div className="assay-state">
                         {getTranslate(ensayo.state)}

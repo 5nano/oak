@@ -15,5 +15,8 @@ export type IEnsayo = {
     tags: Array<ITag>,
     created:string,
     estimatedFinished:string,
-    state?:string
+    state?:string,
+    stars?: number,
+    comments?:string
+
 }
