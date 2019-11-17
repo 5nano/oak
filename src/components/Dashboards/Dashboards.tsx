@@ -5,6 +5,7 @@ import Overall from './dashboardsTypes/Overall/Overall';
 import GreenFreq from './dashboardsTypes/GreenFrequency/GreenFrequency';
 import YellowFreq from './dashboardsTypes/YellowFrequency/YellowFrequency';
 import LinearTreatment from './dashboardsTypes/LinearLeafAreaTreatments/LinearLeafAreaTreatments';
+import LeafAreaPerExperiments from './dashboardsTypes/LeafAreaPerExperiments/LeafAreaPerExperiments';
 import { DashboardType } from './dashboardsTypes/InterfaceDashboardTypes';
 
 import DashboardSelector from './components/DashboardSelector/DashboardSelector';
@@ -43,7 +44,8 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
       LeafArea,
       YellowFreq,
       GreenFreq,
-      LinearTreatment
+      LinearTreatment,
+      LeafAreaPerExperiments
     ];
 
     this.state = {
@@ -113,7 +115,7 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
     })
   }
 
-  renderEmptyDashboard(id : DashboardType["id"],title:string) {
+  renderEmptyDashboard(id : DashboardType["id"],title:string, content: string) {
     
     if(this.state.dashboardsLoading[id]) return (
       <div style={{display:'flex',width:'100%',justifyContent:'center',alignItems:'center'}}>
@@ -126,7 +128,7 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
           <h4>{title}</h4>
         </div>
         <div className="empty-dashboard-content">
-          <Info message="Aún no contamos con datos para este ensayo, comienza a sacar fotos"/>
+          <Info message={content || "Aún no contamos con datos para este ensayo, comienza a sacar fotos"}/>
         </div>
       </div>
 

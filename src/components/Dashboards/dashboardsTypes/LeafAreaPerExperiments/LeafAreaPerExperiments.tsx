@@ -5,7 +5,7 @@ import { DashboardType } from '../InterfaceDashboardTypes';
 import Plot from 'react-plotly.js';
 import { Layout } from "plotly.js";
 import BushService from '../../../../services/bush';
-import BoxPlot from '../../components/BoxPlot/BoxPlot';
+import MultiPlot from '../../components/MultiPlot/MultiPlot';
 import Loader from "../../../Utilities/Loader/Loader";
 
 type AssayParamsType = {
@@ -45,8 +45,8 @@ const generateExperimentData = (data: Array<{dataPoints: Array<{label: string, y
 }
 
 
-const name = "Área foliar";
-class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
+const name = "Área foliar de experimentos";
+class LeafAreaPerExperiments extends React.Component<LeafAreaProps, LeafAreaState> {
     constructor(props: LeafAreaProps) {
         super(props);
         this.state = {
@@ -57,17 +57,20 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
 
     static fetchData(assayId: string) {
       
-      return Promise.all([
-        BushService.get(`/medians/area?assayId=${assayId}`),
-        BushService.get(`/ensayo/tratamientos?idAssay=${assayId}`)
-      ])
-        .then(([ /* linear, */ box, treatments ]) => {
-          // I'll just remap this so then we can access this data as this.props.data.linear and this.props.data.box
-          
+      return BushService.get(`/ensayo/tratamientos?idAssay=${assayId}`)
+        .then((treatments) => {
+          if (!(treatments && treatments.length)) {
+            return [treatments]
+          } 
+          return BushService.get(`/graficoComparativo/tratamiento/experimentos?treatmentId=${treatments[0].idTreatment}`)
+            .then((firstTreatmentData) => [
+              treatments,
+              firstTreatmentData
+            ])
+        })
+        .then(([treatments, firstTreatmentData]) => {
           return {
-            // linear,
-            box,
-            linear: {treatments}
+            linear: {treatments, firstTreatmentData}
           }
         })
     }
@@ -86,7 +89,8 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
     
 
     render() {
-        if (!(this.props.data && this.props.data.box &&  Object.keys(this.props.data.box).length)) return this.props.onEmptyRender('leaf-area',name);
+
+        if (!(this.props.data && this.props.data.linear &&  Object.keys(this.props.data.linear).length)) return this.props.onEmptyRender('leaf-area',name);
         // const linearData: Plotly.Data[] = this.props.data.linear.map(experiment => ({
         //     x: experiment.dates,
         //     y: experiment.values,
@@ -127,20 +131,22 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
           };
 
           return (
-            <BoxPlot 
-              data={{...this.props.data.box}}
+            <MultiPlot 
+              data={{linear: {...this.props.data.linear, values: this.state.experimentsData}}}
               dataSuffix="px²" 
               title={name} 
               graphPosition={this.props.graphPosition}
+              onLinearChange={this.fetchExperimentsLinearData}
+              onEmptyRender={this.props.onEmptyRender}
             /> 
         )
     }
 };
 
 const leafAreaType : DashboardType = {
-    id: 'leaf-area',
+    id: 'leaf-area-per-experiments',
     name,
-    component: LeafArea,
+    component: LeafAreaPerExperiments,
   };
   
   export default leafAreaType;
