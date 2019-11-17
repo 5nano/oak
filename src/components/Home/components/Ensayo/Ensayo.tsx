@@ -185,8 +185,11 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                             })
     }
 
-    const startDate = new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: 'short',day: '2-digit'}).format(Date.parse(ensayo.created))
-    const endDate = new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: 'short',day: '2-digit'}).format(Date.parse(ensayo.estimatedFinished))
+    const finishedDate = ensayo.state === 'FINISHED'? ensayo.finishedDate : ensayo.estimatedFinished
+    const startDate = new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: 'short',day: '2-digit'})
+                    .format(Date.parse(ensayo.created))
+    const endDate = new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: 'short',day: '2-digit'})
+                    .format(Date.parse(finishedDate))
     return(
         <HomeContext.Consumer>
             {(context:IHomeContext) => (
