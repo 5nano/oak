@@ -25,6 +25,9 @@ import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlin
 import { HomeContext, IHomeContext } from '../../Home';
 import Rating from '@material-ui/lab/Rating';
 
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     card: {
@@ -78,7 +81,8 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
     const [placement,setPlacement] = React.useState();
     const [options,setOptions] = React.useState(false);
 
- 
+    const [update,setUpdate] = React.useState(false)
+    const [updateValue,setUpdateValue] = React.useState('')
     const [reviewAnchor,setReviewAnchor] = React.useState(null)
     const [reviewPlacement,setReviewPlacement] = React.useState();
 
@@ -97,6 +101,20 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
     const openReview = (newPlacement:string,e:React.MouseEvent<SVGSVGElement, MouseEvent>) => {
         setReviewAnchor(reviewAnchor===null? e.currentTarget:null)
         setReviewPlacement(newPlacement)
+    }
+
+    const handleUpdate = (field:string) => {
+        console.log(updateValue)
+        console.log(field)
+        let updatedAssay = ensayo
+        updatedAssay[field] = updateValue
+        setUpdate(false)
+        BushService.patch('/ensayos/modificar',updatedAssay)
+    }
+
+    const handleUpdateRequest = (initialValue:any) => {
+        setUpdateValue(initialValue)
+        setUpdate(true)
     }
 
     const goToDashboard = () =>{
@@ -185,7 +203,22 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                         <MoreVertIcon />
                     </IconButton>
                     }
-                    title={ensayo.name}
+                    title={
+                        <div onKeyDown={(e)=>e.key==='Enter'?handleUpdate('name'):{}}
+                             onBlur={(e) => setUpdateValue(ensayo.name)}
+                             onClick={()=>handleUpdateRequest(ensayo.name)}>
+                                {update? 
+                                    <input type='text'
+                                           value={updateValue}
+                                           className="update-value"
+                                           defaultValue={ensayo.name}
+                                           onChange={(e) => setUpdateValue(e.currentTarget.value)}
+                                           />
+                                    :
+                                    ensayo.name
+                                }
+                        </div>
+                    }
                     subheader={
                                 <div className="assay-subtitle">
                                     {startDate + " al " + endDate}
