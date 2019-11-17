@@ -1,12 +1,13 @@
 @import './Components/styles.scss';
 
 .treatments-container{
-    width: 1200px;
+    width: 910px;
     height: 600px;
     background-color: rgb(252, 252, 252);
     overflow: auto;
 
-    border-radius: 4px;
+    border-radius: 8px;
+    border: 1px solid #c2c3c7;
 
     .treatments-wrapper{
         display:flex;
@@ -20,16 +21,4 @@
 .new-treatment-button{
     width:300px;
     margin: 20px 0px;
-}
-
-.empty-treatment{
-    display:flex;
-    flex-direction: column;
-    color: black;
-
-    p{
-        color: #c2c3c7;
-        margin: 10px 20px;
-        text-align: center;
-    }
 }
