@@ -26,8 +26,8 @@ const MultiPlot = (props) => {
     const [loading, setLoading] = React.useState(false);
 
     const handleTreatmentSelection = (event) => {
-        event.preventDefault && event.preventDefault();
         setLoading(true);
+        event.preventDefault && event.preventDefault();
         updateLinearTreatmentShown(event.target.value);
         props.onLinearChange(event.target.value)
             .then(() => setLoading(false));
@@ -47,7 +47,7 @@ const MultiPlot = (props) => {
 
     const experimentHasNoData = !(data && Object.values(data).filter((arr: Array<any>) => arr.length).length) && !loading;
 
-    if (!data) return props.onEmptyRender();
+    if (!data && !loading) return props.onEmptyRender();
     
     return (
         <div className="MultiPlot">
@@ -83,7 +83,7 @@ const MultiPlot = (props) => {
             }
 
             {
-                experimentHasNoData ? 
+                experimentHasNoData && !loading ? 
                 props.onEmptyRender(null, null, "El tratamiento seleccionado no contiene experimentos con imágenes")
                 :
                 <PlotToRender {...props} data={data} />
