@@ -41,7 +41,7 @@ const TestCarrousel:React.SFC<ITestCarrouselProps> = (props) => {
                             <h4>Ancho:</h4><p>{test.width} px</p>
                         </div>
                         <div className="content-row">
-                            <h4>Area Foliar:</h4><p>{test.area} px²</p>
+                            <h4>Area Foliar:</h4><p>{test.area} px</p>
                         </div>
                     </div>
                     }
