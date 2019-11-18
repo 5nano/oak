@@ -35,7 +35,8 @@ const useStyles = makeStyles((theme: Theme) =>
       margin:'20px',
       display:'flex',
       flexDirection: 'column',
-      justifyContent:'space-between'
+      justifyContent:'space-between',
+      borderRadius:'16px',
     },
     media: {
       height: 0,
@@ -59,6 +60,7 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: 'rgb(106, 193, 169)',
         color: 'white',
         fontSize: '14px',
+        borderRadius:'16px',
         "&:hover" : {
             backgroundColor: 'white',
             color: 'rgb(106, 193, 169)',
@@ -208,15 +210,18 @@ const Ensayo:React.SFC<IEnsayoProps> = (props) => {
                     }
                     title={
                         <div onKeyDown={(e)=>e.key==='Enter'?handleUpdate('name'):{}}
-                             onBlur={(e) => setUpdateValue(ensayo.name)}
                              onClick={()=>handleUpdateRequest(ensayo.name)}>
                                 {update? 
+                                    <ClickAwayListener onClickAway={()=>{
+                                        setUpdateValue(ensayo.name)
+                                        setUpdate(false)
+                                    }}>
                                     <input type='text'
                                            value={updateValue}
                                            className="update-value"
-                                           defaultValue={ensayo.name}
                                            onChange={(e) => setUpdateValue(e.currentTarget.value)}
                                            />
+                                    </ClickAwayListener>
                                     :
                                     ensayo.name
                                 }

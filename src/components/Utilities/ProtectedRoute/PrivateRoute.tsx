@@ -9,7 +9,7 @@ const PrivateRoute = ({component:Component,isLoggedIn,user,...rest}) => (
         isLoggedIn? 
             user===null? 
                 <div className="empty-content">
-                    <Loader/>
+                   
                 </div>
             :
             <Layout {...props} user={user} renderContent={()=>(
