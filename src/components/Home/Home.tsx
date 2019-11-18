@@ -181,8 +181,7 @@ export class Homes extends React.Component<IHomesProps,IHomeState> {
 
 
                 <div className="welcome">
-                        <div>¡Bienvenido!</div>
-                        <div>Buscá tus ensayos</div>
+                        
                 </div>
                 <HomeSearcher search={this.searchAssays.bind(this)}
                             setSelectedTags = {this.setSelectedTags.bind(this)}
