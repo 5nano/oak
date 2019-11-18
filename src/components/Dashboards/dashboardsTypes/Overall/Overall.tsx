@@ -13,7 +13,7 @@ import Loader from "../../../Utilities/Loader/Loader";
 import LeafAreaPerExperiments from '../LeafAreaPerExperiments/LeafAreaPerExperiments';
 
 export interface OverallComponentState {
-  loading: boolean,
+  lastDateWithData: string,
 }
 
 type AssayParamsType = {
@@ -22,6 +22,7 @@ type AssayParamsType = {
 
 export interface OverallComponentProps extends RouteComponentProps<AssayParamsType> {
   onEmptyRender: Function,
+  dateRange: object,
   data: {
       [key: string]: {box, linear}
   },
@@ -31,12 +32,13 @@ const name = "Overview";
 
 class OverallComponent extends React.Component<OverallComponentProps, OverallComponentState> {
   constructor(props:OverallComponentProps){
-    super(props)
+    super(props);
   }
 
   static fetchData() {
     return Promise.resolve();
   }
+
 
   render(){
     /*const leafAreaHasData = this.props.data[LeafArea.id] && this.props.data[LeafArea.id].box && Object.keys(this.props.data[LeafArea.id].box).length;
@@ -50,16 +52,18 @@ class OverallComponent extends React.Component<OverallComponentProps, OverallCom
         <Loader/>
       </div>)
     */
+
+
     return (
         <div className="Overall">
             <div className="left-panel">
-                <LeafArea.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[LeafArea.id]} graphPosition="left"/>
-                <GreenFreq.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[GreenFreq.id]} graphPosition="left"/>
-                <LeafAreaPerExperiments.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[LeafAreaPerExperiments.id]} graphPosition="left"/>
+                <LeafArea.component dateRange={this.props.dateRange} onEmptyRender={this.props.onEmptyRender} data={this.props.data[LeafArea.id]} graphPosition="left"/>
+                <GreenFreq.component dateRange={this.props.dateRange} onEmptyRender={this.props.onEmptyRender} data={this.props.data[GreenFreq.id]} graphPosition="left"/>
+                <LeafAreaPerExperiments.component dateRange={this.props.dateRange} onEmptyRender={this.props.onEmptyRender} data={this.props.data[LeafAreaPerExperiments.id]} graphPosition="left"/>
             </div>
             <div className="right-panel">
-                <YellowFreq.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[YellowFreq.id]} graphPosition="right"/>
-                <LinearLeafAreaTreatments.component onEmptyRender={this.props.onEmptyRender} data={this.props.data[LinearLeafAreaTreatments.id]} graphPosition="right"/>
+                <YellowFreq.component dateRange={this.props.dateRange} onEmptyRender={this.props.onEmptyRender} data={this.props.data[YellowFreq.id]} graphPosition="right"/>
+                <LinearLeafAreaTreatments.component dateRange={this.props.dateRange} onEmptyRender={this.props.onEmptyRender} data={this.props.data[LinearLeafAreaTreatments.id]} graphPosition="right"/>
             </div>
         </div>
     );

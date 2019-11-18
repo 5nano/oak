@@ -17,10 +17,10 @@ const Landing:React.SFC<ILandingProps> = (props) => {
                     </div>
                     <div className="landing-links">
                         <div className="link">
-                            <h4>Contacto</h4>
+                            <h4>Contactanos</h4>
                         </div>
                         <div className="link">
-                            <h4>Nosotros</h4>
+                            <h4>Nanivo Box</h4>
                         </div>
                     </div>
                     <div className="landing-user">

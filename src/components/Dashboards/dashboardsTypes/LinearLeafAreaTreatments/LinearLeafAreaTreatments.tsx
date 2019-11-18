@@ -17,6 +17,7 @@ type AverageTreatment ={
   
 interface LinearLeafAreaTreatmentsProps extends RouteComponentProps<AssayParamsType> {
     onEmptyRender: Function,
+    dateRange: object,
     data: {
       linear: Array<Array<AverageTreatment>>
       box
@@ -60,37 +61,7 @@ class LinearLeafAreaTreatments extends React.Component<LinearLeafAreaTreatmentsP
           }
         })
 
-          const layout: Partial<Layout> = {
-              showlegend: true,
-
-            
-            xaxis: {
-              type: 'date',
-              autorange: true,
-              rangeselector: {buttons: [
-                {
-                  count: 7,
-                  label: '1w',
-                  step: 'day',
-                  stepmode: 'todate'
-                },
-                {
-                  count: 1,
-                  label: '1m',
-                  step: 'month',
-                  stepmode: 'backward'
-                },
-                {step: 'all'}
-              ]},
-            rangeslider: {},
-            },
-            yaxis: {
-                tickformat: '.3s', // Hasta 3 dígitos
-                ticksuffix: " px²",
-                showticksuffix: "all"
-            },
-            autosize: true
-          };
+          const layout: Partial<Layout> = this.props.dateRange;
 
         return (
           <div className="plot-graph">

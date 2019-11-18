@@ -27,6 +27,7 @@ export interface BoxPlotState{
 export interface BoxPlotProps {
   data: GraphData,
   dataSuffix?: string,
+  dateRange?: object,
   title: string,
   graphPosition: 'left' | 'right', 
 }
@@ -88,11 +89,11 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
               if (!treatmentValues[treatmentId]) {
                 treatmentValues[treatmentId] = {
                   y: [treatmentValue],
-                  x: [date]
+                  x: [new Date(date)]
                 }
               } else {
                 treatmentValues[treatmentId].y.push(treatmentValue);
-                treatmentValues[treatmentId].x.push(date);
+                treatmentValues[treatmentId].x.push(new Date(date));
               }
             })
         });
@@ -106,9 +107,7 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
       }))
 
       const layout = {
-        xaxis: {
-          tickprefix: '',
-        },
+        ...this.props.dateRange,
         yaxis: {
           ticksuffix: ` ${this.props.dataSuffix}`,
         },

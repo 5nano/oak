@@ -20,6 +20,7 @@ type Experiment = {
   
 interface LeafAreaProps extends RouteComponentProps<AssayParamsType> {
     onEmptyRender: Function,
+    dateRange: object,
     data: {
       box,
       linear
@@ -91,54 +92,17 @@ class LeafAreaPerExperiments extends React.Component<LeafAreaProps, LeafAreaStat
     render() {
 
         if (!(this.props.data && this.props.data.linear &&  Object.keys(this.props.data.linear).length)) return this.props.onEmptyRender('leaf-area',name);
-        // const linearData: Plotly.Data[] = this.props.data.linear.map(experiment => ({
-        //     x: experiment.dates,
-        //     y: experiment.values,
-        //     name: experiment.name,
-        //     type: 'scatter'
-        //   }))
 
-          const layout: Partial<Layout> = {
-              showlegend: true,
-
-            title: name,
-            xaxis: {
-              type: 'date',
-              autorange: true,
-              rangeselector: {buttons: [
-                {
-                  count: 7,
-                  label: '1w',
-                  step: 'day',
-                  stepmode: 'todate'
-                },
-                {
-                  count: 1,
-                  label: '1m',
-                  step: 'month',
-                  stepmode: 'backward'
-                },
-                {step: 'all'}
-              ]},
-            rangeslider: {},
-            },
-            yaxis: {
-                tickformat: '.3s', // Hasta 3 dígitos
-                ticksuffix: "px²",
-                showticksuffix: "all"
-            },
-            autosize: true,
-          };
-
-          return (
-            <MultiPlot 
-              data={{linear: {...this.props.data.linear, values: this.state.experimentsData}}}
-              dataSuffix="px²" 
-              title={name} 
-              graphPosition={this.props.graphPosition}
-              onLinearChange={this.fetchExperimentsLinearData}
-              onEmptyRender={this.props.onEmptyRender}
-            /> 
+        return (
+          <MultiPlot 
+            data={{linear: {...this.props.data.linear, values: this.state.experimentsData}}}
+            dataSuffix="px²" 
+            title={name} 
+            graphPosition={this.props.graphPosition}
+            onLinearChange={this.fetchExperimentsLinearData}
+            onEmptyRender={this.props.onEmptyRender}
+            dateRange={this.props.dateRange}
+          /> 
         )
     }
 };
