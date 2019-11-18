@@ -114,6 +114,7 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
     let date;
 
     if (data) {
+
       const firstLevelHasDates = Object.keys(data).find((el) => 
         isDate(el)
       );
@@ -121,13 +122,13 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
       if (firstLevelHasDates) {
         date = Object.keys(data).sort((a:any, b:any) => a - b).slice(-1);
       } else {
-        const secondLevelHasDates = Object.keys(Object.values(data)).find((el) => (
+        const secondLevelHasDates = Object.keys(Object.values(data)[0]).find((el) => (
           isDate(el)
         ));
         if (secondLevelHasDates) {
           date = Object.keys(data).sort((a:any, b:any) => a - b).slice(-1);
         }
-      }
+      } 
   
       if (isDate(date)) {
         this.setLastDateWithData(date[0]);
@@ -186,8 +187,6 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
     });
 
     const isInvalidDate = !isDate(this.state.lastDateWithData);
-
-    if (!isInvalidDate) debugger;
     
     const lastDate = isInvalidDate ? new Date() : new Date(this.state.lastDateWithData);
     const range = [
