@@ -22,6 +22,7 @@ export interface LinearPlotState {
 export interface LinearPlotProps {
   data: any,
   dataSuffix?: string,
+  dateRange: object,
   title: string,
   graphPosition: 'left' | 'right', 
 }
@@ -76,21 +77,12 @@ class LinearPlot extends React.PureComponent<LinearPlotProps, LinearPlotState> {
 
       const data: Plotly.Data[] = Object.keys(experimentData).map(experimentId => ({
         y: experimentData[experimentId].map((pointData) => pointData.value),
-        x: experimentData[experimentId].map((pointData) => pointData.instant),
+        x: experimentData[experimentId].map((pointData) => new Date(pointData.instant)),
         name: `${namePrefix + experimentId}`,
         type: 'scatter'
       }))
 
-      const layout = {
-        xaxis: {
-          tickprefix: '',
-        },
-        yaxis: {
-          ticksuffix: ` ${this.props.dataSuffix}`,
-        },
-        boxmode: "group",
-        autosize: true,
-      };
+      const layout: Partial<Layout> = this.props.dateRange;
 
       return (
       <>

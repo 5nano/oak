@@ -20,6 +20,7 @@ export interface YellowFreqComponentProps extends RouteComponentProps<AssayParam
   onEmptyRender: Function,
   data: any,
   graphPosition?: 'left' | 'right', 
+  dateRange: object,
 }
 
 
@@ -40,7 +41,7 @@ const freqComponentGenerator = (color, name,id) => class YellowFreqComponent ext
       (!(this.props.data && Object.keys(this.props.data).length))?
             this.props.onEmptyRender(id,name)
               :
-            <BoxPlot data={this.props.data} dataSuffix="Hz" title={name} graphPosition={this.props.graphPosition} />
+            <BoxPlot dateRange={this.props.dateRange} data={this.props.data} dataSuffix="Hz" title={name} graphPosition={this.props.graphPosition} />
           
     );
   }
