@@ -20,7 +20,9 @@ interface IDashboardsState{
   currentDashboard: DashboardType,
   dashboardsData: { [key:string]: Array<number> },
   dashboardsLoading: { [key:string]: boolean },
-  treatments: { [key:string]: string}
+  treatments: { [key:string]: string},
+  lastDateWithData: string,
+  range: Array<any>
 }
 
 interface IDashboardProps {
@@ -28,6 +30,8 @@ interface IDashboardProps {
     params: { assayId: string },
   },
 }
+
+const isDate = (data) => data && data.length && (/\d{0,4}-\d{1,2}-\d{1,2}/g).test(data);
 
 interface Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
   dashboardTypes: Array<DashboardType>
@@ -58,12 +62,20 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
         acc[dash.id] = true; return acc},{}
         ),
       tags:[],
-      treatments: {}
+      treatments: {},
+      lastDateWithData: '',
+      range: []
     };
     this.fetchDataFromdashboards();
     this.fetchTags();
     this.fetchAssay();
     this.fetchTreatments();
+  }
+
+  setLastDateWithData(date) {
+    this.setState({
+      lastDateWithData: date 
+    })
   }
 
   fetchTags() {
@@ -98,6 +110,30 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
   }
 
   storeDataFromDashboard(data:any, dashboardId: DashboardType["id"]) {
+
+    let date;
+
+    if (data) {
+      const firstLevelHasDates = Object.keys(data).find((el) => 
+        isDate(el)
+      );
+
+      if (firstLevelHasDates) {
+        date = Object.keys(data).sort((a:any, b:any) => a - b).slice(-1);
+      } else {
+        const secondLevelHasDates = Object.keys(Object.values(data)).find((el) => (
+          isDate(el)
+        ));
+        if (secondLevelHasDates) {
+          date = Object.keys(data).sort((a:any, b:any) => a - b).slice(-1);
+        }
+      }
+  
+      if (isDate(date)) {
+        this.setLastDateWithData(date[0]);
+      }
+    }
+
     this.setState({
       dashboardsData: {
         ...this.state.dashboardsData,
@@ -144,15 +180,39 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
   renderDashboard(type : DashboardType) {
     const Dashboard = type.component;
 
+    const lastDayWithDataMinusDays = ((daysToSubstract, lastDate) => {
+      const lastDay = new Date(lastDate);
+      return new Date(lastDay.setDate(lastDay.getDate()-daysToSubstract));
+    });
+
+    const isInvalidDate = !isDate(this.state.lastDateWithData);
+
+    if (!isInvalidDate) debugger;
     
+    const lastDate = isInvalidDate ? new Date() : new Date(this.state.lastDateWithData);
+    const range = [
+      lastDayWithDataMinusDays(7, lastDate),
+      lastDate,
+    ];
+
+
+    const dateRangeOptions = {
+      type: 'date',
+      xaxis: {
+        range: [range[0].toISOString().slice(0,10), range[1].toISOString().slice(0,10)],
+        rangeslider: {},
+      }
+    };
+
     // Special case
-    if (type.id === 'overall') return <Dashboard onEmptyRender={this.renderEmptyDashboard.bind(this)} data={this.state.dashboardsData} />
-    return <Dashboard onEmptyRender={this.renderEmptyDashboard.bind(this)} data={this.state.dashboardsData[type.id]} />;
+    if (type.id === 'overall') return <Dashboard dateRange={dateRangeOptions} onEmptyRender={this.renderEmptyDashboard.bind(this)} data={this.state.dashboardsData} />
+    return <Dashboard dateRange={dateRangeOptions} onEmptyRender={this.renderEmptyDashboard.bind(this)} data={this.state.dashboardsData[type.id]} />;
   }
 
  
 
-  render(){      
+  render(){    
+      
     return (
       <div className="Dashboard">
         <div className="dashboard-header">

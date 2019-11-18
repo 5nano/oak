@@ -20,6 +20,7 @@ type Experiment = {
   
 interface LeafAreaProps extends RouteComponentProps<AssayParamsType> {
     onEmptyRender: Function,
+    dateRange,
     data: {
       box,
       linear
@@ -94,42 +95,11 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
         //     type: 'scatter'
         //   }))
 
-          const layout: Partial<Layout> = {
-              showlegend: true,
-
-            title: name,
-            xaxis: {
-              type: 'date',
-              autorange: true,
-              rangeselector: {buttons: [
-                {
-                  count: 7,
-                  label: '1w',
-                  step: 'day',
-                  stepmode: 'todate'
-                },
-                {
-                  count: 1,
-                  label: '1m',
-                  step: 'month',
-                  stepmode: 'backward'
-                },
-                {step: 'all'}
-              ]},
-            rangeslider: {},
-            },
-            yaxis: {
-                tickformat: '.3s', // Hasta 3 dígitos
-                ticksuffix: "px²",
-                showticksuffix: "all"
-            },
-            autosize: true,
-          };
-
           return (
             <BoxPlot 
               data={{...this.props.data.box}}
-              dataSuffix="px²" 
+              dataSuffix="px²"
+              dateRange={this.props.dateRange}
               title={name} 
               graphPosition={this.props.graphPosition}
             /> 
