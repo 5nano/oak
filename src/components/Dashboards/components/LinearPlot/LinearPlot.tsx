@@ -82,7 +82,12 @@ class LinearPlot extends React.PureComponent<LinearPlotProps, LinearPlotState> {
         type: 'scatter'
       }))
 
-      const layout: Partial<Layout> = this.props.dateRange;
+      const layout: Partial<Layout> = {
+        ...this.props.dateRange,
+        yaxis: {
+          ticksuffix: ` ${this.props.dataSuffix}`,
+        },
+      };
 
       return (
       <>
