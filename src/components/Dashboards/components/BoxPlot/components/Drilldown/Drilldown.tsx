@@ -14,7 +14,9 @@ export interface DrillDownState {
 export interface DrillDownProps {
     treatmentId: number,
     date: string,
-    experiments: Array<Experimento>,
+    title?: string,
+    img?: string,
+    experiments?: Array<Experimento>,
     close: Function,
     pointerDirection: 'left' | 'right' 
 }
@@ -38,7 +40,7 @@ class DrillDown extends React.Component<DrillDownProps, DrillDownState> {
     return (
         <div className="DrillDown">
             <div className="title">
-              <h1>Detalle de tratamiento {this.props.treatmentId}</h1>
+              <h1>Detalle de {this.props.title || 'tratamiento'} {this.props.treatmentId}</h1>
               <h2>Fecha: {this.props.date}</h2>
             </div>
             <div className={`close icon-${this.props.pointerDirection}-open`} onClick={() => this.props.close()}></div>
@@ -59,6 +61,10 @@ class DrillDown extends React.Component<DrillDownProps, DrillDownState> {
                     </div>
                   )
                 })
+              }
+              {
+                this.props.img &&
+                <img className="drilldown-optional-img" src={this.props.img} />
               }
             </div>
         </div>
