@@ -298,8 +298,9 @@ const openComponentsList = () => {
         </List>
         <Divider />
 
-        <div >
-          @Copyright 2019-5NANO
+        <div className="sidebar-footer">
+          <p>@Copyright 2019</p>
+          <p>5NANO</p>
         </div>
       </Drawer>
       <main
