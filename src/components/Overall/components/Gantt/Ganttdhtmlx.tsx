@@ -58,9 +58,62 @@ class Ganttdhtmlx extends React.Component<IGanttdhtmlxProps> {
         const data = {
             data: tasks
         }
+        gantt.config.columns = [
+            {name: "text", label: "Ensayo", width: 380, tree: true},
+            {
+            name: "start_time", label: "Inicio", template: function (obj) {
+            return gantt.templates.date_grid(obj.start_date);
+            }, align: "center", width: 80
+            },
+            {name: "duration", label: "Duración", align: "center", width: 70},
+        ];
+        var gridOnlyLayout = {
+            css: 'gantt_container',
+            cols: [
+              {
+                rows: [
+                  { view: 'grid', scrollX: 'gridScrollX', scrollY: 'scrollVer' },
+                  { view: 'scrollbar', id: 'gridScrollX', group: 'horizontal' },
+                ]
+              },
+              {
+              width: 1,
+              rows: [
+              { view: 'timeline', scrollX: 'scrollHor', scrollY: 'scrollVer' },
+              { view: 'scrollbar', id: 'scrollHor', group: 'horizontal' },
+            ]
+          },
+              { view: 'scrollbar', id: 'scrollVer' }
+          ]
+          };
+
+          var gridTimelineLayout = {
+            css: 'gantt_container',
+            cols: [
+              {
+                width: 530,
+                min_width: 300,
+                rows: [
+                  { view: 'grid', scrollX: 'gridScrollX', scrollable:true, scrollY: 'scrollVer' },
+                  { view: 'scrollbar', id: 'gridScrollX', group: 'horizontal' },
+                ]
+              },
+              {
+              rows: [
+              { view: 'timeline', scrollX: 'scrollHor', scrollY: 'scrollVer' },
+              { view: 'scrollbar', id: 'scrollHor', group: 'horizontal' },
+            ]
+          },
+              { view: 'scrollbar', id: 'scrollVer' }
+          ]
+          };
+        
+        gantt.config.layout = gridTimelineLayout;
+        gantt.config.readonly = true;
+        
         gantt.init('gantt-chart');
         gantt.parse(data);
-        gantt.config.readonly = true;
+        gantt.render();
     }
 
     render() {
