@@ -136,14 +136,12 @@ private handleSubmit = async (
       setValues: this.setValues,
       validate: this.validate
     };
-
     const {title} = this.props;
 
+    
     return (
       <FormContext.Provider value={context}>
         <div className="form-container-wrapper">
-          
-
           <div className="form-title">
             {title}
           </div>

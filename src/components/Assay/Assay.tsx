@@ -59,6 +59,7 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
             let assayId = data["idAssay"]
             newAssay.id = assayId
             this.setState({assay:newAssay,feedback:{variant:'success',message:'El ensayo fue creado exitosamente!'}})
+            this.sendNewAssayEmail(newAssay)
             return true;
         })
         .catch(error=>{
@@ -66,6 +67,16 @@ class Assay extends React.Component<IAssayProps,IAssayState> {
           return false
         })
      }
+
+     sendNewAssayEmail(assay:IAssay){
+      let htmlToSend = {
+        subject: `El ensayo ${assay.name} ha sido creado`,
+        html: "<html><img src='https://i.ibb.co/dgLfMrs/new-assay.png'/></html>",
+      }
+      BushService.post("/mailSender",htmlToSend)
+                .then(()=> {console.log("mail enviado")})
+     }
+
 
      goToTreatments(){
         this.props.history.push(`/assay/${this.state.assay.id}/treatments`)
