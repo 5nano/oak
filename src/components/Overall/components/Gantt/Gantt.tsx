@@ -92,6 +92,9 @@ class Gantt extends React.Component<IGanttProps,IGanttState> {
         return (
             !this.state.loading && 
                 <div className="gantt-container">
+                    <div className="chart-title">
+                        <h1>Planificación de ensayos</h1>
+                    </div>
                     <Toolbar zoom={this.state.currentZoom}
                             onZoomChange={this.handleZoomChange}
                             />

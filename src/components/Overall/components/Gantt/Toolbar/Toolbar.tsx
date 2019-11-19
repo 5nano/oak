@@ -50,7 +50,7 @@ interface IToolbarProps{
         });
 
         return (
-            <div className="tool-bar">
+            <div className="gantt-toolbar">
                     { zoomRadios }
             </div>
         );
