@@ -30,6 +30,7 @@ export interface BoxPlotProps {
   dateRange?: object,
   title: string,
   graphPosition: 'left' | 'right', 
+  treatments:any
 }
 
 const namePrefix = 'Treatment ';
@@ -45,7 +46,7 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
   
   handleBoxClick(e) {
     const date = e.points[0].x;
-    const treatmentId = Number(e.points[0].data.name.replace(namePrefix, ''));
+    const treatmentId = Number(e.points[0].data.label.replace(namePrefix, ''));
     this.showDetail(treatmentId, date);
     return this.fetchExperiments(treatmentId);
   }
@@ -102,7 +103,9 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
       const data: Plotly.Data[] = Object.keys(treatmentValues).map(treatmentId => ({
         y: treatmentValues[treatmentId].y,
         x: treatmentValues[treatmentId].x,
-        name: `${namePrefix + treatmentId}`,
+        name:this.props.treatments[treatmentId],
+        label: treatmentId,
+        
         type: 'box'
       }))
 
@@ -146,6 +149,7 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
                 experiments={this.state.treatmentsData[this.state.selectedBox.treatmentId]}
                 close={this.closeDrilldown.bind(this)}
                 pointerDirection={this.props.graphPosition}
+                treatmentName={this.props.treatments[this.state.selectedBox.treatmentId]}
               />
             </Popper>
         }

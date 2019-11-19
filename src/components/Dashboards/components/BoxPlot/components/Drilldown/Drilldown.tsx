@@ -12,6 +12,7 @@ export interface DrillDownState {
 }
 
 export interface DrillDownProps {
+    treatmentName?: string,
     treatmentId: number,
     date: string,
     title?: string,
@@ -40,7 +41,7 @@ class DrillDown extends React.Component<DrillDownProps, DrillDownState> {
     return (
         <div className="DrillDown">
             <div className="title">
-              <h1>Detalle de {this.props.title || 'tratamiento'} {this.props.treatmentId}</h1>
+              <h1>Detalle de {this.props.title || 'tratamiento'} {this.props.treatmentName}</h1>
               <h2>Fecha: {this.props.date}</h2>
             </div>
             <div className={`close icon-${this.props.pointerDirection}-open`} onClick={() => this.props.close()}></div>

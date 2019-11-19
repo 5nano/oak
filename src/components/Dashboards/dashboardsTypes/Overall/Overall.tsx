@@ -23,6 +23,7 @@ type AssayParamsType = {
 export interface OverallComponentProps extends RouteComponentProps<AssayParamsType> {
   onEmptyRender: Function,
   dateRange: object,
+  treatments:any,
   data: {
       [key: string]: {box, linear}
   },
@@ -57,13 +58,13 @@ class OverallComponent extends React.Component<OverallComponentProps, OverallCom
     return (
         <div className="Overall">
             <div className="left-panel">
-                <LeafArea.component dateRange={this.props.dateRange} onEmptyRender={this.props.onEmptyRender} data={this.props.data[LeafArea.id]} graphPosition="left"/>
-                <GreenFreq.component dateRange={this.props.dateRange} onEmptyRender={this.props.onEmptyRender} data={this.props.data[GreenFreq.id]} graphPosition="left"/>
-                <LeafAreaPerExperiments.component dateRange={this.props.dateRange} onEmptyRender={this.props.onEmptyRender} data={this.props.data[LeafAreaPerExperiments.id]} graphPosition="left"/>
+                <LeafArea.component dateRange={this.props.dateRange} onEmptyRender={this.props.onEmptyRender} data={this.props.data[LeafArea.id]} graphPosition="left" treatments={this.props.treatments}/>
+                <GreenFreq.component dateRange={this.props.dateRange} onEmptyRender={this.props.onEmptyRender} data={this.props.data[GreenFreq.id]} graphPosition="left" treatments={this.props.treatments}/>
+                <LeafAreaPerExperiments.component dateRange={this.props.dateRange} onEmptyRender={this.props.onEmptyRender} data={this.props.data[LeafAreaPerExperiments.id]} graphPosition="left" treatments={this.props.treatments}/>
             </div>
             <div className="right-panel">
-                <YellowFreq.component dateRange={this.props.dateRange} onEmptyRender={this.props.onEmptyRender} data={this.props.data[YellowFreq.id]} graphPosition="right"/>
-                <LinearLeafAreaTreatments.component dateRange={this.props.dateRange} onEmptyRender={this.props.onEmptyRender} data={this.props.data[LinearLeafAreaTreatments.id]} graphPosition="right"/>
+                <YellowFreq.component dateRange={this.props.dateRange} onEmptyRender={this.props.onEmptyRender} data={this.props.data[YellowFreq.id]} graphPosition="right" treatments={this.props.treatments}/>
+                <LinearLeafAreaTreatments.component dateRange={this.props.dateRange} onEmptyRender={this.props.onEmptyRender} data={this.props.data[LinearLeafAreaTreatments.id]} graphPosition="right" treatments={this.props.treatments}/>
             </div>
         </div>
     );

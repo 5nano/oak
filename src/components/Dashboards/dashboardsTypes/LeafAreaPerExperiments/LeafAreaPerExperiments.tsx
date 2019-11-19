@@ -2,11 +2,8 @@
 import * as React from "react";
 import { RouteComponentProps } from 'react-router-dom';
 import { DashboardType } from '../InterfaceDashboardTypes';
-import Plot from 'react-plotly.js';
-import { Layout } from "plotly.js";
 import BushService from '../../../../services/bush';
 import MultiPlot from '../../components/MultiPlot/MultiPlot';
-import Loader from "../../../Utilities/Loader/Loader";
 
 type AssayParamsType = {
     assayId: string,
@@ -21,6 +18,7 @@ type Experiment = {
 interface LeafAreaProps extends RouteComponentProps<AssayParamsType> {
     onEmptyRender: Function,
     dateRange: object,
+    treatments:any,
     data: {
       box,
       linear
@@ -46,7 +44,7 @@ const generateExperimentData = (data: Array<{dataPoints: Array<{label: string, y
 }
 
 
-const name = "Área foliar de tratamientos";
+const name = "Área foliar promediada de experimentos agrupada por tratamientos";
 class LeafAreaPerExperiments extends React.Component<LeafAreaProps, LeafAreaState> {
     constructor(props: LeafAreaProps) {
         super(props);
@@ -102,6 +100,7 @@ class LeafAreaPerExperiments extends React.Component<LeafAreaProps, LeafAreaStat
             onLinearChange={this.fetchExperimentsLinearData}
             onEmptyRender={this.props.onEmptyRender}
             dateRange={this.props.dateRange}
+            treatments={this.props.treatments}
           /> 
         )
     }
