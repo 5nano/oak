@@ -5,8 +5,9 @@
 
     .overall-wrapper{
         display:flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
+        justify-content: center;
        
         padding: 40px 80px;
 
@@ -14,10 +15,9 @@
             display:flex;
         }
 
-        .charts-row{
+        .charts-column{
             display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
+            flex-direction: column;
             justify-content: space-around;
         }
     }
