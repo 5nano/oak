@@ -3,6 +3,8 @@ import BushService from '../../../../services/bush';
 import { assayState } from '../../../Home/Home';
 import Chart from 'react-google-charts'
 import Loader from '../../../Utilities/Loader/Loader';
+import Ganttdhtmlx from './Ganttdhtmlx';
+import Toolbar from './Toolbar/Toolbar';
 
 interface GanttAssay{
     finishDate:string,
@@ -17,7 +19,8 @@ interface IGanttProps{
 
 interface IGanttState{
     gantt:Array<GanttAssay>,
-    loading:boolean
+    loading:boolean,
+    currentZoom: string
 }
 
 class Gantt extends React.Component<IGanttProps,IGanttState> {
@@ -26,7 +29,8 @@ class Gantt extends React.Component<IGanttProps,IGanttState> {
         super(props)
         this.state = {
             gantt:null,
-            loading:true
+            loading:true,
+            currentZoom: 'Days'
         }
     }
 
@@ -37,58 +41,62 @@ class Gantt extends React.Component<IGanttProps,IGanttState> {
                     })
     }
 
-    getDate(date:string){
+    getDate(date:string):Date{
         let stringbits = date.split(/\D/);
         let bits = stringbits.map(bit => {return Number(bit)})
         let parsedDate = new Date(bits[0],--bits[1],bits[2],bits[3],bits[4])
         return parsedDate;
     }
 
-    render(){
-        const columns = [
-            { type: 'string', label: 'Task ID' },
-            { type: 'string', label: 'Task Name' },
-            { type: 'string', label: 'Resource' },
-            { type: 'date', label: 'Start Date' },
-            { type: 'date', label: 'End Date' },
-            { type: 'number', label: 'Duration' },
-            { type: 'number', label: 'Percent Complete' },
-            { type: 'string', label: 'Dependencies' },
-        ]
+    getDifferenceInDays(startDate:string,endDate:string){
+        
+        let difference=Math.round(this.getDate(endDate).getTime() - this.getDate(startDate).getTime()).toFixed(0)
+        console.log(difference)
+        if(difference=='0') return 1;
+        else return Number.parseInt(difference) / (1000 * 3600 * 24);
+    }
 
-        let rows = [];
-        if(!this.state.loading){
-            this.state.gantt.forEach(assay => {
-            let row = [
-                assay.name,
-                assay.name,
-                assay.name,
-                this.getDate(assay.startDate),
-                this.getDate(assay.finishDate),
-                null,
-                0,
-                null,
-              ]
-            rows.push(row)
+    getTasks() {
+        return this.state.gantt.map (assay => {
+            return {
+                id: assay.name,
+                text:assay.name,
+                start_date: this.getDate(assay.startDate),
+                duration: this.getDifferenceInDays(assay.startDate,assay.finishDate),
+                progress: 0,
+                color: this.getTaskColor(assay.status)
+            }
         })
     }
 
+    getTaskColor(state:string){
+        switch(state){
+            case 'ACTIVE':
+                return '#6dcefd'
+            case 'FINISHED':
+                return '  #9af88e'
+            case 'ARCHIVED':
+                return '  #fbb0a1';
+            default: break;
+        }
+    }
+
+    handleZoomChange = (zoom) => {
+        this.setState({
+            currentZoom: zoom
+        });
+    }
+
+    render(){
+
         return (
             !this.state.loading && 
-                <div className="gantt-chart">
-                        <Chart
-                            width={800}
-                            chartType='Gantt'
-                            loader={<Loader/>}
-                            data={[columns,...rows]}
-                            options={{
-                                title:"Planificación de ensayos",
-                                gantt: {
-                                trackHeight: 30,
-                                },
-                            }}
-                            legendToggle
-                            rootProps={{'data-testid':'1'}}/>
+                <div className="gantt-container">
+                    <Toolbar zoom={this.state.currentZoom}
+                            onZoomChange={this.handleZoomChange}
+                            />
+                    <Ganttdhtmlx tasks={this.getTasks()}
+                                  zoom={this.state.currentZoom}/>
                 </div>
         )
     }

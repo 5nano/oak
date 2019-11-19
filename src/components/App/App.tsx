@@ -78,15 +78,9 @@ const App = (props: AppProps) => {
 
             <PrivateRoute path='/photos' exact component={PhotosGallery} isLoggedIn={loggedIn} user={user}/>
 
-            <PrivateRoute path='/overall' exact component={Overall} isLoggedIn={loggedIn} user={user}/>
+            <PrivateRoute path='/managment' exact component={Overall} isLoggedIn={loggedIn} user={user}/>
 
             <PrivateRoute path='/gantt' exact component={GanttContainer} isLoggedIn={loggedIn} user={user}/>
-
-            <PrivateRoute path='/histogram' exact component={HistogramContainer} isLoggedIn={loggedIn} user={user}/>
-
-            <PrivateRoute path='/sunburst' exact component={SunburstContainer} isLoggedIn={loggedIn} user={user}/>
-
-            <PrivateRoute path='/sankey' exact component={SankeyContainer} isLoggedIn={loggedIn} user={user}/>
 
           </Switch>
 
