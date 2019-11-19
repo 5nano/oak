@@ -98,7 +98,7 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
           return (
             <BoxPlot 
               data={{...this.props.data.box}}
-              dataSuffix="px²"
+              dataSuffix="px"
               dateRange={this.props.dateRange}
               title={name} 
               graphPosition={this.props.graphPosition}

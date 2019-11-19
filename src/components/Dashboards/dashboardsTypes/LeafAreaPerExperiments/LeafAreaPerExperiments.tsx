@@ -46,7 +46,7 @@ const generateExperimentData = (data: Array<{dataPoints: Array<{label: string, y
 }
 
 
-const name = "Área foliar de experimentos";
+const name = "Área foliar de tratamientos";
 class LeafAreaPerExperiments extends React.Component<LeafAreaProps, LeafAreaState> {
     constructor(props: LeafAreaProps) {
         super(props);
@@ -96,7 +96,7 @@ class LeafAreaPerExperiments extends React.Component<LeafAreaProps, LeafAreaStat
         return (
           <MultiPlot 
             data={{linear: {...this.props.data.linear, values: this.state.experimentsData}}}
-            dataSuffix="px²" 
+            dataSuffix="px" 
             title={name} 
             graphPosition={this.props.graphPosition}
             onLinearChange={this.fetchExperimentsLinearData}

@@ -115,13 +115,15 @@ class BoxPlot extends React.PureComponent<BoxPlotProps, BoxPlotState> {
         autosize: true,
       };
 
+      const popperPosition = this.props.graphPosition === 'left' ? 'right' : 'left';
+
       return (
       <>
           {
             this.state.selectedBox &&
             <Popper
               open={true}
-              placement={this.props.graphPosition}
+              placement={popperPosition}
               disablePortal={true}
               anchorEl={document.querySelector(`#graph-${this.props.title.replace(/\s/g, '-')}`)}
               modifiers={{

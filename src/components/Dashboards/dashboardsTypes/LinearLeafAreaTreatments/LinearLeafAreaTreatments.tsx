@@ -61,7 +61,14 @@ class LinearLeafAreaTreatments extends React.Component<LinearLeafAreaTreatmentsP
           }
         })
 
-          const layout: Partial<Layout> = this.props.dateRange;
+          const layout: Partial<Layout> = {
+            ...this.props.dateRange,
+            yaxis: {
+                tickformat: '.3s', // Hasta 3 dígitos
+                ticksuffix: " mm²",
+                showticksuffix: "all"
+            },
+          };
 
         return (
           <div className="plot-graph">

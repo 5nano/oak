@@ -44,7 +44,7 @@ const ExperimentPopover:React.SFC<IExperimentPopoverProps> = (props) => {
                 <h1>Ancho: </h1>
                 <h2>{experiment.width} px</h2>
                 <h1>Area: </h1>
-                <h2>{experiment.area} px²</h2>
+                <h2>{experiment.area} px</h2>
             </div>
           </div>
       </div>

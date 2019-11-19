@@ -21,7 +21,7 @@ interface IDashboardsState{
   dashboardsData: { [key:string]: Array<number> },
   dashboardsLoading: { [key:string]: boolean },
   treatments: { [key:string]: string},
-  lastDateWithData: string,
+  lastDatesWithData: Array<string>,
   range: Array<any>
 }
 
@@ -63,7 +63,7 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
         ),
       tags:[],
       treatments: {},
-      lastDateWithData: '',
+      lastDatesWithData: [],
       range: []
     };
     this.fetchDataFromdashboards();
@@ -72,9 +72,9 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
     this.fetchTreatments();
   }
 
-  setLastDateWithData(date) {
+  setLastDatesWithData(dates) {
     this.setState({
-      lastDateWithData: date 
+      lastDatesWithData: dates 
     })
   }
 
@@ -111,7 +111,7 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
 
   storeDataFromDashboard(data:any, dashboardId: DashboardType["id"]) {
 
-    let date;
+    let dates;
 
     if (data) {
 
@@ -120,18 +120,18 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
       );
 
       if (firstLevelHasDates) {
-        date = Object.keys(data).sort((a:any, b:any) => a - b).slice(-1);
+        dates = Object.keys(data);
       } else {
         const secondLevelHasDates = Object.keys(Object.values(data)[0]).find((el) => (
           isDate(el)
         ));
         if (secondLevelHasDates) {
-          date = Object.keys(data).sort((a:any, b:any) => a - b).slice(-1);
+          dates = Object.keys(data);
         }
       } 
-  
-      if (isDate(date)) {
-        this.setLastDateWithData(date[0]);
+      
+      if (dates && isDate(dates[0])) {
+        this.setLastDatesWithData(dates);
       }
     }
 
@@ -186,9 +186,19 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
       return new Date(lastDay.setDate(lastDay.getDate()-daysToSubstract));
     });
 
-    const isInvalidDate = !isDate(this.state.lastDateWithData);
+    const isInvalidDate = !isDate(this.state.lastDatesWithData[0]);
     
-    const lastDate = isInvalidDate ? new Date() : new Date(this.state.lastDateWithData);
+    const lastDate = isInvalidDate ? new Date() : new Date(this.state.lastDatesWithData.slice(-1)[0]);
+
+    const isShortRange = (datesList) => {
+      const singleDate = datesList.length === 1;
+      const sameYear = datesList.map((date) => date.slice(0,7)).every( (date, i, arr) => date === arr[0] );
+      const sortedDays = datesList.slice(-2).map(Number).sort((a,b) => a-b);
+      const daysRange = sortedDays[sortedDays.length-1] - sortedDays[0];
+
+      return singleDate || (sameYear && daysRange < 7);
+    }
+    
     const range = [
       lastDayWithDataMinusDays(7, lastDate),
       lastDate,
@@ -198,7 +208,8 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
     const dateRangeOptions = {
       type: 'date',
       xaxis: {
-        range: [range[0].toISOString().slice(0,10), range[1].toISOString().slice(0,10)],
+        autorange: isShortRange(this.state.lastDatesWithData),
+        range: isShortRange(this.state.lastDatesWithData) ? null : [range[0].toISOString().slice(0,10), range[1].toISOString().slice(0,10)],
         rangeslider: {},
       }
     };
