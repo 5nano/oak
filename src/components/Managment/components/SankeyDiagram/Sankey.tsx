@@ -3,7 +3,7 @@ import BushService from '../../../../services/bush';
 import Plot from 'react-plotly.js';
 import Plotly = require('plotly.js/lib/index-basic');
 
-interface SankeyDiagram{
+export interface SankeyDiagram{
     label: Array<string>
     source:Array<Number>
     target:Array<Number>
@@ -11,12 +11,11 @@ interface SankeyDiagram{
 }
 
 interface ISankeyDiagramProps{
-
+    data:SankeyDiagram
 }
 
 interface ISankeyDiagramState{
-    sankeyDiagram:SankeyDiagram,
-    loading:boolean
+    sankeyDiagram:SankeyDiagram
 }
 
 class Sankey extends React.Component<ISankeyDiagramProps,ISankeyDiagramState> {
@@ -24,17 +23,14 @@ class Sankey extends React.Component<ISankeyDiagramProps,ISankeyDiagramState> {
     constructor(props){
         super(props)
         this.state = {
-            sankeyDiagram:null,
-            loading:true
+            sankeyDiagram:null
         }
     }
 
     componentDidMount(){
-        BushService.get('/metricas/ensayos/sankey')
-                    .then(data=> {
-                        this.setState({sankeyDiagram:data,loading:false})
-                    })
+        this.setState({sankeyDiagram:this.props.data})
     }
+
 
     renderGraph(){
         
@@ -53,7 +49,7 @@ class Sankey extends React.Component<ISankeyDiagramProps,ISankeyDiagramState> {
             },
             orientation: "h",
             valueformat: ".0f",
-            valuesuffix: "TWh",
+            valuesuffix: "u",
             node: {
                 pad: 15,
                 thickness: 15,
@@ -74,9 +70,10 @@ class Sankey extends React.Component<ISankeyDiagramProps,ISankeyDiagramState> {
         }
 
 
-        var layout = {
+        var layout:Partial<Plotly.Layout> = {
+        title:"Flujo de componentes en ensayos.",
         font: {size:12},
-        width: 600,
+        width: 850,
         height: 400,
         }
 
@@ -86,7 +83,7 @@ class Sankey extends React.Component<ISankeyDiagramProps,ISankeyDiagramState> {
 
     render(){
 
-        if(!this.state.loading) this.renderGraph()
+        this.state.sankeyDiagram!=null && this.renderGraph()
         return (
             <div id="sankey-container" className="sankey-chart"/>
         )

@@ -1,19 +1,19 @@
 import * as React from 'react';
 import BushService from '../../../../services/bush';
 import Plotly = require('plotly.js');
+import Loader from '../../../Utilities/Loader/Loader';
 
 
-interface IDates{
+export interface IDates{
     [key: string]: string[]
 }
 
 interface IHistogramProps{
-
+    data:IDates
 }
 
 interface IHistogramState{
-    dates: IDates
-    loading:boolean
+    dates:IDates
 }
 
 class Histogram extends React.Component<IHistogramProps,IHistogramState> {
@@ -22,15 +22,12 @@ class Histogram extends React.Component<IHistogramProps,IHistogramState> {
         super(props)
         this.state = {
             dates:null,
-            loading:true
+            
         }
     }
 
     componentDidMount(){
-        BushService.get('/metricas/histograma/pruebas')
-                    .then(data=> {
-                        this.setState({dates:data.dates,loading:false})
-                    })
+        this.setState({dates:this.props.data})
     }
 
     renderGraph(){
@@ -49,8 +46,9 @@ class Histogram extends React.Component<IHistogramProps,IHistogramState> {
         
         var data = traces;
         var layout:Partial<Plotly.Layout> = {
+            title:"Imágenes capturadas por día por ensayo.",
             barmode: 'stack',
-            width: 600,
+            width: 850,
             height: 400,
             }
         
@@ -58,7 +56,7 @@ class Histogram extends React.Component<IHistogramProps,IHistogramState> {
     }
 
     render(){
-        if(!this.state.loading) this.renderGraph()
+        this.state.dates!=null && this.renderGraph()
         return (
             <div id="histogram-container"/>
         )

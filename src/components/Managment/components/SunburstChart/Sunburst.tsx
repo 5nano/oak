@@ -1,21 +1,21 @@
 import * as React from 'react';
 import BushService from '../../../../services/bush';
 import Plotly = require('plotly.js/lib/index-basic');
+import Loader from '../../../Utilities/Loader/Loader';
 
-interface SunburstChart{
+export interface SunburstChart{
     labels:Array<string>
     parents:Array<string>
-    values:Array<Number>
+    ids:Array<string>
     branchValues:string
 }
 
 interface ISunburstChartProps{
-
+    data:SunburstChart
 }
 
 interface ISunburstChartState{
-    sunburstChart:SunburstChart,
-    loading:boolean
+    sunburstChart:SunburstChart
 }
 
 class Sunburst extends React.Component<ISunburstChartProps,ISunburstChartState> {
@@ -23,16 +23,12 @@ class Sunburst extends React.Component<ISunburstChartProps,ISunburstChartState> 
     constructor(props){
         super(props)
         this.state = {
-            sunburstChart:null,
-            loading:true
+            sunburstChart:null
         }
     }
 
     componentDidMount(){
-        BushService.get('/metricas/mezclasAgroquimicos')
-                    .then(data=> {
-                        this.setState({sunburstChart:data,loading:false})
-                    })
+        this.setState({sunburstChart:this.props.data})
     }
 
     renderGraph(){
@@ -41,14 +37,18 @@ class Sunburst extends React.Component<ISunburstChartProps,ISunburstChartState> 
                 type: "sunburst",
                 labels: this.state.sunburstChart.labels,
                 parents: this.state.sunburstChart.parents,
-                values:  this.state.sunburstChart.values,
+                ids:  this.state.sunburstChart.ids,
                 leaf: {"opacity": 0.4},
-                marker: {"line": {"width": 2}},
+                marker: {"line": {"width": 4}},
+                outsidetextfont: {size: 20, color:"#377eb8"},
                 branchvalues: this.state.sunburstChart.branchValues
             };
             
-            var layout = {
-                "margin": {"l": 0, "r": 0, "b": 0, "t": 0},
+            var layout:Partial<Plotly.Layout>= {
+                height: 800,
+                width:600,
+                margin: {"l": 0, "r": 0, "b": 0, "t": 0},
+                sunburstcolorway:["#636efa","#ef553b","#00cc96"],
             };
             
             Plotly.newPlot('sunburst-chart', [data], layout)
@@ -57,7 +57,7 @@ class Sunburst extends React.Component<ISunburstChartProps,ISunburstChartState> 
 
     render(){
         
-        if(!this.state.loading) this.renderGraph()
+        this.state.sunburstChart!=null && this.renderGraph()
 
         return (
             <div id="sunburst-chart"/>
