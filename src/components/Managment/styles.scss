@@ -1,7 +1,8 @@
 @import './components/styles.scss';
 
 .overall-container{
-
+    display:flex;
+    justify-content: center;
 
     .overall-wrapper{
         display:flex;
@@ -11,14 +12,19 @@
        
         padding: 40px 80px;
 
-        .gant-wrapper{
-            display:flex;
-        }
 
-        .charts-column{
+        .overall-column{
             display: flex;
             flex-direction: column;
-            justify-content: space-around;
+            justify-content: flex-start;
+        }
+
+        .overall-row{
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+
+            width: 100%;
         }
     }
 }

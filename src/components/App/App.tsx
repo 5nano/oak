@@ -16,8 +16,8 @@ import Treatments from '../Treatments/Treatments';
 import PhotosGallery from '../PhotosGallery/PhotosGallery';
 import BushService from '../../services/bush';
 import { UserHeader } from '../../Interfaces/User';
-import Overall from '../Overall/Overall';
-import Gantt from '../Overall/components/Gantt/Gantt';
+import Overall from '../Managment/Managment';
+import Gantt from '../Managment/components/Gantt/Gantt';
 export interface AppProps { title: string }
 
 const App = (props: AppProps) => {
