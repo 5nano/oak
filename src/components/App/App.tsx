@@ -17,11 +17,7 @@ import PhotosGallery from '../PhotosGallery/PhotosGallery';
 import BushService from '../../services/bush';
 import { UserHeader } from '../../Interfaces/User';
 import Overall from '../Overall/Overall';
-import HistogramContainer from '../Overall/components/Histogram/HistogramContainer';
-import GanttContainer from '../Overall/components/Gantt/GanttContainer';
-import SunburstContainer from '../Overall/components/SunburstChart/SunburstContainer';
-import SankeyContainer from '../Overall/components/SankeyDiagram/SankeyContainer';
-
+import Gantt from '../Overall/components/Gantt/Gantt';
 export interface AppProps { title: string }
 
 const App = (props: AppProps) => {
@@ -78,15 +74,9 @@ const App = (props: AppProps) => {
 
             <PrivateRoute path='/photos' exact component={PhotosGallery} isLoggedIn={loggedIn} user={user}/>
 
-            <PrivateRoute path='/overall' exact component={Overall} isLoggedIn={loggedIn} user={user}/>
+            <PrivateRoute path='/managment' exact component={Overall} isLoggedIn={loggedIn} user={user}/>
 
-            <PrivateRoute path='/gantt' exact component={GanttContainer} isLoggedIn={loggedIn} user={user}/>
-
-            <PrivateRoute path='/histogram' exact component={HistogramContainer} isLoggedIn={loggedIn} user={user}/>
-
-            <PrivateRoute path='/sunburst' exact component={SunburstContainer} isLoggedIn={loggedIn} user={user}/>
-
-            <PrivateRoute path='/sankey' exact component={SankeyContainer} isLoggedIn={loggedIn} user={user}/>
+            <PrivateRoute path='/gantt' exact component={Gantt} isLoggedIn={loggedIn} user={user}/>
 
           </Switch>
 

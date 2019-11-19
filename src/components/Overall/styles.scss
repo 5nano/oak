@@ -5,8 +5,9 @@
 
     .overall-wrapper{
         display:flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
+        justify-content: center;
        
         padding: 40px 80px;
 
@@ -14,10 +15,9 @@
             display:flex;
         }
 
-        .charts-row{
+        .charts-column{
             display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
+            flex-direction: column;
             justify-content: space-around;
         }
     }
@@ -27,14 +27,15 @@
     display:flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 
     margin-top:40px;
+    height: 100%;
 
-    .chart-title{
-        color: #6AC1A9;
-        h1,h2{
-            margin:0
-        }
+}
+.chart-title{
+    color: #6AC1A9;
+    h1,h2{
+        margin:0
     }
 }

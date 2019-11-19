@@ -25,7 +25,8 @@ import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import SearchIcon from '@material-ui/icons/Search';
-
+import EventIcon from '@material-ui/icons/Event';
+import HomeIcon from '@material-ui/icons/Home';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -145,7 +146,6 @@ const Layout:React.SFC<ILayoutProps> = (props) => {
 
    const [userMenuAnchorEl,setUserMenuAnchorEl] = React.useState(null)
    const [componentsList,setComponentsList] = React.useState(false)
-   const [componentsOverall,setComponentsOverall] = React.useState(false)
    const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -174,9 +174,6 @@ const openComponentsList = () => {
   setComponentsList(!componentsList)
 }
 
-const openComponentsOverall = () => {
-  setComponentsOverall(!componentsOverall)
-}
 
   return (
     <div className={classes.root}>
@@ -257,37 +254,21 @@ const openComponentsOverall = () => {
         <Divider />
         <List>
 
-          <ListItem button className={classes.nested} onClick={()=>openComponentsOverall()}>
-                <ListItemIcon><DashboardOutlinedIcon/></ListItemIcon>
-                <ListItemText primary="Gestión" />
+          <ListItem button className={classes.nested} onClick={()=>props.history.push('/home')}>
+                <ListItemIcon><HomeIcon/></ListItemIcon>
+                <ListItemText primary="Home"/>
           </ListItem>
 
-          <Collapse in={componentsOverall} timeout="auto" unmountOnExit>
-              
-            
-            <List component="div" disablePadding>
-              <ListItem button key={'1'} onClick={()=>props.history.push('/overall')} >
-                <ListItemText primary={'Overall'} />
-              </ListItem>
-              
-              <ListItem button key={'2'} onClick={()=>props.history.push('/gantt')} >
-                <ListItemText primary={'Gantt'} />
-              </ListItem>
+          <ListItem button className={classes.nested} onClick={()=>props.history.push('/managment')}>
+                <ListItemIcon><DashboardOutlinedIcon/></ListItemIcon>
+                <ListItemText primary="Gestión"/>
+          </ListItem>
 
-              <ListItem button key={'3'} onClick={()=>props.history.push('/histogram')} >
-                <ListItemText primary={'Histograma'} />
-              </ListItem>
+          <ListItem button className={classes.nested} onClick={()=>props.history.push('/gantt')}>
+                <ListItemIcon><EventIcon/></ListItemIcon>
+                <ListItemText primary="Planificación" />
+          </ListItem>
 
-              <ListItem button key={'4'} onClick={()=>props.history.push('/sankey')} >
-                <ListItemText primary={'Flujos de ensayos'} />
-              </ListItem>
-
-              <ListItem button key={'5'} onClick={()=>props.history.push('/sunburst')} >
-                <ListItemText primary={'Sunburst '} />
-              </ListItem>
-            </List>
-            <Divider />
-          </Collapse>
 
           <ListItem button className={classes.nested} onClick={openComponentsList}>
                 <ListItemIcon><FolderOutlinedIcon /></ListItemIcon>
@@ -316,6 +297,10 @@ const openComponentsOverall = () => {
 
         </List>
         <Divider />
+
+        <div >
+          @Copyright 2019-5NANO
+        </div>
       </Drawer>
       <main
         className={clsx(classes.content, {
