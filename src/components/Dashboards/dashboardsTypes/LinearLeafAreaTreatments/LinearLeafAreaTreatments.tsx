@@ -18,6 +18,7 @@ type AverageTreatment ={
 interface LinearLeafAreaTreatmentsProps extends RouteComponentProps<AssayParamsType> {
     onEmptyRender: Function,
     dateRange: object,
+    treatments:any,
     data: {
       linear: Array<Array<AverageTreatment>>
       box
@@ -25,7 +26,7 @@ interface LinearLeafAreaTreatmentsProps extends RouteComponentProps<AssayParamsT
     graphPosition?: 'left' | 'right', 
 }
 
-const name = "Área Foliar Linear Promediada";
+const name = "Área foliar linear promediada de tratamientos";
 
 class LinearLeafAreaTreatments extends React.Component<LinearLeafAreaTreatmentsProps> {
    
@@ -57,7 +58,7 @@ class LinearLeafAreaTreatments extends React.Component<LinearLeafAreaTreatmentsP
             x: dates,
             y: values,
             type: 'scatter',
-            name: key
+            name: this.props.treatments[key]
           }
         })
 
@@ -65,7 +66,7 @@ class LinearLeafAreaTreatments extends React.Component<LinearLeafAreaTreatmentsP
             ...this.props.dateRange,
             yaxis: {
                 tickformat: '.3s', // Hasta 3 dígitos
-                ticksuffix: " mm²",
+                ticksuffix: " px",
                 showticksuffix: "all"
             },
           };

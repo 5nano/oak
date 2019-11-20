@@ -21,6 +21,7 @@ type Experiment = {
 interface LeafAreaProps extends RouteComponentProps<AssayParamsType> {
     onEmptyRender: Function,
     dateRange,
+    treatments,
     data: {
       box,
       linear
@@ -97,6 +98,7 @@ class LeafArea extends React.Component<LeafAreaProps, LeafAreaState> {
 
           return (
             <BoxPlot 
+              treatments={this.props.treatments}
               data={{...this.props.data.box}}
               dataSuffix="px"
               dateRange={this.props.dateRange}

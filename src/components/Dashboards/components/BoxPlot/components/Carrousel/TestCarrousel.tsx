@@ -6,6 +6,7 @@ import Loader from '../../../../../Utilities/Loader/Loader';
 import { Slide } from 'material-auto-rotating-carousel';
 interface ITestCarrouselProps{
     experimentId: Number;
+    treatmentName:string
 }
 
 const TestCarrousel:React.SFC<ITestCarrouselProps> = (props) => {
@@ -30,8 +31,13 @@ const TestCarrousel:React.SFC<ITestCarrouselProps> = (props) => {
 
             {tests.map(test => (
                 <Slide 
-                    media={ <img src={test.pathImage}/>}
-                    title={new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(Date.parse(test.instant))}
+                    media={ <img style={{marginTop:'30px'}} src={test.pathImage}/>}
+                    title={
+                        <div className="carrousel-title">
+                        <p>Tratamiento {props.treatmentName}</p>
+                        <p>Fecha de captura: {new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(Date.parse(test.instant))}</p>
+                        </div>
+                    }
                     subtitle={
                     <div className="test-content">
                         <div className="content-row">

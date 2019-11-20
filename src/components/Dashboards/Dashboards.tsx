@@ -94,7 +94,10 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
 
   fetchTreatments(){
     BushService.get(`/ensayo/nombresTratamientos?idAssay=${this.props.match.params.assayId}`)
-                .then(data => this.setState({treatments:data}))
+                .then(data =>{ 
+                  this.setState({treatments:data})
+                  console.log(data)
+                })
   }
 
   fetchDataFromdashboards() {
@@ -214,9 +217,11 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
       }
     };
 
+    
+
     // Special case
-    if (type.id === 'overall') return <Dashboard dateRange={dateRangeOptions} onEmptyRender={this.renderEmptyDashboard.bind(this)} data={this.state.dashboardsData} />
-    return <Dashboard dateRange={dateRangeOptions} onEmptyRender={this.renderEmptyDashboard.bind(this)} data={this.state.dashboardsData[type.id]} />;
+    if (type.id === 'overall') return <Dashboard dateRange={dateRangeOptions} onEmptyRender={this.renderEmptyDashboard.bind(this)} data={this.state.dashboardsData} treatments={this.state.treatments}/>
+    return <Dashboard dateRange={dateRangeOptions} onEmptyRender={this.renderEmptyDashboard.bind(this)} data={this.state.dashboardsData[type.id]} treatments={this.state.treatments} />;
   }
 
  
@@ -240,14 +245,14 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
           </div>
         </div>
         <div className="dashboard-container">
-          <div className="left-column">
+          <div className="row">
             <DashboardSelector 
               dashboardTypes={this.dashboardTypes} 
               onSelect={this.setDashboard.bind(this)}
               currentSelection={this.state.currentDashboard}
             />
           </div>
-          <div className="right-column">
+          <div className="row">
             {
               this.renderDashboard(this.state.currentDashboard)
             }
