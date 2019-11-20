@@ -29,7 +29,7 @@ export interface OverallComponentProps extends RouteComponentProps<AssayParamsTy
   },
 }
 
-const name = "Overview";
+const name = "General";
 
 class OverallComponent extends React.Component<OverallComponentProps, OverallComponentState> {
   constructor(props:OverallComponentProps){

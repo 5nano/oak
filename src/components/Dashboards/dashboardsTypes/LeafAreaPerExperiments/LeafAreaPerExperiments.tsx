@@ -89,7 +89,8 @@ class LeafAreaPerExperiments extends React.Component<LeafAreaProps, LeafAreaStat
 
     render() {
 
-        if (!(this.props.data && this.props.data.linear &&  Object.keys(this.props.data.linear).length)) return this.props.onEmptyRender('leaf-area',name);
+        if (!(this.props.data && this.props.data.linear &&  Object.keys(this.props.data.linear).length && this.props.data.linear.firstTreatmentData)) 
+         return this.props.onEmptyRender('leaf-area-per-experiments',name);
 
         return (
           <MultiPlot 

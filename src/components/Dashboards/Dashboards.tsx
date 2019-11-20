@@ -108,6 +108,9 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
                   this.storeDataFromDashboard(data, dashboardId)
                   this.setLoading(dashboardId)
                 })
+                .catch(error => {
+                  this.setLoading(dashboardId)
+                })
                
     });
   }
@@ -163,12 +166,13 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
       </div>
       )
     return (
-      <div className="empty-dashboard">
-        <div className="empty-dashboard-title">
-          <h4>{title}</h4>
+      <div className="info-content">
+        <div style={{width:'200px'}} className="info-content-image">
+          <img  style={{opacity:0.5}}src='../../../assets/images/empty-dashboard.png'/>
         </div>
-        <div className="empty-dashboard-content">
-          <Info message={content || "Aún no contamos con datos para este ensayo, comienza a sacar fotos"}/>
+        <div className="info-content-description">
+          <h2>{title}</h2>
+          <p>Todavía no has tomados fotos para visualizar este gráfico.</p>
         </div>
       </div>
 
