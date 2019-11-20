@@ -57,7 +57,8 @@ class DrillDown extends React.Component<DrillDownProps, DrillDownState> {
                       </div>
                       {
                         this.state.showExperiment === experiment.experimentId &&
-                            <TestCarrousel experimentId={Number(experiment.experimentId)}/>
+                            <TestCarrousel experimentId={Number(experiment.experimentId)}
+                                           treatmentName={this.props.treatmentName}/>
                       }
                     </div>
                   )
