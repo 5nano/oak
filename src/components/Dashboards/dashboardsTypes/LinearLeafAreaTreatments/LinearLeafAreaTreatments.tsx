@@ -44,9 +44,12 @@ class LinearLeafAreaTreatments extends React.Component<LinearLeafAreaTreatmentsP
     }
 
     render() { 
-
-        if (!(this.props.data && this.props.data.linear &&  Object.keys(this.props.data.linear).length)) 
-          return this.props.onEmptyRender('linear-leaf-area-treatments',name);
+      console.log(name)
+      console.log(this.props)
+        if (!(this.props.data && this.props.data.linear &&  Object.keys(this.props.data.linear).length && Object.keys(this.props.data.linear[0]).length )){
+          console.log("Aca")
+           return this.props.onEmptyRender('linear-leaf-area-treatments',name);
+        }
          
         let averageTreatmentsData = this.props.data.linear[0]
         const linearData: Plotly.Data[] = Object.keys(averageTreatmentsData).map(key => {
@@ -71,7 +74,9 @@ class LinearLeafAreaTreatments extends React.Component<LinearLeafAreaTreatmentsP
             },
           };
 
-        return (
+          return (
+
+
           <div className="plot-graph">
             <h4>{name}</h4>
             <Plot
