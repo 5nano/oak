@@ -13,28 +13,33 @@ const TestCarrousel:React.SFC<ITestCarrouselProps> = (props) => {
     
     const [tests,setTests] = React.useState<Array<ITest>>([])
     const [loading,setLoading] = React.useState<boolean>(true)
+
+    const [open,setOpen] = React.useState<boolean>(false)
    
     React.useEffect(()=>{
+        console.log(props)
       BushService.get(`/experiment/points?experimentId=${props.experimentId}`)
                 .then((tests:Array<ITest>) => {
-                  setTests(tests)
-                  setLoading(false)
+                    if(tests.length > 0) { //Otherwise AutoRotatingCarousel will throw error
+                        setTests(tests)
+                        setLoading(false)
+                        setOpen(true)
+                    }
                 })
     },[])
     
     return(
         <AutoRotatingCarousel
-            open={!loading}
-            onClose={()=>setLoading(true)}
+            open={open}
+            onClose={()=>setOpen(false)}
             autoplay={false}
             >
-
             {tests.map(test => (
                 <Slide 
                     media={ <img style={{marginTop:'30px'}} src={test.pathImage}/>}
                     title={
                         <div className="carrousel-title">
-                        <p>Tratamiento {props.treatmentName}</p>
+                        <p>Tratamiento {props.treatmentName} - Experimento {props.experimentId}</p>
                         <p>Fecha de captura: {new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(Date.parse(test.instant))}</p>
                         </div>
                     }
