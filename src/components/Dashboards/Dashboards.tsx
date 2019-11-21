@@ -53,6 +53,7 @@ interface IDashboardProps {
   },
   history: {
     push: Function,
+    replace: Function
   }
 }
 
@@ -82,7 +83,7 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
     if (!selectedDashboard) {
       selectedDashboard = this.dashboardTypes[0].id;
       this.props.location.search = qs.stringify({ type: selectedDashboard });
-      this.props.history.push(`?${this.props.location.search}`);
+      this.props.history.replace(`?${this.props.location.search}`);
     }
     this.state = {
       assay: null,
@@ -226,7 +227,7 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
       currentDashboard: this.dashboardTypes.find(dash => dash.id === idDashboardType),
     }, () => {
       this.props.location.search = qs.stringify({ type: idDashboardType });
-      this.props.history.push(`?${this.props.location.search}`);
+      this.props.history.replace(`?${this.props.location.search}`);
     })
   }
 
@@ -253,7 +254,7 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
     
     const range = [
       lastDayWithDataMinusDays(7, lastDate),
-      lastDate,
+      new Date(lastDate.setDate(lastDate.getDate() + 1))
     ];
 
 
