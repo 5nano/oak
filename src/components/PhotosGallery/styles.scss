@@ -1,5 +1,13 @@
 @import './Components/styles.scss';
 
+.go-back-to-dashboard {
+    text-align: center;
+    margin-top: 45vh;
+    vertical-align: middle;
+    font-size: 16px;
+    font-weight: 600;
+}
+
 .gallery-container{
     
     display:flex;

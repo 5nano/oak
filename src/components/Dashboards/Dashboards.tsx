@@ -20,6 +20,8 @@ import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import EcoIcon from '@material-ui/icons/Eco';
 import ViewModuleIcon from '@material-ui/icons/ViewModule';
 import { RouteComponentProps } from "react-router-dom";
+const qs = require('qs');
+
 interface IDashboardsState{
   assay:IEnsayo,
   tags: Array<ITag>
@@ -38,10 +40,20 @@ interface Metrics {
   treatmentsLength: Number
 }
 
+interface MatchParams {
+  assayId: string;
+}
+
 interface IDashboardProps {
   match: {
     params: { assayId: string,},    
   },
+  location: {
+    search: string,
+  },
+  history: {
+    push: Function,
+  }
 }
 
 const isDate = (data) => data && data.length && (/\d{0,4}-\d{1,2}-\d{1,2}/g).test(data);
@@ -64,10 +76,17 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
       LinearTreatment,
       LeafAreaPerExperiments
     ];
-
+    const initialQuery = qs.parse(this.props.location.search.slice(1));
+    let selectedDashboard = initialQuery['type'] && initialQuery['type'];
+    selectedDashboard = this.dashboardTypes.find(d => d.id === selectedDashboard) && this.dashboardTypes.find(d => d.id === selectedDashboard).id;
+    if (!selectedDashboard) {
+      selectedDashboard = this.dashboardTypes[0].id;
+      this.props.location.search = qs.stringify({ type: selectedDashboard });
+      this.props.history.push(`?${this.props.location.search}`);
+    }
     this.state = {
-      assay:null,
-      currentDashboard: this.dashboardTypes[0],
+      assay: null,
+      currentDashboard: this.dashboardTypes.find(d => d.id === selectedDashboard),
       dashboardsData: this.dashboardTypes.reduce((acc:{ [key:string]: Array<number> }, dash) => {
         acc[dash.id] = []; return acc }, {}
       ),
@@ -205,6 +224,9 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
   setDashboard(idDashboardType: DashboardType["id"]) {
     this.setState({
       currentDashboard: this.dashboardTypes.find(dash => dash.id === idDashboardType),
+    }, () => {
+      this.props.location.search = qs.stringify({ type: idDashboardType });
+      this.props.history.push(`?${this.props.location.search}`);
     })
   }
 

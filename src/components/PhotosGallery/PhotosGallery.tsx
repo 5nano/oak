@@ -101,8 +101,7 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
             </div>
         )
         if (!this.state.loading && (!this.state.selectedAssayId || !this.state.assays.find(assay => assay.idAssay === this.state.selectedAssayId))) {
-            debugger;
-            return <div className="go-back-to-dashboard">Retorne al dashboard para ver imágenes de un ensayo</div>
+            return <div className="go-back-to-dashboard">El ensayo seleccionado no existe. Retorne al inicio y acceda a la galería de imágenes desde un ensayo</div>
         }
 
         return (
