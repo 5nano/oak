@@ -13,30 +13,36 @@
 
     .dashboard-header {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-content: center;
         padding: 32px 16px;
 
-        
-        .dashboard-title{
-            h1,h2 {
-                margin-block-start: 0;
-                margin-block-end: 0;
-                margin-inline-start: 0;
-                margin-inline-end: 0;
-                font-size: inherit;
-                font-weight: inherit;
-              
-            }
-            
-            h1 {
-                font-size: 32px;
-                color:#6AC1A9;
-            }
-            h2 {
-                font-size: 16px;
+        .dashboard-header-basic{
+            display:flex;
+            flex-direction: column;
+
+            .dashboard-title{
+                h1,h2 {
+                    margin-block-start: 0;
+                    margin-block-end: 0;
+                    margin-inline-start: 0;
+                    margin-inline-end: 0;
+                    font-size: inherit;
+                    font-weight: inherit;
+                  
+                }
+                
+                h1 {
+                    font-size: 32px;
+                    color:#6AC1A9;
+                }
+                h2 {
+                    font-size: 16px;
+                }
             }
         }
+
+        
 
         .dashboard-tags{
             display:flex;
@@ -82,6 +88,48 @@
                 top: 0;
               }
               
+        }
+
+
+        .dashboard-header-metrics{
+            display: flex;
+            flex-direction: row;
+            flex-grow: 2;
+            justify-content: flex-end;
+
+            .assay-dashboard-card{
+                border:1px solid white;
+                border-radius: 32px;
+                padding:20px;
+                width: 300px;
+                background: rgba(106,193,169,0.2);
+                color: white;
+                margin: 0 30px;
+                .assay-dashboard-card-wrapper{
+                    display:flex;
+                    flex-direction: column;
+            
+                    .assay-dashboard-card-header{
+                        display:flex;
+                        align-items: center;
+
+                        h3{
+                            margin: 0 5px;
+                        }
+                    }
+            
+                    .assay-dashboard-card-content{
+                        font-size: 48px;
+                        color:white;
+                        text-align: center;
+                    }
+            
+                    .assay-dashboard-card-actions{
+                        text-align: center;
+                        color:white;
+                    }
+                }
+            }
         }
     }
 

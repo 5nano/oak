@@ -43,12 +43,13 @@ class LinearLeafAreaTreatments extends React.Component<LinearLeafAreaTreatmentsP
         })
     }
 
-    render() { 
-      console.log(name)
-      console.log(this.props)
-        if (!(this.props.data && this.props.data.linear &&  Object.keys(this.props.data.linear).length && Object.keys(this.props.data.linear[0]).length )){
-          console.log("Aca")
-           return this.props.onEmptyRender('linear-leaf-area-treatments',name);
+    render() {
+        if (this.props.data == null || 
+              this.props.data.linear == null ||  
+              Object.keys(this.props.data.linear).length==0 ||
+              Object.keys(this.props.data.linear[0]).length == 0  ||
+              Object.values(this.props.data.linear[0]).every((t:any) => t.length == 0)) {              
+            return this.props.onEmptyRender('linear-leaf-area-treatments',name);
         }
          
         let averageTreatmentsData = this.props.data.linear[0]
