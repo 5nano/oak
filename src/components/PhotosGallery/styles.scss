@@ -1,19 +1,21 @@
 @import './Components/styles.scss';
+
 .gallery-container{
+    
     display:flex;
     flex-direction: row;
     justify-content:flex-start;
 
-    padding: 80px;
-
+    .column-title {
+        padding-left: 4px !important;
+    }
+    
     .options-sidebar{
         flex-wrap: wrap;
         width: 200px;
        
 
         overflow: auto;
-
-        
 
         &.treatments {
             display: flex;
@@ -33,6 +35,7 @@
             cursor: pointer;
             &.selected {
                 background-color: #6AC1A9;
+                cursor: default;
             }
 
             &.column-title {
@@ -63,13 +66,16 @@
     }
 
     .experiment-images-container{
-        border: 1px solid black;
-        width: 400px;
         overflow:auto;
+        height: 100%;
+        flex-shrink: 9999;
 
         .experiment-images{
             flex-wrap: wrap;
             list-style-type: none;
+
+            border: 1px solid black;
+            border-top: none;
 
             .space-div {
                 padding-top: 40px;
@@ -80,17 +86,18 @@
                 flex-wrap: wrap;
                 width: 100%;
                 justify-content: start;
+                border: 1px solid rgba(0,0,0,0.1);
+                padding: 16px;
             }
 
             .experiment-image-container {
-                width: 196px;
-                margin: 2px;
+                width: 220px;
+                margin: 6px;
+                border: 1px solid black;
+
                 .timestamp {
                     text-align: center;
-                    font-size: 10px;
-                    border-top: 1px solid black;
-                    border-right: 1px solid black;
-                    border-left: 1px solid black;
+                    font-size: 12px;
                     margin-block-start: 0;
                     margin-block-end: 0;
                     margin-inline-start: 0;
@@ -98,8 +105,10 @@
                 }
                 
                 img {
-                    height: 196px;
+                    height: 220px;
+                    object-fit: cover;
                     width: 100%;
+                    display: block;
                 }
             }
 
@@ -108,10 +117,12 @@
                 &.column-title {
                     background-color: gray;
                     display: block;
-                    position: absolute;
+                    position: relative;
                     color: white;
-                    width: 400px;
+                    width: inherit;
                     padding: 10px 0;
+
+                    border: 1px solid black;
                 }
             }
         }
