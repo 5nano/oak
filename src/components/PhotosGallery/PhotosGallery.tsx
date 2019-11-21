@@ -51,7 +51,6 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
         BushService.get('/ensayos')
                     .then((data:Array<IEnsayo>) => {
                         this.setState({assays:data}, () => {
-                            this.setLoading(false);
                             if (this.state.selectedAssayId) this.showTreatments(this.state.selectedAssayId);
                         })
                     })
@@ -61,10 +60,12 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
 
     showTreatments(idAssay:Number){
         this.setLoading(true)
-        this.setState({loading:true,selectedAssayId:null,selectedTreatmentId:null,selectedExperimentId:null})
+        this.setState({selectedAssayId:null,selectedTreatmentId:null,selectedExperimentId:null})
         BushService.get(`/ensayo/tratamientos?idAssay=${idAssay}`)
                     .then((data:Array<ITreatment>) => {
-                        this.setState({treatments:data,loading:false,selectedAssayId:idAssay})
+                        this.setState({treatments:data,loading:false,selectedAssayId:idAssay}, () => {
+                            this.setLoading(false)
+                        })
                     })
     }
 
@@ -95,13 +96,37 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
     }
     debugger;
     render(){
-        if (!this.state.assays.length && this.state.loading) return (
-            <div style={{display:'flex',justifyContent:'center'}}>
-                <Loader/>
-            </div>
-        )
+        if (!(this.state.assays.length && this.state.treatments.length) && this.state.loading) {
+            return (
+                <div style={{display:'flex',justifyContent:'center'}}>
+                    <Loader/>
+                </div>
+            )
+        };
+
         if (!this.state.loading && (!this.state.selectedAssayId || !this.state.assays.find(assay => assay.idAssay === this.state.selectedAssayId))) {
-            return <div className="go-back-to-dashboard">El ensayo seleccionado no existe. Retorne al inicio y acceda a la galería de imágenes desde un ensayo</div>
+            return (
+                <div className="info-content">
+                    <div style={{width:'200px', marginTop: "20vh"}} className="info-content-image">
+                        <img  style={{opacity:0.5}} src='../../../assets/images/empty-dashboard.png'/>
+                    </div>
+                    <div className="info-content-description">
+                        <p>El ensayo seleccionado no existe. Retorne al inicio y acceda a la galería de imágenes desde un ensayo</p>
+                    </div>
+                </div>
+            )
+        }
+        if (!this.state.loading && !this.state.treatments.length) {
+            return (
+                <div className="info-content">
+                    <div style={{width:'200px', marginTop: "20vh"}} className="info-content-image">
+                        <img  style={{opacity:0.5}} src='../../../assets/images/empty-dashboard.png'/>
+                    </div>
+                    <div className="info-content-description">
+                        <p>Todavía no has tomados fotos para este ensayo.</p>
+                    </div>
+                </div>
+            )
         }
 
         return (
