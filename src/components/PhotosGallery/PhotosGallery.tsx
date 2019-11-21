@@ -70,10 +70,12 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
     }
 
     showExperiments(idTreatment:Number){
+        
         this.setLoading(true)
         this.setState({loading:true,selectedExperimentId:null,selectedTreatmentId:null})
         BushService.get(`/tratamiento/experimentos?treatmentId=${idTreatment}`)
                     .then((data:Array<IExperiment>) => {
+                        console.log(data)
                         this.setState({experiments:data,loading:false,selectedTreatmentId:idTreatment})
                     })
         
@@ -176,7 +178,7 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
                         const experimentClassName = classnames({ 'option-sidebar': true, selected: experiment.experimentId === this.state.selectedExperimentId})
                         return (
                             <div className={experimentClassName} onClick={()=>this.showExperimentImages(experiment.experimentId)}>
-                                {experiment.nombre}
+                                {experiment.experimentId}
                             </div>
                         )
                     })}
