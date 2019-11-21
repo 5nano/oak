@@ -14,6 +14,12 @@ import BushService from "../../services/bush";
 import { ITag } from "../../Interfaces/Tags";
 import { IEnsayo } from "../../Interfaces/IEnsayo";
 import Loader from "../Utilities/Loader/Loader";
+
+import Button from '@material-ui/core/Button';
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
+import EcoIcon from '@material-ui/icons/Eco';
+import ViewModuleIcon from '@material-ui/icons/ViewModule';
+import { RouteComponentProps } from "react-router-dom";
 interface IDashboardsState{
   assay:IEnsayo,
   tags: Array<ITag>
@@ -22,12 +28,19 @@ interface IDashboardsState{
   dashboardsLoading: { [key:string]: boolean },
   treatments: { [key:string]: string},
   lastDatesWithData: Array<string>,
-  range: Array<any>
+  range: Array<any>,
+  metrics:Metrics
+}
+
+interface Metrics {
+  photosLength: Number,
+  experimentsLength: Number,
+  treatmentsLength: Number
 }
 
 interface IDashboardProps {
   match: {
-    params: { assayId: string },
+    params: { assayId: string,},    
   },
 }
 
@@ -64,18 +77,27 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
       tags:[],
       treatments: {},
       lastDatesWithData: [],
-      range: []
+      range: [],
+      metrics: null
     };
     this.fetchDataFromdashboards();
     this.fetchTags();
     this.fetchAssay();
     this.fetchTreatments();
+    this.fetchMetrics();
   }
 
   setLastDatesWithData(dates) {
     this.setState({
       lastDatesWithData: dates 
     })
+  }
+
+  fetchMetrics(){
+    BushService.get(`/ensayo/minimalInfo?idAssay=${this.props.match.params.assayId}`)
+               .then(data => {
+                this.setState({metrics:data})
+               })
   }
 
   fetchTags() {
@@ -88,6 +110,7 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
   fetchAssay(){
     BushService.get(`/ensayo?idAssay=${this.props.match.params.assayId}`)
                 .then((data:IEnsayo) => {
+                  console.log(data)
                   this.setState({assay:data})
                 })
   }
@@ -230,23 +253,71 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
 
  
 
-  render(){    
+  render(){  
+    
       
     return (
       <div className="Dashboard">
         <div className="dashboard-header">
-          <div className="dashboard-title">
-            <h1>Dashboard</h1>
-            <h2>{this.state.assay && this.state.assay.name}</h2>
+          <div className="dashboard-header-basic">
+            <div className="dashboard-title">
+              <h1>Dashboard</h1>
+              <h2>{this.state.assay && this.state.assay.name}</h2>
+            </div>
+            <div className="dashboard-tags">
+              {this.state.tags.map(tag => {
+                return <div className="assay-tag" style={{backgroundColor:tag.color}}>
+                          {tag.name}
+                      </div>
+                })
+              }
+            </div>
           </div>
-          <div className="dashboard-tags">
-            {this.state.tags.map(tag => {
-              return <div className="assay-tag" style={{backgroundColor:tag.color}}>
-                        {tag.name}
-                     </div>
-               })
-            }
+
+
+          {this.state.metrics != null && 
+          <div className="dashboard-header-metrics">
+              <div className="assay-dashboard-card">
+                <div className="assay-dashboard-card-wrapper">
+                    <div className="assay-dashboard-card-header">
+                        <PhotoCameraIcon/>
+                        <h3>Cantidad de fotos</h3>
+                    </div>
+                    <div className="assay-dashboard-card-content">
+                        {this.state.metrics.photosLength}
+                    </div>
+                    <div className="assay-dashboard-card-actions">
+                        <Button size="small" >Ir a imágenes</Button>
+                    </div>
+                  </div>
+              </div>
+              <div className="assay-dashboard-card">
+                <div className="assay-dashboard-card-wrapper">
+                    <div className="assay-dashboard-card-header">
+                        <ViewModuleIcon/>
+                        <h3>Cantidad de tratamientos</h3>
+                    </div>
+                    <div className="assay-dashboard-card-content">
+                        {this.state.metrics.treatmentsLength}
+                    </div>
+                    <div className="assay-dashboard-card-actions">
+                        <Button size="small">Ir a tratamientos</Button>
+                    </div>
+                  </div>
+              </div>
+              <div className="assay-dashboard-card">
+                <div className="assay-dashboard-card-wrapper">
+                    <div className="assay-dashboard-card-header">
+                        <EcoIcon/>
+                        <h3>Cantidad de plantas</h3>
+                    </div>
+                    <div className="assay-dashboard-card-content">
+                        {this.state.metrics.experimentsLength}
+                    </div>
+                  </div>
+              </div>
           </div>
+          }
         </div>
         <div className="dashboard-container">
           <div className="row">
