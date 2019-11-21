@@ -14,6 +14,7 @@ import BushService from "../../services/bush";
 import { ITag } from "../../Interfaces/Tags";
 import { IEnsayo } from "../../Interfaces/IEnsayo";
 import Loader from "../Utilities/Loader/Loader";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Button from '@material-ui/core/Button';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
@@ -309,9 +310,9 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
                     <div className="assay-dashboard-card-content">
                         {this.state.metrics.photosLength}
                     </div>
-                    <div className="assay-dashboard-card-actions">
-                        <Button size="small" >Ir a imágenes</Button>
-                    </div>
+                      <div className="assay-dashboard-card-actions">
+                          <Button onClick={(e) => this.props.history.push(`/photos?assay=${this.props.match.params.assayId}`)} size="small" >Ir a imágenes</Button>
+                      </div>
                   </div>
               </div>
               <div className="assay-dashboard-card">
@@ -324,7 +325,9 @@ class Dashboards extends React.Component<IDashboardProps, IDashboardsState> {
                         {this.state.metrics.treatmentsLength}
                     </div>
                     <div className="assay-dashboard-card-actions">
-                        <Button size="small">Ir a tratamientos</Button>
+                        <Button
+                          onClick={(e) => this.props.history.push(`/assay/${this.props.match.params.assayId}/treatments`)}
+                          size="small">Ir a tratamientos</Button>
                     </div>
                   </div>
               </div>
