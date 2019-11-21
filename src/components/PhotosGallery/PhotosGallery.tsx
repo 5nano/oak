@@ -6,6 +6,7 @@ import BushService from '../../services/bush';
 import ExperimentPopover from './Components/ExperimentPopover';
 import classnames from 'classnames';
 const qs = require('qs');
+import Loader from "../Utilities/Loader/Loader";
 
 interface IPhotosGalleryState {
     assays:Array<IEnsayo>,
@@ -29,11 +30,11 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
         const initialQuery = qs.parse(props.location.search.slice(1));
         const selectedAssayId = initialQuery['assay'] && Number(initialQuery['assay']);
         this.state={
+            loading: true,
             assays:[],
             treatments:[],
             experiments:[],
             experimentImages:[],
-            loading:true,
             selectedAssayId,
             selectedTreatmentId:null,
             selectedExperimentId:null,
@@ -46,12 +47,16 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
     }
 
     componentDidMount(){
+        this.setLoading(true)
         BushService.get('/ensayos')
                     .then((data:Array<IEnsayo>) => {
-                        this.setState({assays:data,loading:false})
+                        this.setState({assays:data}, () => {
+                            this.setLoading(false);
+                            if (this.state.selectedAssayId) this.showTreatments(this.state.selectedAssayId);
+                        })
                     })
 
-        if (this.state.selectedAssayId) this.showTreatments(this.state.selectedAssayId);
+        
     }
 
     showTreatments(idAssay:Number){
@@ -88,21 +93,37 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
     closeImage(){
         this.setState({experimentImageFocus:null})
     }
+    debugger;
     render(){
+        if (!this.state.assays.length && this.state.loading) return (
+            <div style={{display:'flex',justifyContent:'center'}}>
+                <Loader/>
+            </div>
+        )
+        if (!this.state.loading && (!this.state.selectedAssayId || !this.state.assays.find(assay => assay.idAssay === this.state.selectedAssayId))) {
+            return <div className="go-back-to-dashboard">El ensayo seleccionado no existe. Retorne al inicio y acceda a la galería de imágenes desde un ensayo</div>
+        }
+
         return (
             <div id="gallery-container" className="gallery-container">
                 <div className="options-sidebar treatments">
                     <div className="option-sidebar column-title">
                         Ensayo
                     </div>
-                        {this.state.assays.map(assay => {
-                            const assayClassName = classnames({ 'option-sidebar': true, selected: assay.idAssay === this.state.selectedAssayId})
-                            return (
-                                <div className={assayClassName} onClick={()=>this.showTreatments(assay.idAssay)}>
-                                    {assay.name}
-                                </div>
-                            )
-                        })}
+                        {
+                            this.state.selectedAssayId &&
+                            this.state.assays.map(assay => {
+                            if (assay && assay.idAssay === this.state.selectedAssayId) {
+                                
+                                const assayClassName = classnames({ 'option-sidebar': true, selected: assay.idAssay === this.state.selectedAssayId})
+                                return (
+                                    <div className={assayClassName}>
+                                        {assay.name}
+                                    </div>
+                                )
+                            }
+                        })
+                        }
                 </div>
                 
                 {this.state.selectedAssayId &&
@@ -143,7 +164,6 @@ class PhotosGallery extends React.Component<IPhotosGalleryProps,IPhotosGallerySt
                     <div className="experiment-image column-title">
                         Imagenes
                     </div>
-                    <div className="space-div" />
                     <div className="images-flex">
                         {this.state.experimentImages.map(experimentImage => (
                             <div className="experiment-image-container">

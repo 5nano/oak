@@ -65,10 +65,9 @@ interface StyledTabsProps {
 const DashboardSelector: React.FunctionComponent<DashboardSelectorProps> = (props: DashboardSelectorProps) => {
     
     const classes = useStyles(props);
-    const [value, setValue] = React.useState(0);
+    const currentSelection = props.dashboardTypes.indexOf(props.currentSelection);
     const handleClick = (event: React.ChangeEvent<any>,newValue:number) => {
       event.preventDefault();
-      setValue(newValue)
       props.onSelect(tabs[newValue]);
   }
 
@@ -86,10 +85,10 @@ const DashboardSelector: React.FunctionComponent<DashboardSelectorProps> = (prop
     <div className="dashboard-selector">
         <Paper className={classes.root}>
             <StyledTabs
-                value={value}
+                value={currentSelection}
                 onChange={handleClick}>
                 {
-                props.dashboardTypes.map((dashboard) =>(
+                props.dashboardTypes.map((dashboard) => (
                     <StyledTab label={dashboard.name} />
                  ))
                 }
